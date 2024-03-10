@@ -21,11 +21,13 @@ class HomepageWidget extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          GlobalText1(
-              text: text,
-              color: Colors.black,
-              fontSize: 12.0,
-              fontWeight: FontWeight.normal)
+          globalText2(
+            text: text,
+            fontSize: 12.0,
+            fontWeight: FontWeight.normal,
+            color: Colors.black,
+            textAlignment: TextAlign.end,
+          ),
         ],
       ),
     );

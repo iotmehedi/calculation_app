@@ -4,4 +4,5 @@ class Routes {
   static const questionpage = "/questionpage";
   static const mortgagePage = "/mortgage";
   static const normalCalculatorScreen = "/normalCalculatorScreen";
+  static const fractionCalculator = "/fractionCalculator";
 }

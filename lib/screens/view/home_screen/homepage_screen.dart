@@ -264,7 +264,10 @@ class HomepageScreen extends StatelessWidget {
                   child: HomepageWidget(
                     images: AppAssets.fractionCalculator,
                     text: "Fraction\nCalculator",
-                    onPress: () {},
+                    onPress: () {
+                      RouteGenerator.pushNamed(
+                          context, Routes.fractionCalculator);
+                    },
                   ),
                 ),
               ],

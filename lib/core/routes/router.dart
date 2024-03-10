@@ -1,4 +1,5 @@
 import 'package:calculation_app/core/routes/route_name.dart';
+import 'package:calculation_app/screens/view/all_calculators/fractio_calculator/fraction_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/normal_calculator_screen.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
 import 'package:calculation_app/screens/view/mortgage_screen/mortgage_screen.dart';
@@ -67,7 +68,11 @@ class RouteGenerator {
         );
       case Routes.normalCalculatorScreen:
         return MaterialPageRoute(
-          builder: (context) =>  NormalCalculatorScreen(),
+          builder: (context) => NormalCalculatorScreen(),
+        );
+      case Routes.fractionCalculator:
+        return MaterialPageRoute(
+          builder: (context) => FractionCalculatorApp(),
         );
     }
     return null;
