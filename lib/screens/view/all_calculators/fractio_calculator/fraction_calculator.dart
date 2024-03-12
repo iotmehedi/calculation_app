@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,8 @@ class _FractionCalculatorState extends State<FractionCalculator> {
 
   String _selectedOperation = '+';
   Fraction _result = Fraction(0, 1);
-
+  String forAdd = '';
+  // bool forMultiply = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,48 +105,83 @@ class _FractionCalculatorState extends State<FractionCalculator> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            buildFractionInput(
-                "Fraction 1", _numeratorController1, _denominatorController1),
-            buildOperationDropdown(),
-            buildFractionInput(
-                "Fraction 2", _numeratorController2, _denominatorController2),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: calculate,
-              child: const Text('Calculate'),
-            ),
-            const SizedBox(height: 40),
-            // text, fontSize, fontWeight, color, TextAlign end
-            globalText2(
-                text: "Answer:",
-                fontSize: 20.0,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-                textAlignment: TextAlign.start,
-                alignment: Alignment.centerLeft),
-            const SizedBox(
-              height: 10,
-            ),
-            Visibility(
-                visible: _selectedOperation == '+' ? true : false,
-                child: AddFraction()),
-            Text(
-              'Result without GCD: ${_result.toString()}',
-              style: const TextStyle(fontSize: 18),
-            ),
-            Text(
-              'Result with GCD: ${_result.toStringWithGCD()}',
-              style: const TextStyle(fontSize: 18),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: buildFractionInput("Fraction 1",
+                        _numeratorController1, _numeratorController2),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  buildOperationDropdown(),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: buildFractionInput("Fraction 2",
+                        _denominatorController1, _denominatorController2),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.calculateButtonColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8))),
+                onPressed: calculate,
+                child: globalText20(text: "Calculate"),
+              ),
+              const SizedBox(height: 40),
+              // text, fontSize, fontWeight, color, TextAlign end
+              globalText2(
+                  text: "Answer:",
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  textAlignment: TextAlign.start,
+                  alignment: Alignment.centerLeft),
+              const SizedBox(
+                height: 10,
+              ),
+              Visibility(
+                  visible: ((forAdd == 'add') || (forAdd == 'abstract')) &&
+                          (_numeratorController1.text.isNotEmpty &&
+                              _numeratorController2.text.isNotEmpty &&
+                              _denominatorController1.text.isNotEmpty &&
+                              _denominatorController2.text.isNotEmpty)
+                      ? true
+                      : false,
+                  child: AddFraction()),
+
+              Visibility(
+                visible: ((forAdd == 'multiply') || (forAdd == 'multiply')) &&
+                    (_numeratorController1.text.isNotEmpty &&
+                        _numeratorController2.text.isNotEmpty &&
+                        _denominatorController1.text.isNotEmpty &&
+                        _denominatorController2.text.isNotEmpty),
+                child: MultiplyWidget(),
+              ),
+              Visibility(
+                visible: (forAdd == 'divide') &&
+                    (_numeratorController1.text.isNotEmpty &&
+                        _numeratorController2.text.isNotEmpty &&
+                        _denominatorController1.text.isNotEmpty &&
+                        _denominatorController2.text.isNotEmpty),
+                child: DivideWidget(),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-//
+
   Widget AddFraction() {
     return Column(
       children: [
@@ -175,7 +212,17 @@ class _FractionCalculatorState extends State<FractionCalculator> {
               const SizedBox(
                 width: 10,
               ),
-              Text(_selectedOperation),
+              globalTextSixteen(
+                  text: _selectedOperation == '+' && forAdd == 'add'
+                      ? "+"
+                      : _selectedOperation == '-' && forAdd == 'abstract'
+                          ? "-"
+                          : _selectedOperation == '*' && forAdd == 'multiply'
+                              ? "*"
+                              : _selectedOperation == '÷' &&
+                                      forAdd == 'multiply'
+                                  ? "÷"
+                                  : ''),
               const SizedBox(
                 width: 10,
               ),
@@ -209,7 +256,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(_selectedOperation),
+                    globalTextSixteen(text: _selectedOperation),
                     const SizedBox(
                       width: 10,
                     ),
@@ -234,7 +281,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(_selectedOperation),
+                    globalTextSixteen(text: _selectedOperation),
                     const SizedBox(
                       width: 10,
                     ),
@@ -259,6 +306,183 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                 width: 10,
               ),
               CustomColumn(_result.toString(), _result.toString2()),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 100),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              globalTextSixteen(text: "="),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomColumn(
+                  _result.toStringWithGCD(), _result.toStringWithGCD2()),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget MultiplyWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AnswerWidget(),
+        globalText2(
+            text: "Calculation Step: ",
+            fontSize: 20.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+            textAlignment: TextAlign.start,
+            alignment: Alignment.centerLeft),
+        const SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomColumn(
+                  _numeratorController1.text, _numeratorController2.text),
+              const SizedBox(
+                width: 10,
+              ),
+              globalTextSixteen(text: _selectedOperation),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomColumn(
+                  _denominatorController1.text, _denominatorController2.text),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text('='),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                children: [
+                  CalculationDetailsRow(
+                      _numeratorController1.text, _denominatorController1.text),
+                  SizedBox(
+                    width: 40,
+                    child: Divider(
+                      color: Colors.black,
+                    ),
+                  ),
+                  CalculationDetailsRow(
+                      _numeratorController2.text, _denominatorController2.text),
+                ],
+              ),
+            ],
+          ),
+        ),
+        WithAndWithoutGCDResult()
+        // globalTextSixteen(text: "*"),
+      ],
+    );
+  }
+
+  Widget DivideWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AnswerWidget(),
+        globalText2(
+            text: "Calculation Step: ",
+            fontSize: 20.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+            textAlignment: TextAlign.start,
+            alignment: Alignment.centerLeft),
+        const SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomColumn(
+                  _numeratorController1.text, _numeratorController2.text),
+              const SizedBox(
+                width: 10,
+              ),
+              globalTextSixteen(text: _selectedOperation),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomColumn(
+                  _denominatorController1.text, _denominatorController2.text),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text('='),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                children: [
+                  CalculationDetailsRow(
+                      _numeratorController1.text, _denominatorController2.text),
+                  SizedBox(
+                    width: 40,
+                    child: Divider(
+                      color: Colors.black,
+                    ),
+                  ),
+                  CalculationDetailsRow(
+                      _numeratorController2.text, _denominatorController1.text),
+                ],
+              ),
+            ],
+          ),
+        ),
+        WithAndWithoutGCDResult()
+        // globalTextSixteen(text: "*"),
+      ],
+    );
+  }
+
+  Widget WithAndWithoutGCDResult() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 100),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              globalTextSixteen(text: "="),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomColumn(_result.toString(), _result.toString2()),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 100),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              globalTextSixteen(text: "="),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomColumn(
+                  _result.toStringWithGCD(), _result.toStringWithGCD2()),
             ],
           ),
         )
@@ -290,7 +514,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
         const SizedBox(
           width: 10,
         ),
-        Text(_selectedOperation),
+        globalTextSixteen(text: _selectedOperation),
         const SizedBox(
           width: 10,
         ),
@@ -332,22 +556,46 @@ class _FractionCalculatorState extends State<FractionCalculator> {
       String label,
       TextEditingController numeratorController,
       TextEditingController denominatorController) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Flexible(
+        Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.fractionInputTextBorderColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: TextField(
+            textAlign: TextAlign.center,
             controller: numeratorController,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Numerator'),
+            decoration: const InputDecoration(
+              labelText: '',
+              border: InputBorder.none,
+            ),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
           ),
         ),
-        const Text('/'),
-        Flexible(
+        const SizedBox(
+          height: 3,
+        ),
+        Divider(),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.fractionInputTextBorderColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: TextField(
+            textAlign: TextAlign.center,
             controller: denominatorController,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Denominator'),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+            decoration:
+                const InputDecoration(labelText: '', border: InputBorder.none),
           ),
         ),
       ],
@@ -355,26 +603,34 @@ class _FractionCalculatorState extends State<FractionCalculator> {
   }
 
   Widget buildOperationDropdown() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        const Text('Operation:'),
-        DropdownButton<String>(
+    return DropdownButtonHideUnderline(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        height: 39,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: AppColors.fractionInputTextBorderColor,
+        ),
+        child: DropdownButton<String>(
           value: _selectedOperation,
           onChanged: (String? newValue) {
             setState(() {
               _selectedOperation = newValue!;
             });
           },
-          items: ['+', '-', '*', '/']
+          icon: Icon(Icons.keyboard_arrow_down),
+          items: ['+', '-', '*', '÷', 'of']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: globalText24(text: value),
+              ),
             );
           }).toList(),
         ),
-      ],
+      ),
     );
   }
 
@@ -390,21 +646,25 @@ class _FractionCalculatorState extends State<FractionCalculator> {
     switch (_selectedOperation) {
       case '+':
         setState(() {
+          forAdd = 'add';
           _result = fraction1.add(fraction2);
         });
         break;
       case '-':
         setState(() {
+          forAdd = 'abstract';
           _result = fraction1.subtract(fraction2);
         });
         break;
-      case '*':
+      case '*' || 'of':
         setState(() {
+          forAdd = 'multiply';
           _result = fraction1.multiply(fraction2);
         });
         break;
-      case '/':
+      case '÷':
         setState(() {
+          forAdd = 'divide';
           _result = fraction1.divide(fraction2);
         });
         break;

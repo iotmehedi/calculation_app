@@ -37,11 +37,53 @@ globalTextSixteen({required String text, Alignment? alignment}) {
         maxLines: 2,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
+        style: const TextStyle(
           letterSpacing: 0.2,
           color: Colors.black,
           fontSize: 16.0,
           fontWeight: FontWeight.w600,
+        ),
+      ),
+    ),
+  );
+}
+
+globalText24({required String text, Alignment? alignment}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: SizedBox(
+      child: Text(
+        text,
+        maxLines: 2,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          letterSpacing: 0.2,
+          color: Colors.black,
+          fontSize: 24.0,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+  );
+}
+
+globalText20({required String text, Alignment? alignment}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: SizedBox(
+      child: Center(
+        child: Text(
+          text,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            letterSpacing: 0.2,
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
     ),

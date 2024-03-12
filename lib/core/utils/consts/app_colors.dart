@@ -16,4 +16,6 @@ class AppColors {
   static final Color readMore = HexColor('#2CCAA0');
   static final Color dateColor = HexColor('#E5A5A5');
   static final Color greyForPrefixIcon = HexColor('#80848A');
+  static final Color fractionInputTextBorderColor = HexColor('F3F6F9');
+  static final Color calculateButtonColor = HexColor('244384');
 }
