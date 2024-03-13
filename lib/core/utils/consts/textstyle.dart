@@ -27,6 +27,31 @@ globalText2(
     ),
   );
 }
+globalText1(
+    {required String text,
+    required double fontSize,
+    required FontWeight fontWeight,
+    required Color color,
+    required TextAlign textAlignment,
+    Alignment? alignment}) {
+  return Align(
+    alignment: Alignment.center,
+    child: SizedBox(
+      child: Text(
+        text,
+        // maxLines: 2,
+        textAlign: textAlignment,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          // letterSpacing: 0.2,
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        ),
+      ),
+    ),
+  );
+}
 
 globalTextSixteen({required String text, Alignment? alignment}) {
   return Align(

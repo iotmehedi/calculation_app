@@ -2,9 +2,11 @@
 
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Fraction {
   int numerator;
@@ -76,9 +78,7 @@ class Fraction {
 class FractionCalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: FractionCalculator(),
-    );
+    return FractionCalculator();
   }
 }
 
@@ -95,13 +95,34 @@ class _FractionCalculatorState extends State<FractionCalculator> {
 
   String _selectedOperation = '+';
   Fraction _result = Fraction(0, 1);
-  String forAdd = '';
-  // bool forMultiply = false;
+  var selectedOperator = '';
+  @override
+  void initState() {
+    super.initState();
+    // Load the selected operation from SharedPreferences
+    _loadSelectedOperation();
+  }
+
+  void _loadSelectedOperation() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    selectedOperator =  prefs.getString('selectedOperation') ?? '+';
+  }
+
+  void _saveSelectedOperation(String operation) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('selectedOperation', operation);
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fraction Calculator'),
+leading: IconButton(onPressed: ()async{
+  Navigator.pop(context);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+}, icon: Icon(Icons.arrow_back_ios)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -146,11 +167,12 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                   color: Colors.black,
                   textAlignment: TextAlign.start,
                   alignment: Alignment.centerLeft),
+
               const SizedBox(
                 height: 10,
               ),
               Visibility(
-                  visible: ((forAdd == 'add') || (forAdd == 'abstract')) &&
+                  visible: ((selectedOperator == '+') || (selectedOperator == '-')) &&
                           (_numeratorController1.text.isNotEmpty &&
                               _numeratorController2.text.isNotEmpty &&
                               _denominatorController1.text.isNotEmpty &&
@@ -160,7 +182,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                   child: AddFraction()),
 
               Visibility(
-                visible: ((forAdd == 'multiply') || (forAdd == 'multiply')) &&
+                visible: ((selectedOperator == '*') || (selectedOperator == 'of')) &&
                     (_numeratorController1.text.isNotEmpty &&
                         _numeratorController2.text.isNotEmpty &&
                         _denominatorController1.text.isNotEmpty &&
@@ -168,7 +190,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                 child: MultiplyWidget(),
               ),
               Visibility(
-                visible: (forAdd == 'divide') &&
+                visible: (selectedOperator == '÷') &&
                     (_numeratorController1.text.isNotEmpty &&
                         _numeratorController2.text.isNotEmpty &&
                         _denominatorController1.text.isNotEmpty &&
@@ -213,16 +235,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                 width: 10,
               ),
               globalTextSixteen(
-                  text: _selectedOperation == '+' && forAdd == 'add'
-                      ? "+"
-                      : _selectedOperation == '-' && forAdd == 'abstract'
-                          ? "-"
-                          : _selectedOperation == '*' && forAdd == 'multiply'
-                              ? "*"
-                              : _selectedOperation == '÷' &&
-                                      forAdd == 'multiply'
-                                  ? "÷"
-                                  : ''),
+                  text: selectedOperator.toString()),
               const SizedBox(
                 width: 10,
               ),
@@ -256,7 +269,8 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                     const SizedBox(
                       width: 10,
                     ),
-                    globalTextSixteen(text: _selectedOperation),
+                    globalTextSixteen(
+                        text: selectedOperator.toString()),
                     const SizedBox(
                       width: 10,
                     ),
@@ -276,17 +290,9 @@ class _FractionCalculatorState extends State<FractionCalculator> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CalculationDetailsRow("(${_numeratorController1.text}",
+                    CalculationDetailsRow("(${_numeratorController2.text}",
                         "${_denominatorController2.text})"),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    globalTextSixteen(text: _selectedOperation),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    CalculationDetailsRow("(${_denominatorController1.text}",
-                        "${_numeratorController2.text})"),
+
                   ],
                 )
               ],
@@ -352,7 +358,8 @@ class _FractionCalculatorState extends State<FractionCalculator> {
               const SizedBox(
                 width: 10,
               ),
-              globalTextSixteen(text: _selectedOperation),
+              globalTextSixteen(
+                  text: selectedOperator.toString()),
               const SizedBox(
                 width: 10,
               ),
@@ -413,7 +420,8 @@ class _FractionCalculatorState extends State<FractionCalculator> {
               const SizedBox(
                 width: 10,
               ),
-              globalTextSixteen(text: _selectedOperation),
+              globalTextSixteen(
+                  text: selectedOperator.toString()),
               const SizedBox(
                 width: 10,
               ),
@@ -514,7 +522,8 @@ class _FractionCalculatorState extends State<FractionCalculator> {
         const SizedBox(
           width: 10,
         ),
-        globalTextSixteen(text: _selectedOperation),
+        globalTextSixteen(
+            text: selectedOperator.toString()),
         const SizedBox(
           width: 10,
         ),
@@ -565,10 +574,16 @@ class _FractionCalculatorState extends State<FractionCalculator> {
             color: AppColors.fractionInputTextBorderColor,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: TextField(
+          child: TextFormField(
             textAlign: TextAlign.center,
             controller: numeratorController,
             keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               labelText: '',
               border: InputBorder.none,
@@ -614,6 +629,7 @@ class _FractionCalculatorState extends State<FractionCalculator> {
         child: DropdownButton<String>(
           value: _selectedOperation,
           onChanged: (String? newValue) {
+            _saveSelectedOperation(newValue!);
             setState(() {
               _selectedOperation = newValue!;
             });
@@ -635,39 +651,73 @@ class _FractionCalculatorState extends State<FractionCalculator> {
   }
 
   void calculate() {
-    int numerator1 = int.parse(_numeratorController1.text);
-    int denominator1 = int.parse(_denominatorController1.text);
-    int numerator2 = int.parse(_numeratorController2.text);
-    int denominator2 = int.parse(_denominatorController2.text);
 
-    Fraction fraction1 = Fraction(numerator1, denominator1);
-    Fraction fraction2 = Fraction(numerator2, denominator2);
+   if(_numeratorController1.text.isEmpty && _numeratorController2.text.isEmpty && _denominatorController1.text.isEmpty && _denominatorController2.text.isEmpty){
+     errorToast(context: context, msg: "Enter value");
+   }else if(_numeratorController1.text.isEmpty){
+     print(1);
+errorToast(context: context, msg: "Enter a value in the first writing space");
+    } else if(_numeratorController2.text.isEmpty){
+     print(2);
+errorToast(context: context, msg: "Enter a value in the third writing space");
+    } else if(_denominatorController1.text.isEmpty){
+     print(3);
+errorToast(context: context, msg: "Enter a value in the second writing space");
+    } else if(_denominatorController2.text.isEmpty){
+errorToast(context: context, msg: "Enter a value in the forth writing space");
+    }else{
+     int numerator1 = int.parse(_numeratorController1.text);
+     int denominator1 = int.parse(_denominatorController1.text);
+     int numerator2 = int.parse(_numeratorController2.text);
+     int denominator2 = int.parse(_denominatorController2.text);
+      _loadSelectedOperation();
+      Fraction fraction1 = Fraction(numerator1, denominator1);
+      Fraction fraction2 = Fraction(numerator2, denominator2);
 
-    switch (_selectedOperation) {
-      case '+':
-        setState(() {
-          forAdd = 'add';
-          _result = fraction1.add(fraction2);
-        });
-        break;
-      case '-':
-        setState(() {
-          forAdd = 'abstract';
-          _result = fraction1.subtract(fraction2);
-        });
-        break;
-      case '*' || 'of':
-        setState(() {
-          forAdd = 'multiply';
-          _result = fraction1.multiply(fraction2);
-        });
-        break;
-      case '÷':
-        setState(() {
-          forAdd = 'divide';
-          _result = fraction1.divide(fraction2);
-        });
-        break;
+      switch (_selectedOperation) {
+        case '+':
+
+          setState(() {
+
+            _result = fraction1.add(fraction2);
+            _saveSelectedOperation("+");
+            _loadSelectedOperation();
+          });
+          break;
+        case '-':
+
+          setState(() {
+
+            _result = fraction1.subtract(fraction2);
+            _saveSelectedOperation("-");
+          });
+          break;
+        case '*':
+
+          setState(() {
+
+            _result = fraction1.multiply(fraction2);
+            _saveSelectedOperation("*");
+          });
+          break;
+        case 'of':
+
+          setState(() {
+
+            _result = fraction1.multiply(fraction2);
+            _saveSelectedOperation("of");
+          });
+          break;
+        case '÷':
+
+          setState(() {
+
+            _result = fraction1.divide(fraction2);
+            _saveSelectedOperation("÷");
+          });
+          break;
+      }
     }
+
   }
 }

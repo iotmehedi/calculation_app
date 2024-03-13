@@ -21,12 +21,12 @@ class HomepageWidget extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-          globalText2(
+          globalText1(
             text: text,
             fontSize: 12.0,
             fontWeight: FontWeight.normal,
             color: Colors.black,
-            textAlignment: TextAlign.end,
+            textAlignment: TextAlign.center,
           ),
         ],
       ),
