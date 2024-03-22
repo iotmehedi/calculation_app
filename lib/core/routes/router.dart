@@ -7,6 +7,9 @@ import 'package:calculation_app/screens/view/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
+import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
+
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
       {List arguments = const []}) {
@@ -73,6 +76,14 @@ class RouteGenerator {
       case Routes.fractionCalculator:
         return MaterialPageRoute(
           builder: (context) => FractionCalculatorApp(),
+        );
+        case Routes.percentageCalculator:
+        return MaterialPageRoute(
+          builder: (context) => PercentageCalculator(),
+        );
+        case Routes.bMICalculator:
+        return MaterialPageRoute(
+          builder: (context) => BMICalculator(),
         );
     }
     return null;

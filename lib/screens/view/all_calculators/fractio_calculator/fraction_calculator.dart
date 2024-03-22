@@ -105,24 +105,26 @@ class _FractionCalculatorState extends State<FractionCalculator> {
 
   void _loadSelectedOperation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    selectedOperator =  prefs.getString('selectedOperation') ?? '+';
+    selectedOperator = prefs.getString('selectedOperation') ?? '+';
   }
 
   void _saveSelectedOperation(String operation) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('selectedOperation', operation);
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fraction Calculator'),
-leading: IconButton(onPressed: ()async{
-  Navigator.pop(context);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.clear();
-}, icon: Icon(Icons.arrow_back_ios)),
+        leading: IconButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+            },
+            icon: Icon(Icons.arrow_back_ios)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -156,7 +158,12 @@ leading: IconButton(onPressed: ()async{
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
                 onPressed: calculate,
-                child: globalText20(text: "Calculate"),
+                child: Center(
+                  child: globalText20(
+                      text: "Calculate",
+                      color: Colors.white,
+                      alignment: Alignment.center),
+                ),
               ),
               const SizedBox(height: 40),
               // text, fontSize, fontWeight, color, TextAlign end
@@ -172,7 +179,8 @@ leading: IconButton(onPressed: ()async{
                 height: 10,
               ),
               Visibility(
-                  visible: ((selectedOperator == '+') || (selectedOperator == '-')) &&
+                  visible: ((selectedOperator == '+') ||
+                              (selectedOperator == '-')) &&
                           (_numeratorController1.text.isNotEmpty &&
                               _numeratorController2.text.isNotEmpty &&
                               _denominatorController1.text.isNotEmpty &&
@@ -182,11 +190,12 @@ leading: IconButton(onPressed: ()async{
                   child: AddFraction()),
 
               Visibility(
-                visible: ((selectedOperator == '*') || (selectedOperator == 'of')) &&
-                    (_numeratorController1.text.isNotEmpty &&
-                        _numeratorController2.text.isNotEmpty &&
-                        _denominatorController1.text.isNotEmpty &&
-                        _denominatorController2.text.isNotEmpty),
+                visible:
+                    ((selectedOperator == '*') || (selectedOperator == 'of')) &&
+                        (_numeratorController1.text.isNotEmpty &&
+                            _numeratorController2.text.isNotEmpty &&
+                            _denominatorController1.text.isNotEmpty &&
+                            _denominatorController2.text.isNotEmpty),
                 child: MultiplyWidget(),
               ),
               Visibility(
@@ -234,8 +243,7 @@ leading: IconButton(onPressed: ()async{
               const SizedBox(
                 width: 10,
               ),
-              globalTextSixteen(
-                  text: selectedOperator.toString()),
+              globalTextSixteen(text: selectedOperator.toString()),
               const SizedBox(
                 width: 10,
               ),
@@ -269,8 +277,7 @@ leading: IconButton(onPressed: ()async{
                     const SizedBox(
                       width: 10,
                     ),
-                    globalTextSixteen(
-                        text: selectedOperator.toString()),
+                    globalTextSixteen(text: selectedOperator.toString()),
                     const SizedBox(
                       width: 10,
                     ),
@@ -292,7 +299,6 @@ leading: IconButton(onPressed: ()async{
                   children: [
                     CalculationDetailsRow("(${_numeratorController2.text}",
                         "${_denominatorController2.text})"),
-
                   ],
                 )
               ],
@@ -358,8 +364,7 @@ leading: IconButton(onPressed: ()async{
               const SizedBox(
                 width: 10,
               ),
-              globalTextSixteen(
-                  text: selectedOperator.toString()),
+              globalTextSixteen(text: selectedOperator.toString()),
               const SizedBox(
                 width: 10,
               ),
@@ -420,8 +425,7 @@ leading: IconButton(onPressed: ()async{
               const SizedBox(
                 width: 10,
               ),
-              globalTextSixteen(
-                  text: selectedOperator.toString()),
+              globalTextSixteen(text: selectedOperator.toString()),
               const SizedBox(
                 width: 10,
               ),
@@ -522,8 +526,7 @@ leading: IconButton(onPressed: ()async{
         const SizedBox(
           width: 10,
         ),
-        globalTextSixteen(
-            text: selectedOperator.toString()),
+        globalTextSixteen(text: selectedOperator.toString()),
         const SizedBox(
           width: 10,
         ),
@@ -627,7 +630,9 @@ leading: IconButton(onPressed: ()async{
           color: AppColors.fractionInputTextBorderColor,
         ),
         child: DropdownButton<String>(
+          isDense: true,
           value: _selectedOperation,
+          alignment: Alignment.center,
           onChanged: (String? newValue) {
             _saveSelectedOperation(newValue!);
             setState(() {
@@ -640,7 +645,7 @@ leading: IconButton(onPressed: ()async{
             return DropdownMenuItem<String>(
               value: value,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: globalText24(text: value),
               ),
             );
@@ -651,73 +656,68 @@ leading: IconButton(onPressed: ()async{
   }
 
   void calculate() {
-
-   if(_numeratorController1.text.isEmpty && _numeratorController2.text.isEmpty && _denominatorController1.text.isEmpty && _denominatorController2.text.isEmpty){
-     errorToast(context: context, msg: "Enter value");
-   }else if(_numeratorController1.text.isEmpty){
-     print(1);
-errorToast(context: context, msg: "Enter a value in the first writing space");
-    } else if(_numeratorController2.text.isEmpty){
-     print(2);
-errorToast(context: context, msg: "Enter a value in the third writing space");
-    } else if(_denominatorController1.text.isEmpty){
-     print(3);
-errorToast(context: context, msg: "Enter a value in the second writing space");
-    } else if(_denominatorController2.text.isEmpty){
-errorToast(context: context, msg: "Enter a value in the forth writing space");
-    }else{
-     int numerator1 = int.parse(_numeratorController1.text);
-     int denominator1 = int.parse(_denominatorController1.text);
-     int numerator2 = int.parse(_numeratorController2.text);
-     int denominator2 = int.parse(_denominatorController2.text);
+    if (_numeratorController1.text.isEmpty &&
+        _numeratorController2.text.isEmpty &&
+        _denominatorController1.text.isEmpty &&
+        _denominatorController2.text.isEmpty) {
+      errorToast(context: context, msg: "Enter value");
+    } else if (_numeratorController1.text.isEmpty) {
+      print(1);
+      errorToast(
+          context: context, msg: "Enter a value in the first writing space");
+    } else if (_numeratorController2.text.isEmpty) {
+      print(2);
+      errorToast(
+          context: context, msg: "Enter a value in the third writing space");
+    } else if (_denominatorController1.text.isEmpty) {
+      print(3);
+      errorToast(
+          context: context, msg: "Enter a value in the second writing space");
+    } else if (_denominatorController2.text.isEmpty) {
+      errorToast(
+          context: context, msg: "Enter a value in the forth writing space");
+    } else {
+      int numerator1 = int.parse(_numeratorController1.text);
+      int denominator1 = int.parse(_denominatorController1.text);
+      int numerator2 = int.parse(_numeratorController2.text);
+      int denominator2 = int.parse(_denominatorController2.text);
       _loadSelectedOperation();
       Fraction fraction1 = Fraction(numerator1, denominator1);
       Fraction fraction2 = Fraction(numerator2, denominator2);
 
       switch (_selectedOperation) {
         case '+':
-
           setState(() {
-
             _result = fraction1.add(fraction2);
             _saveSelectedOperation("+");
             _loadSelectedOperation();
           });
           break;
         case '-':
-
           setState(() {
-
             _result = fraction1.subtract(fraction2);
             _saveSelectedOperation("-");
           });
           break;
         case '*':
-
           setState(() {
-
             _result = fraction1.multiply(fraction2);
             _saveSelectedOperation("*");
           });
           break;
         case 'of':
-
           setState(() {
-
             _result = fraction1.multiply(fraction2);
             _saveSelectedOperation("of");
           });
           break;
         case '÷':
-
           setState(() {
-
             _result = fraction1.divide(fraction2);
             _saveSelectedOperation("÷");
           });
           break;
       }
     }
-
   }
 }

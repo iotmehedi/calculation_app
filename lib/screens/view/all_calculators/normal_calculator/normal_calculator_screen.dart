@@ -23,11 +23,24 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
   String doesContainDecimal(dynamic result) {
     if (result.toString().contains('.')) {
       List<String> splitDecimal = result.toString().split('.');
-      if (!(int.parse(splitDecimal[1]) > 0))
-        return result = splitDecimal[0].toString();
+      // Check if the decimal part is non-zero or the integer part is non-zero
+      if (int.parse(splitDecimal[1]) > 0 || int.parse(splitDecimal[0]) > 0) {
+        // If either part is non-zero, return result as is
+        return result.toString();
+      } else {
+        // If both parts are zero, return '0'
+        return '0';
+      }
+    } else if (result.toString() == '.') {
+      // If the result is just a decimal point, return '0'
+      return '0';
     }
-    return result;
+    return result.toString();
   }
+
+
+
+
 
   buttonPress(String buttonText) {
     setState(() {
@@ -94,9 +107,20 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
         if (equation == '0') {
           equation = buttonText;
         } else {
-          equation = equation + buttonText;
+          // Handle the case when a decimal point is entered as the first character
+          if (buttonText == '.') {
+            // Check if the equation already contains a decimal point
+            if (!equation.contains('.')) {
+              equation += buttonText; // Add the decimal point
+            }
+          } else {
+            equation += buttonText;
+          }
         }
+        // Adjust equation to remove unnecessary decimal points
+        // equation = doesContainDecimal(equation);
       }
+
     });
   }
 
@@ -158,7 +182,7 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
                       child: Text(
-                        result,
+                        result.replaceAll(".0", '').replaceAll(".00", ''),
                         maxLines: 3,
                         style: TextStyle(fontSize: resultFontSize),
                       ),

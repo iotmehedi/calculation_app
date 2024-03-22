@@ -155,7 +155,8 @@ class HomepageScreen extends StatelessWidget {
                     images: AppAssets.bmi,
                     text: "BMI\nCalculator",
                     onPress: () {
-                      print("this is");
+                      RouteGenerator.pushNamed(context, Routes.bMICalculator);
+
                     },
                   ),
                 ),
@@ -247,7 +248,9 @@ class HomepageScreen extends StatelessWidget {
                   child: HomepageWidget(
                     images: AppAssets.percentage,
                     text: "Percentage\nCalculator",
-                    onPress: () {},
+                    onPress: () {
+                      RouteGenerator.pushNamed(context, Routes.percentageCalculator);
+                    },
                   ),
                 ),
                 Expanded(

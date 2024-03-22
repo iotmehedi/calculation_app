@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hexcolor/src/hexcolor_base.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;
@@ -60,6 +61,12 @@ class CustomSimpleTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Color? prefixIconColor;
+  final bool? paddingNeed;
+  final TextAlign? textAlign;
+  final FontWeight? fontWeight;
+  final double? fontSize;
+  final MaterialColor? color;
+  final HexColor? hexColor;
   const CustomSimpleTextField({
     super.key,
     this.hint,
@@ -69,23 +76,43 @@ class CustomSimpleTextField extends StatelessWidget {
     this.textInputType,
     this.textInputAction,
     this.prefixIconColor,
+    this.paddingNeed,
+    this.textAlign,
+    this.fontWeight,
+    this.fontSize,
+    this.color,
+    this.hexColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: textInputType,
-      textInputAction: textInputAction,
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: hint,
-        border: InputBorder.none,
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: prefixIcon,
-        ),
-      prefixIconColor: prefixIconColor,
-        suffixIcon: suffixIcon,
+    return Container(
+      decoration: BoxDecoration(
+          color: HexColor("#F3F6F9"), borderRadius: BorderRadius.circular(12)),
+      child: TextFormField(
+        keyboardType: textInputType,
+        textInputAction: textInputAction,
+        textAlign: textAlign ?? TextAlign.start,
+        controller: controller,
+        style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color ?? hexColor),
+        decoration: paddingNeed == false
+            ? InputDecoration(
+                hintText: hint,
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.only(right: 10))
+            : InputDecoration(
+                hintText: hint,
+                border: InputBorder.none,
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: prefixIcon,
+                ),
+                prefixIconColor: prefixIconColor,
+                suffixIcon: suffixIcon,
+              ),
       ),
     );
   }
