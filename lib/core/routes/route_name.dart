@@ -7,4 +7,5 @@ class Routes {
   static const fractionCalculator = "/fractionCalculator";
   static const percentageCalculator = "/percentageCalculator";
   static const bMICalculator = "/bMICalculator";
+  static const resultScreen = "/ResultScrren";
 }

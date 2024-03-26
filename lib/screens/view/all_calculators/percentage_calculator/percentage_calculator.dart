@@ -1,4 +1,5 @@
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -26,13 +27,12 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: globalText20(
-            text: "Percentage",
-            alignment: Alignment.center,
-            fontWeight: FontWeight.w700),
-      ),
+            appBar: CustomAppBar(
+    title: 'Percentage',
+    onBackPressed: () {
+      Navigator.pop(context);
+    },
+  ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(

@@ -19,7 +19,7 @@ globalText2(
         maxLines: 2,
         textAlign: textAlignment,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
+        style: GoogleFonts.poppins(
           letterSpacing: 0.2,
           color: color,
           fontSize: fontSize,
@@ -45,7 +45,7 @@ globalText1(
         // maxLines: 2,
         textAlign: textAlignment,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
+        style: GoogleFonts.poppins(
           // letterSpacing: 0.2,
           color: color,
           fontSize: fontSize,
@@ -80,16 +80,16 @@ globalTextSixteen(
   );
 }
 
-globalText24({required String text, Alignment? alignment}) {
+globalText24({required String text, Alignment? alignment, Color?color}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: SizedBox(
       child: Text(
         text,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(
+        style:  GoogleFonts.poppins(
           letterSpacing: 0.2,
-          color: Colors.black,
+          color: color ?? Colors.black,
           fontSize: 24.0,
           fontWeight: FontWeight.w700,
         ),
@@ -186,4 +186,56 @@ globalText14(
       ),
     ),
   );
+}
+globalText16(
+    {required String text,
+    Alignment? alignment,
+    Color? color,
+    HexColor? hexColor, FontWeight? fontWeight}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: Text(
+      text,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.poppins(
+        letterSpacing: 0.2,
+        color: color ?? hexColor,
+        fontSize: 16.0,
+        fontWeight: fontWeight ?? FontWeight.w700,
+      ),
+    ),
+  );
+}
+globalText28(
+    {required String text,
+    Alignment? alignment,
+    Color? color,
+    HexColor? hexColor, FontWeight? fontWeight}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: Text(
+      text,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.poppins(
+        letterSpacing: 0.2,
+        color: color ?? hexColor,
+        fontSize: 28.0,
+        fontWeight: fontWeight ?? FontWeight.w700,
+      ),
+    ),
+  );
+}
+
+
+globalTextStyle(){
+  return GoogleFonts.poppins(
+        letterSpacing: 0.2,
+        color: HexColor('80848A'),
+        fontSize: 16.0,
+        fontWeight:  FontWeight.normal,
+      );
 }

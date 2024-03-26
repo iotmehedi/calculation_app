@@ -2,6 +2,7 @@
 
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -116,15 +117,13 @@ class _FractionCalculatorState extends State<FractionCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fraction Calculator'),
-        leading: IconButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.clear();
-            },
-            icon: Icon(Icons.arrow_back_ios)),
+      appBar: CustomAppBar(
+        title: 'Fraction Calculator',
+        onBackPressed: () async {
+          Navigator.pop(context);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.clear();
+        },
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

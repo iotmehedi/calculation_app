@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/src/hexcolor_base.dart';
@@ -98,11 +99,13 @@ class CustomSimpleTextField extends StatelessWidget {
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color ?? hexColor),
+        
         decoration: paddingNeed == false
             ? InputDecoration(
                 hintText: hint,
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.only(right: 10))
+                hintStyle: globalTextStyle(),
+                contentPadding: const EdgeInsets.only(right: 10, left: 10))
             : InputDecoration(
                 hintText: hint,
                 border: InputBorder.none,

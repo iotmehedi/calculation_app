@@ -1,11 +1,10 @@
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/Colors.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 class NormalCalculatorScreen extends StatefulWidget {
   // const NormalCalculatorScreen({Key? key}) : super(key: key);
@@ -152,7 +151,12 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Simple Calculator')),
+            appBar: CustomAppBar(
+    title: 'Simple Calculator',
+    onBackPressed: () {
+      Navigator.pop(context);
+    },
+  ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
