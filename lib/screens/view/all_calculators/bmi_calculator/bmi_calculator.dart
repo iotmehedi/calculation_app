@@ -286,7 +286,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
@@ -306,6 +306,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               Text('Male'),
             ],
           ),
+           const SizedBox(width: 10,),
           Row(
             children: <Widget>[
               SquareCheckBox(
@@ -324,24 +325,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               Text('Female'),
             ],
           ),
-          Row(
-            children: <Widget>[
-              SquareCheckBox(
-                value: otherChecked,
-                onChanged: (value) {
-                  setState(() {
-                    otherChecked = value!;
-                    if (value) {
-                      maleChecked = false;
-                      femaleChecked = false;
-                    }
-                  });
-                },
-              ),
-              SizedBox(width: 8),
-              Text('Other'),
-            ],
-          ),
+
         ],
       ),
     );

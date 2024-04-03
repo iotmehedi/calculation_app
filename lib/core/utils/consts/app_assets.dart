@@ -25,4 +25,5 @@ class AppAssets {
   static const String sip = 'assets/sip_cal.png';
   static const String stocks = 'assets/stocks_cal.png';
   static const String fractionCalculator = 'assets/fraction_image.png';
+  static const String brmCalculationPic = 'assets/brm_calculator_result_pic.png';
 }

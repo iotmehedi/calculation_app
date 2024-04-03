@@ -140,8 +140,9 @@ class ResultScrren extends StatelessWidget {
                           child: CustomRichText(
                             heading: 'BMI = ${bmiresult.toStringAsFixed(1)} ',
                             title: bmiValueName,
-                            fontSize: 27.0,
-                            color: bmiresult < 18.5
+                            headingFontSize: 27.0,
+                            titleFontSIze: 27.0,
+                            titleTextColor: bmiresult < 18.5
                                   ? HexColor('EE3838')
                                   : bmiresult >= 18.5 && bmiresult < 24.9
                                       ? HexColor('21BB30')
@@ -206,24 +207,24 @@ class ResultScrren extends StatelessWidget {
                     CustomRichText(
                       heading: 'Less than 18.5 = ',
                       title: 'Underweight',
-                      color: HexColor('EE3838'),
+                      titleTextColor: HexColor('EE3838'),
                     ),
                     const SizedBox(height: 10,),
                     CustomRichText(
                         heading: 'Between 18.5 - 24.9 = ',
                         title: 'Healthy Normal',
-                        color: HexColor('21BB30')),
+                        titleTextColor: HexColor('21BB30')),
                         const SizedBox(height: 10,),
                     CustomRichText(
                       heading: 'Between 25 - 29.9 = ',
                       title: 'Overweight',
-                      color: HexColor('F2BC67'),
+                      titleTextColor: HexColor('F2BC67'),
                     ),
                     const SizedBox(height: 10,),
                     CustomRichText(
                       heading: 'Over 30 =',
                       title: 'Obese',
-                      color: HexColor('F04E71'),
+                      titleTextColor: HexColor('F04E71'),
                     ),
                   ],
                 ),

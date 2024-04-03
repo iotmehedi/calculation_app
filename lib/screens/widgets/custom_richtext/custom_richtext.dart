@@ -4,9 +4,9 @@ import 'package:hexcolor/src/hexcolor_base.dart';
 
 class CustomRichText extends StatelessWidget {
   final String title, heading;
-  final HexColor color;
-  final double? fontSize;
-  const CustomRichText({super.key, required this.title, required this.color, required this.heading, this.fontSize});
+  final HexColor? titleTextColor, headingTextColor;
+  final double? headingFontSize, titleFontSIze;
+  const CustomRichText({super.key, required this.title, required this.titleTextColor, required this.heading, this.headingFontSize, this.headingTextColor,this.titleFontSIze});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +15,14 @@ class CustomRichText extends StatelessWidget {
     text: heading,
     style: GoogleFonts.poppins(
       fontWeight: FontWeight.w600,
-      fontSize: fontSize ?? 16,
-      color: Colors.black
+      fontSize: headingFontSize ?? 16,
+      color: headingTextColor ?? Colors.black
     ),
     children:  <TextSpan>[
       TextSpan(text: title, style: GoogleFonts.poppins(
       fontWeight: FontWeight.w600,
-      fontSize: fontSize ?? 16,
-      color: color
+      fontSize: titleFontSIze ?? 16,
+      color: titleTextColor ?? Colors.black
     ),),
     ],
   ),

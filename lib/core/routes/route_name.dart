@@ -8,4 +8,6 @@ class Routes {
   static const percentageCalculator = "/percentageCalculator";
   static const bMICalculator = "/bMICalculator";
   static const resultScreen = "/ResultScrren";
+  static const bMRCalculator = "/BMRCalculator";
+  static const bRMResultScreen = "/BRMResultScreen";
 }

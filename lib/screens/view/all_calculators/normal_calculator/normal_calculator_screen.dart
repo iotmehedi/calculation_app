@@ -1,4 +1,5 @@
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -36,9 +37,6 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
     }
     return result.toString();
   }
-
-
-
 
 
   buttonPress(String buttonText) {
@@ -163,9 +161,9 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            color: AssetColor.containerColor,
-            height: 170,
+          Expanded(
+            // color: AssetColor.containerColor,
+            // height: 170,
             child: SingleChildScrollView(
               reverse: true,
               child: Center(
@@ -178,8 +176,8 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
                       padding: EdgeInsets.fromLTRB(10, 0, 20, 0),
                       child: Text(
                         equation,
-                        maxLines: 3,
-                        style: TextStyle(fontSize: equationFontSize),
+                        // maxLines: 4,
+                        style: TextStyle(fontSize: equation.length >= 65 ? 12 : 30),
                       ),
                     ),
                     Container(
@@ -187,7 +185,7 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
                       padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
                       child: Text(
                         result.replaceAll(".0", '').replaceAll(".00", ''),
-                        maxLines: 3,
+                        // maxLines: 3,
                         style: TextStyle(fontSize: resultFontSize),
                       ),
                     ),
@@ -199,92 +197,94 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildButton("C", 1, AssetColor.firstThreeButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                      buildButton("+/-", 1, AssetColor.firstThreeButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                      buildButton("%", 1, AssetColor.firstThreeButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                      buildButton("÷", 1, AssetColor.calculationButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                    ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildButton("7", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("8", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("9", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("×", 1, AssetColor.calculationButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                    ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildButton("4", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("5", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("6", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("-", 1, AssetColor.calculationButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                    ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildButton("1", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("2", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("3", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("+", 1, AssetColor.calculationButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                    ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildButton("00", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("0", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton(".", 1, AssetColor.digitsColor,
-                          AssetColor.digitsTextColor),
-                      buildButton("=", 1, AssetColor.calculationButtonColor,
-                          Colors.white,
-                          calculationButtons: true),
-                    ]),
-              ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildButton("C", 1, AssetColor.firstThreeButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                        buildButton("+/-", 1, AssetColor.firstThreeButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                        buildButton("%", 1, AssetColor.firstThreeButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                        buildButton("÷", 1, AssetColor.calculationButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                      ]),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildButton("7", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("8", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("9", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("×", 1, AssetColor.calculationButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                      ]),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildButton("4", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("5", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("6", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("-", 1, AssetColor.calculationButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                      ]),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildButton("1", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("2", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("3", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("+", 1, AssetColor.calculationButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                      ]),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildButton("⌫", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("0", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton(".", 1, AssetColor.digitsColor,
+                            AssetColor.digitsTextColor),
+                        buildButton("=", 1, AssetColor.calculationButtonColor,
+                            Colors.white,
+                            calculationButtons: true),
+                      ]),
+                ],
+              ),
             ),
           )
         ],

@@ -1,5 +1,7 @@
 import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/screens/view/all_calculators/bmi_calculator/result_page.dart';
+import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_calculator.dart';
+import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/fractio_calculator/fraction_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/normal_calculator_screen.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
@@ -94,6 +96,22 @@ class RouteGenerator {
             bmiresult: arguments[0] as double,
             progressValue: arguments[1] as double,
             bmiValueName: arguments[2] as String,
+          ),
+        );
+        }
+        case Routes.bRMResultScreen:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+          builder: (context) => BRMResultScreen(
+            bmiresult: arguments[0] as double,
+          ),
+        );
+        }
+        case Routes.bMRCalculator:
+        {
+          return MaterialPageRoute(
+          builder: (context) => BmrCalculator(
           ),
         );
         }
