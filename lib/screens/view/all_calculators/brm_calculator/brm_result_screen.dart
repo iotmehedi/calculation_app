@@ -36,8 +36,6 @@ class BRMResultScreen extends StatelessWidget {
                 ],
                 stops: [
                   0.0,
-                  // 0.55,
-                  // 0.70,
                   1.0,
                 ],
               ),
@@ -82,39 +80,87 @@ class BRMResultScreen extends StatelessWidget {
                 )
               ],
             ),
-          )
-        
-        ,const SizedBox(height: 30,),
-
-        Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                height: 64,
-                color: HexColor("247C2C"),
-                child: Padding(padding: const EdgeInsets.only(left: 10),
-                child: globalText16(text: "Activity Level", color: Colors.white),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  height: 64,
+                  color: HexColor("247C2C"),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: globalText16(
+                        text: "Activity Level", color: Colors.white),
+                  ),
                 ),
               ),
-              
-            ),
-            const SizedBox(width: 1.5,),
-            Expanded(
-              child: Container(
-                height: 64,
-                color: HexColor("247C2C"),
-                child: Center(
-                  child: globalText16(text: "Calorie", color: Colors.white, alignment: Alignment.center),
+              const SizedBox(
+                width: 1.5,
+              ),
+              Expanded(
+                child: Container(
+                  height: 64,
+                  color: HexColor("247C2C"),
+                  child: Center(
+                    child: globalText16(
+                        text: "Calorie",
+                        color: Colors.white,
+                        alignment: Alignment.center),
+                  ),
                 ),
               ),
-            ),
-          ],
-        )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomRow(title: "Sedentary: little or no exercise", value: "1,926"),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomRow(title: "Exercise 1-3 times/week", value: "2,207"),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomRow(title: "Exercise 4-5 times/week", value: "2,351"),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomRow(title: "Daily exercise 6-7 times/week", value: "2,769"),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomRow(
+              title: "Daily  Hard exercise 6-7 times/week", value: "3,050"),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );
   }
+}
+
+Widget CustomRow({required String title, required String value}) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10),
+    child: Row(
+      children: [
+        Expanded(
+            flex: 3,
+            child: globalText16(text: title, fontWeight: FontWeight.w500)),
+        Expanded(
+            child: globalText16(
+                text: value,
+                alignment: Alignment.center,
+                fontWeight: FontWeight.w700)),
+      ],
+    ),
+  );
 }
 
 class TriangleIndicator extends StatelessWidget {
