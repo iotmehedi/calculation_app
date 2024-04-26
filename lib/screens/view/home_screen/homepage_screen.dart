@@ -17,14 +17,14 @@ class HomepageScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
               child: Text(
                 "Finance Type Calculator",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -61,7 +61,7 @@ class HomepageScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -98,7 +98,7 @@ class HomepageScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -135,17 +135,17 @@ class HomepageScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
               child: Text(
                 "Health Calculator",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -165,7 +165,7 @@ class HomepageScreen extends StatelessWidget {
                     images: AppAssets.calories,
                     text: "Calories\nCalculator",
                     onPress: () {
-                      
+                       RouteGenerator.pushNamed(context, Routes.calorieCalculatorApp);
                     },
                   ),
                 ),
@@ -182,12 +182,14 @@ class HomepageScreen extends StatelessWidget {
                   child: HomepageWidget(
                     images: AppAssets.bodyFat,
                     text: "Body Fat\nCalculator",
-                    onPress: () {},
+                    onPress: () {
+                       RouteGenerator.pushNamed(context, Routes.bodyFatCalculator);
+                    },
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -224,17 +226,17 @@ class HomepageScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
               child: Text(
                 "Math Type Calculator",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
