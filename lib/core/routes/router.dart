@@ -4,6 +4,7 @@ import 'package:calculation_app/screens/view/all_calculators/body_fat_calculator
 import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
+import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_resultpage.dart';
 import 'package:calculation_app/screens/view/all_calculators/fractio_calculator/fraction_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/normal_calculator_screen.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
@@ -82,56 +83,64 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => FractionCalculatorApp(),
         );
-        case Routes.percentageCalculator:
+      case Routes.percentageCalculator:
         return MaterialPageRoute(
           builder: (context) => PercentageCalculator(),
         );
-        case Routes.bMICalculator:
+      case Routes.bMICalculator:
         return MaterialPageRoute(
           builder: (context) => BMICalculatorScreen(),
         );
-        case Routes.resultScreen:
+      case Routes.resultScreen:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-          builder: (context) => ResultScrren(
-            bmiresult: arguments[0] as double,
-            progressValue: arguments[1] as double,
-            bmiValueName: arguments[2] as String,
-          ),
-        );
+            builder: (context) => ResultScrren(
+              bmiresult: arguments[0] as double,
+              progressValue: arguments[1] as double,
+              bmiValueName: arguments[2] as String,
+            ),
+          );
         }
-        case Routes.bRMResultScreen:
+      case Routes.bRMResultScreen:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-          builder: (context) => BRMResultScreen(
-            bmiresult: arguments[0] as double,
-          ),
-        );
+            builder: (context) => BRMResultScreen(
+              bmiresult: arguments[0] as double,
+            ),
+          );
         }
-        case Routes.bMRCalculator:
+      case Routes.bMRCalculator:
         {
           return MaterialPageRoute(
-          builder: (context) => BmrCalculator(
-          ),
-        );
+            builder: (context) => BmrCalculator(),
+          );
         }
-        case Routes.calorieCalculatorApp:
+      case Routes.calorieCalculatorApp:
         {
           return MaterialPageRoute(
-          builder: (context) => CalorieCalculatorApp(
-          ),
-        );
+            builder: (context) => CalorieCalculatorScreen(),
+          );
         }
-        case Routes.bodyFatCalculator:
+      case Routes.calorieResultScreen:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => CalorieResultScrren(
+              maintainWeight: arguments[0] as int,
+              mildWeightLoss: arguments[1] as int,
+              weightLoss: arguments[2] as int,
+              extremeWeightLoss: arguments[3] as int,
+            ),
+          );
+        }
+      case Routes.bodyFatCalculator:
         {
           return MaterialPageRoute(
-          builder: (context) => BodyFatCalculator(
-          ),
-        );
+            builder: (context) => BodyFatCalculator(),
+          );
         }
-        
     }
     return null;
   }

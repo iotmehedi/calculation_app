@@ -18,4 +18,6 @@ class AppColors {
   static final Color greyForPrefixIcon = HexColor('#80848A');
   static final Color fractionInputTextBorderColor = HexColor('F3F6F9');
   static final HexColor calculateButtonColor = HexColor('244384');
+  static final HexColor unselectButtonTextColor = HexColor('0F182E');
+  static final HexColor unselectButtonColor = HexColor('EEF2F6');
 }

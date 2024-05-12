@@ -12,4 +12,5 @@ class Routes {
   static const bRMResultScreen = "/BRMResultScreen";
   static const calorieCalculatorApp = "/CalorieCalculatorApp";
   static const bodyFatCalculator = "/BodyFatCalculator";
+  static const calorieResultScreen = "/CaloriResultScreen";
 }

@@ -142,6 +142,10 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               const SizedBox(
                 height: 20,
               ),
+              CheckBox(),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
                   Expanded(
@@ -168,10 +172,6 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                   Expanded(child: SizedBox())
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              CheckBox(),
               const SizedBox(
                 height: 20,
               ),
@@ -286,7 +286,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(
             children: <Widget>[
@@ -306,7 +306,9 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               Text('Male'),
             ],
           ),
-           const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Row(
             children: <Widget>[
               SquareCheckBox(
@@ -325,7 +327,6 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               Text('Female'),
             ],
           ),
-
         ],
       ),
     );
