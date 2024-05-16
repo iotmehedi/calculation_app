@@ -13,4 +13,5 @@ class Routes {
   static const calorieCalculatorApp = "/CalorieCalculatorApp";
   static const bodyFatCalculator = "/BodyFatCalculator";
   static const calorieResultScreen = "/CaloriResultScreen";
+  static const bodyfatResultScreen = "/bodyfatResultScreen";
 }

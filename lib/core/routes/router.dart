@@ -1,6 +1,7 @@
 import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/screens/view/all_calculators/bmi_calculator/result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/body_fat_calculator/body_fat_calculator.dart';
+import 'package:calculation_app/screens/view/all_calculators/body_fat_calculator/bodyfata_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
@@ -139,6 +140,15 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => BodyFatCalculator(),
+          );
+        }
+      case Routes.bodyfatResultScreen:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => BodyfatResultScreen(
+              maintainWeight: arguments[0] as String,
+            ),
           );
         }
     }

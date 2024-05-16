@@ -1,4 +1,15 @@
+import 'package:calculation_app/core/routes/route_name.dart';
+import 'package:calculation_app/core/routes/router.dart';
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
+import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
+import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_eleveted_button.dart';
+import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
+
+import 'package:hexcolor/hexcolor.dart';
 
 class BodyFatCalculator extends StatefulWidget {
   @override
@@ -9,34 +20,66 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   TextEditingController weightController = TextEditingController();
   TextEditingController heightFeetController = TextEditingController();
   TextEditingController heightInchesController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
   TextEditingController neckController = TextEditingController();
   TextEditingController waistController = TextEditingController();
   TextEditingController hipController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   String gender = 'Male';
   double result = 0.0;
-
+  bool isUSCUnit = true;
+  String? type = 'usUnit';
+  Gender selectedGender = Gender.male;
   void calculateBodyFat() {
     if (_validateInputs()) {
-      double weightInKg = double.tryParse(weightController.text) ?? 0;
-      if (weightInKg <= 0) {
+      double weight = double.tryParse(weightController.text) ?? 0;
+      if (weight <= 0) {
         _showErrorDialog('Invalid weight');
         return;
       }
-      int heightFeet = int.tryParse(heightFeetController.text) ?? 0;
-      int heightInches = int.tryParse(heightInchesController.text) ?? 0;
-      int age = int.tryParse(ageController.text) ?? 0;
+      double heightFeet = double.tryParse(heightFeetController.text) ?? 0;
+      double heightInches = double.tryParse(heightInchesController.text) ?? 0;
+      double age = double.tryParse(ageController.text) ?? 0;
       double neck = double.tryParse(neckController.text) ?? 0;
       double waist = double.tryParse(waistController.text) ?? 0;
       double hip = double.tryParse(hipController.text) ?? 0;
 
-      // Example calculation (use a formula appropriate for your application)
-      double bodyFatPercentage = 0.0;
+      // Convert height to inches
+      double height = (heightFeet * 12) + heightInches;
 
+      // Convert to metric if necessary
+      if (!isUSCUnit) {
+        weight *= 0.453592; // pounds to kg
+        height *= 2.54; // inches to cm
+        neck *= 2.54; // inches to cm
+        waist *= 2.54; // inches to cm
+        hip *= 2.54; // inches to cm
+      }
+
+      // Calculate body fat percentage
+      double bodyFatPercentage = 0.0;
       if (gender == 'Male') {
-        bodyFatPercentage = (86.010 * (waist - neck) / weightInKg - 70.041 * heightFeet - 0.334 * age) + 36.76;
+        if (isUSCUnit) {
+          bodyFatPercentage =
+              (86.010 * log10(waist - neck)) - (70.041 * log10(height)) + 36.76;
+        } else {
+          bodyFatPercentage = (495 /
+                  (1.0324 -
+                      (0.19077 * log10(waist - neck)) +
+                      (0.15456 * log10(height))) -
+              450);
+        }
       } else {
-        bodyFatPercentage = (163.205 * (waist + hip - neck) / weightInKg - 97.684 * heightFeet - 78.387 * heightInches - 76.76);
+        if (isUSCUnit) {
+          bodyFatPercentage = (163.205 * log10(waist + hip - neck)) -
+              (97.684 * log10(height)) -
+              78.387;
+        } else {
+          bodyFatPercentage = (495 /
+                  (1.29579 -
+                      (0.35004 * log10(waist + hip - neck)) +
+                      (0.22100 * log10(height))) -
+              450);
+        }
       }
 
       setState(() {
@@ -45,13 +88,17 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
     }
   }
 
+  double log10(num value) {
+    return log(value) / log(10);
+  }
+
   bool _validateInputs() {
     if (weightController.text.isEmpty ||
         heightFeetController.text.isEmpty ||
         heightInchesController.text.isEmpty ||
-        ageController.text.isEmpty ||
         neckController.text.isEmpty ||
         waistController.text.isEmpty ||
+        ageController.text.isEmpty ||
         (gender == 'Female' && hipController.text.isEmpty)) {
       _showErrorDialog('Missing Information');
       return false;
@@ -87,100 +134,330 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            DropdownButton<String>(
-              value: gender,
-              onChanged: ( newValue) {
-                setState(() {
-                  gender = newValue!;
-                });
-              },
-              items: <String>['Male', 'Female'].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            TextFormField(
-              controller: weightController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(labelText: 'Weight (kg)'),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: heightFeetController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: 'Height (feet)'),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: TextFormField(
-                    controller: heightInchesController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: 'Height (inches)'),
-                  ),
-                ),
-              ],
-            ),
-            if (gender == 'Female')
-              TextFormField(
-                controller: hipController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Hip (inches)'),
-              ),
-            TextFormField(
-              controller: neckController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Neck (inches)'),
-            ),
-            TextFormField(
-              controller: waistController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Waist (inches)'),
-            ),
-            TextFormField(
-              controller: ageController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Age'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: calculateBodyFat,
-              child: Text('Calculate'),
-            ),
-            SizedBox(height: 20),
-            if (result != 0.0)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
                 children: [
-                  Text(
-                    'Body Fat:',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Expanded(
+                      child: CustomElevatedButton(
+                    text: globalText20(
+                        text: 'Us Unit',
+                        color: type != 'usUnit' && (type?.isNotEmpty ?? false)
+                            ? HexColor('0F182E')
+                            : Colors.white,
+                        alignment: Alignment.center,
+                        fontWeight: FontWeight.normal),
+                    color: type == 'usUnit' && (type?.isNotEmpty ?? false)
+                        ? AppColors.calculateButtonColor
+                        : HexColor('EEF2F6'),
+                    onPress: () {
+                      setState(() {
+                        type = "usUnit";
+                        ageController.text = '';
+                        heightFeetController.text = '';
+                        heightInchesController.text = '';
+                        weightController.text = '';
+                        neckController.text = '';
+                        waistController.text = '';
+                        hipController.text = '';
+                      });
+                    },
+                  )),
+                  const SizedBox(
+                    width: 30,
                   ),
-                  Text(
-                    '${result.toStringAsFixed(1)}% = ${(result * double.parse(weightController.text) * 0.01 * 2.20462).toStringAsFixed(0)} lbs',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    'Weight lose 1% body fat, you must burn',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'At least: ${(5390 * double.parse(weightController.text)).toStringAsFixed(0)} Calories',
-                    style: TextStyle(fontSize: 18),
+                  Expanded(
+                    child: CustomElevatedButton(
+                      onPress: () {
+                        setState(() {
+                          type = 'matrics';
+                          ageController.text = '';
+                          heightFeetController.text = '';
+                          heightInchesController.text = '';
+                          weightController.text = '';
+                          neckController.text = '';
+                          waistController.text = '';
+                          hipController.text = '';
+                        });
+                      },
+                      color: type == 'matrics' && (type?.isNotEmpty ?? false)
+                          ? AppColors.calculateButtonColor
+                          : HexColor('EEF2F6'),
+                      text: globalText20(
+                          text: 'Matrics Units',
+                          color:
+                              type != 'matrics' && (type?.isNotEmpty ?? false)
+                                  ? HexColor('0F182E')
+                                  : Colors.white,
+                          alignment: Alignment.center,
+                          fontWeight: FontWeight.normal),
+                    ),
                   ),
                 ],
               ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(text: "Age", fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        CustomSimpleTextField(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            hexColor: HexColor('80848A'),
+                            controller: ageController,
+                            textInputType: TextInputType.number,
+                            paddingNeed: false,
+                            hint: "Age",
+                            textAlign: TextAlign.start),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: SizedBox())
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Transform.scale(
+                    scale: 1.1,
+                    child: Checkbox(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      value: selectedGender == Gender.male,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedGender =
+                              value! ? Gender.male : selectedGender;
+                        });
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      activeColor: Colors.blue, // Set your desired color
+                    ),
+                  ),
+                  const Text('Male'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Transform.scale(
+                    scale: 1.1,
+                    child: Checkbox(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      value: selectedGender == Gender.female,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedGender =
+                              value! ? Gender.female : selectedGender;
+                        });
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      activeColor: Colors.blue, // Set your desired color
+                    ),
+                  ),
+                  const Text('Female'),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(
+                            text: "Weight", fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        CustomSimpleTextField(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            hexColor: HexColor('80848A'),
+                            controller: weightController,
+                            textInputType: TextInputType.number,
+                            paddingNeed: false,
+                            hint: type != 'usUnit' ? "kg" : "Pounds",
+                            textAlign: TextAlign.end),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: SizedBox())
+                ],
+              ),
+              10.ph,
+              globalText16(text: "Height", fontWeight: FontWeight.w500),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: CustomSimpleTextField(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                        hexColor: HexColor('80848A'),
+                        controller: heightFeetController,
+                        textInputType: TextInputType.number,
+                        paddingNeed: false,
+                        hint: type != 'usUnit' ? "cm" : "Feet",
+                        textAlign: TextAlign.end),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: type == 'matrics' ? false : true,
+                      child: CustomSimpleTextField(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          hexColor: HexColor('80848A'),
+                          controller: heightInchesController,
+                          textInputType: TextInputType.number,
+                          paddingNeed: false,
+                          hint: "Inch",
+                          textAlign: TextAlign.end),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(text: "Neck", fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        CustomSimpleTextField(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            hexColor: HexColor('80848A'),
+                            controller: neckController,
+                            textInputType: TextInputType.number,
+                            paddingNeed: false,
+                            hint: type != 'usUnit' ? "cm" : "inchs",
+                            textAlign: TextAlign.end),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: SizedBox())
+                ],
+              ),
+              10.ph,
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(
+                            text: "Waist", fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        CustomSimpleTextField(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            hexColor: HexColor('80848A'),
+                            controller: waistController,
+                            textInputType: TextInputType.number,
+                            paddingNeed: false,
+                            hint: type != 'usUnit' ? "cm" : "inchs",
+                            textAlign: TextAlign.end),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: SizedBox())
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              if (selectedGender == Gender.female)
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          globalText16(
+                              text: "Hip", fontWeight: FontWeight.w500),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CustomSimpleTextField(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              hexColor: HexColor('80848A'),
+                              controller: hipController,
+                              textInputType: TextInputType.number,
+                              paddingNeed: false,
+                              hint: type != 'usUnit' ? "cm" : "inchs",
+                              textAlign: TextAlign.end),
+                        ],
+                      ),
+                    ),
+                    Expanded(child: SizedBox())
+                  ],
+                ),
+              10.ph,
+              const SizedBox(height: 20),
+              CustomElevatedButton(
+                  text: globalText24(
+                      text: "Calculate",
+                      alignment: Alignment.center,
+                      color: Colors.white),
+                  hexColor: AppColors.calculateButtonColor,
+                  onPress: () {
+                    // if (ageController.text.isEmpty) {
+                    //   errorToast(context: context, msg: "Please enter age");
+                    // } else if (heightFeetController.text.isEmpty) {
+                    //   errorToast(context: context, msg: "Please enter feet");
+                    // } else if (heightInchesController.text.isEmpty) {
+                    //   errorToast(context: context, msg: "Please enter inch");
+                    // } else if (weightKgController.text.isEmpty) {
+                    //   errorToast(context: context, msg: "Please enter weight");
+                    // } else {
+                    calculateBodyFat();
+                    RouteGenerator().pushNamedSms(
+                        context, Routes.bodyfatResultScreen,
+                        arguments: [result.toStringAsFixed(0)]);
+                    print("this is result $result");
+                    // }
+                  }),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
