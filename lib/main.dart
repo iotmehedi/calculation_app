@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       onGenerateRoute: RouteGenerator.onRouteGenerate,
+      
       // home: const SplashScreen(),
     );
   }

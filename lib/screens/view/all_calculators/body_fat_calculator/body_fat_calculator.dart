@@ -6,6 +6,7 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
 import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_eleveted_button.dart';
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
+import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -29,62 +30,69 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   bool isUSCUnit = true;
   String? type = 'usUnit';
   Gender selectedGender = Gender.male;
-  void calculateBodyFat() {
+  Future<bool> calculateBodyFat() async {
     if (_validateInputs()) {
       double weight = double.tryParse(weightController.text) ?? 0;
       if (weight <= 0) {
         _showErrorDialog('Invalid weight');
-        return;
-      }
-      double heightFeet = double.tryParse(heightFeetController.text) ?? 0;
-      double heightInches = double.tryParse(heightInchesController.text) ?? 0;
-      double age = double.tryParse(ageController.text) ?? 0;
-      double neck = double.tryParse(neckController.text) ?? 0;
-      double waist = double.tryParse(waistController.text) ?? 0;
-      double hip = double.tryParse(hipController.text) ?? 0;
-
-      // Convert height to inches
-      double height = (heightFeet * 12) + heightInches;
-
-      // Convert to metric if necessary
-      if (!isUSCUnit) {
-        weight *= 0.453592; // pounds to kg
-        height *= 2.54; // inches to cm
-        neck *= 2.54; // inches to cm
-        waist *= 2.54; // inches to cm
-        hip *= 2.54; // inches to cm
-      }
-
-      // Calculate body fat percentage
-      double bodyFatPercentage = 0.0;
-      if (gender == 'Male') {
-        if (isUSCUnit) {
-          bodyFatPercentage =
-              (86.010 * log10(waist - neck)) - (70.041 * log10(height)) + 36.76;
-        } else {
-          bodyFatPercentage = (495 /
-                  (1.0324 -
-                      (0.19077 * log10(waist - neck)) +
-                      (0.15456 * log10(height))) -
-              450);
-        }
+        return false;
       } else {
-        if (isUSCUnit) {
-          bodyFatPercentage = (163.205 * log10(waist + hip - neck)) -
-              (97.684 * log10(height)) -
-              78.387;
-        } else {
-          bodyFatPercentage = (495 /
-                  (1.29579 -
-                      (0.35004 * log10(waist + hip - neck)) +
-                      (0.22100 * log10(height))) -
-              450);
-        }
-      }
+        setState(() {
+          double heightFeet = double.tryParse(heightFeetController.text) ?? 0;
+          double heightInches =
+              double.tryParse(heightInchesController.text) ?? 0;
+          double age = double.tryParse(ageController.text) ?? 0;
+          double neck = double.tryParse(neckController.text) ?? 0;
+          double waist = double.tryParse(waistController.text) ?? 0;
+          double hip = double.tryParse(hipController.text) ?? 0;
 
-      setState(() {
-        result = bodyFatPercentage;
-      });
+          // Convert height to inches
+          double height = (heightFeet * 12) + heightInches;
+
+          // Convert to metric if necessary
+          if (!isUSCUnit) {
+            weight *= 0.453592; // pounds to kg
+            height *= 2.54; // inches to cm
+            neck *= 2.54; // inches to cm
+            waist *= 2.54; // inches to cm
+            hip *= 2.54; // inches to cm
+          }
+
+          // Calculate body fat percentage
+          double bodyFatPercentage = 0.0;
+          if (gender == 'Male') {
+            if (isUSCUnit) {
+              bodyFatPercentage = (86.010 * log10(waist - neck)) -
+                  (70.041 * log10(height)) +
+                  36.76;
+            } else {
+              bodyFatPercentage = (495 /
+                      (1.0324 -
+                          (0.19077 * log10(waist - neck)) +
+                          (0.15456 * log10(height))) -
+                  450);
+            }
+          } else {
+            if (isUSCUnit) {
+              bodyFatPercentage = (163.205 * log10(waist + hip - neck)) -
+                  (97.684 * log10(height)) -
+                  78.387;
+            } else {
+              bodyFatPercentage = (495 /
+                      (1.29579 -
+                          (0.35004 * log10(waist + hip - neck)) +
+                          (0.22100 * log10(height))) -
+                  450);
+            }
+          }
+
+          result = bodyFatPercentage;
+        });
+        print("this is result of the body fat $result");
+        return true;
+      }
+    } else {
+      return false;
     }
   }
 
@@ -438,21 +446,30 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                       color: Colors.white),
                   hexColor: AppColors.calculateButtonColor,
                   onPress: () {
-                    // if (ageController.text.isEmpty) {
-                    //   errorToast(context: context, msg: "Please enter age");
-                    // } else if (heightFeetController.text.isEmpty) {
-                    //   errorToast(context: context, msg: "Please enter feet");
-                    // } else if (heightInchesController.text.isEmpty) {
-                    //   errorToast(context: context, msg: "Please enter inch");
-                    // } else if (weightKgController.text.isEmpty) {
-                    //   errorToast(context: context, msg: "Please enter weight");
-                    // } else {
-                    calculateBodyFat();
-                    RouteGenerator().pushNamedSms(
-                        context, Routes.bodyfatResultScreen,
-                        arguments: [result.toStringAsFixed(0)]);
-                    print("this is result $result");
-                    // }
+                    if (ageController.text.isEmpty) {
+                      errorToast(context: context, msg: "Please enter age");
+                    } else if (heightFeetController.text.isEmpty) {
+                      errorToast(context: context, msg: "Please enter feet");
+                    } else if (heightInchesController.text.isEmpty &&
+                        type == 'usUnit') {
+                      errorToast(context: context, msg: "Please enter inch");
+                    } else if (weightController.text.isEmpty) {
+                      errorToast(context: context, msg: "Please enter weight");
+                    } else if (hipController.text.isEmpty && type != "usUnit") {
+                      errorToast(context: context, msg: "Please enter hip");
+                    } else {
+                      calculateBodyFat().then((value) {
+                        if (value == true) {
+                          RouteGenerator().pushNamedSms(
+                              context, Routes.bodyfatResultScreen, arguments: [
+                            result.toStringAsFixed(0),
+                            type,
+                            weightController.text
+                          ]);
+                          print("this is result $result");
+                        }
+                      });
+                    }
                   }),
             ],
           ),

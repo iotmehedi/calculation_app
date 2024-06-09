@@ -106,7 +106,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'BMI Calculator',
+        title: 'BRM Calculator',
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -231,7 +231,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                   Transform.scale(
                     scale: 1.1,
                     child: Checkbox(
-                       shape: RoundedRectangleBorder(
+                      shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       value: selectedGender == Gender.female,
                       onChanged: (value) {
@@ -247,6 +247,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                   const Text('Female'),
                 ],
               ),
+
               const SizedBox(
                 height: 20,
               ),

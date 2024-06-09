@@ -14,4 +14,9 @@ class Routes {
   static const bodyFatCalculator = "/BodyFatCalculator";
   static const calorieResultScreen = "/CaloriResultScreen";
   static const bodyfatResultScreen = "/bodyfatResultScreen";
+  static const ovulationPeriod = "/ovulationPeriod";
+  static const periodCalculator = "/periodCalculator";
+  static const pregnancyDueDate = "/pregnancyDueDate";
+  static const pregnancyDueDateResult = "/pregnancyResultDueDate";
+  static const pregnancyTrimester = "/pregnancyTrimester";
 }

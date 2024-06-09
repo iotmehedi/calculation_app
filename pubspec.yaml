@@ -40,6 +40,8 @@ dependencies:
   google_fonts: ^6.1.0
   math_expressions: ^2.4.0
   shared_preferences: ^2.2.2
+  table_calendar:
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

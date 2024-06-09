@@ -9,28 +9,31 @@ import 'package:hexcolor/hexcolor.dart';
 class ResultScrren extends StatelessWidget {
   final double bmiresult;
   final double progressValue;
-  final String bmiValueName;
+  final String bmiValueName, type;
   const ResultScrren(
       {super.key,
       required this.bmiresult,
       required this.progressValue,
-      required this.bmiValueName});
+      required this.bmiValueName,
+      required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-    title: 'Results',
-    onBackPressed: () {
-      Navigator.pop(context);
-    },
-  ),
+        title: 'Results',
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 height: 130,
                 width: MediaQuery.of(context).size.width - 32,
@@ -138,11 +141,11 @@ class ResultScrren extends StatelessWidget {
                         // width: MediaQuery.of(context).size.width,
                         child: Center(
                           child: CustomRichText(
-                            heading: 'BMI = ${bmiresult.toStringAsFixed(1)} ',
-                            title: bmiValueName,
-                            headingFontSize: 27.0,
-                            titleFontSIze: 27.0,
-                            titleTextColor: bmiresult < 18.5
+                              heading: 'BMI = ${bmiresult.toStringAsFixed(1)} ',
+                              title: bmiValueName,
+                              headingFontSize: 27.0,
+                              titleFontSIze: 27.0,
+                              titleTextColor: bmiresult < 18.5
                                   ? HexColor('EE3838')
                                   : bmiresult >= 18.5 && bmiresult < 24.9
                                       ? HexColor('21BB30')
@@ -198,7 +201,9 @@ class ResultScrren extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 50),
                 child: globalText16(text: "BMI Weight Range:"),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 30),
                 child: Column(
@@ -209,18 +214,24 @@ class ResultScrren extends StatelessWidget {
                       title: 'Underweight',
                       titleTextColor: HexColor('EE3838'),
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CustomRichText(
                         heading: 'Between 18.5 - 24.9 = ',
                         title: 'Healthy Normal',
                         titleTextColor: HexColor('21BB30')),
-                        const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CustomRichText(
                       heading: 'Between 25 - 29.9 = ',
                       title: 'Overweight',
                       titleTextColor: HexColor('F2BC67'),
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CustomRichText(
                       heading: 'Over 30 =',
                       title: 'Obese',

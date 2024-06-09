@@ -2,6 +2,7 @@ import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/core/routes/router.dart';
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_eleveted_button.dart';
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
@@ -25,9 +26,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   double bmiResult = 0.0;
   String? type = 'usUnit';
   String? bmiValueName;
-  bool maleChecked = false;
-  bool femaleChecked = false;
-  bool otherChecked = false;
+  Gender selectedGender = Gender.male;
   double progressValue = 0.0; // Initial value for progress indicator
   void calculateUsUnitBMI() {
     double weight = double.tryParse(weightKgController.text) ?? 0.0;
@@ -142,7 +141,47 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               const SizedBox(
                 height: 20,
               ),
-              CheckBox(),
+              Row(
+                children: [
+                  Transform.scale(
+                    scale: 1.1,
+                    child: Checkbox(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      value: selectedGender == Gender.male,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedGender =
+                              value! ? Gender.male : selectedGender;
+                        });
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      activeColor: Colors.blue, // Set your desired color
+                    ),
+                  ),
+                  const Text('Male'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Transform.scale(
+                    scale: 1.1,
+                    child: Checkbox(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      value: selectedGender == Gender.female,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedGender =
+                              value! ? Gender.female : selectedGender;
+                        });
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      activeColor: Colors.blue, // Set your desired color
+                    ),
+                  ),
+                  const Text('Female'),
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -254,9 +293,11 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                   onPress: () {
                     if (ageController.text.isEmpty) {
                       errorToast(context: context, msg: "Please enter age");
-                    } else if (heightFeetController.text.isEmpty) {
+                    } else if (heightFeetController.text.isEmpty &&
+                        type == 'usUnit') {
                       errorToast(context: context, msg: "Please enter feet");
-                    } else if (heightInchesController.text.isEmpty) {
+                    } else if (heightInchesController.text.isEmpty &&
+                        type == 'usUnit') {
                       errorToast(context: context, msg: "Please enter inch");
                     } else if (weightKgController.text.isEmpty) {
                       errorToast(context: context, msg: "Please enter weight");
@@ -267,12 +308,12 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                         calculateUsUnitBMI();
                       }
                       RouteGenerator().pushNamedSms(
-                          context, Routes.resultScreen,
-                          arguments: [
-                            bmiResult,
-                            progressValue,
-                            bmiValueName,
-                          ]);
+                          context, Routes.resultScreen, arguments: [
+                        bmiResult,
+                        progressValue,
+                        bmiValueName,
+                        type
+                      ]);
                     }
                   }),
             ],
@@ -282,91 +323,91 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
     );
   }
 
-  Widget CheckBox() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              SquareCheckBox(
-                value: maleChecked,
-                onChanged: (value) {
-                  setState(() {
-                    maleChecked = value!;
-                    if (value) {
-                      femaleChecked = false;
-                      otherChecked = false;
-                    }
-                  });
-                },
-              ),
-              SizedBox(width: 8),
-              Text('Male'),
-            ],
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Row(
-            children: <Widget>[
-              SquareCheckBox(
-                value: femaleChecked,
-                onChanged: (value) {
-                  setState(() {
-                    femaleChecked = value!;
-                    if (value) {
-                      maleChecked = false;
-                      otherChecked = false;
-                    }
-                  });
-                },
-              ),
-              SizedBox(width: 8),
-              Text('Female'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget CheckBox() {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 30),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: <Widget>[
+  //         Row(
+  //           children: <Widget>[
+  //             SquareCheckBox(
+  //               value: maleChecked,
+  //               onChanged: (value) {
+  //                 setState(() {
+  //                   maleChecked = value!;
+  //                   if (value) {
+  //                     femaleChecked = false;
+  //                     otherChecked = false;
+  //                   }
+  //                 });
+  //               },
+  //             ),
+  //             SizedBox(width: 8),
+  //             Text('Male'),
+  //           ],
+  //         ),
+  //         const SizedBox(
+  //           width: 10,
+  //         ),
+  //         Row(
+  //           children: <Widget>[
+  //             SquareCheckBox(
+  //               value: femaleChecked,
+  //               onChanged: (value) {
+  //                 setState(() {
+  //                   femaleChecked = value!;
+  //                   if (value) {
+  //                     maleChecked = false;
+  //                     otherChecked = false;
+  //                   }
+  //                 });
+  //               },
+  //             ),
+  //             SizedBox(width: 8),
+  //             Text('Female'),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 
-class SquareCheckBox extends StatelessWidget {
-  final bool value;
-  final ValueChanged<bool?> onChanged;
+// class SquareCheckBox extends StatelessWidget {
+//   final bool value;
+//   final ValueChanged<bool?> onChanged;
 
-  const SquareCheckBox({
-    required this.value,
-    required this.onChanged,
-  });
+//   const SquareCheckBox({
+//     required this.value,
+//     required this.onChanged,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onChanged(!value);
-      },
-      child: Container(
-        width: 24,
-        height: 24,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(4),
-          color: value ? HexColor('244384') : null,
-        ),
-        child: value
-            ? Icon(
-                Icons.check,
-                size: 18,
-                color: Colors.white,
-              )
-            : null,
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         onChanged(!value);
+//       },
+//       child: Container(
+//         width: 24,
+//         height: 24,
+//         decoration: BoxDecoration(
+//           border: Border.all(
+//             color: value ? Colors.transparent : Colors.black,
+//             width: 2,
+//           ),
+//           borderRadius: BorderRadius.circular(4),
+//           color: value ? HexColor('244384') : null,
+//         ),
+//         child: value
+//             ? Icon(
+//                 Icons.check,
+//                 size: 18,
+//                 color: Colors.white,
+//               )
+//             : null,
+//       ),
+//     );
+//   }
+// }

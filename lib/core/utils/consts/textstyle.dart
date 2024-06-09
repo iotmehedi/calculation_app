@@ -80,18 +80,22 @@ globalTextSixteen(
   );
 }
 
-globalText24({required String text, Alignment? alignment, Color?color}) {
+globalText24(
+    {required String text,
+    Alignment? alignment,
+    Color? color,
+    FontWeight? fontWeight}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: SizedBox(
       child: Text(
         text,
         overflow: TextOverflow.ellipsis,
-        style:  GoogleFonts.poppins(
+        style: GoogleFonts.poppins(
           letterSpacing: 0.2,
           color: color ?? Colors.black,
           fontSize: 24.0,
-          fontWeight: FontWeight.w700,
+          fontWeight: fontWeight ?? FontWeight.w700,
         ),
       ),
     ),
@@ -115,6 +119,28 @@ globalText20(
         letterSpacing: 0.2,
         color: color ?? hexColor,
         fontSize: 20.0,
+        fontWeight: fontWeight ?? FontWeight.w700,
+      ),
+    ),
+  );
+}
+globalText10(
+    {required String text,
+    Alignment? alignment,
+    Color? color,
+    HexColor? hexColor,
+    FontWeight? fontWeight}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: Text(
+      text,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.poppins(
+        letterSpacing: 0.2,
+        color: color ?? hexColor,
+        fontSize: 10.0,
         fontWeight: fontWeight ?? FontWeight.w700,
       ),
     ),
@@ -170,34 +196,37 @@ globalText14(
     {required String text,
     Alignment? alignment,
     Color? color,
-    HexColor? hexColor}) {
+    HexColor? hexColor, FontWeight? fontWeight,TextAlign? textAlign,}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: Text(
       text,
       maxLines: 2,
-      textAlign: TextAlign.center,
+      textAlign: textAlign ?? TextAlign.center,
       overflow: TextOverflow.ellipsis,
       style: GoogleFonts.poppins(
         letterSpacing: 0.2,
         color: color ?? hexColor,
         fontSize: 14.0,
-        fontWeight: FontWeight.w700,
+        fontWeight: fontWeight ?? FontWeight.w700,
       ),
     ),
   );
 }
+
 globalText16(
     {required String text,
     Alignment? alignment,
+    TextAlign? textAlign,
     Color? color,
-    HexColor? hexColor, FontWeight? fontWeight}) {
+    HexColor? hexColor,
+    FontWeight? fontWeight}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: Text(
       text,
       maxLines: 2,
-      textAlign: TextAlign.center,
+      textAlign:  textAlign ??TextAlign.center,
       overflow: TextOverflow.ellipsis,
       style: GoogleFonts.poppins(
         letterSpacing: 0.2,
@@ -208,11 +237,35 @@ globalText16(
     ),
   );
 }
+globalText18(
+    {required String text,
+    Alignment? alignment,
+    Color? color,
+    HexColor? hexColor,
+    FontWeight? fontWeight}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: Text(
+      text,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.poppins(
+        letterSpacing: 0.2,
+        color: color ?? hexColor,
+        fontSize: 18.0,
+        fontWeight: fontWeight ?? FontWeight.w700,
+      ),
+    ),
+  );
+}
+
 globalText28(
     {required String text,
     Alignment? alignment,
     Color? color,
-    HexColor? hexColor, FontWeight? fontWeight}) {
+    HexColor? hexColor,
+    FontWeight? fontWeight}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: Text(
@@ -230,12 +283,11 @@ globalText28(
   );
 }
 
-
-globalTextStyle(){
+globalTextStyle() {
   return GoogleFonts.poppins(
-        letterSpacing: 0.2,
-        color: HexColor('80848A'),
-        fontSize: 16.0,
-        fontWeight:  FontWeight.normal,
-      );
+    letterSpacing: 0.2,
+    color: HexColor('80848A'),
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal,
+  );
 }

@@ -53,13 +53,13 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
   TextEditingController heightInchesController = TextEditingController();
   TextEditingController heightCmController = TextEditingController();
   TextEditingController weightKgController = TextEditingController();
-
+  Gender selectedGender = Gender.male;
   // late double heightCm; // Height in centimeters
   // late double weightKg; // Weight in kilograms
   // late int age;
   // late double heightFeet;
-  bool maleChecked = true;
-  bool femaleChecked = false;
+  // bool maleChecked = true;
+  // bool femaleChecked = false;
   late ActivityLevel activityLevel;
   late int calculatedCalories;
   late Map<String, int> weightLossCalories;
@@ -89,16 +89,23 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
     double heightInch = double.tryParse(heightInchesController.text) ?? 0.0;
     double heightCm;
     if (isMetricUnit == true) {
-      heightCm = height;
+      heightCm = double.tryParse(heightCmController.text) ?? 0.0;
+      // weightKg = weightKg * 2.20462;
     } else {
       heightCm = (height * 12) + heightInch;
     }
 
     int age = int.tryParse(ageController.text) ?? 0;
-    print("heightCm $heightCm");
-    if (maleChecked == true && femaleChecked == false) {
-      bmr = (9 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
+    print("heightCm $heightCm $heightInch");
+    if (selectedGender == Gender.male) {
+      if (isMetricUnit == true) {
+        bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
+      } else {
+        bmr = (9 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
+      }
+
       print(10 * weightKg);
+      print(heightCm);
       print(6.25 * heightCm);
       print(5 * age);
       print(bmr);
@@ -156,7 +163,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
         },
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -198,7 +205,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                 )),
               ],
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             // Text('Gender'),
 
             // Text('Age'),
@@ -274,7 +281,47 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
             //         ],
             //       ),
 
-            CheckBox(),
+            Row(
+              children: [
+                Transform.scale(
+                  scale: 1.1,
+                  child: Checkbox(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    value: selectedGender == Gender.male,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender = value! ? Gender.male : selectedGender;
+                      });
+                    },
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    activeColor: Colors.blue, // Set your desired color
+                  ),
+                ),
+                const Text('Male'),
+                const SizedBox(
+                  width: 10,
+                ),
+                Transform.scale(
+                  scale: 1.1,
+                  child: Checkbox(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    value: selectedGender == Gender.female,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender =
+                            value! ? Gender.female : selectedGender;
+                      });
+                    },
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    activeColor: Colors.blue, // Set your desired color
+                  ),
+                ),
+                const Text('Female'),
+              ],
+            ),
+
             const SizedBox(
               height: 20,
             ),
@@ -301,7 +348,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                     ],
                   ),
                 ),
-                Expanded(child: SizedBox())
+                const Expanded(child: SizedBox())
               ],
             ),
             const SizedBox(
@@ -372,7 +419,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                     ],
                   ),
                 ),
-                Expanded(child: SizedBox())
+                const Expanded(child: SizedBox())
               ],
             ),
             10.ph,
@@ -430,7 +477,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             const SizedBox(height: 20),
             CustomElevatedButton(
                 text: globalText24(
@@ -439,25 +486,29 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                     color: Colors.white),
                 hexColor: AppColors.calculateButtonColor,
                 onPress: () {
-                  // if (ageController.text.isEmpty) {
-                  //   errorToast(context: context, msg: "Please enter age");
-                  // } else if (heightFeetController.text.isEmpty) {
-                  //   errorToast(context: context, msg: "Please enter feet");
-                  // } else if (heightInchesController.text.isEmpty) {
-                  //   errorToast(context: context, msg: "Please enter inch");
-                  // } else if (weightKgController.text.isEmpty) {
-                  //   errorToast(context: context, msg: "Please enter weight");
-                  // } else {
-                  calculateCalories();
-                  RouteGenerator().pushNamedSms(
-                      context, Routes.calorieResultScreen,
-                      arguments: [
-                        weightLossCalories['Maintain weight'],
-                        weightLossCalories['Mild weight loss (0.5 kg/week)'],
-                        weightLossCalories['Weight loss (1 kg/week)'],
-                        weightLossCalories['Extreme weight loss (2 kg/week)']
-                      ]);
-                  // }
+                  if (ageController.text.isEmpty) {
+                    errorToast(context: context, msg: "Please enter age");
+                  } else if (heightFeetController.text.isEmpty &&
+                      isMetricUnit == false) {
+                    errorToast(context: context, msg: "Please enter feet");
+                  } else if (heightInchesController.text.isEmpty &&
+                      isMetricUnit == false) {
+                    errorToast(context: context, msg: "Please enter inch");
+                  } else if (isMetricUnit == true &&
+                      heightCmController.text.isEmpty) {
+                  } else if (weightKgController.text.isEmpty) {
+                    errorToast(context: context, msg: "Please enter weight");
+                  } else {
+                    calculateCalories();
+                    RouteGenerator().pushNamedSms(
+                        context, Routes.calorieResultScreen,
+                        arguments: [
+                          weightLossCalories['Maintain weight'],
+                          weightLossCalories['Mild weight loss (0.5 kg/week)'],
+                          weightLossCalories['Weight loss (1 kg/week)'],
+                          weightLossCalories['Extreme weight loss (2 kg/week)']
+                        ]);
+                  }
                 }),
 
             // SizedBox(height: 16.0),
@@ -479,51 +530,51 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
     );
   }
 
-  Widget CheckBox() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              SquareCheckBox(
-                value: maleChecked,
-                onChanged: (value) {
-                  setState(() {
-                    maleChecked = value!;
-                    if (value) {
-                      femaleChecked = false;
-                    }
-                  });
-                },
-              ),
-              SizedBox(width: 8),
-              Text('Male'),
-            ],
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Row(
-            children: <Widget>[
-              SquareCheckBox(
-                value: femaleChecked,
-                onChanged: (value) {
-                  setState(() {
-                    femaleChecked = value!;
-                    if (value) {
-                      maleChecked = false;
-                    }
-                  });
-                },
-              ),
-              SizedBox(width: 8),
-              Text('Female'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget CheckBox() {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 30),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: <Widget>[
+  //         Row(
+  //           children: <Widget>[
+  //             SquareCheckBox(
+  //               value: maleChecked,
+  //               onChanged: (value) {
+  //                 setState(() {
+  //                   maleChecked = value!;
+  //                   if (value) {
+  //                     femaleChecked = false;
+  //                   }
+  //                 });
+  //               },
+  //             ),
+  //             SizedBox(width: 8),
+  //             Text('Male'),
+  //           ],
+  //         ),
+  //         const SizedBox(
+  //           width: 10,
+  //         ),
+  //         Row(
+  //           children: <Widget>[
+  //             SquareCheckBox(
+  //               value: femaleChecked,
+  //               onChanged: (value) {
+  //                 setState(() {
+  //                   femaleChecked = value!;
+  //                   if (value) {
+  //                     maleChecked = false;
+  //                   }
+  //                 });
+  //               },
+  //             ),
+  //             SizedBox(width: 8),
+  //             Text('Female'),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

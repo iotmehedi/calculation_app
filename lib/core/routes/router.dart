@@ -8,6 +8,11 @@ import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_resultpage.dart';
 import 'package:calculation_app/screens/view/all_calculators/fractio_calculator/fraction_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/normal_calculator_screen.dart';
+import 'package:calculation_app/screens/view/all_calculators/ovaluation_period/ovaluation_period_screen.dart';
+import 'package:calculation_app/screens/view/all_calculators/period_calculator/period_calculator_screen.dart';
+import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/due_date_result_page.dart';
+import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_due_date_calculator.dart';
+import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_trimester.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
 import 'package:calculation_app/screens/view/mortgage_screen/mortgage_screen.dart';
 import 'package:calculation_app/screens/view/splash_screen/splash_screen.dart';
@@ -100,6 +105,7 @@ class RouteGenerator {
               bmiresult: arguments[0] as double,
               progressValue: arguments[1] as double,
               bmiValueName: arguments[2] as String,
+              type: arguments[3] as String,
             ),
           );
         }
@@ -148,6 +154,62 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder: (context) => BodyfatResultScreen(
               maintainWeight: arguments[0] as String,
+              type: arguments[1] as String,
+              weight: arguments[2] as String,
+            ),
+          );
+        }
+      case Routes.ovulationPeriod:
+        {
+          return MaterialPageRoute(
+            builder: (context) => OvulationInputPage(),
+          );
+        }
+      case Routes.periodCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => PeriodInputPage(),
+          );
+        }
+      case Routes.pregnancyDueDate:
+        {
+          return MaterialPageRoute(
+            builder: (context) => PregnancyCalculatorPage(),
+          );
+        }
+        case Routes.pregnancyDueDateResult:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => DueDateResultCalculator(
+              lastMonthName: arguments[0] as DateTime,
+              firstTrimesterDayDifference: arguments[1] as int,
+              secondTrimesterDayDifference: arguments[2] as int,
+              thirdTrimesterDayDifference: arguments[3] as int,
+                mostRecentPastDate: arguments[4] as String,
+                associatedWeekName: arguments[5] == null ? "" : arguments[5] as String,
+                milestones: arguments[6] as List<Map<String, Object>>,
+                selectedMethod: arguments[7] as String,
+                selectedOption: arguments[8] as String,
+                firstTrimesterEnd: arguments[9] as DateTime,
+                thirdTrimesterStart: arguments[10] as DateTime,
+              milestones2: arguments[11] as List<Map<String, Object>>,
+              milestones3: arguments[12] as List<Map<String, Object>>,
+            ),
+          );
+        }
+        case Routes.pregnancyTrimester:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => PregnancyTrimester(
+                milestones: arguments[0] as List<Map<String, Object>>,
+                selectedMethod: arguments[1] as String,
+                selectedOption: arguments[2] as String,
+                firstTrimesterEnd: arguments[3] as DateTime,
+                thirdTrimesterStart: arguments[4] as DateTime,
+              milestones2: arguments[5] as List<Map<String, Object>>,
+              milestones3: arguments[6] as List<Map<String, Object>>,
             ),
           );
         }
