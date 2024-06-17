@@ -44,7 +44,9 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.autoLoan,
                       text: "Auto Loan\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.autoLoanCalculatorScreen);
+                      },
                     ),
                   ),
                   Expanded(

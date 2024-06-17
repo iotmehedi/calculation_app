@@ -23,4 +23,5 @@ class Routes {
   static const pregnancyResultCalculator = "/pregnancyResultCalculator";
   static const pregnancyTimeTrimester = "/pregnancyTimeTrimester";
   static const mortgageResultPage = "/mortgageResultPage";
+  static const autoLoanCalculatorScreen = "/autoLoanCalculatorScreen";
 }

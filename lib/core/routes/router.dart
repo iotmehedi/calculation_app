@@ -22,6 +22,7 @@ import 'package:calculation_app/screens/view/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
@@ -256,6 +257,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) =>  MortgageResultPage(),
+          );
+        }
+        case Routes.autoLoanCalculatorScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>  AutoLoanCalculatorScreen(),
           );
         }
     }

@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
 class MortgageScreen extends StatefulWidget {
@@ -210,7 +209,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                             title: Text(
                               controller.selectedDate?.value == null
                                   ? 'Select Date'
-                                  : DateFormat("yyyy/MM/dd")
+                                  : DateFormat("yyyy/MM")
                                       .format(controller.selectedDate!.value),
                               style: const TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.normal),
@@ -224,6 +223,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    if(controller.isChecked.value == false)
                     SizedBox(
                       height: 50,
                       child: Row(
@@ -257,6 +257,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                         ],
                       ),
                     ),
+                    if(controller.isChecked.value == false)
                     const SizedBox(
                       height: 20,
                     ),
@@ -532,7 +533,25 @@ class _MortgageScreenState extends State<MortgageScreen> {
 
                     const SizedBox(
                       height: 20,
-                    )
+                    ),
+                    if(controller.isChecked.value == true)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: CustomElevatedButton(
+                        color: HexColor("244384"),
+                        onPress: controller.calculateMonthlyPayment,
+                        // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
+                        text: const Text(
+                          "Calculate",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -549,7 +568,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
               ? DateTime.now()
               : (controller.selectedDate?.value ?? DateTime.now()),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      lastDate: DateTime(DateTime.now().year + 1),
     );
     if (picked != null && picked != controller.selectedDate?.value) {
       controller.selectedDate?.value = picked;
