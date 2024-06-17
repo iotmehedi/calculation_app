@@ -33,8 +33,33 @@ class DueDateResultCalculator extends StatefulWidget {
 }
 
 class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
+  DateTime presentDate = DateTime.now();
+  
+  int get daysDifference {
+    return presentDate.difference((widget.milestones[0]["weeks"] as DateTime)).inDays;
+  }
+   String getOrdinalSuffix(int number) {
+    if (number >= 11 && number <= 13) {
+      return 'th';
+    }
+    switch (number % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    print("this is date ${widget.milestones[0]["weeks"]}");
+    int daysDiff = daysDifference;
+    int trimesterDays = 91;
+    int trimesterIndex = (daysDiff / trimesterDays).floor();
+    int progressInCurrentTrimester = daysDiff % trimesterDays;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Due date Calculator',
@@ -131,91 +156,130 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
               color: HexColor("F3F3F3"),
             ),
             10.ph,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 5),
-                        child: globalText10(
-                            text: "1st Trimester",
-                            color: HexColor("2FAE3B"),
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.centerLeft),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: LinearPercentIndicator(
-                          backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
+
+Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
+          children: [
+            for (int i = 0; i < 3; i++)
+              Expanded(
+                child: Column(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 15), child: globalText10(text: '${i + 1}${getOrdinalSuffix(i + 1)} Trimester', fontWeight: FontWeight.normal),),
+                    5.ph,
+                    Padding(
+                      padding:  EdgeInsets.only(right: (i + 1 == 3) ? 0 : 10),
+                      child: LinearPercentIndicator(
+                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
                           animation: true,
                           lineHeight: 20.0,
                           animationDuration: 3000,
-                          percent: widget.secondTrimesterDayDifference / 100,
                           animateFromLastPercent: true,
                           progressColor: Colors.green,
                           barRadius: Radius.circular(10),
-                        ),
+                        percent: i < trimesterIndex
+                            ? 1.0
+                            : i == trimesterIndex
+                                ? progressInCurrentTrimester / trimesterDays
+                                : 0.0,
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 16.0),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 5),
-                        child: globalText10(
-                            text: "2nd Trimester",
-                            color: HexColor("2FAE3B"),
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.centerLeft),
-                      ),
-                      LinearPercentIndicator(
-                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 3000,
-                        percent: widget.thirdTrimesterDayDifference / 100,
-                        animateFromLastPercent: true,
-                        progressColor: Colors.green,
-                        barRadius: Radius.circular(10),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 5),
-                        child: globalText10(
-                            text: "3rd Trimester",
-                            color: HexColor("2FAE3B"),
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.centerLeft),
-                      ),
-                      LinearPercentIndicator(
-                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 3000,
-                        percent: widget.firstTrimesterDayDifference / 100,
-                        animateFromLastPercent: true,
-                        progressColor: Colors.green,
-                        barRadius: Radius.circular(10),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+          ],
+        ),
+      ),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Expanded(
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         mainAxisAlignment: MainAxisAlignment.start,
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.only(left: 15, bottom: 5),
+            //             child: globalText10(
+            //                 text: "1st Trimester",
+            //                 color: HexColor("2FAE3B"),
+            //                 fontWeight: FontWeight.w400,
+            //                 alignment: Alignment.centerLeft),
+            //           ),
+            //           Align(
+            //             alignment: Alignment.centerLeft,
+            //             child: LinearPercentIndicator(
+            //               backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
+            //               animation: true,
+            //               lineHeight: 20.0,
+            //               animationDuration: 3000,
+            //               percent: widget.secondTrimesterDayDifference / 100,
+            //               animateFromLastPercent: true,
+            //               progressColor: Colors.green,
+            //               barRadius: Radius.circular(10),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.only(left: 15, bottom: 5),
+            //             child: globalText10(
+            //                 text: "2nd Trimester",
+            //                 color: HexColor("2FAE3B"),
+            //                 fontWeight: FontWeight.w400,
+            //                 alignment: Alignment.centerLeft),
+            //           ),
+            //           LinearPercentIndicator(
+            //             backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
+            //             animation: true,
+            //             lineHeight: 20.0,
+            //             animationDuration: 3000,
+            //             percent: widget.thirdTrimesterDayDifference / 100,
+            //             animateFromLastPercent: true,
+            //             progressColor: Colors.green,
+            //             barRadius: Radius.circular(10),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.only(left: 15, bottom: 5),
+            //             child: globalText10(
+            //                 text: "3rd Trimester",
+            //                 color: HexColor("2FAE3B"),
+            //                 fontWeight: FontWeight.w400,
+            //                 alignment: Alignment.centerLeft),
+            //           ),
+            //           LinearPercentIndicator(
+            //             backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
+            //             animation: true,
+            //             lineHeight: 20.0,
+            //             animationDuration: 3000,
+            //             percent: widget.firstTrimesterDayDifference / 100,
+            //             animateFromLastPercent: true,
+            //             progressColor: Colors.green,
+            //             barRadius: Radius.circular(10),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            
+            
+            
             20.ph,
             Center(
               child: ElevatedButton(

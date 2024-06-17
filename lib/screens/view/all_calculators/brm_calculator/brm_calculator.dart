@@ -122,7 +122,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                 children: [
                   Expanded(
                       child: CustomElevatedButton(
-                    text: globalText20(
+                    text: globalText18(
                         text: 'Us Unit',
                         color: type != 'usUnit' && (type?.isNotEmpty ?? false)
                             ? HexColor('0F182E')
@@ -161,13 +161,13 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                       color: type == 'matrics' && (type?.isNotEmpty ?? false)
                           ? AppColors.calculateButtonColor
                           : HexColor('EEF2F6'),
-                      text: globalText20(
+                      text: globalText18(
                           text: 'Matrics Units',
                           color:
                               type != 'matrics' && (type?.isNotEmpty ?? false)
                                   ? HexColor('0F182E')
                                   : Colors.white,
-                          alignment: Alignment.center,
+                          // alignment: Alignment.center,
                           fontWeight: FontWeight.normal),
                     ),
                   ),

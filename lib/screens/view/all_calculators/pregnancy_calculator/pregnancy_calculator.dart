@@ -1,6 +1,8 @@
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/pregnancy_calculator/pregnancy_calculator_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
@@ -18,18 +20,19 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
   String _timeline = '';
   String _selectedMethod = 'Last Period';
   int _cycleLength = 28;
+  int _cycleWeek = 22;
+  int _cycleDays = 6;
   int _selectedMonth = DateTime.now().month;
   int _selectedDay = DateTime.now().day;
   int _selectedYear = DateTime.now().year;
   String selectedOption = '1';
-  List<Map<String, Object>> milestones = [{}];
-  List<Map<String, Object>> milestones2 = [{}];
-  List<Map<String, Object>> milestones3 = [{}];
+
   DateTime dueDate = DateTime.now();
   var firstTrimesterEnd = DateTime.now();
   var secondTrimesterEnd = DateTime.now();
   var thirdTrimesterStart = DateTime.now();
-  // List<Tuple2<String, DateTime>>? milestones;
+  // List<Tuple2<String, DateTime>>? controller.milestones;
+  var controller = Get.put(PregnancyCalculatorController());
   List<int> _daysInMonth(int year, int month) {
     return List<int>.generate(DateTime(year, month + 1, 0).day, (i) => i + 1);
   }
@@ -68,11 +71,14 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
       case 'Conception Date':
         dueDate = _selectedDate.add(const Duration(days: 266));
         break;
+        case 'Due Date':
+        dueDate = _selectedDate.add(const Duration(days: 280));
+        break;
       case 'IVF':
         dueDate = _selectedDate.add(const Duration(days: 266));
         break;
       case 'Ultra Sound':
-        final int daysPregnant = (6 * 7) + 0;
+        final int daysPregnant = (_cycleWeek * 7) + _cycleDays;
         dueDate = _selectedDate.add(Duration(days: 266 - daysPregnant));
         break;
       case 'I know my due date':
@@ -82,690 +88,27 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
         dueDate = _selectedDate;
     }
 
-    if (_selectedMethod == 'Ultra Sound') {
-      milestones = [
-        {
-          "week_name": '2 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 36 * 7)),
-          "line1": "Your baby is",
-          "line2": "conceive",
-          "line3": ""
-        },
-        {
-          "week_name": '4 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 34 * 7)),
-          "line1": "You'll have a positive",
-          "line2": "pregnancy test",
-          "line3": ""
-        },
-        {
-          "week_name": '6 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 32 * 7)),
-          "line1": "Cells in your",
-          "line2": " baby's future heart",
-          "line3": "are flickering"
-        },
-        {
-          "week_name": '6 - 8 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 32 * 7)),
-          "line1": "you may have your ",
-          "line2": "first prenatal visit",
-          "line3": ""
-        },
-        {
-          "week_name": '10 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 28 * 7)),
-          "line1": "you'll be offered ",
-          "line2": "NIPT ",
-          "line3": "(Noninvasive prenantal test)"
-        },
-        {
-          "week_name": '10 - 13 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 28 * 7)),
-          "line1": "You can choose to have ",
-          "line2": "CVS",
-          "line3": " (Chorionic villus sampling)"
-        },
-        {
-          "week_name": '11 - 14 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 28 * 7 - 7)),
-          "line1": "You may have an ",
-          "line2": "NT scan and blood test",
-          "line3": ""
-        },
-        {
-          "week_name": '12 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 26 * 7)),
-          "line1": "You may ",
-          "line2": "hear your baby's heartbeat",
-          "line3": " with a Doppler"
-        },
-
-
-      ];
-      milestones2 = [
-        {
-          "week_name": '15 - 20 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 23 * 7)),
-          "line1": "You may have ",
-          "line2": "anamniocentesis",
-          "line3": ""
-        },
-        {
-          "week_name": '16 - 18 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 22 * 7)),
-          "line1": "You may have a ",
-          "line2": "quad scan",
-          "line3": " test"
-        },
-        {
-          "week_name": '16 - 22 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 22 * 7)),
-          "line1": "You can ",
-          "line2": "feel your baby kick",
-          "line3": ""
-        },
-        {
-          "week_name": '18 - 22 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 21 * 7 - 7)),
-          "line1": "You'll have a mid-pregnancy",
-          "line2": " ultrasound",
-          "line3": ""
-        },
-        {
-          "week_name": '23 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 15 * 7)),
-          "line1": "Your baby can ",
-          "line2": "hear you talk",
-          "line3": ""
-        },
-        {
-          "week_name": '24 - 28 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 14 * 7)),
-          "line1": "",
-          "line2": "glucose screeing",
-          "line3": ""
-        },
-        {
-          "week_name": '27 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 11 * 7)),
-          "line1": "You baby will ",
-          "line2": "open their eyes",
-          "line3": ""
-        },
-      ];
-      milestones3 = [
-        {
-          "week_name": '28 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 10 * 7)),
-          "line1": "You'll have ",
-          "line2": "prenatal visits ",
-          "line3": "every two weeks until 36 weeks, then weekly"
-        },
-        {
-          "week_name": '28 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 10 * 7)),
-          "line1": "If you're",
-          "line2": " Rh negative, ",
-          "line3": "you'll have a shot of Rh immune globulin (RhoGAM)"
-        },
-        {
-          "week_name": '34 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 4 * 7)),
-          "line1": "Your baby has ",
-          "line2": "fingernails",
-          "line3": ""
-        },
-        {
-          "week_name": '36 - 37 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 2 * 7)),
-          "line1": "You'll be screened for ",
-          "line2": "Group B strep",
-          "line3": ""
-        },
-        {
-          "week_name": '37 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 1 * 7)),
-          "line1": "Your baby is ",
-          "line2": "early term",
-          "line3": ""
-        },
-        {
-          "week_name": '39 weeks',
-          "weeks": dueDate.add(const Duration(days: 1 * 7)),
-          "line1": "Your baby is ",
-          "line2": "full term",
-          "line3": ""
-        },
-        {
-          "week_name": '40 weeks',
-          "weeks": dueDate.add(const Duration(days: 2 * 7)),
-          "line1": "Your ",
-          "line2": "baby is due!",
-          "line3": ""
-        },
-        {
-          "week_name": '41 weeks',
-          "weeks": dueDate.add(const Duration(days: 3 * 7)),
-          "line1": "If your labor doesn't start, you may be",
-          "line2": " induced",
-          "line3": ""
-        },
-      ];
-    } else if (_selectedMethod == 'IVF') {
-      if (selectedOption == "1") {
-        print("Calculation start");
-        milestones = [
-          {
-            "week_name": '2 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 38 * 7 + 3)),
-            "line1": "Your baby is",
-            "line2": "conceive",
-            "line3": ""
-          },
-          {
-            "week_name": '4 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 36 * 7 + 3)),
-            "line1": "You'll have a positive",
-            "line2": "pregnancy test",
-            "line3": ""
-          },
-          {
-            "week_name": '6 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 34 * 7 + 3)),
-            "line1": "Cells in your",
-            "line2": " baby's future heart",
-            "line3": "are flickering"
-          },
-          {
-            "week_name": '6 - 8 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 34 * 7 + 3)),
-            "line1": "you may have your ",
-            "line2": "first prenatal visit",
-            "line3": ""
-          },
-          {
-            "week_name": '10 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 30 * 7 + 3)),
-            "line1": "you'll be offered ",
-            "line2": "NIPT ",
-            "line3": "(Noninvasive prenantal test)"
-          },
-          {
-            "week_name": '10 - 13 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 30 * 7 + 3)),
-            "line1": "You can choose to have ",
-            "line2": "CVS",
-            "line3": " (Chorionic villus sampling)"
-          },
-          {
-            "week_name": '11 - 14 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 29 * 7 + 3)),
-            "line1": "You may have an ",
-            "line2": "NT scan and blood test",
-            "line3": ""
-          },
-          {
-            "week_name": '12 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 28 * 7 + 3)),
-            "line1": "You may ",
-            "line2": "hear your baby's heartbeat",
-            "line3": " with a Doppler"
-          },
-
-
-        ];
-        milestones2 = [
-          {
-            "week_name": '15 - 20 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 25 * 7 + 3)),
-            "line1": "You may have ",
-            "line2": "anamniocentesis",
-            "line3": ""
-          },
-          {
-            "week_name": '16 - 18 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 24 * 7 + 3)),
-            "line1": "You may have a ",
-            "line2": "quad scan",
-            "line3": " test"
-          },
-          {
-            "week_name": '16 - 22 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 24 * 7 + 3)),
-            "line1": "You can ",
-            "line2": "feel your baby kick",
-            "line3": ""
-          },
-          {
-            "week_name": '18-22 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 22 * 7 + 3)),
-            "line1": "You'll have a mid-pregnancy",
-            "line2": " ultrasound",
-            "line3": ""
-          },
-          {
-            "week_name": '23 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 16 * 7 + 7 + 3)),
-            "line1": "Your baby can ",
-            "line2": "hear you talk",
-            "line3": ""
-          },
-          {
-            "week_name": '24 - 28 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 16 * 7 + 3)),
-            "line1": "",
-            "line2": "glucose screeing",
-            "line3": ""
-          },
-          {
-            "week_name": '27 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 13 * 7 + 3)),
-            "line1": "You baby will ",
-            "line2": "open their eyes",
-            "line3": ""
-          },
-        ];
-        milestones3 = [
-          {
-            "week_name": '28 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 12 * 7 + 3)),
-            "line1": "You'll have ",
-            "line2": "prenatal visits ",
-            "line3": "every two weeks until 36 weeks, then weekly"
-          },
-          {
-            "week_name": '28 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 12 * 7 + 3)),
-            "line1": "If you're",
-            "line2": " Rh negative, ",
-            "line3": "you'll have a shot of Rh immune globulin (RhoGAM)"
-          },
-          {
-            "week_name": '34 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 6 * 7 + 3)),
-            "line1": "Your baby has ",
-            "line2": "fingernails",
-            "line3": ""
-          },
-          {
-            "week_name": '36 - 37 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 4 * 7 + 3)),
-            "line1": "You'll be screened for ",
-            "line2": "Group B strep",
-            "line3": ""
-          },
-          {
-            "week_name": '37 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 3 * 7 + 3)),
-            "line1": "Your baby is ",
-            "line2": "early term",
-            "line3": ""
-          },
-          {
-            "week_name": '39 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 1 * 7 + 3)),
-            "line1": "Your baby is ",
-            "line2": "full term",
-            "line3": ""
-          },
-          {
-            "week_name": '40 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 0 - 7 + 7 + 3)),
-            "line1": "Your ",
-            "line2": "baby is due!",
-            "line3": ""
-          },
-          {
-            "week_name": '41 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 0 - 7 + 3)),
-            "line1": "If your labor doesn't start, you may be",
-            "line2": " induced",
-            "line3": ""
-          },
-        ];
-      } else {
-        milestones = [
-          {
-            "week_name": '2 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 38 * 7 + 5)),
-            "line1": "Your baby is",
-            "line2": "conceive",
-            "line3": ""
-          },
-          {
-            "week_name": '4 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 36 * 7 + 5)),
-            "line1": "You'll have a positive",
-            "line2": "pregnancy test",
-            "line3": ""
-          },
-          {
-            "week_name": '6 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 34 * 7 + 5)),
-            "line1": "Cells in your",
-            "line2": " baby's future heart",
-            "line3": "are flickering"
-          },
-          {
-            "week_name": '6 - 8 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 34 * 7 + 5)),
-            "line1": "you may have your ",
-            "line2": "first prenatal visit",
-            "line3": ""
-          },
-          {
-            "week_name": '10 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 30 * 7 + 5)),
-            "line1": "you'll be offered ",
-            "line2": "NIPT ",
-            "line3": "(Noninvasive prenantal test)"
-          },
-          {
-            "week_name": '10 - 13 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 30 * 7 + 5)),
-            "line1": "You can choose to have ",
-            "line2": "CVS",
-            "line3": " (Chorionic villus sampling)"
-          },
-          {
-            "week_name": '11 - 14 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 29 * 7 + 5)),
-            "line1": "You may have an ",
-            "line2": "NT scan and blood test",
-            "line3": ""
-          },
-          {
-            "week_name": '12 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 28 * 7 + 5)),
-            "line1": "You may ",
-            "line2": "hear your baby's heartbeat",
-            "line3": " with a Doppler"
-          },
-
-
-        ];
-        milestones2 = [
-          {
-            "week_name": '15 - 20 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 25 * 7 + 5)),
-            "line1": "You may have ",
-            "line2": "anamniocentesis",
-            "line3": ""
-          },
-          {
-            "week_name": '16 - 18 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 24 * 7 + 5)),
-            "line1": "You may have a ",
-            "line2": "quad scan",
-            "line3": " test"
-          },
-          {
-            "week_name": '16 - 22 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 24 * 7 + 5)),
-            "line1": "You can ",
-            "line2": "feel your baby kick",
-            "line3": ""
-          },
-          {
-            "week_name": '18-22 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 22 * 7 + 5)),
-            "line1": "You'll have a mid-pregnancy",
-            "line2": " ultrasound",
-            "line3": ""
-          },
-          {
-            "week_name": '23 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 16 * 7 + 7 + 5)),
-            "line1": "Your baby can ",
-            "line2": "hear you talk",
-            "line3": ""
-          },
-          {
-            "week_name": '24 - 28 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 16 * 7 + 5)),
-            "line1": "",
-            "line2": "glucose screeing",
-            "line3": ""
-          },
-          {
-            "week_name": '27 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 13 * 7 + 5)),
-            "line1": "You baby will ",
-            "line2": "open their eyes",
-            "line3": ""
-          },
-        ];
-        milestones3 = [
-          {
-            "week_name": '28 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 12 * 7 + 5)),
-            "line1": "You'll have ",
-            "line2": "prenatal visits ",
-            "line3": "every two weeks until 36 weeks, then weekly"
-          },
-          {
-            "week_name": '28 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 12 * 7 + 5)),
-            "line1": "If you're",
-            "line2": " Rh negative, ",
-            "line3": "you'll have a shot of Rh immune globulin (RhoGAM)"
-          },
-          {
-            "week_name": '34 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 6 * 7 + 5)),
-            "line1": "Your baby has ",
-            "line2": "fingernails",
-            "line3": ""
-          },
-          {
-            "week_name": '36 - 37 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 4 * 7 + 5)),
-            "line1": "You'll be screened for ",
-            "line2": "Group B strep",
-            "line3": ""
-          },
-          {
-            "week_name": '37 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 3 * 7 + 5)),
-            "line1": "Your baby is ",
-            "line2": "early term",
-            "line3": ""
-          },
-          {
-            "week_name": '39 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 1 * 7 + 5)),
-            "line1": "Your baby is ",
-            "line2": "full term",
-            "line3": ""
-          },
-          {
-            "week_name": '40 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 0 - 7 + 7 + 5)),
-            "line1": "Your ",
-            "line2": "baby is due!",
-            "line3": ""
-          },
-          {
-            "week_name": '41 weeks',
-            "weeks": dueDate.subtract(const Duration(days: 0 - 7 + 5)),
-            "line1": "If your labor doesn't start, you may be",
-            "line2": " induced",
-            "line3": ""
-          },
-        ];
-      }
+    if(_selectedMethod == 'Due Date'){
+      controller.lastPeriodFunction(dueDate);
+controller.dueDateFunction(dueDate);
+    } else if(_selectedMethod == 'Last Period'){
+      controller.lastPeriodFunction(dueDate);
+    }else if (_selectedMethod == 'Ultra Sound') {
+      final int daysPregnant = (_cycleWeek * 7) + _cycleDays;
+        dueDate = _selectedDate.add(Duration(days: 266 - daysPregnant));
+        controller.ultrasoundFun(dueDate);
+    } else if(_selectedMethod == "Conception Date"){
+      controller.conceptionDate(dueDate);
     } else {
-      milestones = [
-        {
-          "week_name": '2 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 38 * 7)),
-          "line1": "Your baby is",
-          "line2": "conceive",
-          "line3": ""
-        },
-        {
-          "week_name": '4 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 36 * 7)),
-          "line1": "You'll have a positive",
-          "line2": "pregnancy test",
-          "line3": ""
-        },
-        {
-          "week_name": '6 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 34 * 7)),
-          "line1": "Cells in your",
-          "line2": " baby's future heart",
-          "line3": "are flickering"
-        },
-        {
-          "week_name": '6 - 8 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 34 * 7)),
-          "line1": "you may have your ",
-          "line2": "first prenatal visit",
-          "line3": ""
-        },
-        {
-          "week_name": '10 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 30 * 7)),
-          "line1": "you'll be offered ",
-          "line2": "NIPT ",
-          "line3": "(Noninvasive prenantal test)"
-        },
-        {
-          "week_name": '10 - 13 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 30 * 7)),
-          "line1": "You can choose to have ",
-          "line2": "CVS",
-          "line3": " (Chorionic villus sampling)"
-        },
-        {
-          "week_name": '11 - 14 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 29 * 7)),
-          "line1": "You may have an ",
-          "line2": "NT scan and blood test",
-          "line3": ""
-        },
-        {
-          "week_name": '12 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 28 * 7)),
-          "line1": "You may ",
-          "line2": "hear your baby's heartbeat",
-          "line3": " with a Doppler"
-        },
-
-
-      ];
-      milestones2 = [
-        {
-          "week_name": '15 - 20 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 25 * 7)),
-          "line1": "You may have ",
-          "line2": "anamniocentesis",
-          "line3": ""
-        },
-        {
-          "week_name": '16 - 18 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 24 * 7)),
-          "line1": "You may have a ",
-          "line2": "quad scan",
-          "line3": " test"
-        },
-        {
-          "week_name": '16 - 22 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 24 * 7)),
-          "line1": "You can ",
-          "line2": "feel your baby kick",
-          "line3": ""
-        },
-        {
-          "week_name": '18-22 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 22 * 7)),
-          "line1": "You'll have a mid-pregnancy",
-          "line2": " ultrasound",
-          "line3": ""
-        },
-        {
-          "week_name": '23 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 16 * 7 + 7)),
-          "line1": "Your baby can ",
-          "line2": "hear you talk",
-          "line3": ""
-        },
-        {
-          "week_name": '24 - 28 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 16 * 7)),
-          "line1": "",
-          "line2": "glucose screeing",
-          "line3": ""
-        },
-        {
-          "week_name": '27 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 13 * 7)),
-          "line1": "You baby will ",
-          "line2": "open their eyes",
-          "line3": ""
-        },
-      ];
-      milestones3 = [
-        {
-          "week_name": '28 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 12 * 7)),
-          "line1": "You'll have ",
-          "line2": "prenatal visits ",
-          "line3": "every two weeks until 36 weeks, then weekly"
-        },
-        {
-          "week_name": '28 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 12 * 7)),
-          "line1": "If you're",
-          "line2": " Rh negative, ",
-          "line3": "you'll have a shot of Rh immune globulin (RhoGAM)"
-        },
-        {
-          "week_name": '34 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 6 * 7)),
-          "line1": "Your baby has ",
-          "line2": "fingernails",
-          "line3": ""
-        },
-        {
-          "week_name": '36 - 37 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 4 * 7)),
-          "line1": "You'll be screened for ",
-          "line2": "Group B strep",
-          "line3": ""
-        },
-        {
-          "week_name": '37 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 3 * 7)),
-          "line1": "Your baby is ",
-          "line2": "early term",
-          "line3": ""
-        },
-        {
-          "week_name": '39 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 1 * 7)),
-          "line1": "Your baby is ",
-          "line2": "full term",
-          "line3": ""
-        },
-        {
-          "week_name": '40 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 0 - 7 + 7)),
-          "line1": "Your ",
-          "line2": "baby is due!",
-          "line3": ""
-        },
-        {
-          "week_name": '41 weeks',
-          "weeks": dueDate.subtract(const Duration(days: 0 - 7)),
-          "line1": "If your labor doesn't start, you may be",
-          "line2": " induced",
-          "line3": ""
-        },
-      ];
-    }
+      if(selectedOption == "1"){
+        controller.ivfFunctionSelectOne(dueDate);
+      }else if(selectedOption == "2"){
+        controller.ivfFunctionSelectTwo(dueDate);
+      }else{
+        controller.ivfFunctionSelectThree(dueDate);
+      }
+      
+    } 
 
     firstTrimesterEnd = dueDate.subtract(_selectedMethod == 'Ultra Sound'
         ? const Duration(days: 26 * 7)
@@ -786,7 +129,7 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
     String timeline = 'Pregnancy timeline\n';
     timeline +=
         '\nThird Trimester\n${formatDate(_selectedMethod == 'Ultra Sound' ? dueDate.subtract(const Duration(days: 10 * 7)) : _selectedMethod == 'I know my due date' ? dueDate.subtract(const Duration(days: 12 * 7)) : _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 12 * 7 + 3)) : thirdTrimesterStart)} to ${formatDate(_selectedMethod == 'Ultra Sound' ? dueDate.add(const Duration(days: 2 * 7)) : _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 3)) : dueDate)}\n';
-    timeline += milestones
+    timeline += controller.milestones
             ?.where((milestone) =>
                 ((milestone["weeks"] as DateTime).isAfter(_selectedMethod ==
                             'Ultra Sound'
@@ -819,8 +162,10 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
     var thirdTrimesterEndDate = _selectedMethod == 'Ultra Sound' ? dueDate.add(const Duration(days: 2 * 7)) : _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 3)) : dueDate;
     var thirdTrimesterDifference = thirdTrimesterEndDate.difference(thirdTrimesterStartDate).inDays;
     DateTime? mostRecentPastDate;
+    DateTime? middleDate;
     String? associatedWeekName;
-    for(var month in milestones){
+    for(var month in (controller.milestones + controller.milestones2 + controller.milestones3)){
+
       if((month['weeks'] as DateTime).isBefore(DateTime.now())){
         DateTime weekDate = month["weeks"] as DateTime;
       print("month['week_name'] ${month['weeks']}");
@@ -830,45 +175,139 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
       }
       }
     }
+    if(_selectedMethod == "Last Period"){
+     controller.lastPeriod = dueDate.toString();
+    }else{
+    controller.lastPeriod = '';
+    }
+    // for(var month in controller.milestones){
+      print("First trimester days difference1 ${(controller.milestones[controller.milestones.length - 1]['weeks'] as DateTime).difference(controller.milestones[0]['weeks'] as DateTime).inDays}");
+      print("First trimester days difference2 ${(controller.milestones2[controller.milestones.length - 1]['weeks'] as DateTime).difference(controller.milestones2[0]['weeks'] as DateTime).inDays}");
+      print("First trimester days difference3 ${(controller.milestones3[controller.milestones.length - 1]['weeks'] as DateTime).difference(controller.milestones3[0]['weeks'] as DateTime).inDays}");
+    // }
+    var value = (DateTime.now()).difference(controller.milestones[0]['weeks'] as DateTime).inDays;
+    print("total value $value");
+    if(value <= 91){
+      print("First Trimester");
+    }else if(value <= 182){
+      print("Second trimester");
+    }else{
+      print("third trimester");
+    }
+    
     if (mostRecentPastDate != null && associatedWeekName != null) {
+      
       print('Most recent past date: ${DateFormat('MMM-d-yyyy').format(mostRecentPastDate)}');
       print('Associated week name: $associatedWeekName');
-      print('last date name: ${milestones[milestones.length - 1]["weeks"]}');
+      print('last date name: ${controller.milestones[controller.milestones.length - 1]["weeks"]}');
+      Duration difference = mostRecentPastDate.add(const Duration(days: 6)).difference(mostRecentPastDate);
+    Duration halfDifference = Duration(days: difference.inDays ~/ 2);
+    middleDate =  mostRecentPastDate.add(halfDifference);
+     print("the middle date is $middleDate");
+      var weekname = associatedWeekName.replaceAll(" weeks", '');
+      convertWeeksToMonthsAndDays(int.parse(weekname));
+      _calculateDifference();
+      checkCurrentTrimester(mostRecentPastDate);
     } else {
       print('No past date found.');
     }
+    
     print("difference ${firstTrimesterdayDifference}");
     print("difference ${secondTrimesterdayDifference}");
     print("difference ${thirdTrimesterDifference}");
-
+conceivedOn();
     RouteGenerator().pushNamedSms(
-        context, Routes.pregnancyDueDateResult, arguments: [
-      milestones3[milestones3.length - 1]["weeks"],
-      firstTrimesterdayDifference,
-      secondTrimesterdayDifference,
-      thirdTrimesterDifference,
-      DateFormat('MMM-d-yyyy').format(mostRecentPastDate ?? DateTime.now()),
-      associatedWeekName,
-      milestones,
-      _selectedMethod,
-      selectedOption,
-      firstTrimesterEnd,
-      thirdTrimesterStart,
-      milestones2,
-      milestones3,
+        context, Routes.pregnancyResultCalculator, arguments: [
+      controller.weeksDifference,
+      controller.daysDifference,
+      controller.months,
+      controller.remainingDays - 4,
+      controller.currentTrimester,
+      controller.conceviedDate,
+      controller.dueDate,
+      controller.milestones,
+      controller.milestones2,
+      controller.milestones3,
     ]);
   }
-
-  String formatDate(DateTime date) {
-    return DateFormat('MMM\nd').format(date);
+ void checkCurrentTrimester(DateTime mostRecentPastDate) {
+  setState(() {
+    DateTime currentDate = DateTime.now();
+    for (var milestone in controller.milestones) {
+      if ((milestone['weeks'] as DateTime).isAtSameMomentAs(currentDate) || (mostRecentPastDate == (milestone['weeks'] as DateTime))) {
+       controller.currentTrimester = 'First Trimester';
+        return;
+      }
+    }
+    
+    for (var milestone in controller.milestones2) {
+      if ((milestone['weeks'] as DateTime).isAtSameMomentAs(currentDate) || (mostRecentPastDate == (milestone['weeks'] as DateTime))) {
+        controller.currentTrimester = 'Second Trimester';
+        return;
+      }
+    }
+    for (var milestone in controller.milestones3) {
+      if ((milestone['weeks'] as DateTime).isAtSameMomentAs(currentDate) || (mostRecentPastDate == (milestone['weeks'] as DateTime))) {
+        controller.currentTrimester = 'Third Trimester';
+        return;
+      }
+    }
+    
+    controller.currentTrimester = 'Not currently in a defined milestone week';
+  });
+    
   }
 
+  void conceivedOn(){
+    if((_selectedMethod == "Due Date" || _selectedMethod == "Last Period" || _selectedMethod == "Ultra Sound")){
+      print("this is hot");
+   for (var milestone in controller.milestones) {
+      if (milestone["week_name"] == "2 weeks") {
+        controller.conceviedDate = ((milestone['weeks'] as DateTime).add(const Duration(days: 6))).toString();
+        print("conceived Date ${controller.conceviedDate}");
+      }
+    }
+    }
+    if(_selectedMethod != "Due Date"){
+    for (var milestone in controller.milestones3) {
+      if (milestone["week_name"] ==   "40 weeks" ) {
+        controller.dueDate = ((milestone['weeks'] as DateTime).add(const Duration(days: 6))).toString();
+      }
+    }
+ }else{
+  controller.dueDate = '';
+ }
+  }
+void convertWeeksToMonthsAndDays(int weeks) {
+  int days = weeks * 7;
+  int months = days ~/ 30;
+  int remainingDays = days % 30;
+setState(() {
+  controller.months = months;
+  controller.remainingDays = remainingDays;
+});
+  print('$weeks weeks is approximately $months months and ${remainingDays} days.');
+}
+  String formatDate(DateTime date) {
+    return DateFormat('MMM\nd yyyy').format(date);
+  }
+void _calculateDifference() {
+    final DateTime currentDate = DateTime.now();
+    final Duration difference = currentDate.difference((controller.milestones[0]['weeks'] as DateTime));
+    setState(() {
+      controller.weeksDifference = difference.inDays.abs() ~/ 7;
+      controller.daysDifference = difference.inDays.abs() % 7;
+    });
+    print("this is days weeek ${difference}");
+    print("this is days weeek ${controller.weeksDifference}");
+    print("this is days days ${controller.daysDifference }");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: globalText20(
-            text: "Due date Calculator", fontWeight: FontWeight.w600),
+            text: "Pregnancy Calculator", fontWeight: FontWeight.w600),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -1046,44 +485,6 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
                           color: HexColor("437AFF"),
                           size: 22,
                         )
-                        // Expanded(
-                        //   child: Container(
-                        //     width: MediaQuery.of(context).size.width * 0.2,
-                        //     decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(8),
-                        //         color: HexColor("F3F6F9")),
-                        //     child: DropdownButtonHideUnderline(
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.symmetric(
-                        //             horizontal: 8, vertical: 2),
-                        //         child: DropdownButton<int>(
-                        //           icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                        //           value: _selectedYear,
-                        //           onChanged: (int? newValue) {
-                        //             setState(() {
-                        //               _selectedYear = newValue!;
-                        //               if (_selectedDay >
-                        //                   _daysInMonth(_selectedYear, _selectedMonth)
-                        //                       .length) {
-                        //                 _selectedDay = _daysInMonth(
-                        //                     _selectedYear, _selectedMonth)
-                        //                     .length;
-                        //               }
-                        //             });
-                        //           },
-                        //           items: _years().map((year) {
-                        //             return DropdownMenuItem(
-                        //               value: year,
-                        //               child: globalText16(
-                        //                   text: "$year",
-                        //                   fontWeight: FontWeight.normal),
-                        //             );
-                        //           }).toList(),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -1133,6 +534,87 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
                 ],
               ),
             ],
+            if (_selectedMethod == 'Ultra Sound') ...[
+              Row(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: HexColor("F3F6F9")),
+                        child: Center(
+                          child: TextFormField(
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                              // labelText: 'Cycle Length (days)',
+                              border: InputBorder.none,
+                            ),
+                            keyboardType: TextInputType.number,
+                            initialValue: _cycleWeek.toString(),
+                            onChanged: (val) {
+                              setState(() {
+                                _cycleWeek = int.tryParse(val) ?? 28;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your cycle length';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      globalText16(text: "Weeks", fontWeight: FontWeight.normal)
+                    ],
+                  ),
+                  10.pw,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: HexColor("F3F6F9")),
+                        child: Center(
+                          child: TextFormField(
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                              // labelText: 'Cycle Length (days)',
+                              border: InputBorder.none,
+                            ),
+                            keyboardType: TextInputType.number,
+                            initialValue: _cycleDays.toString(),
+                            onChanged: (val) {
+                              setState(() {
+                                _cycleDays = int.tryParse(val) ?? 28;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your cycle length';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      globalText16(text: "Weeks", fontWeight: FontWeight.normal)
+                    ],
+                  ),
+                ],
+              ),
+            ],
             if (_selectedMethod == 'IVF') ...[
               ListTile(
                 title: globalText16(
@@ -1160,6 +642,21 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
                     });
                   },
                   value: "2",
+                ),
+              ),
+              ListTile(
+                title: globalText16(
+                    text: "IVF 6 Day Transfer Date",
+                    fontWeight: FontWeight.w500),
+                leading: Radio<String>(
+                  groupValue: selectedOption,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedOption = value ?? '';
+                      print(selectedOption);
+                    });
+                  },
+                  value: "3",
                 ),
               ),
             ],
@@ -1199,8 +696,20 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
                   )),
             ),
             
-            const SizedBox(height: 16.0),
-          //  if(milestones[0]['weeks'] != null && (milestones[0]['weeks'] as DateTime).day.toString().isNotEmpty)
+          //   const SizedBox(height: 16.0),
+          //  if(controller.milestones[0]['weeks'] != null && (controller.milestones[0]['weeks'] as DateTime).day.toString().isNotEmpty)
+          // Expanded(child: ListView.builder(
+          //     itemCount: controller.milestones.length,
+          //     itemBuilder: (_, index){
+          //       var item = controller.milestones[index];
+          //       return Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text("${formatDate(item['weeks'] as DateTime)}"),
+          //           Text("${item['week_name']}"),
+          //         ],
+          //       );
+          //     }))
           
           ],
         ),

@@ -10,31 +10,60 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 
-class DueDateResultCalculator extends StatefulWidget {
-  final DateTime lastMonthName, firstTrimesterEnd, thirdTrimesterStart;
-  final String mostRecentPastDate, associatedWeekName,selectedMethod, selectedOption;
-  final int firstTrimesterDayDifference,
-      secondTrimesterDayDifference,
-      thirdTrimesterDayDifference;
+class PregnancyResultCalculator extends StatefulWidget {
+  final int weeksDifference, daysDifference, month, remainingDays;
+  final String currentTrimester, conceviedDate, dueDate;
   final List<Map<String, Object>> milestones, milestones2,milestones3;
-  const DueDateResultCalculator(
-      {super.key,
-      required this.lastMonthName,
-      required this.firstTrimesterDayDifference,
-      required this.secondTrimesterDayDifference,
-      required this.thirdTrimesterDayDifference,
-      required this.mostRecentPastDate,
-      required this.associatedWeekName,
-      required this.milestones, required this.selectedMethod, required this.selectedOption, required this.firstTrimesterEnd, required this.thirdTrimesterStart, required this.milestones2, required this.milestones3});
+  const PregnancyResultCalculator(
+      {super.key, 
+      required this.weeksDifference, 
+      required this.daysDifference, 
+      required this.month, 
+      required this.remainingDays, 
+      required this.currentTrimester, 
+      required this.conceviedDate, 
+      required this.dueDate,
+required this.milestones,
+required this.milestones2,
+required this.milestones3,
+
+      });
+
 
   @override
-  State<DueDateResultCalculator> createState() =>
-      _DueDateResultCalculatorState();
+  State<PregnancyResultCalculator> createState() =>
+      _PregnancyResultCalculatorState();
 }
 
-class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
+class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
+  // final DateTime selectedDate = DateTime(2023, 10, 12); 
+  DateTime presentDate = DateTime.now();
+  
+  int get daysDifference {
+    return presentDate.difference((widget.milestones[0]["weeks"] as DateTime)).inDays;
+  }
+   String getOrdinalSuffix(int number) {
+    if (number >= 11 && number <= 13) {
+      return 'th';
+    }
+    switch (number % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    print("this is date ${widget.milestones[0]["weeks"]}");
+    int daysDiff = daysDifference;
+    int trimesterDays = 91;
+    int trimesterIndex = (daysDiff / trimesterDays).floor();
+    int progressInCurrentTrimester = daysDiff % trimesterDays;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Due date Calculator',
@@ -71,8 +100,9 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
                 child: globalText24(text: "Calculator", color: Colors.white),
               ),
             ),
+            
             Container(
-              height: 140,
+              height: 180,
               width: MediaQuery.of(context).size.width,
               color: HexColor("0F182E"),
               child: Column(
@@ -85,139 +115,110 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
                     width: 40,
                   ),
                   globalText16(
-                      text: "Your Due Date",
+                      text: "Your Currently Pregnent",
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                       alignment: Alignment.center),
-                  globalText24(
+                  globalText20(
                       text:
-                          "${DateFormat('d MMMM, yyyy').format(widget.lastMonthName)}",
+                          "${widget.weeksDifference} week ${widget.daysDifference} days",
                       color: HexColor("7BFF80"),
                       fontWeight: FontWeight.w700,
                       alignment: Alignment.center),
+                  globalText20(
+                      text:
+                          "OR",
+                      color: HexColor("7BFF80"),
+                      fontWeight: FontWeight.w700,
+                      alignment: Alignment.center),
+                  globalText20(
+                      text:
+                          "${widget.month} months ${widget.remainingDays} Days",
+                      color: HexColor("7BFF80"),
+                      fontWeight: FontWeight.w700,
+                      alignment: Alignment.center),
+
                 ],
               ),
             ),
             10.ph,
-            globalText20(
-                text: "You Are Current",
-                color: HexColor("000000"),
-                fontWeight: FontWeight.w600,
-                alignment: Alignment.center),
-            10.ph,
-            Container(
-              height: 80,
-              width: 80,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(500),
-                  color: HexColor("0F182E")),
-              child: Center(
-                child: globalText24(
-                    text:
-                        "${widget.associatedWeekName.replaceAll("weeks", "")}",
-                    color: HexColor("7BFF80"),
-                    fontWeight: FontWeight.w700,
-                    alignment: Alignment.center),
+            Padding(padding: EdgeInsets.only(left: 20),
+            child: globalText12(
+                text: "You Are in the ${widget.currentTrimester}",
+                color: HexColor("2FAE3B"),
+                fontWeight: FontWeight.w500,
+                alignment: Alignment.centerLeft),
+            ),
+            Padding(padding: EdgeInsets.only(left: 20),
+            child: globalText12(
+                text: "Your baby was likely conceived on ${DateFormat("MMM d, yyyy").format(DateTime.parse(widget.conceviedDate))}",
+                color: HexColor("2FAE3B"),
+                fontWeight: FontWeight.w500,
+                alignment: Alignment.centerLeft),
+            ),
+            Visibility(
+              visible: widget.dueDate.toString().isEmpty ? false : true,
+              child: Padding(padding: EdgeInsets.only(left: 20),
+              child: globalText12(
+                  text: "The estimated due date is ${DateFormat("MMM d, yyyy").format(DateTime.parse(widget.dueDate.toString().isEmpty ? widget.conceviedDate : widget.dueDate))}",
+                  color: HexColor("2FAE3B"),
+                  fontWeight: FontWeight.w500,
+                  alignment: Alignment.centerLeft),
               ),
             ),
-            10.ph,
-            globalText20(
-                text: "Week pregnant",
-                color: HexColor("2FAE3B"),
-                fontWeight: FontWeight.w600,
-                alignment: Alignment.center),
-            10.ph,
+            20.ph,
             Divider(
               color: HexColor("F3F3F3"),
             ),
             10.ph,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 5),
-                        child: globalText10(
-                            text: "1st Trimester",
-                            color: HexColor("2FAE3B"),
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.centerLeft),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: LinearPercentIndicator(
-                          backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
+            globalText20(
+                text: "Progress",
+                color: HexColor("2E2E2E"),
+                fontWeight: FontWeight.w700,
+                alignment: Alignment.center),
+            10.ph,
+            Padding(padding: EdgeInsets.only(left: 20), child: globalText14(
+                text: "You are of the way through your pregnancy.",
+                color: HexColor("2E2E2E"),
+                fontWeight: FontWeight.normal,
+                alignment: Alignment.centerLeft),),
+
+20.ph,
+                Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
+          children: [
+            for (int i = 0; i < 3; i++)
+              Expanded(
+                child: Column(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 15), child: globalText10(text: '${i + 1}${getOrdinalSuffix(i + 1)} Trimester', fontWeight: FontWeight.normal),),
+                    5.ph,
+                    Padding(
+                      padding:  EdgeInsets.only(right: (i + 1 == 3) ? 0 : 10),
+                      child: LinearPercentIndicator(
+                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
                           animation: true,
                           lineHeight: 20.0,
                           animationDuration: 3000,
-                          percent: widget.secondTrimesterDayDifference / 100,
                           animateFromLastPercent: true,
                           progressColor: Colors.green,
                           barRadius: Radius.circular(10),
-                        ),
+                        percent: i < trimesterIndex
+                            ? 1.0
+                            : i == trimesterIndex
+                                ? progressInCurrentTrimester / trimesterDays
+                                : 0.0,
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 16.0),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 5),
-                        child: globalText10(
-                            text: "2nd Trimester",
-                            color: HexColor("2FAE3B"),
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.centerLeft),
-                      ),
-                      LinearPercentIndicator(
-                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 3000,
-                        percent: widget.thirdTrimesterDayDifference / 100,
-                        animateFromLastPercent: true,
-                        progressColor: Colors.green,
-                        barRadius: Radius.circular(10),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 5),
-                        child: globalText10(
-                            text: "3rd Trimester",
-                            color: HexColor("2FAE3B"),
-                            fontWeight: FontWeight.w400,
-                            alignment: Alignment.centerLeft),
-                      ),
-                      LinearPercentIndicator(
-                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 3000,
-                        percent: widget.firstTrimesterDayDifference / 100,
-                        animateFromLastPercent: true,
-                        progressColor: Colors.green,
-                        barRadius: Radius.circular(10),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            20.ph,
-            Center(
+              ),
+          ],
+        ),
+      ),
+                  Center(
               child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -236,13 +237,9 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
                   ),
                   onPressed: () {
                     RouteGenerator().pushNamedSms(
-                        context, Routes.pregnancyTrimester,
+                        context, Routes.pregnancyTimeTrimester,
                         arguments: [
                           widget.milestones,
-                          widget.selectedMethod,
-                          widget.selectedOption,
-                          widget.firstTrimesterEnd,
-                          widget.thirdTrimesterStart,
                           widget.milestones2,
                           widget.milestones3,
                         ]);

@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/src/intl/date_format.dart';
 
-// ignore: must_be_immutable
-class PregnancyTimeTrimester extends StatelessWidget {
+class PregnancyTrimester extends StatelessWidget {
   final List<Map<String, Object>> milestones, milestones2,milestones3;
-
-   PregnancyTimeTrimester({super.key, required this.milestones, required this.milestones2, required this.milestones3});
+  final String selectedMethod, selectedOption;
+  final DateTime firstTrimesterEnd, thirdTrimesterStart;
+   PregnancyTrimester({super.key, required this.milestones, required this.selectedMethod, required this.selectedOption, required this.firstTrimesterEnd, required this.thirdTrimesterStart, required this.milestones2, required this.milestones3});
   String formatDate(DateTime date) {
     return DateFormat('MMM\nd').format(date);
   }
@@ -41,7 +41,7 @@ DateTime dueDate = DateTime.now();
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                if (item["week_name"] == "1 weeks")
+                                if (item["week_name"] == "2 weeks")
                                   Column(
                                     children: [
                                       globalText16(
@@ -51,7 +51,7 @@ DateTime dueDate = DateTime.now();
                                       color: Colors.black, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                                       globalText14(
                                       text:
-                                          "${formatDate1(item['weeks'] as DateTime)}  to  ${formatDate1(milestones[milestones.length - 1]['weeks'] as DateTime)}\n",
+                                          "${formatDate1(item['weeks'] as DateTime)}  to  ${DateFormat('MMM d, yyyy').format(firstTrimesterEnd)}\n",
                                       fontWeight: FontWeight.w400,
                                       color: HexColor("8E8E8E"), alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                                     ],
@@ -118,7 +118,7 @@ DateTime dueDate = DateTime.now();
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                if (index == 0)
+                                if (item["week_name"] == "15 - 20 weeks")
                                   Column(
                                     children: [
                                       globalText16(
@@ -128,7 +128,7 @@ DateTime dueDate = DateTime.now();
                                       color: Colors.black, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                                       globalText14(
                                       text:
-                                          "${formatDate1(milestones[milestones.length - 1]['weeks'] as DateTime)} to ${formatDate1(milestones2[milestones2.length - 1]['weeks'] as DateTime)}\n",
+                                          "${DateFormat('MMM d, yyyy').format(firstTrimesterEnd)} to ${formatDate1(milestones2[milestones2.length - 1]['weeks'] as DateTime)}\n",
                                       fontWeight: FontWeight.w400,
                                       color: HexColor("8E8E8E"), alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                                     ],

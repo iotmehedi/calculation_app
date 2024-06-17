@@ -87,7 +87,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                 children: [
                   Expanded(
                       child: CustomElevatedButton(
-                    text: globalText20(
+                    text: globalText18(
                         text: 'Us Unit',
                         color: type != 'usUnit' && (type?.isNotEmpty ?? false)
                             ? HexColor('0F182E')
@@ -126,7 +126,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                       color: type == 'matrics' && (type?.isNotEmpty ?? false)
                           ? AppColors.calculateButtonColor
                           : HexColor('EEF2F6'),
-                      text: globalText20(
+                      text: globalText18(
                           text: 'Matrics Units',
                           color:
                               type != 'matrics' && (type?.isNotEmpty ?? false)

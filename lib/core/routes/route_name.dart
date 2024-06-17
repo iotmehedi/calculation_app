@@ -19,4 +19,8 @@ class Routes {
   static const pregnancyDueDate = "/pregnancyDueDate";
   static const pregnancyDueDateResult = "/pregnancyResultDueDate";
   static const pregnancyTrimester = "/pregnancyTrimester";
+  static const pregnancyTimeCalculator = "/pregnancyTimeCalculatorPage";
+  static const pregnancyResultCalculator = "/pregnancyResultCalculator";
+  static const pregnancyTimeTrimester = "/pregnancyTimeTrimester";
+  static const mortgageResultPage = "/mortgageResultPage";
 }

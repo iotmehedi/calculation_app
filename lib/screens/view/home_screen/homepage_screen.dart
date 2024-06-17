@@ -202,7 +202,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.pregnant,
                       text: "Pregnancy\nCalculator",
                       onPress: () {
-                        print("this is");
+                        RouteGenerator.pushNamed(
+                            context, Routes.pregnancyTimeCalculator);
                       },
                     ),
                   ),

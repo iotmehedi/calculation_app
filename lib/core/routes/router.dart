@@ -7,20 +7,24 @@ import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_resultpage.dart';
 import 'package:calculation_app/screens/view/all_calculators/fractio_calculator/fraction_calculator.dart';
+import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/normal_calculator_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/ovaluation_period/ovaluation_period_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/period_calculator/period_calculator_screen.dart';
+import 'package:calculation_app/screens/view/all_calculators/pregnancy_calculator/pregnancy_calculator.dart';
+import 'package:calculation_app/screens/view/all_calculators/pregnancy_calculator/pregnancy_time_trimester.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/due_date_result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_due_date_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_trimester.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
-import 'package:calculation_app/screens/view/mortgage_screen/mortgage_screen.dart';
+import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_screen.dart';
 import 'package:calculation_app/screens/view/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
+import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -79,7 +83,7 @@ class RouteGenerator {
         );
       case Routes.mortgagePage:
         return MaterialPageRoute(
-          builder: (context) => const MortgageScreen(),
+          builder: (context) =>  const MortgageScreen(),
         );
       case Routes.normalCalculatorScreen:
         return MaterialPageRoute(
@@ -177,6 +181,12 @@ class RouteGenerator {
             builder: (context) => PregnancyCalculatorPage(),
           );
         }
+        case Routes.pregnancyTimeCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => PregnancyTimeCalculatorPage(),
+          );
+        }
         case Routes.pregnancyDueDateResult:
         {
           final arguments = routeSettings.arguments as List;
@@ -211,6 +221,41 @@ class RouteGenerator {
               milestones2: arguments[5] as List<Map<String, Object>>,
               milestones3: arguments[6] as List<Map<String, Object>>,
             ),
+          );
+        }
+        case Routes.pregnancyResultCalculator:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => PregnancyResultCalculator(
+              weeksDifference: arguments[0] as int,
+              daysDifference: arguments[1] as int,
+              month: arguments[2] as int,
+              remainingDays: arguments[3] as int,
+              currentTrimester: arguments[4] as String,
+              conceviedDate: arguments[5] as String,
+              dueDate: arguments[6] as String,
+                milestones: arguments[7] as List<Map<String, Object>>,
+              milestones2: arguments[8] as List<Map<String, Object>>,
+              milestones3: arguments[9] as List<Map<String, Object>>,
+            ),
+          );
+        }
+        case Routes.pregnancyTimeTrimester:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => PregnancyTimeTrimester(
+                milestones: arguments[0] as List<Map<String, Object>>,
+              milestones2: arguments[1] as List<Map<String, Object>>,
+              milestones3: arguments[2] as List<Map<String, Object>>,
+            ),
+          );
+        }
+        case Routes.mortgageResultPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>  MortgageResultPage(),
           );
         }
     }
