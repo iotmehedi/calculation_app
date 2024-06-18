@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator.dart';
+import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator_result.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
@@ -263,6 +264,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) =>  AutoLoanCalculatorScreen(),
+          );
+        }
+        case Routes.autoLoanCalculatorResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>  AutoLoanCalculatorResult(),
           );
         }
     }
