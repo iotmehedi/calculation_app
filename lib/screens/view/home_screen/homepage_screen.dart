@@ -120,7 +120,9 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.stocks,
                       text: "Stocks\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.stockCalculatorPage);
+                      },
                     ),
                   ),
                   Expanded(

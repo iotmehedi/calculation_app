@@ -192,7 +192,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                             fontSize: 20.0,
                             hexColor: HexColor('80848A'),
                             controller: ageController,
-                            textInputType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             paddingNeed: false,
                             hint: "Age",
                             textAlign: TextAlign.start),
@@ -266,7 +266,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                         controller: type != 'usUnit'
                             ? heightCmController
                             : heightFeetController,
-                        textInputType: TextInputType.number,
+                        keyboardType: TextInputType.number,
                         paddingNeed: false,
                         hint: type != 'usUnit' ? "cm" : "Feet",
                         textAlign: TextAlign.end),
@@ -282,7 +282,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                           fontSize: 20.0,
                           hexColor: HexColor('80848A'),
                           controller: heightInchesController,
-                          textInputType: TextInputType.number,
+                          keyboardType: TextInputType.number,
                           paddingNeed: false,
                           hint: "Inch",
                           textAlign: TextAlign.end),
@@ -312,7 +312,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                             controller: type != 'matrics'
                                 ? weightPoundsController
                                 : weightKgController,
-                            textInputType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             paddingNeed: false,
                             hint: type != 'usUnit' ? "kg" : "Pounds",
                             textAlign: TextAlign.end),

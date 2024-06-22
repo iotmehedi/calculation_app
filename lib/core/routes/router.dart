@@ -27,6 +27,8 @@ import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calcul
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
+import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
+import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_screen.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -270,6 +272,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) =>  AutoLoanCalculatorResult(),
+          );
+        }
+        case Routes.stockCalculatorPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>  StockCalculatorPage(),
+          );
+        }
+        case Routes.stocksCalculatorResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>  StocksCalculatorResultScreen(),
           );
         }
     }
