@@ -31,4 +31,6 @@ class Routes {
   static const loanCalculatorResult = "/loanCalculatorResult";
   static const sIPCalculatorPage = "/sIPCalculatorPage";
   static const sIPResultScreen = "/sIPResultScreen";
+  static const tipCalculator = "/tipCalculator";
+  static const emiCalculator = "/emiCalculator";
 }

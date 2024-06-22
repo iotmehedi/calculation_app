@@ -25,6 +25,7 @@ import 'package:get/get.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator_result.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
+import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
@@ -33,6 +34,7 @@ import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_result_screen.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_screen.dart';
+import '../../screens/view/all_calculators/tip_calculator/tip_calculator_screen.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -312,6 +314,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) =>   SIPResultScreen(),
+          );
+        }
+        case Routes.tipCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>   TipCalculator(),
+          );
+        }
+        case Routes.emiCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>   EmiCalculator(),
           );
         }
     }

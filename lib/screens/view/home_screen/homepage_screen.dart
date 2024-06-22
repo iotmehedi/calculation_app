@@ -62,7 +62,9 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.emi,
                       text: "EMI\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.emiCalculator);
+                      },
                     ),
                   ),
                 ],

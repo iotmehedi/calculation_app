@@ -13,10 +13,19 @@ class HomepageWidget extends StatelessWidget {
       onTap: onPress,
       child: Column(
         children: [
-          Image.asset(
-            images,
-            height: 30,
-            width: 30,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: Colors.grey.withOpacity(0.2))
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Image.asset(
+                images,
+                height: 30,
+                width: 30,
+              ),
+            ),
           ),
           const SizedBox(
             height: 5,
