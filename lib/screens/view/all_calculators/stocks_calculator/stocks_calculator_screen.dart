@@ -311,34 +311,7 @@ var controller = Get.put(StocksCalculatorController());
               ),
 
               SizedBox(height: 20),
-              Text(
-                'Net Buying Price: \$${controller.netBuyingPrice.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                'Buying Commission: \$${controller.buyingCommissionController.value.text}',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                'Net Selling Price: \$${controller.netSellingPrice.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                'Selling Commission: \$${controller.sellingCommissionController.value.text}',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                'Break-even Selling Price: \$${controller.breakEvenSellingPrice.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                'Return on Investment: ${controller.returnOnInvestment.toStringAsFixed(2)}%',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                'Profit/Loss: \$${controller.profitOrLoss.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 20),
-              ),
+
             ],
           ),
         ),

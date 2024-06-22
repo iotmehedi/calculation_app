@@ -25,8 +25,12 @@ import 'package:get/get.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator_result.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
+import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
+import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
+import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
+import '../../screens/view/all_calculators/sip_calculator/sip_result_screen.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_screen.dart';
 
@@ -284,6 +288,30 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) =>  StocksCalculatorResultScreen(),
+          );
+        }
+        case Routes.loanCalculatorScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>  LoanCalculatorScreen(),
+          );
+        }
+        case Routes.loanCalculatorResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>   LoanCalculatorResult(),
+          );
+        }
+        case Routes.sIPCalculatorPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>   SIPCalculatorPage(),
+          );
+        }
+        case Routes.sIPResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) =>   SIPResultScreen(),
           );
         }
     }

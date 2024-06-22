@@ -53,7 +53,9 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.sip,
                       text: "SIP\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.sIPCalculatorPage);
+                      },
                     ),
                   ),
                   Expanded(
@@ -112,7 +114,7 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.loan,
                       text: "Loan\nCalculator",
                       onPress: () {
-                        print("this is");
+                        RouteGenerator.pushNamed(context, Routes.loanCalculatorScreen);
                       },
                     ),
                   ),

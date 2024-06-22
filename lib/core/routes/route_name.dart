@@ -27,4 +27,8 @@ class Routes {
   static const autoLoanCalculatorResult = "/autoLoanCalculatorResult";
   static const stockCalculatorPage = "/stockCalculatorPage";
   static const stocksCalculatorResultScreen = "/stocksCalculatorResultScreen";
+  static const loanCalculatorScreen = "/loanCalculatorScreen";
+  static const loanCalculatorResult = "/loanCalculatorResult";
+  static const sIPCalculatorPage = "/sIPCalculatorPage";
+  static const sIPResultScreen = "/sIPResultScreen";
 }

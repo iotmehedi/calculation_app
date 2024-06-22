@@ -55,7 +55,7 @@ class CustomTextField extends StatelessWidget {
 }
 
 class CustomSimpleTextField extends StatelessWidget {
-  final String? hint;
+  final String? hint, suffixText;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -68,7 +68,7 @@ class CustomSimpleTextField extends StatelessWidget {
   final double? fontSize;
   final MaterialColor? color;
   final HexColor? hexColor;
-  String? Function(String?)? validator;
+  final String? Function(String?)? validator;
    CustomSimpleTextField({
     super.key,
     this.hint,
@@ -84,7 +84,7 @@ class CustomSimpleTextField extends StatelessWidget {
     this.fontSize,
     this.color,
     this.hexColor,
-    this.validator
+    this.validator, this.suffixText
   });
 
   @override
@@ -108,16 +108,21 @@ class CustomSimpleTextField extends StatelessWidget {
                 hintText: hint,
                 border: InputBorder.none,
                 hintStyle: globalTextStyle(),
-                contentPadding: const EdgeInsets.only(right: 10, left: 10))
+                contentPadding: const EdgeInsets.only(right: 10, left: 10),
+
+        )
             : InputDecoration(
                 hintText: hint,
                 border: InputBorder.none,
+
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: prefixIcon,
                 ),
                 prefixIconColor: prefixIconColor,
                 suffixIcon: suffixIcon,
+          suffixText: suffixText,
+          suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
               ),
       ),
     );

@@ -145,19 +145,19 @@ class BRMResultScreen extends StatelessWidget {
   }
 }
 
-Widget CustomRow({required String title, required String value}) {
+Widget CustomRow({required String title, required String value, FontWeight? titleFontWeight, FontWeight? headingFontWeight, Color? titleColor, Color? headingColor}) {
   return Padding(
     padding: const EdgeInsets.only(left: 10),
     child: Row(
       children: [
         Expanded(
-            flex: 3,
-            child: globalText16(text: title, fontWeight: FontWeight.w500)),
+            flex: 1,
+            child: globalText16(text: title, fontWeight: titleFontWeight ?? FontWeight.w500, color: titleColor)),
         Expanded(
             child: globalText16(
                 text: value,
                 alignment: Alignment.center,
-                fontWeight: FontWeight.w700)),
+                fontWeight: headingFontWeight ?? FontWeight.w700, color: headingColor)),
       ],
     ),
   );
