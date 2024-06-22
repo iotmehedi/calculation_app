@@ -166,7 +166,13 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
                       width: MediaQuery.of(context).size.width,
                       child: CustomElevatedButton(
                         color: HexColor("244384"),
-                        onPress: controller.calculateSIP,
+                        onPress: (){
+                          if(controller.selectedButton.value){
+                            controller.calculateSIP();
+                          }else{
+                            controller.calculateLumpsum();
+                          }
+                        },
                         // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
                         text: const Text(
                           "Calculate",

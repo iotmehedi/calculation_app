@@ -14,7 +14,7 @@ class SIPController extends GetxController{
   var monthlyInvestmentController = TextEditingController().obs;
   var annualReturnController = TextEditingController().obs;
   var timePeriodController = TextEditingController().obs;
-  var selectedButton = false.obs;
+  var selectedButton = true.obs;
   var investmentAmount = 0.0.obs;
   var estReturn = 0.0.obs;
   var totalValue = 0.0.obs;
@@ -36,6 +36,22 @@ var list = [].obs;
           (pow(1 + monthlyReturn, totalMonths) - 1) /
           monthlyReturn *
           (1 + monthlyReturn);
+      estReturn.value = totalValue.value - investmentAmount.value;
+      list.add(investmentAmount.round());
+      list.add(estReturn.round());
+      total.value = investmentAmount.value + estReturn.value;
+      RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.sIPResultScreen);
+    }
+  }
+  void calculateLumpsum() {
+    list.clear();
+    if (formKey.value.currentState!.validate()) {
+      double investment = double.parse(monthlyInvestmentController.value.text);
+      double annualReturn = double.parse(annualReturnController.value.text) / 100;
+      int timePeriod = int.parse(timePeriodController.value.text);
+
+      investmentAmount.value = investment;
+      totalValue.value = investment * pow(1 + annualReturn, timePeriod);
       estReturn.value = totalValue.value - investmentAmount.value;
       list.add(investmentAmount.round());
       list.add(estReturn.round());

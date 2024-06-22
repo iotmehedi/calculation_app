@@ -39,60 +39,61 @@ var controller = Get.find<SIPController>();
                         thickness: 0.5,
                       ),
                       CustomRow(title: "Total Value:", value: "\$ ${controller.totalValue.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal, titleColor: Colors.blue, headingColor: Colors.blue),
-                      30.ph,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            20.ph,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                height: 150,
+                child: Card(
+                  color: Colors.white,
+                  elevation: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
                         child: SizedBox(
-                          height: 150,
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 140,
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: PieChart(
-                                          PieChartData(
-                                            sections: controller.showingSections(),
-                                            borderData: FlBorderData(
-                                              show: true,
-                                            ),
-                                            sectionsSpace: 0,
-                                            centerSpaceRadius: 40,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                          height: 140,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: PieChart(
+                                PieChartData(
+                                  sections: controller.showingSections(),
+                                  borderData: FlBorderData(
+                                    show: true,
                                   ),
+                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 40,
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomRoww(
-                                          color: HexColor("458EEC"), text: "Principal"),
-                                      CustomRoww(
-                                          color: HexColor("99CBF7"), text: "Interest"),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomRoww(
+                                color: HexColor("458EEC"), text: "Principal"),
+                            CustomRoww(
+                                color: HexColor("99CBF7"), text: "Interest"),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
