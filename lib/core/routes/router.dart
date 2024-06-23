@@ -31,8 +31,11 @@ import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.
 import '../../screens/view/all_calculators/emi_calculator/emi_result_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
+import '../../screens/view/all_calculators/margin_calculator/margin_calculator_result_screen.dart';
+import '../../screens/view/all_calculators/margin_calculator/margin_calculator_screen.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
+import '../../screens/view/all_calculators/salary_calculator/salary_calculator_screen.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_result_screen.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
@@ -41,6 +44,7 @@ import '../../screens/view/all_calculators/tip_calculator/tip_calculator_result_
 import '../../screens/view/all_calculators/tip_calculator/tip_calculator_screen.dart';
 import '../../screens/view/all_calculators/vat_calculator/vat_calculator_screen.dart';
 import '../../screens/view/all_calculators/vat_calculator/vat_result_screen.dart';
+import '../../screens/view/more_calculator/more_calculator.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -369,6 +373,30 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => DiscountResultScreen(),
+          );
+        }
+        case Routes.moreCalculatorPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) => MoreCalculatorPage(),
+          );
+        }
+        case Routes.marginCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => MarginCalculatorScreen(),
+          );
+        }
+        case Routes.marginCalculatorResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => MarginCalculatorResultScreen(),
+          );
+        }
+        case Routes.salaryCalculatorScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => SalaryCalculatorScreen(),
           );
         }
     }

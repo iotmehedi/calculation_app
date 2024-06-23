@@ -123,13 +123,14 @@ class CustomSimpleTextField extends StatelessWidget {
                 border: InputBorder.none,
 
                 prefixIcon: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.only(left: 16),
                   child: prefixIcon,
                 ),
                 prefixIconColor: prefixIconColor,
                 suffixIcon: suffixIcon,
           suffixText: suffixText,
           suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
+          contentPadding: EdgeInsets.only(top: 12),
               ),
       ),
     );

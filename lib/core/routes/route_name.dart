@@ -39,4 +39,8 @@ class Routes {
   static const vatResultScreen = "/vatResultScreen";
   static const discountCalculatorPage = "/discountCalculatorPage";
   static const discountResultScreen = "/discountResultScreen";
+  static const moreCalculatorPage = "/moreCalculatorPage";
+  static const marginCalculator = "/marginCalculator";
+  static const marginCalculatorResultScreen = "/marginCalculatorResultScreen";
+  static const salaryCalculatorScreen = "/salaryCalculatorScreen";
 }

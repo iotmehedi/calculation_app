@@ -1,6 +1,7 @@
 import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/core/routes/router.dart';
 import 'package:calculation_app/core/utils/consts/app_assets.dart';
+import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:calculation_app/screens/widgets/homepage_widget/homepage_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -19,11 +20,21 @@ class HomepageScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Finance Type Calculator",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Finance Type Calculator",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    ),
+                    InkWell(
+                        onTap: (){
+                          RouteGenerator.pushNamed(context, Routes.moreCalculatorPage);
+                        },
+                        child: CustomText(text: "View All", textColor: Colors.blue, fontSize: 14,))
+                  ],
                 ),
               ),
               const SizedBox(
@@ -45,7 +56,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.autoLoan,
                       text: "Auto Loan\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.autoLoanCalculatorScreen);
+                        RouteGenerator.pushNamed(
+                            context, Routes.autoLoanCalculatorScreen);
                       },
                     ),
                   ),
@@ -54,7 +66,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.sip,
                       text: "SIP\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.sIPCalculatorPage);
+                        RouteGenerator.pushNamed(
+                            context, Routes.sIPCalculatorPage);
                       },
                     ),
                   ),
@@ -88,7 +101,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.income,
                       text: "Vat\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.vATCalculatorHomePage);
+                        RouteGenerator.pushNamed(
+                            context, Routes.vATCalculatorHomePage);
                       },
                     ),
                   ),
@@ -118,7 +132,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.loan,
                       text: "Loan\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.loanCalculatorScreen);
+                        RouteGenerator.pushNamed(
+                            context, Routes.loanCalculatorScreen);
                       },
                     ),
                   ),
@@ -127,7 +142,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.stocks,
                       text: "Stocks\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.stockCalculatorPage);
+                        RouteGenerator.pushNamed(
+                            context, Routes.stockCalculatorPage);
                       },
                     ),
                   ),
@@ -145,7 +161,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.more,
                       text: "Discount\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.discountCalculatorPage);
+                        RouteGenerator.pushNamed(
+                            context, Routes.discountCalculatorPage);
                       },
                     ),
                   ),

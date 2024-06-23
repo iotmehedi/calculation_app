@@ -10,6 +10,6 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style:GoogleFonts.podkova(color: textColor, fontWeight: fontWeight, fontSize: fontSize),);
+    return Text(text, style:GoogleFonts.poppins(color: textColor, fontWeight: fontWeight, fontSize: fontSize),);
   }
 }
