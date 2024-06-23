@@ -1,4 +1,5 @@
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/discount_calculator/discount_controller.dart';
 import 'package:calculation_app/screens/view/all_calculators/vat_calculator/vat_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,14 +10,14 @@ import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart';
 import '../brm_calculator/brm_result_screen.dart';
 
-class VatResultScreen extends StatelessWidget {
-   VatResultScreen({super.key});
-  var controller = Get.find<VatController>();
+class DiscountResultScreen extends StatelessWidget {
+  DiscountResultScreen({super.key});
+  var controller = Get.find<DiscountController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "VAT Calculator",
+        title: "Discount Calculator",
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -39,12 +40,12 @@ class VatResultScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomRowWithRichtext(
-                        title: "Gross Price:",
+                        title: "Payable Amount:",
                         titleFontWeight: FontWeight.w600,
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.blue,
-                        richTextValue: '${controller.grossPrice.round()}',
+                        richTextValue: '${controller.payableAmount.toStringAsFixed(2)}',
                         richTextValueFontWeight: FontWeight.w500,
 
                       ),
@@ -53,12 +54,12 @@ class VatResultScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomRowWithRichtext(
-                        title: "TAX Amount:",
+                        title: "Discount:",
                         titleFontWeight: FontWeight.w600,
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.blue,
-                        richTextValue: '${controller.taxAmount.round()}',
+                        richTextValue: '${controller.discountAmount.toStringAsFixed(2)}',
                         richTextValueFontWeight: FontWeight.w500,
                       ),
                     ),
@@ -69,7 +70,7 @@ class VatResultScreen extends StatelessWidget {
                 ),
               ),
             ),
-            CommonPieChartWidget(list: controller.list, total: controller.total.value, netPriceColor: "FF9466", taxAmountColor: "0F182E", netTitle: "Loan Amount", taxTitle: "Total Interest",),
+            CommonPieChartWidget(list: controller.list, total: controller.total.value, netPriceColor: "FF9466", taxAmountColor: "66D1FF", netTitle: "Payable Amount", taxTitle: "Discount"),
           ],
         ),
       ),

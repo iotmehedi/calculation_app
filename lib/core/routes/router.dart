@@ -25,6 +25,8 @@ import 'package:get/get.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator_result.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
+import '../../screens/view/all_calculators/discount_calculator/discount_calculator.dart';
+import '../../screens/view/all_calculators/discount_calculator/discount_result_screen.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_result_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
@@ -355,6 +357,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => VatResultScreen(),
+          );
+        }
+        case Routes.discountCalculatorPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) => DiscountCalculatorPage(),
+          );
+        }
+        case Routes.discountResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => DiscountResultScreen(),
           );
         }
     }

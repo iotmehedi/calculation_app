@@ -144,7 +144,9 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.more,
                       text: "Discount\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.discountCalculatorPage);
+                      },
                     ),
                   ),
                 ],

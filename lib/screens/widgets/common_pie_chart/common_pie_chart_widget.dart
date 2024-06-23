@@ -10,8 +10,8 @@ import '../custom_text/custom_text.dart';
 class CommonPieChartWidget extends StatelessWidget {
 final RxList list;
   final double total;
-  final String netPriceColor,taxAmountColor;
-  const CommonPieChartWidget({super.key, required this.total, required this.list, required this.netPriceColor, required this.taxAmountColor});
+  final String netPriceColor,taxAmountColor, netTitle, taxTitle;
+  const CommonPieChartWidget({super.key, required this.total, required this.list, required this.netPriceColor, required this.taxAmountColor, required this.netTitle, required this.taxTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +56,10 @@ final RxList list;
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomRoww(
-                        color: HexColor("FF9466"), text: "Loan Amount"),
+                        color: HexColor(netPriceColor), text: netTitle),
                     CustomRoww(
-                        color: HexColor("0F182E"),
-                        text: "Total Interest"),
+                        color: HexColor(taxAmountColor),
+                        text: taxTitle),
                   ],
                 ),
               ),

@@ -37,4 +37,6 @@ class Routes {
   static const tipCalculatorResultScreen = "/tipCalculatorResultScreen";
   static const vATCalculatorHomePage = "/vATCalculatorHomePage";
   static const vatResultScreen = "/vatResultScreen";
+  static const discountCalculatorPage = "/discountCalculatorPage";
+  static const discountResultScreen = "/discountResultScreen";
 }
