@@ -33,4 +33,8 @@ class Routes {
   static const sIPResultScreen = "/sIPResultScreen";
   static const tipCalculator = "/tipCalculator";
   static const emiCalculator = "/emiCalculator";
+  static const eMIResultScreen = "/eMIResultScreen";
+  static const tipCalculatorResultScreen = "/tipCalculatorResultScreen";
+  static const vATCalculatorHomePage = "/vATCalculatorHomePage";
+  static const vatResultScreen = "/vatResultScreen";
 }

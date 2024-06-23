@@ -1,8 +1,16 @@
 import 'dart:math';
 
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/emi_calculator/emi_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
-
+import '../../../widgets/common_custom_richText/common_custom_richText.dart';
+import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
+import '../../../widgets/custom_appbar/custom_appbar.dart';
+import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
+import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 
 class EmiCalculator extends StatefulWidget {
   @override
@@ -10,98 +18,95 @@ class EmiCalculator extends StatefulWidget {
 }
 
 class _EmiCalculatorState extends State<EmiCalculator> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _loanAmountController = TextEditingController();
-  final TextEditingController _interestRateController = TextEditingController();
-  final TextEditingController _loanTenureController = TextEditingController();
-
-  double _monthlyEmi = 0.0;
-  double _totalInterest = 0.0;
-  double _totalPayment = 0.0;
-
-  void _calculateEmi() {
-    double loanAmount = double.parse(_loanAmountController.text);
-    double interestRate = double.parse(_interestRateController.text) / 12 / 100;
-    int loanTenure = int.parse(_loanTenureController.text) * 12;
-
-    double emi = (loanAmount * interestRate * pow((1 + interestRate), loanTenure)) /
-        (pow((1 + interestRate), loanTenure) - 1);
-
-    setState(() {
-      _monthlyEmi = emi;
-      _totalPayment = emi * loanTenure;
-      _totalInterest = _totalPayment - loanAmount;
-    });
-  }
-
+  var controller = Get.put(EMIController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('EMI Calculator'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _loanAmountController,
-                decoration: InputDecoration(labelText: 'Loan Amount (\$)'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter loan amount';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _interestRateController,
-                decoration: InputDecoration(labelText: 'Rate of Interest (%)'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter interest rate';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _loanTenureController,
-                decoration: InputDecoration(labelText: 'Loan Tenure (Years)'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty ) {
-                    return 'Please enter loan tenure';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _calculateEmi();
-                  }
-                },
-                child: Text('Calculate EMI'),
-              ),
-              SizedBox(height: 20),
-              if (_monthlyEmi > 0)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: CustomAppBar(title: "EMI Calculator", onBackPressed: (){
+        Navigator.pop(context);
+      },),
+      body: Obx(() => Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: controller.formKey.value,
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Text('Monthly EMI: \$${_monthlyEmi.toStringAsFixed(2)}'),
-                    Text('Total Interest Payable: \$${_totalInterest.toStringAsFixed(2)}'),
-                    Text('Total Amount Payable: \$${_totalPayment.toStringAsFixed(2)}'),
+                    CommonTextFieldCustom(
+                      headingName: 'Loan Amount',
+                      controller: controller.loanAmountController.value,
+                      keyboardType: TextInputType.number,
+                      needPadding: true,
+                      prefixIcon: Icon(
+                        Icons.attach_money,
+                        size: 16,
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter loan amount';
+                        }
+                        return null;
+                      },
+                    ),
+                    10.ph,
+                    CommonRichTextFieldCustom(
+                      headingName: 'Rate of ',
+                      controller: controller.interestRateController.value,
+                      keyboardType: TextInputType.number,
+                      needPadding: true,
+                      prefixIcon: Icon(
+                        Icons.percent,
+                        size: 16,
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter Rate of Interest';
+                        }
+                        return null;
+                      },
+                      titleName: '(%)',
+                      titleTextColor: Colors.blue,
+                      headingTextColor: Colors.black,
+                      titleFontWeight: FontWeight.normal,
+                      headingFontWeight: FontWeight.normal,
+                    ),
+                    10.ph,
+                    CommonRichTextFieldCustom(
+                      headingName: 'Long Tenure ',
+                      controller: controller.loanTenureController.value,
+                      keyboardType: TextInputType.number,
+                      needPadding: false,
+                      prefixIcon: Icon(
+                        Icons.percent,
+                        size: 16,
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter long tenure';
+                        }
+                        return null;
+                      },
+                      titleName: '(Year)',
+                      titleTextColor: Colors.blue,
+                      headingTextColor: Colors.black,
+                      titleFontWeight: FontWeight.normal,
+                      headingFontWeight: FontWeight.normal,
+                    ),
+                    20.ph,
+                    CustomCalculateClearWidget(
+                      onPressCalculate: () {
+                        if (controller.formKey.value.currentState!.validate()) {
+                          controller.calculateEmi();
+                        }
+                      },
+                      onPressClear: controller.allFieldClear,
+                    ),
+                    SizedBox(height: 20),
                   ],
                 ),
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
+          )),
     );
   }
 }

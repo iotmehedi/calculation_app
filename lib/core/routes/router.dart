@@ -26,6 +26,7 @@ import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calcul
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator_result.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.dart';
+import '../../screens/view/all_calculators/emi_calculator/emi_result_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
@@ -34,7 +35,10 @@ import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_result_screen.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_screen.dart';
+import '../../screens/view/all_calculators/tip_calculator/tip_calculator_result_screen.dart';
 import '../../screens/view/all_calculators/tip_calculator/tip_calculator_screen.dart';
+import '../../screens/view/all_calculators/vat_calculator/vat_calculator_screen.dart';
+import '../../screens/view/all_calculators/vat_calculator/vat_result_screen.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -93,7 +97,7 @@ class RouteGenerator {
         );
       case Routes.mortgagePage:
         return MaterialPageRoute(
-          builder: (context) =>  const MortgageScreen(),
+          builder: (context) => const MortgageScreen(),
         );
       case Routes.normalCalculatorScreen:
         return MaterialPageRoute(
@@ -191,13 +195,13 @@ class RouteGenerator {
             builder: (context) => PregnancyCalculatorPage(),
           );
         }
-        case Routes.pregnancyTimeCalculator:
+      case Routes.pregnancyTimeCalculator:
         {
           return MaterialPageRoute(
             builder: (context) => PregnancyTimeCalculatorPage(),
           );
         }
-        case Routes.pregnancyDueDateResult:
+      case Routes.pregnancyDueDateResult:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
@@ -206,34 +210,35 @@ class RouteGenerator {
               firstTrimesterDayDifference: arguments[1] as int,
               secondTrimesterDayDifference: arguments[2] as int,
               thirdTrimesterDayDifference: arguments[3] as int,
-                mostRecentPastDate: arguments[4] as String,
-                associatedWeekName: arguments[5] == null ? "" : arguments[5] as String,
-                milestones: arguments[6] as List<Map<String, Object>>,
-                selectedMethod: arguments[7] as String,
-                selectedOption: arguments[8] as String,
-                firstTrimesterEnd: arguments[9] as DateTime,
-                thirdTrimesterStart: arguments[10] as DateTime,
+              mostRecentPastDate: arguments[4] as String,
+              associatedWeekName:
+                  arguments[5] == null ? "" : arguments[5] as String,
+              milestones: arguments[6] as List<Map<String, Object>>,
+              selectedMethod: arguments[7] as String,
+              selectedOption: arguments[8] as String,
+              firstTrimesterEnd: arguments[9] as DateTime,
+              thirdTrimesterStart: arguments[10] as DateTime,
               milestones2: arguments[11] as List<Map<String, Object>>,
               milestones3: arguments[12] as List<Map<String, Object>>,
             ),
           );
         }
-        case Routes.pregnancyTrimester:
+      case Routes.pregnancyTrimester:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
             builder: (context) => PregnancyTrimester(
-                milestones: arguments[0] as List<Map<String, Object>>,
-                selectedMethod: arguments[1] as String,
-                selectedOption: arguments[2] as String,
-                firstTrimesterEnd: arguments[3] as DateTime,
-                thirdTrimesterStart: arguments[4] as DateTime,
+              milestones: arguments[0] as List<Map<String, Object>>,
+              selectedMethod: arguments[1] as String,
+              selectedOption: arguments[2] as String,
+              firstTrimesterEnd: arguments[3] as DateTime,
+              thirdTrimesterStart: arguments[4] as DateTime,
               milestones2: arguments[5] as List<Map<String, Object>>,
               milestones3: arguments[6] as List<Map<String, Object>>,
             ),
           );
         }
-        case Routes.pregnancyResultCalculator:
+      case Routes.pregnancyResultCalculator:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
@@ -245,87 +250,111 @@ class RouteGenerator {
               currentTrimester: arguments[4] as String,
               conceviedDate: arguments[5] as String,
               dueDate: arguments[6] as String,
-                milestones: arguments[7] as List<Map<String, Object>>,
+              milestones: arguments[7] as List<Map<String, Object>>,
               milestones2: arguments[8] as List<Map<String, Object>>,
               milestones3: arguments[9] as List<Map<String, Object>>,
             ),
           );
         }
-        case Routes.pregnancyTimeTrimester:
+      case Routes.pregnancyTimeTrimester:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
             builder: (context) => PregnancyTimeTrimester(
-                milestones: arguments[0] as List<Map<String, Object>>,
+              milestones: arguments[0] as List<Map<String, Object>>,
               milestones2: arguments[1] as List<Map<String, Object>>,
               milestones3: arguments[2] as List<Map<String, Object>>,
             ),
           );
         }
-        case Routes.mortgageResultPage:
+      case Routes.mortgageResultPage:
         {
           return MaterialPageRoute(
-            builder: (context) =>  MortgageResultPage(),
+            builder: (context) => MortgageResultPage(),
           );
         }
-        case Routes.autoLoanCalculatorScreen:
+      case Routes.autoLoanCalculatorScreen:
         {
           return MaterialPageRoute(
-            builder: (context) =>  AutoLoanCalculatorScreen(),
+            builder: (context) => AutoLoanCalculatorScreen(),
           );
         }
-        case Routes.autoLoanCalculatorResult:
+      case Routes.autoLoanCalculatorResult:
         {
           return MaterialPageRoute(
-            builder: (context) =>  AutoLoanCalculatorResult(),
+            builder: (context) => AutoLoanCalculatorResult(),
           );
         }
-        case Routes.stockCalculatorPage:
+      case Routes.stockCalculatorPage:
         {
           return MaterialPageRoute(
-            builder: (context) =>  StockCalculatorPage(),
+            builder: (context) => StockCalculatorPage(),
           );
         }
-        case Routes.stocksCalculatorResultScreen:
+      case Routes.stocksCalculatorResultScreen:
         {
           return MaterialPageRoute(
-            builder: (context) =>  StocksCalculatorResultScreen(),
+            builder: (context) => StocksCalculatorResultScreen(),
           );
         }
-        case Routes.loanCalculatorScreen:
+      case Routes.loanCalculatorScreen:
         {
           return MaterialPageRoute(
-            builder: (context) =>  LoanCalculatorScreen(),
+            builder: (context) => LoanCalculatorScreen(),
           );
         }
-        case Routes.loanCalculatorResult:
+      case Routes.loanCalculatorResult:
         {
           return MaterialPageRoute(
-            builder: (context) =>   LoanCalculatorResult(),
+            builder: (context) => LoanCalculatorResult(),
           );
         }
-        case Routes.sIPCalculatorPage:
+      case Routes.sIPCalculatorPage:
         {
           return MaterialPageRoute(
-            builder: (context) =>   SIPCalculatorPage(),
+            builder: (context) => SIPCalculatorPage(),
           );
         }
-        case Routes.sIPResultScreen:
+      case Routes.sIPResultScreen:
         {
           return MaterialPageRoute(
-            builder: (context) =>   SIPResultScreen(),
+            builder: (context) => SIPResultScreen(),
           );
         }
-        case Routes.tipCalculator:
+      case Routes.tipCalculator:
         {
           return MaterialPageRoute(
-            builder: (context) =>   TipCalculator(),
+            builder: (context) => TipCalculator(),
           );
         }
-        case Routes.emiCalculator:
+      case Routes.emiCalculator:
         {
           return MaterialPageRoute(
-            builder: (context) =>   EmiCalculator(),
+            builder: (context) => EmiCalculator(),
+          );
+        }
+      case Routes.eMIResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => EMIResultScreen(),
+          );
+        }
+      case Routes.tipCalculatorResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => TipCalculatorResultScreen(),
+          );
+        }
+      case Routes.vATCalculatorHomePage:
+        {
+          return MaterialPageRoute(
+            builder: (context) => VATCalculatorHomePage(),
+          );
+        }
+      case Routes.vatResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => VatResultScreen(),
           );
         }
     }

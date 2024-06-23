@@ -86,14 +86,16 @@ class HomepageScreen extends StatelessWidget {
                   Expanded(
                     child: HomepageWidget(
                       images: AppAssets.income,
-                      text: "Income Tax\nCalculator",
-                      onPress: () {},
+                      text: "Vat\nCalculator",
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.vATCalculatorHomePage);
+                      },
                     ),
                   ),
                   Expanded(
                     child: HomepageWidget(
                       images: AppAssets.compound,
-                      text: "Compund interest\nCalculator",
+                      text: "Compound interest\nCalculator",
                       onPress: () {},
                     ),
                   ),
@@ -132,14 +134,16 @@ class HomepageScreen extends StatelessWidget {
                   Expanded(
                     child: HomepageWidget(
                       images: AppAssets.investment,
-                      text: "Investments\nCalculator",
-                      onPress: () {},
+                      text: "Tip\nCalculator",
+                      onPress: () {
+                        RouteGenerator.pushNamed(context, Routes.tipCalculator);
+                      },
                     ),
                   ),
                   Expanded(
                     child: HomepageWidget(
                       images: AppAssets.more,
-                      text: "More\nCalculator",
+                      text: "Discount\nCalculator",
                       onPress: () {},
                     ),
                   ),

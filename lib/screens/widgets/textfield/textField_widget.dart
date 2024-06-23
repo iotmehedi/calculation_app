@@ -62,7 +62,7 @@ class CustomSimpleTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Color? prefixIconColor;
-  final bool? paddingNeed;
+  final bool? paddingNeed, onlyNeedSuffix;
   final TextAlign? textAlign;
   final FontWeight? fontWeight;
   final double? fontSize;
@@ -84,7 +84,7 @@ class CustomSimpleTextField extends StatelessWidget {
     this.fontSize,
     this.color,
     this.hexColor,
-    this.validator, this.suffixText
+    this.validator, this.suffixText, this.onlyNeedSuffix
   });
 
   @override
@@ -111,7 +111,14 @@ class CustomSimpleTextField extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(right: 10, left: 10),
 
         )
-            : InputDecoration(
+            : onlyNeedSuffix == true ? InputDecoration(
+          hintText: hint,
+          border: InputBorder.none,
+          suffixIcon: suffixIcon,
+          suffixText: suffixText,
+          suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
+          contentPadding: const EdgeInsets.only(left: 10),
+        ) : InputDecoration(
                 hintText: hint,
                 border: InputBorder.none,
 

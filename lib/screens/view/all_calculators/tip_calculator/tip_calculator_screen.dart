@@ -1,21 +1,11 @@
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/tip_calculator/tip_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-void main() {
-  runApp(TipCalculatorApp());
-}
-
-class TipCalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tip Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: TipCalculator(),
-    );
-  }
-}
+import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
+import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
 class TipCalculator extends StatefulWidget {
   @override
@@ -23,72 +13,87 @@ class TipCalculator extends StatefulWidget {
 }
 
 class _TipCalculatorState extends State<TipCalculator> {
-  final _priceController = TextEditingController();
-  final _tipController = TextEditingController();
-  final _peopleController = TextEditingController();
-
-  double _tipAmount = 0;
-  double _totalAmount = 0;
-  double _tipPerPerson = 0;
-  double _totalPerPerson = 0;
-
-  void _calculateTip() {
-    final double price = double.tryParse(_priceController.text) ?? 0;
-    final double tipPercent = double.tryParse(_tipController.text) ?? 0;
-    final int numberOfPeople = int.tryParse(_peopleController.text) ?? 1;
-
-    setState(() {
-      _tipAmount = price * tipPercent / 100;
-      _totalAmount = price + _tipAmount;
-      _tipPerPerson = _tipAmount / numberOfPeople;
-      _totalPerPerson = _totalAmount / numberOfPeople;
-    });
-  }
+  var controller = Get.put(TipController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tip Calculator'),
+      appBar: CustomAppBar(
+        title: "Tip Calculator",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _priceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Price (\$)',
-              ),
-            ),
-            TextField(
-              controller: _tipController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Tip (%)',
-              ),
-            ),
-            TextField(
-              controller: _peopleController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Number of People',
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _calculateTip,
-              child: Text('Calculate'),
-            ),
-            SizedBox(height: 20),
-            Text('Tip: \$${_tipAmount.toStringAsFixed(2)}'),
-            Text('Total Amount: \$${_totalAmount.toStringAsFixed(2)}'),
-            Text('Tip per Person: \$${_tipPerPerson.toStringAsFixed(2)}'),
-            Text('Total per Person: \$${_totalPerPerson.toStringAsFixed(2)}'),
-          ],
-        ),
-      ),
+      body: Obx(() => Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Form(
+                key: controller.formKey.value,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CommonTextFieldCustom(
+                        headingName: 'Loan Amount',
+                        controller: controller.priceController.value,
+                        keyboardType: TextInputType.number,
+                        needPadding: true,
+                        onlyNeedSuffix: true,
+                        suffixIcon: Icon(
+                          Icons.attach_money,
+                          size: 16,
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter loan amount';
+                          }
+                          return null;
+                        },
+                      ),
+                      10.ph,
+                      CommonTextFieldCustom(
+                        headingName: 'Tip',
+                        controller: controller.tipController.value,
+                        keyboardType: TextInputType.number,
+                        needPadding: true,
+                        onlyNeedSuffix: true,
+                        suffixIcon: Icon(
+                          Icons.percent,
+                          size: 16,
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter tip';
+                          }
+                          return null;
+                        },
+                      ),
+                      10.ph,
+                      CommonTextFieldCustom(
+                        headingName: 'Number of people',
+                        controller: controller.peopleController.value,
+                        keyboardType: TextInputType.number,
+                        needPadding: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter number of people';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      CustomCalculateClearWidget(
+                        onPressCalculate: () {
+                          if (controller.formKey.value.currentState!
+                              .validate()) {
+                            controller.calculateTip();
+                          }
+                        },
+                        onPressClear: controller.allFieldClear,
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                )),
+          )),
     );
   }
 }

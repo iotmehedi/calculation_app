@@ -326,6 +326,7 @@ void _calculateDifference() {
                 child: DropdownButton<String>(
                   icon: const Icon(Icons.keyboard_arrow_down_sharp),
                   value: _selectedMethod,
+                  isExpanded: true,
                   onChanged: (String? newValue) {
                     setState(() {
                       _selectedMethod = newValue!;
@@ -416,6 +417,7 @@ void _calculateDifference() {
                           child: DropdownButton<int>(
                             icon: const Icon(Icons.keyboard_arrow_down_sharp),
                             value: _selectedDay,
+                            isExpanded: true,
                             onChanged: (int? newValue) {
                               setState(() {
                                 _selectedDay = newValue!;

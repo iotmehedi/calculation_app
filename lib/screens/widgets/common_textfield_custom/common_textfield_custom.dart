@@ -15,6 +15,7 @@ class CommonTextFieldCustom extends StatelessWidget {
   final Icon? suffixIcon;
   final String? suffixText, hint;
   final TextAlign? textAlign;
+  final bool? onlyNeedSuffix;
   CommonTextFieldCustom(
       {super.key,
       required this.headingName,
@@ -23,7 +24,7 @@ class CommonTextFieldCustom extends StatelessWidget {
       required this.keyboardType,
       required this.needPadding,
       this.prefixIcon,this.suffixIcon,
-        this.suffixText, this.textAlign, this.hint});
+        this.suffixText, this.textAlign, this.hint, this.onlyNeedSuffix});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class CommonTextFieldCustom extends StatelessWidget {
                     suffixIcon: suffixIcon,
                     suffixText: suffixText,
                     textAlign: textAlign,
+                    onlyNeedSuffix: onlyNeedSuffix,
                     hint: hint,
                   )),
             ),

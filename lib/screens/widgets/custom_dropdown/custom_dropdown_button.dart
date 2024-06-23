@@ -33,6 +33,7 @@ class CustomDropdownbutton extends StatelessWidget {
                   child: DropdownButton<String>(
                     icon: Icon(Icons.keyboard_arrow_down),
                     value: value,
+                    isExpanded: true,
                     onChanged: onChanged,
                     items: items.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(

@@ -887,6 +887,7 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
                 child: DropdownButton<String>(
                   icon: const Icon(Icons.keyboard_arrow_down_sharp),
                   value: _selectedMethod,
+                  isExpanded: true,
                   onChanged: (String? newValue) {
                     setState(() {
                       _selectedMethod = newValue!;
@@ -977,6 +978,7 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
                           child: DropdownButton<int>(
                             icon: const Icon(Icons.keyboard_arrow_down_sharp),
                             value: _selectedDay,
+                            isExpanded: true,
                             onChanged: (int? newValue) {
                               setState(() {
                                 _selectedDay = newValue!;

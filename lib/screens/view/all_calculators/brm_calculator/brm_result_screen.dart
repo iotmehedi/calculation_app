@@ -149,14 +149,16 @@ Widget CustomRow({required String title, required String value, FontWeight? titl
   return Padding(
     padding: const EdgeInsets.only(left: 10),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
             flex: 1,
-            child: globalText16(text: title, fontWeight: titleFontWeight ?? FontWeight.w500, color: titleColor)),
+            child: globalText16(text: title, fontWeight: titleFontWeight ?? FontWeight.w500, color: titleColor, textAlign: TextAlign.start)),
         Expanded(
             child: globalText16(
                 text: value,
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 fontWeight: headingFontWeight ?? FontWeight.w700, color: headingColor)),
       ],
     ),

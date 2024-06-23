@@ -42,7 +42,7 @@ globalText1(
     child: SizedBox(
       child: Text(
         text,
-        // maxLines: 2,
+        maxLines: 2,
         textAlign: textAlignment,
         overflow: TextOverflow.ellipsis,
         style: GoogleFonts.poppins(

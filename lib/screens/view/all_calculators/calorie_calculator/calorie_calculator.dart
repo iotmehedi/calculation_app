@@ -426,12 +426,14 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
             globalText16(
                 text: "Level of Activity", fontWeight: FontWeight.normal),
             Container(
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: AssetColor.calculationButtonColor.withOpacity(0.05)),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<ActivityLevel>(
                   value: activityLevel,
+                  isExpanded: true,
                   onChanged: (value) {
                     setState(() {
                       activityLevel = value!;
