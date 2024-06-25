@@ -98,7 +98,7 @@ class HomepageScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: HomepageWidget(
-                      images: AppAssets.income,
+                      images: AppAssets.vat,
                       text: "Vat\nCalculator",
                       onPress: () {
                         RouteGenerator.pushNamed(
@@ -149,7 +149,7 @@ class HomepageScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: HomepageWidget(
-                      images: AppAssets.investment,
+                      images: AppAssets.tip,
                       text: "Tip\nCalculator",
                       onPress: () {
                         RouteGenerator.pushNamed(context, Routes.tipCalculator);
@@ -158,7 +158,7 @@ class HomepageScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: HomepageWidget(
-                      images: AppAssets.more,
+                      images: AppAssets.discount,
                       text: "Discount\nCalculator",
                       onPress: () {
                         RouteGenerator.pushNamed(

@@ -6,6 +6,7 @@ import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_
 import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_resultpage.dart';
+import 'package:calculation_app/screens/view/all_calculators/fd_calculator/fd_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/fractio_calculator/fraction_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/normal_calculator_screen.dart';
@@ -25,10 +26,13 @@ import 'package:get/get.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator.dart';
 import '../../screens/view/all_calculators/auto_loan_calculator/auto_loan_calculator_result.dart';
 import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
+import '../../screens/view/all_calculators/cd_calculator/cd-calculator_result.dart';
+import '../../screens/view/all_calculators/cd_calculator/cd_calculator.dart';
 import '../../screens/view/all_calculators/discount_calculator/discount_calculator.dart';
 import '../../screens/view/all_calculators/discount_calculator/discount_result_screen.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_result_screen.dart';
+import '../../screens/view/all_calculators/fd_calculator/fd_calculator.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
 import '../../screens/view/all_calculators/margin_calculator/margin_calculator_result_screen.dart';
@@ -397,6 +401,30 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => SalaryCalculatorScreen(),
+          );
+        }
+        case Routes.cdCalculatorForm:
+        {
+          return MaterialPageRoute(
+            builder: (context) => CDCalculatorForm(),
+          );
+        }
+        case Routes.cdResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => CDResultScreen(),
+          );
+        }
+        case Routes.fdCalculatorHome:
+        {
+          return MaterialPageRoute(
+            builder: (context) => FDCalculatorHome(),
+          );
+        }
+        case Routes.fdResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) => FDResultScreen(),
           );
         }
     }

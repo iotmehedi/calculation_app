@@ -23,27 +23,27 @@ class MoreCalculatorPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: HomepageWidget(
-                    images: AppAssets.mortgage,
-                    text: "Margin\nCalculator",
+                    images: AppAssets.cd,
+                    text: "CD\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.marginCalculator);
+                      RouteGenerator.pushNamed(context, Routes.cdCalculatorForm);
                     },
                   ),
                 ),
                 Expanded(
                   child: HomepageWidget(
-                    images: AppAssets.autoLoan,
-                    text: "Salary\nCalculator",
+                    images: AppAssets.fd,
+                    text: "FD\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(
-                          context, Routes.salaryCalculatorScreen);
+                          context, Routes.fdCalculatorHome);
                     },
                   ),
                 ),
                 Expanded(
                   child: HomepageWidget(
-                    images: AppAssets.sip,
-                    text: "SIP\nCalculator",
+                    images: AppAssets.ppf,
+                    text: "PPF\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(
                           context, Routes.sIPCalculatorPage);
@@ -52,14 +52,62 @@ class MoreCalculatorPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: HomepageWidget(
-                    images: AppAssets.emi,
-                    text: "EMI\nCalculator",
+                    images: AppAssets.gst,
+                    text: "GST\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(context, Routes.emiCalculator);
                     },
                   ),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.grade,
+                    text: "Grade\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(context, Routes.marginCalculator);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.gpa,
+                    text: "GPA\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(
+                          context, Routes.salaryCalculatorScreen);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.sales,
+                    text: "Sales Tax\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(
+                          context, Routes.sIPCalculatorPage);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.margin,
+                    text: "Margin\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(context, Routes.marginCalculator);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
             ),
           ],
         ),

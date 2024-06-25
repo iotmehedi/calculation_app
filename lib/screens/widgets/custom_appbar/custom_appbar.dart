@@ -15,10 +15,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: globalText20(text: title, alignment: Alignment.center),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style:
+            const TextStyle(fontWeight: FontWeight.w600, fontFamily: "Podkova"),
+      ),
       leading: onBackPressed != null
           ? IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: onBackPressed,
             )
           : null,
@@ -26,5 +31,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
