@@ -40,6 +40,8 @@ import '../../screens/view/all_calculators/margin_calculator/margin_calculator_s
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
 import '../../screens/view/all_calculators/salary_calculator/salary_calculator_screen.dart';
+import '../../screens/view/all_calculators/sales_calculator/sales_calculator_screen.dart';
+import '../../screens/view/all_calculators/sales_calculator/sales_result.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_result_screen.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
@@ -425,6 +427,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => FDResultScreen(),
+          );
+        }
+        case Routes.taxCalculatorPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) => TaxCalculatorPage(),
+          );
+        }
+        case Routes.salesCalculatorResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => SalesCalculatorResultScreen(),
           );
         }
     }
