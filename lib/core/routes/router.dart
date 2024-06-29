@@ -38,6 +38,8 @@ import '../../screens/view/all_calculators/loan_calculator/loan_calculator_scree
 import '../../screens/view/all_calculators/margin_calculator/margin_calculator_result_screen.dart';
 import '../../screens/view/all_calculators/margin_calculator/margin_calculator_screen.dart';
 import '../../screens/view/all_calculators/percentage_calculator/percentage_calculator.dart';
+import '../../screens/view/all_calculators/ppf-calculator/ppf_calculator-screen.dart';
+import '../../screens/view/all_calculators/ppf-calculator/ppf_result.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
 import '../../screens/view/all_calculators/salary_calculator/salary_calculator_screen.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
@@ -425,6 +427,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => FDResultScreen(),
+          );
+        }
+        case Routes.ppfCalculatorPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) => PPFCalculatorScreen(),
+          );
+        }
+        case Routes.ppfCalculatorResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) => PPFCalculatorResult(),
           );
         }
     }

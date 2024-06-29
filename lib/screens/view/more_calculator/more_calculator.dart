@@ -46,7 +46,7 @@ class MoreCalculatorPage extends StatelessWidget {
                     text: "PPF\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(
-                          context, Routes.sIPCalculatorPage);
+                          context, Routes.ppfCalculatorPage);
                     },
                   ),
                 ),

@@ -47,4 +47,6 @@ class Routes {
   static const cdResultScreen = "/CDResultScreen";
   static const fdCalculatorHome = "/fdCalculatorHome";
   static const fdResult = "/fdResult";
+  static const ppfCalculatorPage = "/ppfCalculatorPage";
+  static const ppfCalculatorResult = "/ppfCalculatorResult";
 }
