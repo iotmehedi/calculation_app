@@ -55,7 +55,7 @@ class MoreCalculatorPage extends StatelessWidget {
                     images: AppAssets.gst,
                     text: "GST\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.emiCalculator);
+                      RouteGenerator.pushNamed(context, Routes.gstCalculatorScreen);
                     },
                   ),
                 ),

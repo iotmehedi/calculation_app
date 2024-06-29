@@ -69,23 +69,24 @@ class CustomSimpleTextField extends StatelessWidget {
   final MaterialColor? color;
   final HexColor? hexColor;
   final String? Function(String?)? validator;
-   CustomSimpleTextField({
-    super.key,
-    this.hint,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.controller,
-    this.keyboardType,
-    this.textInputAction,
-    this.prefixIconColor,
-    this.paddingNeed,
-    this.textAlign,
-    this.fontWeight,
-    this.fontSize,
-    this.color,
-    this.hexColor,
-    this.validator, this.suffixText, this.onlyNeedSuffix
-  });
+  CustomSimpleTextField(
+      {super.key,
+      this.hint,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.controller,
+      this.keyboardType,
+      this.textInputAction,
+      this.prefixIconColor,
+      this.paddingNeed,
+      this.textAlign,
+      this.fontWeight,
+      this.fontSize,
+      this.color,
+      this.hexColor,
+      this.validator,
+      this.suffixText,
+      this.onlyNeedSuffix});
 
   @override
   Widget build(BuildContext context) {
@@ -102,36 +103,35 @@ class CustomSimpleTextField extends StatelessWidget {
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color ?? hexColor),
-        
         decoration: paddingNeed == false
             ? InputDecoration(
                 hintText: hint,
                 border: InputBorder.none,
                 hintStyle: globalTextStyle(),
                 contentPadding: const EdgeInsets.only(right: 10, left: 10),
-
-        )
-            : onlyNeedSuffix == true ? InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-          suffixIcon: suffixIcon,
-          suffixText: suffixText,
-          suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
-          contentPadding: const EdgeInsets.only(left: 10),
-        ) : InputDecoration(
-                hintText: hint,
-                border: InputBorder.none,
-
-                prefixIcon: Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: prefixIcon,
-                ),
-                prefixIconColor: prefixIconColor,
-                suffixIcon: suffixIcon,
-          suffixText: suffixText,
-          suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
-          contentPadding: EdgeInsets.only(top: 12),
-              ),
+              )
+            : onlyNeedSuffix == true
+                ? InputDecoration(
+                    hintText: hint,
+                    border: InputBorder.none,
+                    suffixIcon: suffixIcon,
+                    suffixText: suffixText,
+                    suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
+                    contentPadding: const EdgeInsets.only(left: 10, top: 10),
+                  )
+                : InputDecoration(
+                    hintText: hint,
+                    border: InputBorder.none,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: 16),
+                      child: prefixIcon,
+                    ),
+                    prefixIconColor: prefixIconColor,
+                    suffixIcon: suffixIcon,
+                    suffixText: suffixText,
+                    suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
+                    contentPadding: EdgeInsets.only(top: 12),
+                  ),
       ),
     );
   }
