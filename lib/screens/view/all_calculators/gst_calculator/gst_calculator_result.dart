@@ -38,7 +38,7 @@ var controller = Get.find<GSTCalculatorController>();
                       padding: const EdgeInsets.all(8.0),
                       child: CustomRowWithRichtext(
                         title: "GST Total:",
-                        titleFontWeight: FontWeight.w600,
+                        titleFontWeight: FontWeight.w500,
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.black,
@@ -53,8 +53,8 @@ var controller = Get.find<GSTCalculatorController>();
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomRowWithRichtext(
-                        title: "Total tax:",
-                        titleFontWeight: FontWeight.w600,
+                        title: controller.radioButtonStatus.value == "1" ? "Post-GST Amount:" : "Pre - GST Amount",
+                        titleFontWeight: FontWeight.w500,
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.black,

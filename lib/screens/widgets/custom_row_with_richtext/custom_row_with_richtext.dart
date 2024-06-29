@@ -11,6 +11,7 @@ class CustomRowWithRichtext extends StatelessWidget {
   final FontWeight? headingFontWeight;
   final Color? titleColor, richtextTitleColor, richTextValueColor;
   final Color? headingColor;
+  final double? headingFontSize, titleFontSIze;
   const CustomRowWithRichtext({
     super.key,
     required this.title,
@@ -23,7 +24,9 @@ class CustomRowWithRichtext extends StatelessWidget {
     this.richTextTitleFontWeight,
     required this.richTextValue,
     this.richTextValueColor,
-    this.richTextValueFontWeight
+    this.richTextValueFontWeight,
+    this.titleFontSIze,
+    this.headingFontSize
   });
 
   @override
@@ -49,6 +52,8 @@ class CustomRowWithRichtext extends StatelessWidget {
               headingTextColor: richtextTitleColor,
               titleFontWeight: richTextValueFontWeight,
               headingFontWeight: richTextTitleFontWeight,
+              titleFontSIze: titleFontSIze,
+              headingFontSize: headingFontSize,
             ),
           ),
         ],
