@@ -132,7 +132,7 @@ class _CourseFormState extends State<CourseForm> {
                                       ),
                                       validator: (value){
                                         if (value!.isEmpty) {
-                                          return 'Please enter the ${controller.courseControllers[index]}';
+                                          return 'Enter ${controller.courseControllers[index]}';
                                         }
                                         return null;
                                       },
