@@ -51,9 +51,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
 
                     const CustomText(
                         text: "Home",
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         textColor: Colors.black,
-                        fontSize: 18.0),
+                        fontSize: 16.0),
                     const SizedBox(
                       height: 10,
                     ),
@@ -86,9 +86,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                     ),
                     const CustomText(
                         text: "Down Payment",
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         textColor: Colors.black,
-                        fontSize: 18.0),
+                        fontSize: 16.0),
                     const SizedBox(
                       height: 10,
                     ),
@@ -115,6 +115,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           width: 10,
                         ),
                         Expanded(
+                          flex: 2,
                           child: SizedBox(
                             height: 55,
                             child: DropdownButtonHideUnderline(
@@ -144,9 +145,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
 
                     const CustomText(
                         text: "Interested Rate",
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         textColor: Colors.black,
-                        fontSize: 18.0),
+                        fontSize: 16.0),
                     const SizedBox(
                       height: 10,
                     ),
@@ -180,9 +181,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                     ),
                     const CustomText(
                         text: "Long Term Year",
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         textColor: Colors.black,
-                        fontSize: 18.0),
+                        fontSize: 16.0),
                     const SizedBox(
                       height: 10,
                     ),
@@ -293,9 +294,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                         ),
                         const CustomText(
                             text: "Include Fee And Texes",
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                             textColor: Colors.black,
-                            fontSize: 18.0),
+                            fontSize: 16.0),
                       ],
                     ),
                     const SizedBox(
@@ -309,9 +310,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                         children: [
                           const CustomText(
                               text: "Property Tax",
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 18.0),
+                              fontSize: 16.0),
                           const SizedBox(
                             height: 10,
                           ),
@@ -364,9 +365,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           ),
                           const CustomText(
                               text: "Home Insurance",
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 18.0),
+                              fontSize: 16.0),
                           const SizedBox(
                             height: 10,
                           ),
@@ -420,9 +421,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           ),
                           const CustomText(
                               text: "PMI Fee",
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 18.0),
+                              fontSize: 16.0),
                           const SizedBox(
                             height: 10,
                           ),
@@ -476,9 +477,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           ),
                           const CustomText(
                               text: "Hoa fee",
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 18.0),
+                              fontSize: 16.0),
                           const SizedBox(
                             height: 10,
                           ),

@@ -51,7 +51,6 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
                         child: _buildTextField(
                             controller: controller.vehiclePriceController.value,
                             prefixIcon: Icons.attach_money_sharp
@@ -70,7 +69,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        
                         child: _buildTextField(
                             controller: controller.loanTermController.value,
                             label: 'Month',
@@ -83,10 +82,10 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                               ? 'Start Date'
                               : DateFormat("yyyy/MM")
                               .format(controller.selectedDate!.value),
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.normal),
+                          style:  TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.normal, fontFamily: "Podkova", color: HexColor("80848A")),
                         ),
-                        trailing: const Icon(Icons.calendar_today),
+                        trailing: const Icon(Icons.keyboard_arrow_down),
                         onTap: selectDate,
                       ),)
                     ],
@@ -103,7 +102,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        
                         child: _buildTextField(
                             controller: controller.interestRateController.value,
                             label: '%',
@@ -123,7 +122,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        
                         child: _buildTextField(
                             controller: controller.downPaymentController.value,
                             label: '\$',
@@ -143,7 +142,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        
                         child: _buildTextField(
                           controller: controller.tradeInValueController.value,
                         ),
@@ -162,7 +161,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                       
                         child: _buildTextField(
                           controller: controller.amountOwedOnTradeInController.value,
                         ),
@@ -180,7 +179,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        
                         child: _buildTextField(
                           controller: controller.salesTaxController.value,
                         ),
@@ -198,7 +197,7 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        
                         child: _buildTextField(
                           controller: controller.feesController.value,
                           // label: 'Title, Registration, and Other Fees',

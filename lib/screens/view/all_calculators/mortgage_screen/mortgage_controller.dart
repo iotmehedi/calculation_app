@@ -210,19 +210,19 @@ void allFieldClear(){
     super.dispose();
   }
     List<PieChartSectionData> showingSections() {
-List<Color> colors = [];
+List<HexColor> colors = [];
 if(isChecked.value == false){
   colors = [
-      Colors.blue,
-      Colors.green,
+      HexColor("458EEC"),
+      HexColor("2FAE3B"),
       // Colors.blue,
     ];
 }else{
     colors = [
-      Colors.blue,
-      Colors.green,
-      Colors.red,
-      Colors.yellow
+      HexColor("458EEC"),
+      HexColor("2FAE3B"),
+      HexColor("99CBF7"),
+      HexColor("80848A")
       // Colors.blue,
     ];
 }

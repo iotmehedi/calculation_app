@@ -16,7 +16,7 @@ class LoanController extends GetxController {
   var fees = 0.0.obs;
   var salesTaxAmountt = 0.0.obs;
   var monthlyPaymentt = 0.0.obs;
-  Rx<DateTime>? selectedDate = DateTime.now().obs;
+  Rx<DateTime>? selectedDate;
   var selectedOption = ''.obs;
   var startDate = DateTime.now().obs;
   // Rx<DateTime>? selectedDate = DateTime.now().obs;

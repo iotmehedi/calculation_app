@@ -95,13 +95,13 @@ class MortgageResultPage extends StatelessWidget {
                             CustomRow(color: Colors.blue, text: "Principal & Interest"),
                           if (controller.isChecked.value == true) 10.ph,
                           if (controller.isChecked.value == true)
-                            CustomRow(color: Colors.green, text: "Property Taxes"),
+                            CustomRow(color: Colors.green, text: "Home Insurance"),
                           if (controller.isChecked.value == true) 10.ph,
                           if (controller.isChecked.value == true)
-                            CustomRow(color: Colors.red, text: "Home Insurance"),
+                            CustomRow(color: HexColor("99CBF7"), text: "Property Taxes"),
                           if (controller.isChecked.value == true) 10.ph,
                           if (controller.isChecked.value == true)
-                            CustomRow(color: Colors.yellow, text: "HOA Fee"),
+                            CustomRow(color: HexColor("80848A"), text: "HOA Fee"),
                           if (controller.isChecked.value == true) 10.ph
                         ],
                       ),

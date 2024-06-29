@@ -59,7 +59,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 20),
               child: CustomText(
-                text: "Your loan estimate",
+                text: "Your loan estimate:",
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -108,11 +108,13 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                                       value: controller.loanAmount
                                           .toStringAsFixed(2)
                                           .toString()),
+                                  10.ph,
                                   CustomRow(
                                       title: "Sales Tax",
                                       value: controller.salesTaxAmount
                                           .toStringAsFixed(2)
                                           .toString()),
+                                          10.ph,
                                   CustomRow(
                                       title: "Upfront Payment",
                                       value: controller.upfrontPayment
@@ -136,16 +138,20 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                                       value: controller.totalLoanInterest
                                           .toStringAsFixed(2)
                                           .toString()),
+                                          10.ph,
                                   CustomRow(
                                       title: "Total Loan Payments",
                                       value: controller.totalLoanPayments
                                           .toStringAsFixed(2)
                                           .toString()),
+                                          10.ph,
                                   CustomRow(
-                                      title: "Pay Of Date",
-                                      value:
-                                          '${DateFormat("MM/yyyy").format(controller.payOutDate.toLocal())}'
-                                              .split(' ')[0],  valueColor: Colors.blue,),
+                                    title: "Pay Of Date",
+                                    value:
+                                        '${DateFormat("MM/yyyy").format(controller.payOutDate.toLocal())}'
+                                            .split(' ')[0],
+                                    valueColor: Colors.blue,
+                                  ),
                                 ],
                               ),
                             ),
@@ -159,9 +165,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                                   title: "Total All Cost:",
                                   value:
                                       "${(controller.loanAmount + controller.salesTaxAmount + controller.upfrontPayment + controller.totalLoanInterest + controller.totalLoanPayments).toStringAsFixed(2)}",
-
-                                titleColor: Colors.blue
-                              ),
+                                  titleColor: Colors.blue),
                             ),
                           ],
                         ),
@@ -175,7 +179,11 @@ class AutoLoanCalculatorResult extends StatelessWidget {
     );
   }
 
-  Widget CustomRow({required String title, required String value, MaterialColor? valueColor,  MaterialColor? titleColor}) {
+  Widget CustomRow(
+      {required String title,
+      required String value,
+      MaterialColor? valueColor,
+      MaterialColor? titleColor}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,8 +191,8 @@ class AutoLoanCalculatorResult extends StatelessWidget {
         Expanded(
             child: CustomText(
           text: title,
-              textColor: titleColor,
-              fontSize: 14,
+          textColor: titleColor,
+          fontSize: 14,
         )),
         Expanded(
             child: Padding(
