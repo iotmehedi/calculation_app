@@ -55,4 +55,5 @@ class Routes {
   static const gstResult = "/gstResult";
   static const courseForm = "/courseForm";
   static const gpaCalculatorResultScreen = "/gpaCalculatorResultScreen";
+  static const gPAForm = "/gPAForm";
 }

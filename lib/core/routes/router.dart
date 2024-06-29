@@ -35,6 +35,7 @@ import '../../screens/view/all_calculators/emi_calculator/emi_result_screen.dart
 import '../../screens/view/all_calculators/fd_calculator/fd_calculator.dart';
 import '../../screens/view/all_calculators/gpa_calculator/gpa_calculator.dart';
 import '../../screens/view/all_calculators/gpa_calculator/gpa_calculator_result_screen.dart';
+import '../../screens/view/all_calculators/grade_calculator/grade_calculator.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_result.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
@@ -481,6 +482,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => GPACalculatorResultScreen(),
+          );
+        }
+        case Routes.gPAForm:
+        {
+          return MaterialPageRoute(
+            builder: (context) => GPAForm(),
           );
         }
     }
