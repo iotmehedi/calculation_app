@@ -91,7 +91,7 @@ class MoreCalculatorPage extends StatelessWidget {
                     text: "Sales Tax\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(
-                          context, Routes.sIPCalculatorPage);
+                          context, Routes.taxCalculatorPage);
                     },
                   ),
                 ),

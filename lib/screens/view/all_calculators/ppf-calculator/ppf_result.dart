@@ -14,7 +14,7 @@ class PPFCalculatorResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "PPF Calculator"),
+      appBar: const CustomAppBar(title: "PPF Calculator"),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -32,7 +32,7 @@ class PPFCalculatorResult extends StatelessWidget {
                       CustomRow(title: "Investment Amount:", value: "\$ ${controller.investedAmount.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal),
                       10.ph,
                       CustomRow(title: "Total Interest:", value: "\$ ${controller.totalInterest.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal),
-                      Divider(
+                      const Divider(
                         thickness: 0.5,
                       ),
                       CustomRow(title: "Maturity Value:", value: "\$ ${controller.maturityValue.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal, titleColor: Colors.blue, headingColor: Colors.blue),
