@@ -53,4 +53,6 @@ class Routes {
   static const ppfCalculatorResult = "/ppfCalculatorResult";
   static const gstCalculatorScreen = "/gstCalculator";
   static const gstResult = "/gstResult";
+  static const courseForm = "/courseForm";
+  static const gpaCalculatorResultScreen = "/gpaCalculatorResultScreen";
 }

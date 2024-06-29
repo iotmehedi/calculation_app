@@ -6,10 +6,11 @@ class CustomText extends StatelessWidget {
   final Color? textColor;
   final double? fontSize;
   final FontWeight? fontWeight;
-  const CustomText({super.key, required this.text, this.textColor, this.fontWeight, this.fontSize});
+  final TextAlign? textAlign;
+  const CustomText({super.key, required this.text, this.textColor, this.fontWeight, this.fontSize, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style:GoogleFonts.poppins(color: textColor, fontWeight: fontWeight, fontSize: fontSize),);
+    return Text(text, style:GoogleFonts.poppins(color: textColor, fontWeight: fontWeight, fontSize: fontSize), textAlign: textAlign,);
   }
 }

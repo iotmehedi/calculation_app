@@ -33,6 +33,8 @@ import '../../screens/view/all_calculators/discount_calculator/discount_result_s
 import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_result_screen.dart';
 import '../../screens/view/all_calculators/fd_calculator/fd_calculator.dart';
+import '../../screens/view/all_calculators/gpa_calculator/gpa_calculator.dart';
+import '../../screens/view/all_calculators/gpa_calculator/gpa_calculator_result_screen.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_result.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
@@ -467,6 +469,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => GSTCalculatorResultScreen(),
+          );
+        }
+        case Routes.courseForm:
+        {
+          return MaterialPageRoute(
+            builder: (context) => CourseForm(),
+          );
+        }
+        case Routes.gpaCalculatorResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => GPACalculatorResultScreen(),
           );
         }
     }
