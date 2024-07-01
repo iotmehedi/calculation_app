@@ -1,22 +1,19 @@
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/grade_calculator/grade_controller.dart';
+import 'package:calculation_app/screens/view/all_calculators/grade_calculator/percentage_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import '../../../../core/routes/route_name.dart';
+import '../../../../core/routes/router.dart';
+import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../main.dart';
+import '../../../widgets/custom_appbar/custom_appbar.dart';
+import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
+import '../../../widgets/custom_text/custom_text.dart';
+import 'letter_widget.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('GPA Calculator'),
-        ),
-        body: GPAForm(),
-      ),
-    );
-  }
-}
 
 class GPAForm extends StatefulWidget {
   @override
@@ -24,182 +21,213 @@ class GPAForm extends StatefulWidget {
 }
 
 class _GPAFormState extends State<GPAForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _grades = <Grade>[];
 
-  final _targetGPAController = TextEditingController();
-  final _additionalWeightController = TextEditingController();
-
-  double _averageGPA = 0.0;
-  double _additionalGradeNeeded = 0.0;
-
-  @override
-  void dispose() {
-    _targetGPAController.dispose();
-    _additionalWeightController.dispose();
-    super.dispose();
-  }
-
-  void _calculateGPA() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      var calculator = GPA_Calculator(grades: _grades);
-      setState(() {
-        _averageGPA = calculator.calculateGPA();
-      });
-    }
-  }
-
-  void _calculateAdditionalGrade() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      var calculator = GPA_Calculator(grades: _grades);
-      double targetGPA = double.parse(_targetGPAController.text);
-      double additionalWeight = double.parse(_additionalWeightController.text);
-      setState(() {
-        _additionalGradeNeeded = calculator.additionalGradeNeeded(targetGPA, additionalWeight);
-      });
-    }
-  }
+  var controller = Get.put(GradeController());
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            ..._grades.map((grade) => ListTile(
-              title: Text(grade.subject),
-              subtitle: Text('Grade: ${grade.letterGrade}, Weight: ${grade.weight}'),
-            )),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Subject'),
-              onSaved: (value) {
-                if (value != null) {
-                  _grades.add(Grade(subject: value, letterGrade: 'A', weight: 1.0));
-                }
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Letter Grade'),
-              onSaved: (value) {
-                if (value != null) {
-                  _grades.last.letterGrade = value;
-                }
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Weight'),
-              keyboardType: TextInputType.number,
-              onSaved: (value) {
-                if (value != null) {
-                  _grades.last.weight = double.parse(value);
-                }
-              },
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _calculateGPA,
-              child: Text('Calculate GPA'),
-            ),
-            Text('Average GPA: $_averageGPA'),
-            SizedBox(height: 16),
-            TextFormField(
-              controller: _targetGPAController,
-              decoration: InputDecoration(labelText: 'Target GPA'),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a target GPA';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: _additionalWeightController,
-              decoration: InputDecoration(labelText: 'Additional Weight'),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter additional weight';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _calculateAdditionalGrade,
-              child: Text('Calculate Additional Grade Needed'),
-            ),
-            Text('Additional Grade Needed: $_additionalGradeNeeded'),
-          ],
-        ),
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: "Grade Calculator",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
       ),
+      body: Obx(() => Form(
+        key: controller.formKey.value,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Container(
+                height: 56,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: HexColor("244384"),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.selectedButton.value = true;
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: controller.selectedButton.value ==
+                                    true
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Grade",
+                                      fontSize: 20,
+                                      textColor:
+                                      controller.selectedButton.value ==
+                                          true
+                                          ? Colors.black
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                        5.pw,
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.selectedButton.value = false;
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: controller.selectedButton.value ==
+                                    false
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Final Grade",
+                                      fontSize: 20,
+                                      textColor:
+                                      controller.selectedButton.value ==
+                                          false
+                                          ? HexColor("244384")
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              20.ph,
+
+              globalText16(text: "Select grade type", fontWeight: FontWeight.w500),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Radio<String>(
+                        fillColor: MaterialStateProperty.resolveWith ((Set  states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return HexColor("244384");
+                          }
+                          return HexColor("244384");
+                        }),
+                        groupValue: controller.radioButtonStatus.value,
+                        onChanged: (value) {
+                          controller.radioButtonStatus.value = value ?? '';
+                        },
+                        value: "1",
+                      ),
+                      globalText16(
+                          text: "Percentage",
+                          fontWeight: FontWeight.w500),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio<String>(
+                        fillColor: MaterialStateProperty.resolveWith ((Set  states) {
+                          if (states.contains(MaterialState.disabled)) {
+                            return HexColor("244384");
+                          }
+                          return HexColor("244384");
+                        }),
+                        groupValue: controller.radioButtonStatus.value,
+                        onChanged: (value) {
+                          // controller.instructorControllers.clear();
+                          controller.radioButtonStatus.value = value ?? '';
+                          // controller.addCourseLetter();
+                          // controller.initialCourse();
+                        },
+                        value: "2",
+                      ),
+                      globalText16(
+                          text: "Letters",
+                          fontWeight: FontWeight.w500),
+                    ],
+                  ),
+
+                ],
+              ),
+              20.ph,
+
+              controller.radioButtonStatus.value == "1" ? PercentageWidget(controller: controller) : LetterWidget(controller: controller),
+              // ElevatedButton(
+              //   onPressed: controller.calculateAdditionalGrade,
+              //   child: Text('Calculate Additional Grade Needed'),
+              // ),
+              10.ph,
+              SizedBox(
+                height: 45,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: CustomElevatedButton(
+                        color: HexColor("244384"),
+                        onPress: (){
+                          if (controller.formKey.value.currentState?.validate() ?? false) {
+                            if(controller.radioButtonStatus.value == "1"){
+                              controller.calculateAdditionalGrade();
+                            }else{
+                              controller.overallGPA.value = 0.0;
+                              controller.totalCredit.value = 0;
+                              controller.totalCreditWithoutPNP.value = 0;
+                              controller.totalGrades();
+                              controller.totalGPA();
+                            }
+
+                            RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.gradeResultScreen);
+                          }
+                        },
+                        text: globalText20(text: "Calculate", color: Colors.white, alignment: Alignment.center, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    10.pw,
+
+                    Expanded(
+                      child: CustomElevatedButton(
+                        color: HexColor("F3F6F9"),
+                        onPress: (){
+                          // controller.clearFields();
+                        },
+                        text: globalText20(text: "Clear", color: HexColor("0F182E"), alignment: Alignment.center, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Text('Average Grade: ${controller.averageGrade.toStringAsFixed(2)}%'),
+              // Text('Average Letter Grade: ${controller.averageLetterGrade}'),
+
+            ],
+          ),
+        ),
+      )),
     );
-  }
-}
-class Grade {
-  String subject;
-  String letterGrade;
-  double weight;
-
-  Grade({required this.subject, required this.letterGrade, required this.weight});
-
-  double get numericGrade {
-    switch (letterGrade) {
-      case 'A':
-        return 4.0;
-      case 'A-':
-        return 3.7;
-      case 'B+':
-        return 3.3;
-      case 'B':
-        return 3.0;
-      case 'B-':
-        return 2.7;
-      case 'C+':
-        return 2.3;
-      case 'C':
-        return 2.0;
-      case 'C-':
-        return 1.7;
-      case 'D+':
-        return 1.3;
-      case 'D':
-        return 1.0;
-      case 'D-':
-        return 0.7;
-      case 'F':
-        return 0.0;
-      default:
-        return 0.0;
-    }
-  }
-}
-
-class GPA_Calculator {
-  List<Grade> grades;
-
-  GPA_Calculator({required this.grades});
-
-  double calculateGPA() {
-    double totalWeight = 0;
-    double totalWeightedGrade = 0;
-
-    for (var grade in grades) {
-      totalWeightedGrade += grade.numericGrade * grade.weight;
-      totalWeight += grade.weight;
-    }
-
-    return totalWeightedGrade / totalWeight;
-  }
-
-  double additionalGradeNeeded(double targetGPA, double additionalWeight) {
-    double currentGPA = calculateGPA();
-    double totalWeight = grades.fold(0, (sum, grade) => sum + int.parse(grade.weight.toString())) + additionalWeight;
-    double requiredGrade = (targetGPA * totalWeight - currentGPA * grades.fold(0, (sum, grade) => sum + grade.weight)) / additionalWeight;
-    return requiredGrade;
   }
 }

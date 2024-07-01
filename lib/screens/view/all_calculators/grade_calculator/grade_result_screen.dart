@@ -1,0 +1,160 @@
+import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/grade_calculator/grade_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
+import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+
+import '../../../widgets/common_result_heading/common_result_heading.dart';
+
+class GradeResultScreen extends StatelessWidget {
+  GradeResultScreen({super.key});
+  var controller = Get.find<GradeController>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
+      appBar: CustomAppBar(
+        title: "Grade Calculator",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const CommonResultHeading(headingName: "Results"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+
+                  20.ph,
+                  Visibility(
+                    visible: controller.radioButtonStatus.value == "1" ? true : false,
+                    child: Column(
+                      children: [
+
+                        globalText16(text: "Average grade", fontWeight: FontWeight.bold),
+                        5.ph,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  globalText20(text: controller.averageGrade.value.toStringAsFixed(2).toString(), color: HexColor("244384"), fontWeight: FontWeight.bold),
+                                  Divider(thickness: 1,color: HexColor("FAFAFA"),),
+                                  globalText20(text: "Grade : ${controller.averageLetterGrade.value.toString()}", color: HexColor("244384"), fontWeight: FontWeight.bold),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        10.ph,
+                        globalText16(text: "Grade Calculation", fontWeight: FontWeight.bold),
+                        SizedBox(
+                           width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10, right: 5, top: 15, bottom: 8),
+                              child: CustomText(text: controller.averageCalculation.value, fontWeight: FontWeight.w500,),
+                            ),
+                          ),
+                        ),
+                        10.ph,
+                        globalText16(text: "Additional grade needed", fontWeight: FontWeight.bold),
+                        5.ph,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  globalText20(text: controller.additionalGrade.value.toStringAsFixed(2).toString(), color: HexColor("244384"), fontWeight: FontWeight.bold),
+                                  Divider(thickness: 1,color: HexColor("FAFAFA"),),
+                                  globalText20(text: "Grade : ${controller.additionalLetterGrade.value.toString()}", color: HexColor("244384"), fontWeight: FontWeight.bold),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              Visibility(
+                visible: controller.radioButtonStatus.value == "2" ? true : false,
+              child: Container(
+                height: 80,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                child:  Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                              text: "GPA: ",
+                              textColor: HexColor("244384"),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600),
+                          CustomText(
+                            text: (controller.overallGPA.value / controller.totalCreditWithoutPNP.value).toStringAsFixed(2),
+                            textColor: HexColor("244384"),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(thickness: 1,color: HexColor("FAFAFA"),),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                           CustomText(
+                              text: "Total Credit : ",
+                              textColor: HexColor("244384"),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500),
+                          CustomText(
+                            text: "${controller.letter((controller.overallGPA.value / controller.totalCreditWithoutPNP.value))}",
+                            textColor: HexColor("244384"),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

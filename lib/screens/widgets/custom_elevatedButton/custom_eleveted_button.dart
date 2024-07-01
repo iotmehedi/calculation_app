@@ -16,12 +16,12 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: hexColor ?? color,
-          // minimumSize: Size(MediaQuery.of(context).size.width, 60),
-          // maximumSize: Size(MediaQuery.of(context).size.width, 60),
+          minimumSize: Size(MediaQuery.of(context).size.width, 60),
+          maximumSize: Size(MediaQuery.of(context).size.width, 60),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       onPressed: onPress,
-      child: Padding(padding: EdgeInsets.symmetric(vertical: 15), child: text,),
+      child: text,
     );
   }
 }

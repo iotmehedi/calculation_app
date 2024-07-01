@@ -71,7 +71,7 @@ class MoreCalculatorPage extends StatelessWidget {
                     images: AppAssets.grade,
                     text: "Grade\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.courseForm);
+                      RouteGenerator.pushNamed(context, Routes.gPAForm);
                     },
                   ),
                 ),
