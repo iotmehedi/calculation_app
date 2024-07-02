@@ -33,7 +33,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
               height: 80,
               width: MediaQuery.of(context).size.width,
               color: HexColor("244384"),
-              child:  Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -47,7 +47,9 @@ class GPACalculatorResultScreen extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.w600),
                       CustomText(
-                        text: (controller.overallGPA.value / controller.totalCreditWithoutPNP.value).toStringAsFixed(2),
+                        text: (controller.overallGPA.value /
+                                controller.totalCreditWithoutPNP.value)
+                            .toStringAsFixed(2),
                         textColor: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -300,11 +302,11 @@ class GPACalculatorResultScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5, left: 10),
                         child: CustomText(
-                            text:
-                                "Total Credit: ${controller.totalCredit.value}",
-                            textAlign: TextAlign.start,
+                          text: "Total Credit: ${controller.totalCredit.value}",
+                          textAlign: TextAlign.start,
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,),
+                          fontWeight: FontWeight.w600,
+                        ),
                       )),
                   10.ph,
                   Container(
@@ -316,10 +318,10 @@ class GPACalculatorResultScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5, left: 10),
                         child: CustomText(
-                            text:
-                                "Overall GPA: ${(controller.overallGPA.value / controller.totalCreditWithoutPNP.value).toStringAsFixed(1)}",
-                            textAlign: TextAlign.start,
-                        fontSize: 14,
+                          text:
+                              "Overall GPA: ${(controller.overallGPA.value / controller.totalCreditWithoutPNP.value).toStringAsFixed(1)}",
+                          textAlign: TextAlign.start,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                       )),

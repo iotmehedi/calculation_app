@@ -33,7 +33,7 @@ class GradeResultScreen extends StatelessWidget {
                   20.ph,
                   Visibility(
                     visible: controller.selectedButton.value == true &&
-                            controller.radioButtonStatus.value == "1"
+                        controller.radioButtonStatus.value == "1"
                         ? true
                         : false,
                     child: Column(
@@ -62,7 +62,7 @@ class GradeResultScreen extends StatelessWidget {
                                   ),
                                   globalText20(
                                       text:
-                                          "Grade : ${controller.averageLetterGrade.value.toString()}",
+                                      "Grade : ${controller.averageLetterGrade.value.toString()}",
                                       color: HexColor("244384"),
                                       fontWeight: FontWeight.bold),
                                 ],
@@ -77,6 +77,7 @@ class GradeResultScreen extends StatelessWidget {
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Card(
+                            elevation: 0,
                             color: Colors.white,
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -114,7 +115,7 @@ class GradeResultScreen extends StatelessWidget {
                                   ),
                                   globalText20(
                                       text:
-                                          "Grade : ${controller.additionalLetterGrade.value.toString()}",
+                                      "Grade : ${controller.additionalLetterGrade.value.toString()}",
                                       color: HexColor("244384"),
                                       fontWeight: FontWeight.bold),
                                 ],
@@ -127,7 +128,7 @@ class GradeResultScreen extends StatelessWidget {
                   ),
                   Visibility(
                     visible: controller.selectedButton.value == true &&
-                            controller.radioButtonStatus.value == "2"
+                        controller.radioButtonStatus.value == "2"
                         ? true
                         : false,
                     child: Container(
@@ -153,8 +154,8 @@ class GradeResultScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                                 CustomText(
                                   text: (controller.overallGPA.value /
-                                          controller
-                                              .totalCreditWithoutPNP.value)
+                                      controller
+                                          .totalCreditWithoutPNP.value)
                                       .toStringAsFixed(2),
                                   textColor: HexColor("244384"),
                                   fontSize: 20,
@@ -180,7 +181,7 @@ class GradeResultScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w500),
                                 CustomText(
                                   text:
-                                      "${controller.letter((controller.overallGPA.value / controller.totalCreditWithoutPNP.value))}",
+                                  "${controller.letter((controller.overallGPA.value / controller.totalCreditWithoutPNP.value))}",
                                   textColor: HexColor("244384"),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -194,13 +195,13 @@ class GradeResultScreen extends StatelessWidget {
                   ),
                   Visibility(
                     visible:
-                        controller.selectedButton.value == false ? true : false,
+                    controller.selectedButton.value == false ? true : false,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         globalText16(
                             text:
-                                "Final exam grade needed to get the target grade",
+                            "Final exam grade needed to get the target grade",
                             fontWeight: FontWeight.w500,
                             textAlign: TextAlign.start),
                         20.ph,
@@ -223,17 +224,17 @@ class GradeResultScreen extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              flex: 2,
+                                flex: 2,
                                 child: Container(
-                              height: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
-                                color: HexColor("244384")
-                              ),
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+                                      color: HexColor("244384")
+                                  ),
                                   child: Center(
                                     child: globalText16(text: "%", color: Colors.white, textAlign: TextAlign.center, alignment: Alignment.center),
                                   ),
-                            ))
+                                ))
                           ],
                         )
                       ],

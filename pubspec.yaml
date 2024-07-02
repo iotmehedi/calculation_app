@@ -46,6 +46,9 @@ dependencies:
   percent_indicator: ^4.2.3
   fl_chart:
   month_year_picker: ^0.3.0+1
+  collection: ^1.16.0
+  syncfusion_flutter_charts: ^25.2.7
+
 
 dependency_overrides:
   intl: 0.17.0

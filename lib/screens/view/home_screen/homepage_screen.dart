@@ -110,7 +110,10 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.compound,
                       text: "Compound interest\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(
+                            context, Routes.compoundScreen);
+                      },
                     ),
                   ),
                   Expanded(
