@@ -31,7 +31,7 @@ class CommonTextFieldCustom extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        globalText16(text: headingName, fontWeight: FontWeight.normal),
+        globalText16(text: headingName, fontWeight: FontWeight.normal, textAlign: TextAlign.start),
         5.ph,
         Row(
           children: [

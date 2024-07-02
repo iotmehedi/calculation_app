@@ -18,7 +18,13 @@ class GradeController extends GetxController{
   var totalCredit = 0.obs;
   var totalCreditWithoutPNP = 0.obs;
   var averageCalculation = ''.obs;
+  var currentGradeController = TextEditingController().obs;
 
+  var targetGradeController = TextEditingController().obs;
+
+  var finalExamWeightController = TextEditingController().obs;
+
+  var result = ''.obs;
   @override
   void onInit() {
     super.onInit();
@@ -191,4 +197,35 @@ class GradeController extends GetxController{
           totalCredit.value + int.parse(instructorControllersLetter[i].text);
     }
   }
+
+
+
+
+  void calculateFinalExamGrade() {
+    final currentGrade = double.tryParse(currentGradeController.value.text);
+    final targetGrade = double.tryParse(targetGradeController.value.text);
+    final finalExamWeight = double.tryParse(finalExamWeightController.value.text);
+
+    if (currentGrade == null ||
+        targetGrade == null ||
+        finalExamWeight == null ||
+        finalExamWeight <= 0 ||
+        finalExamWeight >= 100) {
+
+        result.value = 'Please enter valid values.';
+
+      return;
+    }
+
+    final examWeight = finalExamWeight / 100;
+    final currentWeight = 1 - examWeight;
+    final requiredFinalExamGrade =
+        (targetGrade - (currentWeight * currentGrade)) / examWeight;
+
+
+      result.value = requiredFinalExamGrade.toStringAsFixed(2).toString();
+
+  }
+
+
 }
