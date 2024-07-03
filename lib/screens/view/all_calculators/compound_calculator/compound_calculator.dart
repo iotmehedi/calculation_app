@@ -39,28 +39,29 @@ class _CalculatorFormState extends State<CalculatorForm> {
   double _result = 0.0;
   double _totalPrincipal = 0.0;
   double _totalInterest = 0.0;
-  List<FlSpot> _principalSpots = [];
-  List<FlSpot> _interestSpots = [];
+  List<FlSpot> _principalSpots = [const FlSpot(0,0)];
+  List<FlSpot> _interestSpots = [const FlSpot(0,0)];
 
 
   @override
   Widget build(BuildContext context) {
-    double maxX = (_yearsOfGrowthController.text.isNotEmpty) ? double.parse(_yearsOfGrowthController.text) : 10.0;
-    double maxY = _result;
     int currentYear = DateTime.now().year;
+    int maxYears = 5;
+    double maxX = (maxYears).toDouble();
+    double maxY = _result;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compound Interest Calculator'),
+        title: const Text('Compound Interest Calculator'),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
               children: <Widget>[
             SizedBox(
-              height: 201,
+              height: 400,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: LineChart(
@@ -68,43 +69,58 @@ class _CalculatorFormState extends State<CalculatorForm> {
                     lineTouchData: LineTouchData(
                       touchTooltipData: LineTouchTooltipData(
                         // tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-                        // getTooltipItems: (touchedSpots) {
-                        //   return touchedSpots.map((spot) {
-                        //     final x = spot.x.toInt();
-                        //     final balance = spot.y.toInt();
-                        //     final interest = balance - 5000; // Assuming initial principal is 5000
-                        //     return LineTooltipItem(
-                        //       'Year: ${currentYear + x}\nBalance: \$${balance.toString()}\nInterest: \$${interest.toString()}',
-                        //       TextStyle(color: Colors.white),
-                        //     );
-                        //   }).toList();
-                        // },
+                        getTooltipItems: (touchedSpots) {
+                          return touchedSpots.map((spot) {
+                            final x = spot.x.toInt();
+                            final balance = spot.y.toInt();
+                            print("this is spot ${spot.y}");
+                            final interest =_totalPrincipal - balance ;
+                            // final currentYear = DateTime.now().year;
+                            return LineTooltipItem(
+                              'Year: ${currentYear + x}\nBalance: \$${balance.toStringAsFixed(2)}\nPrincipal: \$${balance.toStringAsFixed(2)}\nInterest: \$${interest.toStringAsFixed(2)}',
+                              const TextStyle(color: Colors.white),
+                              textAlign : TextAlign.center,
+                                // textDirection : TextDirection.LTR,
+                            );
+                          }).toList();
+                        },
                       ),
                       handleBuiltInTouches: true,
                       touchCallback: (FlTouchEvent event, barTouchResponse) {},
                     ),
 
-                    gridData: FlGridData(show: true),
+                    gridData: const FlGridData(show: true),
                     titlesData: FlTitlesData(
+                      show: true,
                       topTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                          interval: 1000, // Customize the interval for Y-axis labels
-                          getTitlesWidget: (value, meta) {
-                            int year = currentYear + value.toInt();
-                            return SideTitleWidget(
-                              axisSide: meta.axisSide,
-                              space: 6,
-                              child: Text(year.toString(), style: TextStyle(fontSize: 10)),
-                            );
-                          },
-                        )
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1000, // Customize the interval for Y-axis labels
+                            getTitlesWidget: (value, meta) {
+                              // int year = currentYear ;
+
+                              int year =  value.toInt();
+                              return SideTitleWidget(
+                                axisSide: meta.axisSide,
+                                space: 6,
+                                child: Text(year.toString(), style: const TextStyle(fontSize: 10)),
+                              );
+                            },
+                          )
                       ),
                       rightTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                          getTitlesWidget: bottomTitleWidgets,
-                        )
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                            // getTitlesWidget: bottomTitleWidgets,
+                          )
+                      ),
+                      bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                            // reservedSize: 30,
+                            getTitlesWidget: bottomTitleWidgets,
+                            interval: 1,
+                          )
                       ),
                     ),
                     borderData:  FlBorderData(
@@ -125,13 +141,13 @@ class _CalculatorFormState extends State<CalculatorForm> {
                         spots: _principalSpots,
                         isCurved: false,
                         color: Colors.blue,
-                        dotData: FlDotData(show: false),
+                        dotData: const FlDotData(show: true),
                       ),
                       LineChartBarData(
                         spots: _interestSpots,
                         isCurved: true,
                         color: Colors.orange,
-                        dotData: FlDotData(show: false),
+                        dotData: const FlDotData(show: true),
                       ),
 
                     ],
@@ -142,7 +158,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
 
                 TextFormField(
                   controller: _initialDepositController,
-                  decoration: InputDecoration(labelText: 'Initial Deposit'),
+                  decoration: const InputDecoration(labelText: 'Initial Deposit'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -153,7 +169,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 ),
                 TextFormField(
                   controller: _contributionAmountController,
-                  decoration: InputDecoration(labelText: 'Contribution Amount'),
+                  decoration: const InputDecoration(labelText: 'Contribution Amount'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -164,7 +180,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 ),
                 DropdownButtonFormField<String>(
                   value: _contributionFrequency,
-                  decoration: InputDecoration(labelText: 'Contribution Frequency'),
+                  decoration: const InputDecoration(labelText: 'Contribution Frequency'),
                   items: <String>['Monthly', 'Yearly'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -179,7 +195,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 ),
                 TextFormField(
                   controller: _yearsOfGrowthController,
-                  decoration: InputDecoration(labelText: 'Years of Growth'),
+                  decoration: const InputDecoration(labelText: 'Years of Growth'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -190,7 +206,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 ),
                 TextFormField(
                   controller: _rateOfReturnController,
-                  decoration: InputDecoration(labelText: 'Estimated Rate of Return (%)'),
+                  decoration: const InputDecoration(labelText: 'Estimated Rate of Return (%)'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -201,7 +217,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 ),
                 DropdownButtonFormField<String>(
                   value: _compoundFrequency,
-                  decoration: InputDecoration(labelText: 'Compound Frequency'),
+                  decoration: const InputDecoration(labelText: 'Compound Frequency'),
                   items: <String>['Daily', 'Monthly', 'Annually'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -214,25 +230,25 @@ class _CalculatorFormState extends State<CalculatorForm> {
                     });
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _calculateCompoundInterest,
-                  child: Text('Calculate'),
+                  child: const Text('Calculate'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'Total Balance: \$$_result',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 Text(
                   'Total Principal: \$$_totalPrincipal',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 Text(
                   'Total Interest: \$$_totalInterest',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
               ],
             ),
           ),
@@ -246,6 +262,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
       fontSize: 14,
     );
     String text;
+    print("this is value of leftTitleWidget $value");
     switch (value.toInt()) {
       case 1:
         text = '1m';
@@ -273,21 +290,28 @@ class _CalculatorFormState extends State<CalculatorForm> {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('SEPT', style: style);
-        break;
-      case 7:
-        text = const Text('OCT', style: style);
-        break;
-      case 12:
-        text = const Text('DEC', style: style);
-        break;
-      default:
-        text = const Text('');
-        break;
+    Widget text = Text('', style: style);
+
+
+    print("this is value of bottomTitleWidget $value");
+    var total = 0;
+    var middle = 0;
+    var list = [];
+    list.add(value);
+    total = total + value.round();
+    if(int.parse(_yearsOfGrowthController.text) == value.round()){
+      
+    middle = (total / list.length).round();
     }
+    print('This is hudai $value');
+    if(value.toInt() == 0.08333333333333333){
+      text = const Text('SEPT', style: style);
+    }else if(middle == value.toInt()){
+      text = const Text('OCT', style: style);
+    }else if(value == int.parse(_yearsOfGrowthController.text)) {
+      text = const Text('DEC', style: style);
+    }
+
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
@@ -537,17 +561,23 @@ class _CalculatorFormState extends State<CalculatorForm> {
 
       double A = P * pow((1 + r / n), n * t);
       _totalPrincipal = P;
-      _principalSpots.clear();
-      _interestSpots.clear();
+      _principalSpots = [FlSpot(0, P)];
+      _interestSpots = [FlSpot(0, P)];
       // List<LineChartSpot> spots = [];
       for (int i = 1; i <= t * m; i++) {
         A += PMT * pow((1 + r / n), n * (t - i / m));
         _totalPrincipal += PMT;
-        double totalPrincipalAtYear = P + (PMT * i * m);
-        double totalAmountAtYear = totalPrincipalAtYear * pow((1 + r / n), n * (t - i));
-        _principalSpots.add(FlSpot(i.toDouble(), totalPrincipalAtYear));
-        _interestSpots.add(FlSpot(i.toDouble(), totalAmountAtYear - totalPrincipalAtYear));
+        double totalPrincipalAt = P + (PMT * i / m);
+        double amount = totalPrincipalAt * pow((1 + r / n), n * (i / m));
+        print(i/m);
+        _principalSpots.add(FlSpot(i / m, totalPrincipalAt));
+        _interestSpots.add(FlSpot(i / m, amount));
         // spots.add(LineChartSpot(i.toDouble(), A));
+        double interest = amount - totalPrincipalAt;
+        if (i == t * m) {
+          _result = amount;
+        }
+
       }
 
       _totalInterest = A - _totalPrincipal;
