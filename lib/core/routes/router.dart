@@ -29,6 +29,7 @@ import '../../screens/view/all_calculators/bmi_calculator/bmi_calculator.dart';
 import '../../screens/view/all_calculators/cd_calculator/cd-calculator_result.dart';
 import '../../screens/view/all_calculators/cd_calculator/cd_calculator.dart';
 import '../../screens/view/all_calculators/compound_calculator/compound_calculator.dart';
+import '../../screens/view/all_calculators/compound_calculator/compound_result_screen.dart';
 import '../../screens/view/all_calculators/discount_calculator/discount_calculator.dart';
 import '../../screens/view/all_calculators/discount_calculator/discount_result_screen.dart';
 import '../../screens/view/all_calculators/emi_calculator/emi_calculator_screen.dart';
@@ -502,6 +503,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => CalculatorForm(),
+          );
+        }
+        case Routes.compoundScreenResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) => CompoundResultScreen(),
           );
         }
     }
