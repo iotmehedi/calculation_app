@@ -66,7 +66,7 @@ class CompoundController extends GetxController {
       }
       result.value = A;
 
-      maxY.value = result.value + 4000;
+      maxY.value = result.value;
 
       principalSpots.value = [];
       interestSpots.value = [];
@@ -89,5 +89,24 @@ class CompoundController extends GetxController {
       RouteGenerator.pushNamed(
           navigatorKey.currentContext!, Routes.compoundScreenResult);
     }
+  }
+  String formatNumber(double value) {
+    if (value >= 1e12) {
+      return '${(value / 1e14).toStringAsFixed(0)}t';
+    } else if (value >= 1e9) {
+      return '${(value / 1e9).toStringAsFixed(0)}b';
+    } else if (value >= 1e6) {
+      return '${(value / 1e6).toStringAsFixed(0)}m';
+    } else if (value >= 1e3) {
+      return '${(value / 1e3).toStringAsFixed(0)}k';
+    } else {
+      return value.toStringAsFixed(0);
+    }
+  }
+  void allFieldClear(){
+    initialDepositController.value.clear();
+    contributionAmountController.value.clear();
+    yearsOfGrowthController.value.clear();
+    rateOfReturnController.value.clear();
   }
 }

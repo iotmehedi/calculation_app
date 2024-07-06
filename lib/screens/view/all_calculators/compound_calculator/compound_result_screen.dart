@@ -127,7 +127,7 @@ class CompoundResultScreen extends StatelessWidget {
                           drawVerticalLine: true,
                           show: true,
                           horizontalInterval:
-                              (controller.maxY.value + 3000) / 6,
+                              (controller.maxY.value) / 5,
                           getDrawingHorizontalLine: (value) {
                             return FlLine(
                               color: HexColor("FAFAFA"),
@@ -157,7 +157,7 @@ class CompoundResultScreen extends StatelessWidget {
                                 return SideTitleWidget(
                                   axisSide: meta.axisSide,
                                   space: 2,
-                                  child: Text('${(value ~/ 1000)}k',
+                                  child: Text(controller.formatNumber(value),
                                       style: const TextStyle(fontSize: 10)),
                                 );
                               },
@@ -196,7 +196,7 @@ class CompoundResultScreen extends StatelessWidget {
                         minX: 0,
                         maxX: maxX,
                         minY: 0,
-                        maxY: controller.maxY.value + 3000,
+                        maxY: controller.maxY.value ,
                         lineBarsData: [
                           LineChartBarData(
                             spots: controller.principalSpots.value,
