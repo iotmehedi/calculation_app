@@ -92,7 +92,8 @@ class HomepageScreen extends StatelessWidget {
                       images: AppAssets.salary,
                       text: "Salary\nCalculator",
                       onPress: () {
-                        print("this is");
+                        RouteGenerator.pushNamed(
+                            context, Routes.salaryCalculatorScreen);
                       },
                     ),
                   ),

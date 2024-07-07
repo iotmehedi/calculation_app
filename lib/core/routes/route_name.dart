@@ -43,6 +43,7 @@ class Routes {
   static const marginCalculator = "/marginCalculator";
   static const marginCalculatorResultScreen = "/marginCalculatorResultScreen";
   static const salaryCalculatorScreen = "/salaryCalculatorScreen";
+  static const salaryCalculatorResultScreen = "/salaryCalculatorResultScreen";
   static const cdCalculatorForm = "/cdCalculatorForm";
   static const cdResultScreen = "/CDResultScreen";
   static const fdCalculatorHome = "/fdCalculatorHome";

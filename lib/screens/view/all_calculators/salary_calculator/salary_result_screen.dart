@@ -1,0 +1,242 @@
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/salary_calculator/salary_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/utils/consts/textstyle.dart';
+import '../../../widgets/common_result_heading/common_result_heading.dart';
+
+class SalaryResultCalculator extends StatelessWidget {
+  SalaryResultCalculator({super.key});
+  var controller = Get.find<SalaryController>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: "Salary Calculator",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      body: Obx(() => SingleChildScrollView(
+        child: Column(
+              children: [
+                const CommonResultHeading(headingName: "Calculation"),
+                20.ph,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DataTable(
+                    border: TableBorder.symmetric(
+                        outside: BorderSide(color: HexColor("F3F3F3"), width: 1),
+                        inside: BorderSide(color: HexColor("F3F3F3"), width: 1)),
+                    columnSpacing: 20,
+                    headingRowColor:
+                        MaterialStateProperty.all(HexColor("0F182E")),
+                    dividerThickness: 0.00000001,
+                    columns: [
+                      DataColumn(label: Text('')),
+                      DataColumn(
+                        label: Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              child: globalText10(
+                                  text: 'Payable',
+                                  color: Colors.white,
+                                  alignment: Alignment.centerRight,
+                                  fontWeight: FontWeight.w400)),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              child: globalText10(
+                                  text: 'Holidays & vacation\ndays adjusted',
+                                  color: Colors.white,
+                                  alignment: Alignment.centerRight,
+                                  fontWeight: FontWeight.w400)),
+                        ),
+                      ),
+                    ],
+                    rows: [
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Hourly',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text: '\$${controller.salary.value.toStringAsFixed(2)}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${controller.adjustedHourlySalary.value.toStringAsFixed(2)}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                        // divider: Divider(height: 1, color: Colors.grey),
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Daily',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${(controller.salary.value * controller.hoursPerWeek.value / controller.daysPerWeek.value + 0.53).toStringAsFixed(2)}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${(controller.adjustedHourlySalary.value * (controller.hoursPerWeek.value / controller.daysPerWeek.value)).toStringAsFixed(2)}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Weekly',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.adjustedHourlySalary.value * controller.hoursPerWeek.value).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Bi-weekly',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * 2).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.adjustedHourlySalary.value * controller.hoursPerWeek.value * 2).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Semi-monthly',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value / 24).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value / 24).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Monthly',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value / 12).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value / 12).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Quarterly',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value / 4).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value / 4).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(globalText14(
+                              text: 'Annual',
+                              alignment: Alignment.center,
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                          DataCell(globalText14(
+                              text:
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value).round())}',
+                              alignment: Alignment.centerRight,
+                              textAlign: TextAlign.end,
+                              fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                20.ph,
+              ],
+            ),
+      )),
+    );
+  }
+}

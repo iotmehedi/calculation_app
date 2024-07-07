@@ -48,6 +48,7 @@ dependencies:
   month_year_picker: ^0.3.0+1
   collection: ^1.16.0
   syncfusion_flutter_charts: ^25.2.7
+  intl:
 
 
 dependency_overrides:

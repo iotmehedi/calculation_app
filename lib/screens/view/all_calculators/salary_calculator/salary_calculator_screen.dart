@@ -1,4 +1,15 @@
+import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/salary_calculator/salary_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
+
+import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
+import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
 void main() {
   runApp(SalaryCalculatorApp());
@@ -23,209 +34,275 @@ class SalaryCalculatorScreen extends StatefulWidget {
 }
 
 class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  String _selectedInterval = 'Hourly';
-  final TextEditingController _salaryController = TextEditingController();
-  final TextEditingController _hoursPerWeekController = TextEditingController();
-  final TextEditingController _daysPerWeekController = TextEditingController();
-  final TextEditingController _holidaysPerYearController = TextEditingController();
-  final TextEditingController _vacationDaysPerYearController = TextEditingController();
-
-  final List<String> _intervals = ['Hourly', 'Daily', 'Weekly', 'Biweekly', 'Semi-monthly', 'Monthly', 'Quarterly', 'Yearly'];
-
-  Map<String, double> _unadjustedSalaries = {};
-  Map<String, double> _adjustedSalaries = {};
-
-  void _calculateSalaries() {
-    if (_formKey.currentState!.validate()) {
-      double salary = double.parse(_salaryController.text);
-      double hoursPerWeek = double.parse(_hoursPerWeekController.text);
-      double daysPerWeek = double.parse(_daysPerWeekController.text);
-      double holidaysPerYear = double.parse(_holidaysPerYearController.text);
-      double vacationDaysPerYear = double.parse(_vacationDaysPerYearController.text);
-
-      double weeksPerYear = 52;
-      double workDaysPerYear = daysPerWeek * weeksPerYear;
-      double workHoursPerYear = hoursPerWeek * weeksPerYear;
-      double totalNonWorkingDays = holidaysPerYear + vacationDaysPerYear;
-      double adjustedWorkDaysPerYear = workDaysPerYear - totalNonWorkingDays;
-      double adjustedWorkHoursPerYear = adjustedWorkDaysPerYear * (hoursPerWeek / daysPerWeek);
-
-      // Convert the input salary to hourly if it's not hourly
-      switch (_selectedInterval) {
-        case 'Daily':
-          salary /= (hoursPerWeek / daysPerWeek);
-          break;
-        case 'Weekly':
-          salary /= hoursPerWeek;
-          break;
-        case 'Biweekly':
-          salary /= (hoursPerWeek * 2);
-          break;
-        case 'Semi-monthly':
-          salary /= (hoursPerWeek * weeksPerYear / 24);
-          break;
-        case 'Monthly':
-          salary /= (hoursPerWeek * weeksPerYear / 12);
-          break;
-        case 'Quarterly':
-          salary /= (hoursPerWeek * weeksPerYear / 4);
-          break;
-        case 'Yearly':
-          salary /= (hoursPerWeek * weeksPerYear);
-          break;
-        default:
-          break;
-      }
-
-      // Unadjusted Salaries Calculation
-      _unadjustedSalaries = {
-        'Hourly': salary,
-        'Daily': salary * hoursPerWeek / daysPerWeek,
-        'Weekly': salary * hoursPerWeek,
-        'Biweekly': salary * hoursPerWeek * 2,
-        'Semi-monthly': salary * hoursPerWeek * weeksPerYear / 24,
-        'Monthly': salary * hoursPerWeek * weeksPerYear / 12,
-        'Quarterly': salary * hoursPerWeek * weeksPerYear / 4,
-        'Yearly': salary * hoursPerWeek * weeksPerYear,
-      };
-
-      // Adjusted Salaries Calculation
-      double annualAdjustedSalary = salary * adjustedWorkHoursPerYear;
-      double adjustedHourlySalary = annualAdjustedSalary / workHoursPerYear;
-
-      _adjustedSalaries = {
-        'Hourly': adjustedHourlySalary,
-        'Daily': adjustedHourlySalary * (hoursPerWeek / daysPerWeek),
-        'Weekly': adjustedHourlySalary * hoursPerWeek,
-        'Biweekly': adjustedHourlySalary * hoursPerWeek * 2,
-        'Semi-monthly': annualAdjustedSalary / 24,
-        'Monthly': annualAdjustedSalary / 12,
-        'Quarterly': annualAdjustedSalary / 4,
-        'Yearly': annualAdjustedSalary,
-      };
-
-      setState(() {});
-    }
-  }
+  var controller = Get.put(SalaryController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Salary Calculator'),
+      appBar: CustomAppBar(
+        title: "Salary Calculator",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DropdownButtonFormField<String>(
-                  value: _selectedInterval,
-                  items: _intervals.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedInterval = newValue!;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Salary Interval',
-                  ),
+      body: Obx(() => Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: controller.formKey.value,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CommonTextFieldCustom(
+                            flex: 15,
+                            headingName: 'Salary Amount',
+                            controller: controller.salaryController.value,
+                            keyboardType: TextInputType.number,
+                            needPadding: true,
+                            onlyNeedSuffix: true,
+                            suffixIcon: const Icon(
+                              Icons.percent,
+                              size: 16,
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter the salary amount';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        // 5.pw,
+                        Column(
+                          children: [
+                            globalText16(
+                                text: '',
+                                fontWeight: FontWeight.normal,
+                                textAlign: TextAlign.start),
+                            5.ph,
+                            Center(
+                              child: globalText18(
+                                  text: "per",
+                                  fontWeight: FontWeight.w400,
+                                  alignment: Alignment.center),
+                            ),
+                          ],
+                        ),
+                        15.pw,
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              globalText16(
+                                  text: '',
+                                  fontWeight: FontWeight.normal,
+                                  textAlign: TextAlign.start),
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: HexColor("EEF2F6")),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    value: controller.selectedInterval.value,
+                                    items: controller.intervals.value
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: globalText16(
+                                            text: value,
+                                            fontWeight: FontWeight.w400),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        controller.selectedInterval.value =
+                                            newValue!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    10.ph,
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: globalText16(
+                              text: "Hours per Week",
+                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CommonTextFieldCustom(
+                            flex: 2,
+                            headingName: '',
+                            controller: controller.hoursPerWeekController.value,
+                            keyboardType: TextInputType.number,
+                            needPadding: false,
+                            onlyNeedSuffix: true,
+                            textAlign: TextAlign.center,
+                            suffixIcon: const Icon(
+                              Icons.percent,
+                              size: 16,
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter the hours per week';
+                              }
+                              return null;
+                            },
+                                                    ),
+                          ),)
+                      ],
+                    ),
+                    10.ph,
+
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: globalText16(
+                              text: "Days per week",
+                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CommonTextFieldCustom(
+                              flex: 2,
+                              headingName: '',
+                              controller: controller.daysPerWeekController.value,
+                              keyboardType: TextInputType.number,
+                              needPadding: false,
+                              onlyNeedSuffix: true,
+                              textAlign: TextAlign.center,
+                              suffixIcon: const Icon(
+                                Icons.percent,
+                                size: 16,
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter the days per week';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),)
+                      ],
+                    ),
+                    10.ph,
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: globalText16(
+                              text: "Holidays per year",
+                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CommonTextFieldCustom(
+                              flex: 2,
+                              headingName: '',
+                              controller: controller.holidaysPerYearController.value,
+                              keyboardType: TextInputType.number,
+                              needPadding: false,
+                              onlyNeedSuffix: true,
+                              textAlign: TextAlign.center,
+                              suffixIcon: const Icon(
+                                Icons.percent,
+                                size: 16,
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter the holidays per year';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),)
+                      ],
+                    ),
+                    10.ph,
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: globalText16(
+                              text: "Vacation days per year",
+                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CommonTextFieldCustom(
+                              flex: 2,
+                              headingName: '',
+                              controller: controller.vacationDaysPerYearController.value,
+                              keyboardType: TextInputType.number,
+                              needPadding: false,
+                              onlyNeedSuffix: true,
+                              textAlign: TextAlign.center,
+                              suffixIcon: const Icon(
+                                Icons.percent,
+                                size: 16,
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter the vacation days per year';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),)
+                      ],
+                    ),
+                    10.ph,
+                    const SizedBox(height: 20),
+
+                    CustomCalculateClearWidget(
+                      onPressCalculate: () {
+                        if (controller.formKey.value.currentState?.validate() ??
+                            false) {
+                          controller.calculateSalaries();
+                        }
+                      },
+                      onPressClear: controller.allFieldClear,
+                        clearButtonTitleFontSize: 20,
+                        clearButtonFontWeight: FontWeight.w600
+                    ),
+                    // if (controller.unadjustedSalaries.isNotEmpty) ...[
+                    //   Text('Unadjusted Salaries:',
+                    //       style: TextStyle(fontWeight: FontWeight.bold)),
+                    //   ...controller.unadjustedSalaries.entries.map((entry) => Text(
+                    //       '${entry.key}: \$${entry.value.toStringAsFixed(2)}')),
+                    // ],
+                    // SizedBox(height: 20),
+                    // if (controller.adjustedSalaries.isNotEmpty) ...[
+                    //   Text('Adjusted Salaries:',
+                    //       style: TextStyle(fontWeight: FontWeight.bold)),
+                    //   ...controller.adjustedSalaries.entries.map((entry) => Text(
+                    //       '${entry.key}: \$${entry.value.toStringAsFixed(2)}')),
+                    // ],
+                  ],
                 ),
-                TextFormField(
-                  controller: _salaryController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Salary Amount',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter salary amount';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _hoursPerWeekController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Hours per Week',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter hours per week';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _daysPerWeekController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Days per Week',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter days per week';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _holidaysPerYearController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Holidays per Year',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter holidays per year';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _vacationDaysPerYearController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Vacation Days per Year',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter vacation days per year';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _calculateSalaries,
-                  child: Text('Calculate'),
-                ),
-                SizedBox(height: 20),
-                if (_unadjustedSalaries.isNotEmpty) ...[
-                  Text('Unadjusted Salaries:', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ..._unadjustedSalaries.entries.map((entry) => Text('${entry.key}: \$${entry.value.toStringAsFixed(2)}')),
-                ],
-                SizedBox(height: 20),
-                if (_adjustedSalaries.isNotEmpty) ...[
-                  Text('Adjusted Salaries:', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ..._adjustedSalaries.entries.map((entry) => Text('${entry.key}: \$${entry.value.toStringAsFixed(2)}')),
-                ],
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

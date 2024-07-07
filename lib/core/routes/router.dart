@@ -17,6 +17,7 @@ import 'package:calculation_app/screens/view/all_calculators/pregnancy_calculato
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/due_date_result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_due_date_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_trimester.dart';
+import 'package:calculation_app/screens/view/all_calculators/salary_calculator/salary_result_screen.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_screen.dart';
 import 'package:calculation_app/screens/view/splash_screen/splash_screen.dart';
@@ -415,6 +416,12 @@ class RouteGenerator {
             builder: (context) => SalaryCalculatorScreen(),
           );
         }
+        case Routes.salaryCalculatorResultScreen:
+        {
+          return MaterialPageRoute(
+            builder: (context) => SalaryResultCalculator(),
+          );
+        }
         case Routes.cdCalculatorForm:
         {
           return MaterialPageRoute(
@@ -515,3 +522,13 @@ class RouteGenerator {
     return null;
   }
 }
+
+
+//      adjHourlyRate = 84961 / adjustedWorkingHours;
+//       adjDailyRate = adjHourlyRate * (hoursPerWeek / daysPerWeek);
+//       adjWeeklyRate = adjHourlyRate * hoursPerWeek;
+//       adjBiWeeklyRate = adjWeeklyRate * 2;
+//       adjSemiMonthlyRate = adjAnnualRate / 24;
+//       adjMonthlyRate = adjAnnualRate / 12;
+//       adjQuarterlyRate = adjAnnualRate / 4;
+//       adjAnnualRate = 94000;

@@ -6,7 +6,7 @@ import '../../../core/utils/consts/textstyle.dart';
 import '../textfield/textField_widget.dart';
 
 class CommonTextFieldCustom extends StatelessWidget {
-  final String headingName;
+  final String? headingName;
   final TextEditingController? controller;
   String? Function(String?)? validator;
   final TextInputType keyboardType;
@@ -16,14 +16,15 @@ class CommonTextFieldCustom extends StatelessWidget {
   final String? suffixText, hint;
   final TextAlign? textAlign;
   final bool? onlyNeedSuffix;
+  final int? flex;
   CommonTextFieldCustom(
       {super.key,
-      required this.headingName,
+       this.headingName,
       required this.controller,
       required this.validator,
       required this.keyboardType,
       required this.needPadding,
-      this.prefixIcon,this.suffixIcon,
+      this.prefixIcon,this.suffixIcon, this.flex,
         this.suffixText, this.textAlign, this.hint, this.onlyNeedSuffix});
 
   @override
@@ -31,12 +32,14 @@ class CommonTextFieldCustom extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        globalText16(text: headingName, fontWeight: FontWeight.normal, textAlign: TextAlign.start),
+        if(headingName?.isNotEmpty ?? false)
+        globalText16(text: headingName ?? '', fontWeight: FontWeight.normal, textAlign: TextAlign.start),
         5.ph,
         Row(
+
           children: [
             Expanded(
-              flex: 3,
+              flex: flex ?? 3,
               child: Container(
                   decoration: BoxDecoration(
                       color: HexColor("#F3F6F9"),
@@ -54,9 +57,11 @@ class CommonTextFieldCustom extends StatelessWidget {
                     hint: hint,
                   )),
             ),
+            if(headingName?.isNotEmpty ?? false)
             const SizedBox(
               width: 10,
             ),
+            if(headingName?.isNotEmpty ?? false)
             Expanded(
               child: SizedBox(),
             ),

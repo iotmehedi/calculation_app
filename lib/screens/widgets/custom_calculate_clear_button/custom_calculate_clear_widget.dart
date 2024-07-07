@@ -6,7 +6,9 @@ import '../custom_elevatedButton/custom_eleveted_button.dart';
 
 class CustomCalculateClearWidget extends StatelessWidget {
   final VoidCallback? onPressCalculate, onPressClear;
-  const CustomCalculateClearWidget({super.key, required this.onPressCalculate, required this.onPressClear});
+  final double? clearButtonTitleFontSize;
+  final FontWeight? clearButtonFontWeight;
+  const CustomCalculateClearWidget({super.key, required this.onPressCalculate, required this.onPressClear, this.clearButtonTitleFontSize, this.clearButtonFontWeight});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +38,9 @@ class CustomCalculateClearWidget extends StatelessWidget {
               text: Text(
                 "Clear",
                 style: TextStyle(
+                  fontSize: clearButtonTitleFontSize ??  14,
                     color: HexColor("0F182E"),
-                    fontWeight: FontWeight.w500),
+                    fontWeight: clearButtonFontWeight ?? FontWeight.w500),
               ),
             ),
           ),
