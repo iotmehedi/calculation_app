@@ -4,6 +4,7 @@ import 'package:calculation_app/screens/view/all_calculators/compound_calculator
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -63,17 +64,17 @@ class CompoundResultScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: Container(
-                    padding: EdgeInsets.only(left: 10, right: 20, top: 20, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 10, right: 20, top: 20, bottom: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(2),
-                      color: Colors.white
-                    ),
+                        borderRadius: BorderRadius.circular(2),
+                        color: Colors.white),
                     height: 251,
                     child: LineChart(
                       LineChartData(
                         lineTouchData: LineTouchData(
                           touchTooltipData: LineTouchTooltipData(
-                            getTooltipColor: (spot) => Colors.red,
+                            getTooltipColor: (spot) => Colors.white,
                             tooltipRoundedRadius: 4,
                             tooltipHorizontalAlignment:
                                 FLHorizontalAlignment.left,
@@ -112,8 +113,13 @@ class CompoundResultScreen extends StatelessWidget {
                               }).toList()
                                 ..[0] = LineTooltipItem(
                                   'Year: ${currentYear + x}\nBalance: \$${balance.toInt()}\nPrincipal: \$${principalUpToYear.toInt()}\nInterest: \$${interest.toInt()}',
-                                  const TextStyle(color: Colors.white),
-                                  textAlign: TextAlign.center,
+                                  const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Poppins",
+                                      wordSpacing: 5,
+                                      overflow: TextOverflow.clip,
+                                      fontSize: 10),
+                                  textAlign: TextAlign.start,
                                 );
                             },
                           ),
@@ -126,8 +132,7 @@ class CompoundResultScreen extends StatelessWidget {
                               true, // Show horizontal grid lines
                           drawVerticalLine: true,
                           show: true,
-                          horizontalInterval:
-                              (controller.maxY.value) / 5,
+                          horizontalInterval: (controller.maxY.value) / 5,
                           getDrawingHorizontalLine: (value) {
                             return FlLine(
                               color: HexColor("FAFAFA"),
@@ -172,7 +177,6 @@ class CompoundResultScreen extends StatelessWidget {
                             sideTitles: SideTitles(
                               showTitles: true,
                               interval: 1,
-
                               getTitlesWidget: bottomTitleWidgets,
                             ),
                           ),
@@ -196,7 +200,7 @@ class CompoundResultScreen extends StatelessWidget {
                         minX: 0,
                         maxX: maxX,
                         minY: 0,
-                        maxY: controller.maxY.value ,
+                        maxY: controller.maxY.value,
                         lineBarsData: [
                           LineChartBarData(
                             spots: controller.principalSpots.value,
@@ -229,7 +233,9 @@ class CompoundResultScreen extends StatelessWidget {
                             color: HexColor("2FAE3B"),
                           ),
                           10.pw,
-                          globalText10(text: "Total Interest", fontWeight: FontWeight.normal)
+                          globalText10(
+                              text: "Total Interest",
+                              fontWeight: FontWeight.normal)
                         ],
                       ),
                       20.pw,
@@ -241,7 +247,9 @@ class CompoundResultScreen extends StatelessWidget {
                             color: HexColor("244384"),
                           ),
                           10.pw,
-                          globalText10(text: "Principal Value", fontWeight: FontWeight.normal)
+                          globalText10(
+                              text: "Principal Value",
+                              fontWeight: FontWeight.normal)
                         ],
                       ),
                     ],
