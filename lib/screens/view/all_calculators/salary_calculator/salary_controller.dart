@@ -8,7 +8,7 @@ import '../../../../main.dart';
 class SalaryController extends GetxController {
   var formKey = GlobalKey<FormState>().obs;
 
-  var selectedInterval = 'Hourly'.obs;
+  var selectedInterval = 'Hour'.obs;
   var salaryController = TextEditingController().obs;
   var hoursPerWeekController = TextEditingController().obs;
   var daysPerWeekController = TextEditingController().obs;
@@ -16,14 +16,14 @@ class SalaryController extends GetxController {
   var vacationDaysPerYearController = TextEditingController().obs;
 
   var intervals = [
-    'Hourly',
-    'Daily',
-    'Weekly',
-    'Biweekly',
-    'Semi-monthly',
-    'Monthly',
-    'Quarterly',
-    'Yearly'
+    'Hour',
+    'Day',
+    'Week',
+    'Biweek',
+    'Semi-month',
+    'Month',
+    'Quarter',
+    'Year'
   ].obs;
 
   var unadjustedSalaries = {}.obs;
@@ -41,6 +41,14 @@ class SalaryController extends GetxController {
   var adjustedWorkHoursPerYear = 0.0.obs;
   var annualAdjustedSalary = 0.0.obs;
   var adjustedHourlySalary = 0.0.obs;
+  var hourlySalary = 0.0.obs;
+  var dailySalary = 0.0.obs;
+  var weeklySalary = 0.0.obs;
+  var biweeklySalary = 0.0.obs;
+  var semimonthlySalary = 0.0.obs;
+  var monthlySalary = 0.0.obs;
+  var quarterlySalary = 0.0.obs;
+  var annualSalary = 0.0.obs;
   void calculateSalaries() {
     if (formKey.value.currentState!.validate()) {
       salary.value = double.parse(salaryController.value.text);
@@ -57,25 +65,25 @@ class SalaryController extends GetxController {
 
       // Convert the input salary to hourly if it's not hourly
       switch (selectedInterval.value) {
-        case 'Daily':
+        case 'Day':
           salary.value /= (hoursPerWeek.value / daysPerWeek.value);
           break;
-        case 'Weekly':
+        case 'Week':
           salary.value /= hoursPerWeek.value;
           break;
-        case 'Biweekly':
+        case 'Biweek':
           salary.value /= (hoursPerWeek * 2);
           break;
-        case 'Semi-monthly':
+        case 'Semi-month':
           salary.value /= (hoursPerWeek * weeksPerYear.value / 24);
           break;
-        case 'Monthly':
+        case 'Month':
           salary.value /= (hoursPerWeek * weeksPerYear.value / 12);
           break;
-        case 'Quarterly':
+        case 'Quarter':
           salary.value /= (hoursPerWeek * weeksPerYear.value / 4);
           break;
-        case 'Yearly':
+        case 'Year':
           salary.value /= (hoursPerWeek * weeksPerYear.value);
           break;
         default:
@@ -84,7 +92,7 @@ class SalaryController extends GetxController {
 
       // Unadjusted Salaries Calculation
       unadjustedSalaries.value = {
-        'Hourly': salary,
+        'Hour': salary,
         'Daily': salary * hoursPerWeek.value / daysPerWeek.value,
         'Weekly': salary * hoursPerWeek.value,
         'Biweekly': salary * hoursPerWeek.value * 2,
@@ -108,8 +116,62 @@ class SalaryController extends GetxController {
         'Quarterly': annualAdjustedSalary.value / 4,
         'Yearly': annualAdjustedSalary.value,
       };
+      calculateSalary();
       RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.salaryCalculatorResultScreen);
     }
+  }
+  void calculateSalary() {
+    final double salaryAmount = double.tryParse(salaryController.value.text) ?? 0.0;
+    final int hoursPerWeek = int.tryParse(hoursPerWeekController.value.text) ?? 0;
+    final int daysPerWeek = int.tryParse(daysPerWeekController.value.text) ?? 0;
+    final int holidaysPerYear = int.tryParse(holidaysPerYearController.value.text) ?? 0;
+    final int vacationDaysPerYear = int.tryParse(vacationDaysPerYearController.value.text) ?? 0;
+
+    const int totalWeeksInYear = 52;
+    const int workingDaysPerWeek = 5;
+
+    final int totalWorkingDaysPerYear = (totalWeeksInYear * workingDaysPerWeek) ;
+    final double totalWorkingHoursPerYear = (totalWorkingDaysPerYear * hoursPerWeek) / daysPerWeek;
+
+
+
+    switch (selectedInterval.value) {
+      case 'Hour':
+        annualSalary.value = totalWorkingHoursPerYear * salaryAmount;
+        break;
+      case 'Day':
+        annualSalary.value = totalWorkingDaysPerYear * salaryAmount;
+        break;
+      case 'Week':
+        annualSalary.value = totalWeeksInYear * salaryAmount;
+        break;
+      case 'Biweek':
+        annualSalary.value = (totalWeeksInYear / 2) * salaryAmount;
+        break;
+      case 'Semi-month':
+        annualSalary.value = 24 * salaryAmount;
+        break;
+      case 'Month':
+        annualSalary.value = 12 * salaryAmount;
+        break;
+      case 'Quarter':
+        annualSalary.value = 4 * salaryAmount;
+        break;
+      case 'Year':
+        annualSalary.value = salaryAmount;
+        break;
+      default:
+        break;
+    }
+
+    hourlySalary.value = annualSalary / totalWorkingHoursPerYear;
+    dailySalary.value = annualSalary / totalWorkingDaysPerYear;
+    weeklySalary.value = annualSalary / totalWeeksInYear;
+    biweeklySalary.value = annualSalary / (totalWeeksInYear / 2);
+    semimonthlySalary.value = annualSalary / 24;
+    monthlySalary.value = annualSalary / 12;
+    quarterlySalary.value = annualSalary / 4;
+
   }
 
 

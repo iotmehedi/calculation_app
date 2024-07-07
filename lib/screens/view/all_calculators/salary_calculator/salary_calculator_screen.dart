@@ -111,7 +111,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                                     isExpanded: true,
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     value: controller.selectedInterval.value,
-                                    items: controller.intervals.value
+                                    items: controller.intervals
                                         .map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,

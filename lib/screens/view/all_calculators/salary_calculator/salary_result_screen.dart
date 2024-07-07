@@ -22,7 +22,7 @@ class SalaryResultCalculator extends StatelessWidget {
         },
       ),
       body: Obx(() => SingleChildScrollView(
-        child: Column(
+            child: Column(
               children: [
                 const CommonResultHeading(headingName: "Calculation"),
                 20.ph,
@@ -30,8 +30,10 @@ class SalaryResultCalculator extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: DataTable(
                     border: TableBorder.symmetric(
-                        outside: BorderSide(color: HexColor("F3F3F3"), width: 1),
-                        inside: BorderSide(color: HexColor("F3F3F3"), width: 1)),
+                        outside:
+                            BorderSide(color: HexColor("F3F3F3"), width: 1),
+                        inside:
+                            BorderSide(color: HexColor("F3F3F3"), width: 1)),
                     columnSpacing: 20,
                     headingRowColor:
                         MaterialStateProperty.all(HexColor("0F182E")),
@@ -70,13 +72,14 @@ class SalaryResultCalculator extends StatelessWidget {
                               textAlign: TextAlign.center,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
-                              text: '\$${controller.salary.value.toStringAsFixed(2)}',
+                              text:
+                                  '\$${controller.salary.value.toStringAsFixed(2)}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${controller.adjustedHourlySalary.value.toStringAsFixed(2)}',
+                                  '\$${(controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? controller.adjustedHourlySalary.value.toStringAsFixed(2) : controller.hourlySalary.value.toStringAsFixed(2)}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -98,7 +101,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${(controller.adjustedHourlySalary.value * (controller.hoursPerWeek.value / controller.daysPerWeek.value)).toStringAsFixed(2)}',
+                                  '\$${(controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * (controller.hoursPerWeek.value / controller.daysPerWeek.value)).toStringAsFixed(2) : controller.dailySalary.value.toStringAsFixed(2)}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -119,7 +122,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.adjustedHourlySalary.value * controller.hoursPerWeek.value).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * controller.hoursPerWeek.value).round() : controller.weeklySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -140,7 +143,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.adjustedHourlySalary.value * controller.hoursPerWeek.value * 2).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * controller.hoursPerWeek.value * 2).round() : controller.biweeklySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -161,7 +164,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value / 24).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 24).round() : controller.semimonthlySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -182,7 +185,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value / 12).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 12).round() : controller.monthlySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -203,7 +206,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value / 4).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 4).round() : controller.quarterlySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -224,7 +227,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.annualAdjustedSalary.value).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value).round() : controller.annualSalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -236,7 +239,7 @@ class SalaryResultCalculator extends StatelessWidget {
                 20.ph,
               ],
             ),
-      )),
+          )),
     );
   }
 }
