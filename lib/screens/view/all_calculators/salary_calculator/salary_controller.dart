@@ -49,6 +49,14 @@ class SalaryController extends GetxController {
   var monthlySalary = 0.0.obs;
   var quarterlySalary = 0.0.obs;
   var annualSalary = 0.0.obs;
+  var hourlyRateUnadjusted = 0.0.obs;
+  var dailyRateUnadjusted = 0.0.obs;
+  var weeklyRateUnadjusted = 0.0.obs;
+  var biweeklyRateUnadjusted = 0.0.obs;
+  var semimonthlyRateUnadjusted = 0.0.obs;
+  var monthlyRateUnadjusted = 0.0.obs;
+  var quarterlyRateUnadjusted = 0.0.obs;
+  var annuallyUnadjusted = 0.0.obs;
   void calculateSalaries() {
     if (formKey.value.currentState!.validate()) {
       salary.value = double.parse(salaryController.value.text);
@@ -116,11 +124,10 @@ class SalaryController extends GetxController {
         'Quarterly': annualAdjustedSalary.value / 4,
         'Yearly': annualAdjustedSalary.value,
       };
-      calculateSalary();
-      RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.salaryCalculatorResultScreen);
+
     }
   }
-  void calculateSalary() {
+  void calculateSalaryAdjusted() {
     final double salaryAmount = double.tryParse(salaryController.value.text) ?? 0.0;
     final int hoursPerWeek = int.tryParse(hoursPerWeekController.value.text) ?? 0;
     final int daysPerWeek = int.tryParse(daysPerWeekController.value.text) ?? 0;
@@ -172,6 +179,53 @@ class SalaryController extends GetxController {
     monthlySalary.value = annualSalary / 12;
     quarterlySalary.value = annualSalary / 4;
 
+  }
+
+  void calculateSalaryUnadjusted() {
+    final double salary = double.tryParse(salaryController.value.text) ?? 0.0;
+    final double hoursPerWeek = double.tryParse(hoursPerWeekController.value.text) ?? 0.0;
+    final double daysPerWeek = double.tryParse(daysPerWeekController.value.text) ?? 0.0;
+
+    double annualSalaryUnadjusted = 0;
+
+    switch (selectedInterval.value) {
+      case 'Hour':
+        annualSalaryUnadjusted = (salary) * hoursPerWeek * 52;
+        break;
+      case 'Day':
+        annualSalaryUnadjusted = salary * daysPerWeek * 52;
+        break;
+      case 'Week':
+        annualSalaryUnadjusted = (salary / 100) * 52;
+        break;
+      case 'Biweek':
+        annualSalaryUnadjusted = salary * 26;
+        break;
+      case 'Semi-month':
+        annualSalaryUnadjusted = salary * 24;
+        break;
+      case 'Month':
+        annualSalaryUnadjusted = salary * 12;
+        break;
+      case 'Quarter':
+        annualSalaryUnadjusted = salary * 4;
+        break;
+      case 'Year':
+        annualSalaryUnadjusted = salary;
+        break;
+      default:
+        annualSalaryUnadjusted = 0;
+        break;
+    }
+
+    hourlyRateUnadjusted.value = annualSalaryUnadjusted / (hoursPerWeek * 52);
+    dailyRateUnadjusted.value = annualSalaryUnadjusted / (daysPerWeek * 52);
+    weeklyRateUnadjusted.value = annualSalaryUnadjusted / 52;
+    biweeklyRateUnadjusted.value = annualSalaryUnadjusted / 26;
+    semimonthlyRateUnadjusted.value = annualSalaryUnadjusted / 24;
+    monthlyRateUnadjusted.value = annualSalaryUnadjusted / 12;
+    quarterlyRateUnadjusted.value = annualSalaryUnadjusted / 4;
+    annuallyUnadjusted.value = annualSalaryUnadjusted;
   }
 
 

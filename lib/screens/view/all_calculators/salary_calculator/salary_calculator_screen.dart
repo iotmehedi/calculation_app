@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/routes/route_name.dart';
+import '../../../../core/routes/router.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
@@ -278,7 +280,13 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                       onPressCalculate: () {
                         if (controller.formKey.value.currentState?.validate() ??
                             false) {
-                          controller.calculateSalaries();
+                          setState(() {
+                            controller.calculateSalaryAdjusted();
+                            controller.calculateSalaryUnadjusted();
+                            controller.calculateSalaries();
+                            RouteGenerator.pushNamed(context, Routes.salaryCalculatorResultScreen);
+                          });
+                          // controller.calculateSalary();
                         }
                       },
                       onPressClear: controller.allFieldClear,

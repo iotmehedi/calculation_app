@@ -73,7 +73,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${controller.salary.value.toStringAsFixed(2)}',
+                                  '\$${controller.hourlyRateUnadjusted.value.toStringAsFixed(2)}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -95,7 +95,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${(controller.salary.value * controller.hoursPerWeek.value / controller.daysPerWeek.value + 0.53).toStringAsFixed(2)}',
+                                  '\$${controller.dailyRateUnadjusted.value.toStringAsFixed(2)}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -116,7 +116,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format(controller.weeklyRateUnadjusted.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -137,7 +137,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * 2).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.biweeklyRateUnadjusted.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -158,7 +158,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value / 24).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format(controller.semimonthlyRateUnadjusted.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -179,7 +179,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value / 12).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format(controller.semimonthlyRateUnadjusted.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -200,7 +200,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value / 4).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format(controller.quarterlyRateUnadjusted.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -221,7 +221,7 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.salary.value * controller.hoursPerWeek.value * controller.weeksPerYear.value).round())}',
+                                  '\$${NumberFormat('#,##0', 'en_US').format(controller.annuallyUnadjusted.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
