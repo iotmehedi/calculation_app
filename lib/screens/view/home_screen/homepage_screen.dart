@@ -121,7 +121,10 @@ class HomepageScreen extends StatelessWidget {
                     child: HomepageWidget(
                       images: AppAssets.retirement,
                       text: "Retirements\nCalculator",
-                      onPress: () {},
+                      onPress: () {
+                        RouteGenerator.pushNamed(
+                            context, Routes.retirementForm);
+                      },
                     ),
                   ),
                 ],

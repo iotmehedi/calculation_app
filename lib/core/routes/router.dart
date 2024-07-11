@@ -50,6 +50,7 @@ import '../../screens/view/all_calculators/percentage_calculator/percentage_calc
 import '../../screens/view/all_calculators/ppf-calculator/ppf_calculator-screen.dart';
 import '../../screens/view/all_calculators/ppf-calculator/ppf_result.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
+import '../../screens/view/all_calculators/retirement_calculator/retirement_calculation.dart';
 import '../../screens/view/all_calculators/salary_calculator/salary_calculator_screen.dart';
 import '../../screens/view/all_calculators/sales_calculator/sales_calculator_screen.dart';
 import '../../screens/view/all_calculators/sales_calculator/sales_result.dart';
@@ -516,6 +517,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => CompoundResultScreen(),
+          );
+        }
+        case Routes.retirementForm:
+        {
+          return MaterialPageRoute(
+            builder: (context) => RetirementForm(),
           );
         }
     }

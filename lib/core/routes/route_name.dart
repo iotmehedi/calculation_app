@@ -60,4 +60,5 @@ class Routes {
   static const gradeResultScreen = "/gradeResultScreen";
   static const compoundScreen = "/compoundScreen";
   static const compoundScreenResult = "/compoundScreenResult";
+  static const retirementForm = "/retirementForm";
 }
