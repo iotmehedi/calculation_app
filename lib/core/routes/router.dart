@@ -522,7 +522,7 @@ class RouteGenerator {
         case Routes.retirementForm:
         {
           return MaterialPageRoute(
-            builder: (context) => RetirementForm(),
+            builder: (context) => RetirementCalculator(),
           );
         }
     }
