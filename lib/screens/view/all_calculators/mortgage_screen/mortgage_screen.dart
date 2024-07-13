@@ -15,6 +15,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
+import '../../../../core/utils/consts/textstyle.dart';
+import '../../../widgets/common_icons_widget/common_icon_widget.dart';
+import '../../../widgets/custom_richtext/custom_richtext.dart';
+
 class MortgageScreen extends StatefulWidget {
   const MortgageScreen({super.key});
 
@@ -31,11 +35,12 @@ class _MortgageScreenState extends State<MortgageScreen> {
             leading: InkWell(
                 onTap: () {
                   Navigator.pop(context);
+                  controller.allFieldClear();
                 },
                 child: const Icon(Icons.arrow_back_ios)),
             title: const CustomText(
                 text: "Mortgage Calculator",
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w600,
                 textColor: Colors.black,
                 fontSize: 20.0),
           ),
@@ -54,13 +59,14 @@ class _MortgageScreenState extends State<MortgageScreen> {
                         fontWeight: FontWeight.w400,
                         textColor: Colors.black,
                         fontSize: 16.0),
+
                     const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 6,
                           child: Container(
                               decoration: BoxDecoration(
                                   color: HexColor("#F3F6F9"),
@@ -68,21 +74,19 @@ class _MortgageScreenState extends State<MortgageScreen> {
                               child: CustomSimpleTextField(
                                 controller:
                                     controller.homePriceController.value,
-                                prefixIcon: const Icon(
-                                  Icons.attach_money_sharp,
-                                  size: 16,
-                                ),
+                                suffixIcon:
+                                    CustomIconWidget(icon: Icons.attach_money),
                                 prefixIconColor: AppColors.greyForPrefixIcon,
                               )),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
-                        const Expanded(flex: 2, child: SizedBox())
+                        const Expanded(flex: 4, child: SizedBox())
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     const CustomText(
                         text: "Down Payment",
@@ -95,173 +99,236 @@ class _MortgageScreenState extends State<MortgageScreen> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 3,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: HexColor("#F3F6F9"),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: CustomSimpleTextField(
-                              controller:
-                                  controller.downPaymentController.value,
-                              prefixIcon: const Icon(
-                                Icons.attach_money_sharp,
-                                size: 16,
-                              ),
-                              prefixIconColor: AppColors.greyForPrefixIcon,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            height: 55,
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: controller.downPaymentType.value,
-                                items: <String>['\$', '%'].map((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    controller.downPaymentType.value =
-                                        newValue!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    const CustomText(
-                        text: "Interested Rate",
-                        fontWeight: FontWeight.w400,
-                        textColor: Colors.black,
-                        fontSize: 16.0),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Container(
+                          flex: 6,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
                               decoration: BoxDecoration(
                                   color: HexColor("#F3F6F9"),
                                   borderRadius: BorderRadius.circular(12)),
                               child: CustomSimpleTextField(
                                 controller:
-                                    controller.interestRateController.value,
-                                prefixIcon: const Icon(
-                                  Icons.percent_outlined,
-                                  size: 16,
-                                ),
-                                prefixIconColor: AppColors.greyForPrefixIcon,
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const Expanded(flex: 2, child: SizedBox())
-                      ],
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const CustomText(
-                        text: "Long Term Year",
-                        fontWeight: FontWeight.w400,
-                        textColor: Colors.black,
-                        fontSize: 16.0),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: HexColor("#F3F6F9"),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: CustomSimpleTextField(
-                                controller: controller.loanTermController.value,
-                                // prefixIcon: Icon(Icons.attach_money_sharp , size: 16,),
-                                // prefixIconColor: AppColors.greyForPrefixIcon,
-                              )),
+                                    controller.downPaymentController.value,
+                                suffixIcon:
+                                    CustomIconWidget(icon: Icons.attach_money),
+                              ),
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                           flex: 2,
-                          child: ListTile(
-                            title: Text(
-                              controller.selectedDate?.value == null
-                                  ? 'Select Date'
-                                  : DateFormat("yyyy/MM")
-                                      .format(controller.selectedDate!.value),
-                              style: const TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.normal),
+                          child:
+                            Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: AppColors.textFieldColor,
+                              ),
+
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: controller.downPaymentType.value,
+                                  items: <String>['\$', '%'].map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      controller.downPaymentType.value =
+                                          newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
                             ),
-                            trailing: const Icon(Icons.calendar_today),
-                            onTap: selectDate,
+                          ),
+                        ),
+                        Expanded(
+                            flex: 1, child: const SizedBox())
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomRichText(
+                                heading: 'Interested Rate',
+                                title: '(%)',
+                                titleTextColor: HexColor('458EEC'),
+                                headingFontWeight: FontWeight.w400,
+                                titleFontWeight: FontWeight.w400,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                      color: HexColor("#F3F6F9"),
+                                      borderRadius:
+                                          BorderRadius.circular(12)),
+                                  child: CustomSimpleTextField(
+                                    controller: controller
+                                        .interestRateController.value,
+                                    suffixIcon: CustomIconWidget(
+                                        icon: Icons.percent_outlined),
+                                  )),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              CustomRichText(
+                                heading: 'Long Term',
+                                title: '(Year)',
+                                titleTextColor: HexColor('458EEC'),
+                                headingFontWeight: FontWeight.w400,
+                                titleFontWeight: FontWeight.w400,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                      color: HexColor("#F3F6F9"),
+                                      borderRadius:
+                                          BorderRadius.circular(12)),
+                                  child: CustomSimpleTextField(
+                                    controller:
+                                        controller.loanTermController.value,
+                                    paddingNeed: false,
+                                    // prefixIcon: Icon(Icons.attach_money_sharp , size: 16,),
+                                    // prefixIconColor: AppColors.greyForPrefixIcon,
+                                  )),
+                            ],
+                          ),
+                        ),
+                        10.pw,
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: AppColors.textFieldColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      globalTextPodkova(
+                                        alignment: Alignment.center,
+                                          text: controller.selectedDate
+                                                      ?.value ==
+                                                  null
+                                              ? 'Select Date'
+                                              : DateFormat("MM/yy")
+                                                  .format(controller
+                                                      .selectedDate!
+                                                      .value),
+                                          textSize: 16.0,
+                                          fontWeight: FontWeight.w400),
+                                      10.pw,
+                                      const Icon(
+                                          Icons.keyboard_arrow_down_sharp),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              10.ph,
+                              Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: AppColors.textFieldColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: InkWell(
+                                    onTap: selectDate,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        globalTextPodkova(
+                                            text: "Start Date",
+                                            textSize: 16.0,
+                                            fontWeight: FontWeight.w400),
+                                        10.pw,
+                                        const Icon(
+                                            Icons.keyboard_arrow_down_sharp),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
+
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
-                    if(controller.isChecked.value == false)
-                    SizedBox(
-                      height: 50,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CustomElevatedButton(
-                              color: HexColor("244384"),
-                              onPress: controller.calculateMonthlyPayment,
-                              // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
-                              text: const Text(
-                                "Calculate",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
+                    if (controller.isChecked.value == false)
+                      SizedBox(
+                        height: 50,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomElevatedButton(
+                                color: HexColor("244384"),
+                                onPress: controller.calculateMonthlyPayment,
+                                // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
+                                text: const Text(
+                                  "Calculate",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                  fontSize: 20
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          10.pw,
-                          Expanded(
-                            child: CustomElevatedButton(
-                              color: HexColor("F3F6F9"),
-                              onPress: controller.allFieldClear,
-                              text: Text(
-                                "Clear",
-                                style: TextStyle(
-                                    color: HexColor("0F182E"),
-                                    fontWeight: FontWeight.w500),
+                            10.pw,
+                            Expanded(
+                              child: CustomElevatedButton(
+                                color: HexColor("F3F6F9"),
+                                onPress: controller.allFieldClear,
+                                text: Text(
+                                  "Clear",
+                                  style: TextStyle(
+                                      color: HexColor("0F182E"),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    if(controller.isChecked.value == false)
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    if (controller.isChecked.value == false)
+                      const SizedBox(
+                        height: 10,
+                      ),
                     Row(
                       children: [
                         InkWell(
@@ -273,9 +340,14 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           child: Container(
                             width: 23,
                             height: 24,
-                            decoration: BoxDecoration(
-                              color: HexColor("#0F182E"),
+                            decoration:controller.isChecked.value ? BoxDecoration(
+                                color: HexColor("244384"),
+                                borderRadius: BorderRadius.circular(6.0),
+
+                            ):  BoxDecoration(
+                              color:  HexColor("#FFFFFF"),
                               borderRadius: BorderRadius.circular(6.0),
+                              border: Border.all(width: 2)
                             ),
                             child: controller.isChecked.value
                                 ? const Icon(
@@ -294,13 +366,13 @@ class _MortgageScreenState extends State<MortgageScreen> {
                         ),
                         const CustomText(
                             text: "Include Fee And Texes",
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             textColor: Colors.black,
                             fontSize: 16.0),
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Visibility(
                       visible:
@@ -312,21 +384,24 @@ class _MortgageScreenState extends State<MortgageScreen> {
                               text: "Property Tax",
                               fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 16.0),
+                              fontSize: 20.0),
+
                           const SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 6,
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: HexColor("#F3F6F9"),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     child: CustomSimpleTextField(
-                                      controller: controller.propertyTaxController.value,
+                                      controller: controller
+                                          .propertyTaxController.value,
+                                      paddingNeed: false,
                                       prefixIconColor:
                                           AppColors.greyForPrefixIcon,
                                     )),
@@ -335,29 +410,39 @@ class _MortgageScreenState extends State<MortgageScreen> {
                                 width: 10,
                               ),
                               Expanded(
-                                flex: 2,
-                                child: SizedBox(
-                                  height: 55,
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      value: controller.propertyTaxType.value,
-                                      items: <String>['\$', '%']
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          controller.propertyTaxType.value =
-                                              newValue!;
-                                        });
-                                      },
+                                flex: 3,
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.textFieldColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        value: controller.propertyTaxType.value,
+                                        items: <String>['\$', '%']
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            controller.propertyTaxType.value =
+                                                newValue!;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
+                              Expanded(
+                                  flex: 1,
+                                  child: const SizedBox())
                             ],
                           ),
                           const SizedBox(
@@ -367,21 +452,23 @@ class _MortgageScreenState extends State<MortgageScreen> {
                               text: "Home Insurance",
                               fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 16.0),
+                              fontSize: 20.0),
                           const SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 6,
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: HexColor("#F3F6F9"),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     child: CustomSimpleTextField(
-                                       controller: controller.homeInsuranceController.value,
+                                      controller: controller
+                                          .homeInsuranceController.value,
+                                      paddingNeed: false,
                                       prefixIconColor:
                                           AppColors.greyForPrefixIcon,
                                     )),
@@ -390,30 +477,39 @@ class _MortgageScreenState extends State<MortgageScreen> {
                                 width: 10,
                               ),
                               Expanded(
-                                flex: 2,
-                                child: SizedBox(
-                                  height: 55,
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      value:
-                                          controller.homeInsuranceType.value,
-                                      items: <String>['\$', '%']
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          controller.homeInsuranceType.value =
-                                              newValue!;
-                                        });
-                                      },
+                                flex: 3,
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.textFieldColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        value: controller.homeInsuranceType.value,
+                                        items: <String>['\$', '%']
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            controller.homeInsuranceType.value =
+                                                newValue!;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
+                              Expanded(
+                                  flex: 1,
+                                  child: const SizedBox())
                             ],
                           ),
                           const SizedBox(
@@ -430,46 +526,57 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 6,
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: HexColor("#F3F6F9"),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     child: CustomSimpleTextField(
-                                       controller: controller.pmiFeeController.value,
+                                      controller:
+                                          controller.pmiFeeController.value,
                                       prefixIconColor:
                                           AppColors.greyForPrefixIcon,
+                                      paddingNeed: false,
                                     )),
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
-                                flex: 2,
-                                child: SizedBox(
-                                  height: 55,
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      value:
-                                          controller.pmiInsuranceType.value,
-                                      items: <String>['\$', '%']
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          controller.pmiInsuranceType.value =
-                                              newValue!;
-                                        });
-                                      },
+                                flex: 3,
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.textFieldColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        value: controller.pmiInsuranceType.value,
+                                        items: <String>['\$', '%']
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            controller.pmiInsuranceType.value =
+                                                newValue!;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
+                              Expanded(
+                                  flex: 1,
+                                  child: const SizedBox())
                             ],
                           ),
                           const SizedBox(
@@ -479,53 +586,64 @@ class _MortgageScreenState extends State<MortgageScreen> {
                               text: "Hoa fee",
                               fontWeight: FontWeight.w400,
                               textColor: Colors.black,
-                              fontSize: 16.0),
+                              fontSize: 20.0),
                           const SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                           Row(
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 6,
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: HexColor("#F3F6F9"),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     child: CustomSimpleTextField(
-                                       controller: controller.hoaFeeController.value,
+                                      controller:
+                                          controller.hoaFeeController.value,
                                       prefixIconColor:
                                           AppColors.greyForPrefixIcon,
+                                      paddingNeed: false,
                                     )),
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
-                                flex: 2,
-                                child: SizedBox(
-                                  height: 55,
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      value:
-                                          controller.hoaFeeType.value,
-                                      items: <String>['\$', '%']
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          controller.hoaFeeType.value =
-                                              newValue!;
-                                        });
-                                      },
+                                flex: 3,
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: AppColors.textFieldColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        value: controller.hoaFeeType.value,
+                                        items: <String>['\$', '%']
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            controller.hoaFeeType.value =
+                                                newValue!;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
+                              Expanded(
+                                  flex: 1,
+                                  child: const SizedBox())
                             ],
                           ),
                         ],
@@ -535,21 +653,22 @@ class _MortgageScreenState extends State<MortgageScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    if(controller.isChecked.value == true)
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: CustomElevatedButton(
-                        color: HexColor("244384"),
-                        onPress: controller.calculateMonthlyPayment,
-                        // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
-                        text: const Text(
-                          "Calculate",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
+                    if (controller.isChecked.value == true)
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: CustomElevatedButton(
+                          color: HexColor("244384"),
+                          onPress: controller.calculateMonthlyPayment,
+                          // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
+                          text: const Text(
+                            "Calculate",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20),
+                          ),
                         ),
                       ),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),

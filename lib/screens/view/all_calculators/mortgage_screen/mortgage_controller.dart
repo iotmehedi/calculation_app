@@ -222,7 +222,7 @@ if(isChecked.value == false){
       HexColor("458EEC"),
       HexColor("2FAE3B"),
       HexColor("99CBF7"),
-      HexColor("80848A")
+      HexColor("FAE15D")
       // Colors.blue,
     ];
 }
@@ -230,15 +230,15 @@ if(isChecked.value == false){
 
     return List.generate(list.length, (i) {
       const isTouched = false; // you can set this dynamically if you want interactivity
-      const fontSize = isTouched == true ? 25.0 : 16.0;
-      const radius = isTouched == true ? 60.0 : 50.0;
+      // const fontSize = isTouched == true ? 25.0 : 16.0;
+      // const radius = isTouched == true ? 60.0 : 50.0;
       return PieChartSectionData(
         color: colors[i],
         value: list[i] / total.value * 100,
-        title: '${(list[i] / total.value * 100).round()}%',
-        radius: radius,
+        title: '',
+        radius: 20,
         titleStyle: const TextStyle(
-          fontSize: fontSize,
+          fontSize: 8,
           fontWeight: FontWeight.bold,
           color: Color(0xffffffff),
         ),

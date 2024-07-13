@@ -291,3 +291,26 @@ globalTextStyle() {
     fontWeight: FontWeight.normal,
   );
 }
+globalTextPodkova(
+    {required String text,
+      Alignment? alignment,
+      Color? color,
+      double? textSize,
+      HexColor? hexColor,
+      FontWeight? fontWeight}) {
+  return Align(
+    alignment: alignment ?? Alignment.centerLeft,
+    child: Text(
+      text,
+      maxLines: 2,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.podkova(
+        letterSpacing: 0.2,
+        color: color ?? hexColor,
+        fontSize: textSize ?? 10.0,
+        fontWeight: fontWeight ?? FontWeight.w700,
+      ),
+    ),
+  );
+}

@@ -14,7 +14,9 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+
       style: ElevatedButton.styleFrom(
+        elevation: 0,
           backgroundColor: hexColor ?? color,
           minimumSize: Size(MediaQuery.of(context).size.width, 60),
           maximumSize: Size(MediaQuery.of(context).size.width, 60),

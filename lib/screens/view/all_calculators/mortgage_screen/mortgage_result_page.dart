@@ -6,6 +6,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 class MortgageResultPage extends StatelessWidget {
   MortgageResultPage({super.key});
@@ -13,6 +14,7 @@ class MortgageResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {
@@ -21,7 +23,7 @@ class MortgageResultPage extends StatelessWidget {
                 child: const Icon(Icons.arrow_back_ios)),
             title: const CustomText(
                 text: "Mortgage Calculator",
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w600,
                 textColor: Colors.black,
                 fontSize: 20.0),
           ),
@@ -54,66 +56,13 @@ class MortgageResultPage extends StatelessWidget {
                   ),
                 ),
                 40.ph,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 140,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: PieChart(
-                              PieChartData(
-                                sections: controller.showingSections(),
-                                borderData: FlBorderData(
-                                  show: false,
-                                ),
-                                sectionsSpace: 4,
-                                centerSpaceRadius: 40,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          if (controller.isChecked.value == false)
-                          CustomRow(
-                              color: HexColor("458EEC"), text: "Principal"),
-                          if (controller.isChecked.value == false)
-                          10.ph,
-                          if (controller.isChecked.value == false)
-                            CustomRow(color: Colors.green, text: "Interest"),
-                          if (controller.isChecked.value == false) 10.ph,
-                          if (controller.isChecked.value == true)
-                            CustomRow(color: Colors.blue, text: "Principal & Interest"),
-                          if (controller.isChecked.value == true) 10.ph,
-                          if (controller.isChecked.value == true)
-                            CustomRow(color: Colors.green, text: "Home Insurance"),
-                          if (controller.isChecked.value == true) 10.ph,
-                          if (controller.isChecked.value == true)
-                            CustomRow(color: HexColor("99CBF7"), text: "Property Taxes"),
-                          if (controller.isChecked.value == true) 10.ph,
-                          if (controller.isChecked.value == true)
-                            CustomRow(color: HexColor("80848A"), text: "HOA Fee"),
-                          if (controller.isChecked.value == true) 10.ph
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                40.ph,
                 Visibility(
                   visible: controller.isChecked.value == true ? true : false,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
+                      elevation: 0,
+                      color: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
@@ -126,14 +75,31 @@ class MortgageResultPage extends StatelessWidget {
                               children: [
                                 Expanded(
                                     child: CustomText(
-                                  text: "Principal Interest:",
-                                  textColor: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                )),
+                                      text: "Principal & Interest:",
+                                      textColor: Colors.blue,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    )),
                                 Expanded(
-                                    child: CustomText(
-                                        text:
-                                            "\$ ${controller.principalAndInterest.value.toStringAsFixed(2)}")),
+                                  child: Obx(
+                                        () {
+                                      // Convert value to double
+                                      double numericValue =
+                                          controller.principalAndInterest.value;
+
+                                      // Format the value with commas and two decimal places
+                                      String formattedValue =
+                                      NumberFormat('#,##0.00', 'en_US')
+                                          .format(numericValue);
+
+                                      return CustomText(
+                                        text: "\$ $formattedValue",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                             Divider(
@@ -142,81 +108,235 @@ class MortgageResultPage extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                    child: CustomText(text: "Property Tax:")),
+                                    child: CustomText(text: "Property Tax:",fontSize: 16,
+                                      fontWeight: FontWeight.w500,)),
                                 Expanded(
-                                    child: CustomText(
-                                        text:
-                                            "\$ ${controller.monthlyPropertyTax.value.toStringAsFixed(2)}")),
+                                  child: Obx(
+                                        () {
+                                      // Convert value to double
+                                      double numericValue =
+                                          controller.monthlyPropertyTax.value;
+
+                                      // Format the value with commas and two decimal places
+                                      String formattedValue =
+                                      NumberFormat('#,##0.00', 'en_US')
+                                          .format(numericValue);
+
+                                      return CustomText(
+                                        text: "\$ $formattedValue",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                             5.ph,
                             Row(
                               children: [
                                 Expanded(
-                                    child: CustomText(text: "Home Insurance:")),
+                                    child: CustomText(text: "Home Insurance:",fontSize: 16,
+                                      fontWeight: FontWeight.w500,)),
                                 Expanded(
-                                    child: CustomText(
-                                        text:
-                                            "\$ ${controller.monthlyHomeInsurance.value.toStringAsFixed(2)}")),
+                                  child: Obx(
+                                        () {
+                                      // Convert value to double
+                                      double numericValue =
+                                          controller.monthlyHomeInsurance.value;
+
+                                      // Format the value with commas and two decimal places
+                                      String formattedValue =
+                                      NumberFormat('#,##0.00', 'en_US')
+                                          .format(numericValue);
+
+                                      return CustomText(
+                                        text: "\$ $formattedValue",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                             5.ph,
                             Row(
                               children: [
-                                Expanded(child: CustomText(text: "PMI Fee:")),
+                                Expanded(child: CustomText(text: "PMI Fee:",fontSize: 16,
+                                  fontWeight: FontWeight.w500,)),
                                 Expanded(
-                                    child: CustomText(
-                                        text:
-                                            "\$ ${controller.monthlyPMI.value.toStringAsFixed(2)}")),
+                                  child: Obx(
+                                        () {
+                                      // Convert value to double
+                                      double numericValue =
+                                          controller.monthlyPMI.value;
+
+                                      // Format the value with commas and two decimal places
+                                      String formattedValue =
+                                      NumberFormat('#,##0.00', 'en_US')
+                                          .format(numericValue);
+
+                                      return CustomText(
+                                        text: "\$ $formattedValue",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                             5.ph,
                             Row(
                               children: [
-                                Expanded(child: CustomText(text: "HOA Fee:")),
+                                Expanded(child: CustomText(text: "HOA Fee:",fontSize: 16,
+                                  fontWeight: FontWeight.w500,)),
                                 Expanded(
-                                    child: CustomText(
-                                        text:
-                                            "\$ ${controller.monthlyHOAFee.value.toStringAsFixed(2)}")),
+                                  child: Obx(
+                                        () {
+                                      // Convert value to double
+                                      double numericValue =
+                                          controller.monthlyHOAFee.value;
+
+                                      // Format the value with commas and two decimal places
+                                      String formattedValue =
+                                      NumberFormat('#,##0.00', 'en_US')
+                                          .format(numericValue);
+
+                                      return CustomText(
+                                        text: "\$ $formattedValue",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
-                            5.ph,
+                            Divider(
+                              thickness: 0.2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    child: CustomText(
+                                      text: "Total Payment:",
+                                      fontSize: 16,
+                                      textColor: Colors.blue,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                Expanded(
+                                  child: Obx(
+                                        () {
+                                      // Convert value to double
+                                      double numericValue =
+                                      (controller.monthlyPropertyTax.value + controller.monthlyPMI.value + controller.monthlyHomeInsurance.value + controller.monthlyHOAFee.value);
+
+                                      // Format the value with commas and two decimal places
+                                      String formattedValue =
+                                      NumberFormat('#,##0.00', 'en_US')
+                                          .format(numericValue);
+
+                                      return CustomText(
+                                        text: "\$ $formattedValue",
+                                        fontSize: 20,
+                                        textColor: Colors.blue,
+                                        fontWeight: FontWeight.w600,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                // Expanded(
+                                //     child: CustomText(
+                                //   text:
+                                //       "\$ ${(controller.monthlyPropertyTax.value + controller.monthlyPMI.value + controller.monthlyHomeInsurance.value + controller.monthlyHOAFee.value).toStringAsFixed(2)}",
+                                //   fontSize: 20,
+                                //   textColor: Colors.blue,
+                                //   fontWeight: FontWeight.w500,
+                                // )),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: controller.isChecked.value == true ? true : false,
+
+                10.ph,
+                Card(
+                  elevation: 0,
+                  color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                            child: CustomText(
-                          text: "Total Amount:",
-                          fontSize: 20,
-                          textColor: Colors.black,
-                          fontWeight: FontWeight.w500,
-                        )),
+                          child: SizedBox(
+                            height: 140,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: PieChart(
+                                  PieChartData(
+                                    sections: controller.showingSections(),
+                                    borderData: FlBorderData(
+                                      show: false,
+                                    ),
+                                    sectionsSpace: 4,
+                                    centerSpaceRadius: 40,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Expanded(
-                            child: CustomText(
-                          text:
-                              "\$ ${(controller.monthlyPropertyTax.value + controller.monthlyPMI.value + controller.monthlyHomeInsurance.value + controller.monthlyHOAFee.value).toStringAsFixed(2)}",
-                          fontSize: 20,
-                          textColor: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                        )),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              if (controller.isChecked.value == false)
+                                CustomRow(
+                                    color: HexColor("458EEC"), text: "Principal"),
+                              if (controller.isChecked.value == false) 10.ph,
+                              if (controller.isChecked.value == false)
+                                CustomRow(color: Colors.green, text: "Interest"),
+                              if (controller.isChecked.value == false) 10.ph,
+                              if (controller.isChecked.value == true)
+                                CustomRow(color: Colors.blue, text: "Principal"),
+                              if (controller.isChecked.value == true) 10.ph,
+                              if (controller.isChecked.value == true)
+                                CustomRow(
+                                    color: Colors.green, text: "Home Insurance"),
+                              if (controller.isChecked.value == true) 10.ph,
+                              if (controller.isChecked.value == true)
+                                CustomRow(
+                                    color: HexColor("99CBF7"),
+                                    text: "Property Tax"),
+                              if (controller.isChecked.value == true) 10.ph,
+                              if (controller.isChecked.value == true)
+                                CustomRow(
+                                    color: HexColor("FAE15D"), text: "HOA Fee"),
+                              if (controller.isChecked.value == true) 10.ph
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
+
                 10.ph,
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Card(
+                    elevation: 0,
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                     child: Padding(
@@ -231,12 +351,30 @@ class MortgageResultPage extends StatelessWidget {
                                   child: CustomText(
                                 text: "House Price:",
                                 textColor: Colors.blue,
-                                fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                               )),
                               Expanded(
-                                  child: CustomText(
-                                      text:
-                                          "\$ ${controller.homePriceController.value.text}")),
+                                child: Obx(
+                                      () {
+                                    // Convert value to double
+                                    double? numericValue =
+                                       double.tryParse(controller.homePriceController.value.text);
+
+                                    // Format the value with commas and two decimal places
+                                    String formattedValue =
+                                    NumberFormat('#,##0.00', 'en_US')
+                                        .format(numericValue);
+
+                                    return CustomText(
+                                      text: "\$ ${formattedValue}",
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    );
+                                  },
+                                ),
+                              ),
+
                             ],
                           ),
                           Divider(
@@ -244,33 +382,73 @@ class MortgageResultPage extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Expanded(child: CustomText(text: "Loan Amount:")),
+                              Expanded(child: CustomText(text: "Loan Amount:",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,)),
                               Expanded(
                                   child: CustomText(
                                       text:
-                                          "\$ ${controller.loanAmount.value}")),
+                                          "\$ ${controller.loanAmount.value}",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,)),
                             ],
                           ),
                           5.ph,
                           Row(
                             children: [
                               Expanded(
-                                  child: CustomText(text: "Down Payment:")),
+                                  child: CustomText(text: "Down Payment:",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,)),
                               Expanded(
-                                  child: CustomText(
-                                      text:
-                                          "\$ ${controller.downPaymentValue.value}")),
+                                child: Obx(
+                                      () {
+                                    // Convert value to double
+                                    double numericValue =
+                                        controller.downPaymentValue.value;
+
+                                    // Format the value with commas and two decimal places
+                                    String formattedValue =
+                                    NumberFormat('#,##0.00', 'en_US')
+                                        .format(numericValue);
+
+                                    return CustomText(
+                                      text: "\$ $formattedValue",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    );
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                           5.ph,
                           Row(
                             children: [
                               Expanded(
-                                  child: CustomText(text: "Total Interest:")),
+                                  child: CustomText(text: "Total Interest:",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,)),
                               Expanded(
-                                  child: CustomText(
-                                      text:
-                                          "\$ ${controller.totalInterestt.value.toStringAsFixed(2)}")),
+                                child: Obx(
+                                      () {
+                                    // Convert value to double
+                                    double numericValue =
+                                        controller.totalInterestt.value;
+
+                                    // Format the value with commas and two decimal places
+                                    String formattedValue =
+                                    NumberFormat('#,##0.00', 'en_US')
+                                        .format(numericValue);
+
+                                    return CustomText(
+                                      text: "\$ $formattedValue",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    );
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                           5.ph,
@@ -278,11 +456,29 @@ class MortgageResultPage extends StatelessWidget {
                             children: [
                               Expanded(
                                   child: CustomText(
-                                      text: "Total Mortgage Payments:")),
+                                      text: "Total Mortgage Payments:",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,)),
                               Expanded(
-                                  child: CustomText(
-                                      text:
-                                          "\$ ${controller.totalPaymentt.value.toStringAsFixed(2)}")),
+                                child: Obx(
+                                  () {
+                                    // Convert value to double
+                                    double numericValue =
+                                        controller.totalPaymentt.value;
+
+                                    // Format the value with commas and two decimal places
+                                    String formattedValue =
+                                        NumberFormat('#,##0.00', 'en_US')
+                                            .format(numericValue);
+
+                                    return CustomText(
+                                      text: "\$ $formattedValue",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    );
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                           5.ph,
@@ -290,11 +486,15 @@ class MortgageResultPage extends StatelessWidget {
                             children: [
                               Expanded(
                                   child: CustomText(
-                                      text: "Mortgage Payoff Date:")),
+                                      text: "Mortgage Payoff Date:",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,)),
                               Expanded(
                                   child: CustomText(
                                       text:
-                                          "\$ ${controller.mortgagePayoffDatee.value}")),
+                                          "\$ ${controller.mortgagePayoffDatee.value}",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,)),
                             ],
                           ),
                           5.ph,

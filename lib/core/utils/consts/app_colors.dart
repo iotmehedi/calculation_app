@@ -3,6 +3,8 @@ import 'package:hexcolor/hexcolor.dart';
 
 class AppColors {
   static final Color appColor = HexColor('#132040');
+  static final Color suffixIconColor = HexColor("80848A");
+  static final Color textFieldColor = HexColor("EEF2F6");
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static final Color off_white_color = HexColor('#959595');
