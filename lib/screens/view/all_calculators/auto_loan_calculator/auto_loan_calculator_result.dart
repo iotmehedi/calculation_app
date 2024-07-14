@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
@@ -86,89 +87,112 @@ class AutoLoanCalculatorResult extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Obx(() => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  CustomRow(
-                                      title: "Loan Amount",
-                                      value: controller.loanAmount
-                                          .toStringAsFixed(2)
-                                          .toString()),
-                                  10.ph,
-                                  CustomRow(
-                                      title: "Sales Tax",
-                                      value: controller.salesTaxAmount
-                                          .toStringAsFixed(2)
-                                          .toString()),
-                                          10.ph,
-                                  CustomRow(
-                                      title: "Upfront Payment",
-                                      value: controller.upfrontPayment
-                                          .toStringAsFixed(2)
-                                          .toString()),
-                                ],
-                              ),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x07101010),
+                        blurRadius: 45,
+                        offset: Offset(0, 8),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Obx(() => Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15, right: 15, top: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomRow(
+                                    title: "Loan Amount",
+                                    value: NumberFormat('#,##0.00', 'en_US')
+                                        .format(controller.loanAmount)
+                                        .toString(),
+                                    titleColor: Colors.black),
+                                10.ph,
+                                CustomRow(
+                                    title: "Sales Tax",
+                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                        .format(controller.salesTaxAmount)
+                                        .toString(),
+                                    titleColor: Colors.black
+                                ),
+                                10.ph,
+                                CustomRow(
+                                    title: "Upfront Payment",
+                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                        .format(controller.upfrontPayment)
+                                        .toString(),
+                                    titleColor: Colors.black),
+                              ],
                             ),
-                            Divider(
-                              thickness: 0.5,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  CustomRow(
-                                      title: "Total Interest Cost",
-                                      value: controller.totalLoanInterest
-                                          .toStringAsFixed(2)
-                                          .toString()),
-                                          10.ph,
-                                  CustomRow(
-                                      title: "Total Loan Payments",
-                                      value: controller.totalLoanPayments
-                                          .toStringAsFixed(2)
-                                          .toString()),
-                                          10.ph,
-                                  CustomRow(
-                                    title: "Pay Of Date",
-                                    value:
-                                        '${DateFormat("MM/yyyy").format(controller.payOutDate.toLocal())}'
-                                            .split(' ')[0],
-                                    valueColor: Colors.blue,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              thickness: 0.5,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: CustomRow(
-                                  title: "Total All Cost:",
+                          ),
+                          Divider(
+                            thickness: 0.5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomRow(
+                                    title: "Total Interest Cost",
+                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                        .format(controller.totalLoanInterest)
+                                        .toString(),
+                                    titleColor: Colors.black),
+                                10.ph,
+                                CustomRow(
+                                    title: "Total of ${controller.loanTermController.value.text} Loan Payments",
+                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                        .format(controller.totalLoanPayments)
+                                        .toString(),
+                                    titleColor: AppColors.deepBlue,
+                                  valueColor: AppColors.deepBlue,
+                                  fontWeight: FontWeight.w500
+                                ),
+                                10.ph,
+                                CustomRow(
+                                  title: "Pay Of Date",
                                   value:
-                                      "${(controller.loanAmount + controller.salesTaxAmount + controller.upfrontPayment + controller.totalLoanInterest + controller.totalLoanPayments).toStringAsFixed(2)}",
-                                  titleColor: Colors.blue),
+                                      '${DateFormat("MM/yyyy").format(controller.payOutDate.toLocal())}'
+                                          .split(' ')[0],
+                                  valueColor: Colors.black,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Divider(
+                            thickness: 0.5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                            child: CustomRow(
+                                title: "Total All Cost:",
+                                value: NumberFormat('#,##0.00', 'en_US')
+                                    .format((controller.loanAmount + controller.salesTaxAmount + controller.upfrontPayment + controller.totalLoanInterest + controller.totalLoanPayments))
+                                    .toString(),
+                                titleColor: AppColors.deepBlue,
+                            size: 16.0,
+                                fontWeight: FontWeight.w600,
+                              valueColor: AppColors.deepBlue,
+                            ),
+                          ),
+                        ],
                       )),
                 ),
               ),
@@ -182,8 +206,9 @@ class AutoLoanCalculatorResult extends StatelessWidget {
   Widget CustomRow(
       {required String title,
       required String value,
-      MaterialColor? valueColor,
-      MaterialColor? titleColor}) {
+      Color? valueColor,
+      Color? titleColor,
+        double? size, FontWeight? fontWeight}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,15 +217,17 @@ class AutoLoanCalculatorResult extends StatelessWidget {
             child: CustomText(
           text: title,
           textColor: titleColor,
-          fontSize: 14,
+          fontSize: size ?? 14,
+          fontWeight: fontWeight ?? FontWeight.w400,
         )),
         Expanded(
             child: Padding(
           padding: const EdgeInsets.only(left: 20),
           child: CustomText(
-            text: "\$ " + value,
+            text: "\$ $value",
             textColor: valueColor,
-            fontSize: 14,
+            fontSize: size ?? 14,
+            fontWeight: fontWeight ?? FontWeight.w400,
           ),
         )),
       ],

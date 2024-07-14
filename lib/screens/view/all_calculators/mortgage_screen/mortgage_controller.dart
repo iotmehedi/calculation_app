@@ -11,7 +11,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 class MortgageController extends GetxController{
     var isChecked = false.obs;
-  Rx<DateTime>? selectedDate = DateTime.now().obs;
+    var selectedDate = Rx<DateTime?>(null);
   var monthlyPaymentt = 0.0.obs;
   var totalPaymentt = 0.0.obs;
   var totalInterestt = 0.0.obs;
@@ -85,8 +85,8 @@ void calculateMonthlyPayment() {
     final double totalPayment = monthlyPayment * numberOfPayments;
     final double totalInterest = totalPayment - calculatedLoanAmount;
     final DateTime payoffDate = DateTime(
-      (selectedDate?.value.year ?? 0) + loanTerm,
-      selectedDate?.value.month ?? 0,
+      (selectedDate?.value?.year ?? 0) + loanTerm,
+      selectedDate?.value?.month ?? 0,
     );
 
     monthlyPaymentt.value = monthlyPayment;

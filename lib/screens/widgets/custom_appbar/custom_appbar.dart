@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
         style:
-            const TextStyle(fontWeight: FontWeight.w600, fontFamily: "Podkova"),
+            const TextStyle(fontWeight: FontWeight.w600, fontFamily: "Poppins", fontSize: 20,),
       ),
       leading: onBackPressed != null
           ? IconButton(

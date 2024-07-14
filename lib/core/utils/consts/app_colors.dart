@@ -5,6 +5,9 @@ class AppColors {
   static final Color appColor = HexColor('#132040');
   static final Color suffixIconColor = HexColor("80848A");
   static final Color textFieldColor = HexColor("EEF2F6");
+  static final Color deepGray = HexColor("80848A");
+  static final Color blue = HexColor("458EEC");
+  static final Color deepBlue = HexColor("437AFF");
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static final Color off_white_color = HexColor('#959595');

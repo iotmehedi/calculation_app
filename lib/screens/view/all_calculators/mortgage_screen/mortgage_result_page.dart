@@ -8,13 +8,15 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../widgets/common_result_heading/common_result_heading.dart';
+
 class MortgageResultPage extends StatelessWidget {
   MortgageResultPage({super.key});
   var controller = Get.put(MortgageController());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+          backgroundColor: HexColor("FAFAFA"),
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {
@@ -55,16 +57,38 @@ class MortgageResultPage extends StatelessWidget {
                         globalText24(text: "Calculator", color: Colors.white),
                   ),
                 ),
-                40.ph,
+                20.ph,
+                CustomResultMonthly(
+                  title:
+                      NumberFormat('#,##0.00', 'en_US').format(controller.principalAndInterest.value),
+                  heading: "Monthly Payment:",
+                  headingColor: Colors.green,
+                  titleColor: Colors.white,
+                ),
+                20.ph,
                 Visibility(
                   visible: controller.isChecked.value == true ? true : false,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: Card(
-                      elevation: 0,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x07101010),
+                            blurRadius: 45,
+                            offset: Offset(0, 8),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -75,22 +99,22 @@ class MortgageResultPage extends StatelessWidget {
                               children: [
                                 Expanded(
                                     child: CustomText(
-                                      text: "Principal & Interest:",
-                                      textColor: Colors.blue,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    )),
+                                  text: "Principal & Interest:",
+                                  textColor: Colors.blue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
                                 Expanded(
                                   child: Obx(
-                                        () {
+                                    () {
                                       // Convert value to double
                                       double numericValue =
                                           controller.principalAndInterest.value;
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                      NumberFormat('#,##0.00', 'en_US')
-                                          .format(numericValue);
+                                          NumberFormat('#,##0.00', 'en_US')
+                                              .format(numericValue);
 
                                       return CustomText(
                                         text: "\$ $formattedValue",
@@ -108,19 +132,22 @@ class MortgageResultPage extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                    child: CustomText(text: "Property Tax:",fontSize: 16,
-                                      fontWeight: FontWeight.w500,)),
+                                    child: CustomText(
+                                  text: "Property Tax:",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
                                 Expanded(
                                   child: Obx(
-                                        () {
+                                    () {
                                       // Convert value to double
                                       double numericValue =
                                           controller.monthlyPropertyTax.value;
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                      NumberFormat('#,##0.00', 'en_US')
-                                          .format(numericValue);
+                                          NumberFormat('#,##0.00', 'en_US')
+                                              .format(numericValue);
 
                                       return CustomText(
                                         text: "\$ $formattedValue",
@@ -136,19 +163,22 @@ class MortgageResultPage extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                    child: CustomText(text: "Home Insurance:",fontSize: 16,
-                                      fontWeight: FontWeight.w500,)),
+                                    child: CustomText(
+                                  text: "Home Insurance:",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
                                 Expanded(
                                   child: Obx(
-                                        () {
+                                    () {
                                       // Convert value to double
                                       double numericValue =
                                           controller.monthlyHomeInsurance.value;
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                      NumberFormat('#,##0.00', 'en_US')
-                                          .format(numericValue);
+                                          NumberFormat('#,##0.00', 'en_US')
+                                              .format(numericValue);
 
                                       return CustomText(
                                         text: "\$ $formattedValue",
@@ -163,19 +193,23 @@ class MortgageResultPage extends StatelessWidget {
                             5.ph,
                             Row(
                               children: [
-                                Expanded(child: CustomText(text: "PMI Fee:",fontSize: 16,
-                                  fontWeight: FontWeight.w500,)),
+                                Expanded(
+                                    child: CustomText(
+                                  text: "PMI Fee:",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
                                 Expanded(
                                   child: Obx(
-                                        () {
+                                    () {
                                       // Convert value to double
                                       double numericValue =
                                           controller.monthlyPMI.value;
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                      NumberFormat('#,##0.00', 'en_US')
-                                          .format(numericValue);
+                                          NumberFormat('#,##0.00', 'en_US')
+                                              .format(numericValue);
 
                                       return CustomText(
                                         text: "\$ $formattedValue",
@@ -190,19 +224,23 @@ class MortgageResultPage extends StatelessWidget {
                             5.ph,
                             Row(
                               children: [
-                                Expanded(child: CustomText(text: "HOA Fee:",fontSize: 16,
-                                  fontWeight: FontWeight.w500,)),
+                                Expanded(
+                                    child: CustomText(
+                                  text: "HOA Fee:",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
                                 Expanded(
                                   child: Obx(
-                                        () {
+                                    () {
                                       // Convert value to double
                                       double numericValue =
                                           controller.monthlyHOAFee.value;
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                      NumberFormat('#,##0.00', 'en_US')
-                                          .format(numericValue);
+                                          NumberFormat('#,##0.00', 'en_US')
+                                              .format(numericValue);
 
                                       return CustomText(
                                         text: "\$ $formattedValue",
@@ -222,22 +260,26 @@ class MortgageResultPage extends StatelessWidget {
                               children: [
                                 Expanded(
                                     child: CustomText(
-                                      text: "Total Payment:",
-                                      fontSize: 16,
-                                      textColor: Colors.blue,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                  text: "Total Payment:",
+                                  fontSize: 16,
+                                  textColor: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                )),
                                 Expanded(
                                   child: Obx(
-                                        () {
+                                    () {
                                       // Convert value to double
                                       double numericValue =
-                                      (controller.monthlyPropertyTax.value + controller.monthlyPMI.value + controller.monthlyHomeInsurance.value + controller.monthlyHOAFee.value);
+                                          (controller.monthlyPropertyTax.value +
+                                              controller.monthlyPMI.value +
+                                              controller
+                                                  .monthlyHomeInsurance.value +
+                                              controller.monthlyHOAFee.value);
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                      NumberFormat('#,##0.00', 'en_US')
-                                          .format(numericValue);
+                                          NumberFormat('#,##0.00', 'en_US')
+                                              .format(numericValue);
 
                                       return CustomText(
                                         text: "\$ $formattedValue",
@@ -264,11 +306,17 @@ class MortgageResultPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 10.ph,
-                Card(
-                  elevation: 0,
-                  color: Colors.white,
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              clipBehavior: Clip.antiAlias,
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
@@ -302,17 +350,21 @@ class MortgageResultPage extends StatelessWidget {
                             children: [
                               if (controller.isChecked.value == false)
                                 CustomRow(
-                                    color: HexColor("458EEC"), text: "Principal"),
+                                    color: HexColor("458EEC"),
+                                    text: "Principal"),
                               if (controller.isChecked.value == false) 10.ph,
                               if (controller.isChecked.value == false)
-                                CustomRow(color: Colors.green, text: "Interest"),
+                                CustomRow(
+                                    color: Colors.green, text: "Interest"),
                               if (controller.isChecked.value == false) 10.ph,
                               if (controller.isChecked.value == true)
-                                CustomRow(color: Colors.blue, text: "Principal"),
+                                CustomRow(
+                                    color: Colors.blue, text: "Principal"),
                               if (controller.isChecked.value == true) 10.ph,
                               if (controller.isChecked.value == true)
                                 CustomRow(
-                                    color: Colors.green, text: "Home Insurance"),
+                                    color: Colors.green,
+                                    text: "Home Insurance"),
                               if (controller.isChecked.value == true) 10.ph,
                               if (controller.isChecked.value == true)
                                 CustomRow(
@@ -330,15 +382,18 @@ class MortgageResultPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 10.ph,
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    elevation: 0,
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                        borderRadius: BorderRadius.circular(4),
+                      ),),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -351,20 +406,21 @@ class MortgageResultPage extends StatelessWidget {
                                   child: CustomText(
                                 text: "House Price:",
                                 textColor: Colors.blue,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
                               )),
                               Expanded(
                                 child: Obx(
-                                      () {
+                                  () {
                                     // Convert value to double
-                                    double? numericValue =
-                                       double.tryParse(controller.homePriceController.value.text);
+                                    double? numericValue = double.tryParse(
+                                        controller
+                                            .homePriceController.value.text);
 
                                     // Format the value with commas and two decimal places
                                     String formattedValue =
-                                    NumberFormat('#,##0.00', 'en_US')
-                                        .format(numericValue);
+                                        NumberFormat('#,##0.00', 'en_US')
+                                            .format(numericValue);
 
                                     return CustomText(
                                       text: "\$ ${formattedValue}",
@@ -374,7 +430,6 @@ class MortgageResultPage extends StatelessWidget {
                                   },
                                 ),
                               ),
-
                             ],
                           ),
                           Divider(
@@ -382,64 +437,40 @@ class MortgageResultPage extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Expanded(child: CustomText(text: "Loan Amount:",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,)),
                               Expanded(
                                   child: CustomText(
-                                      text:
-                                          "\$ ${controller.loanAmount.value}",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,)),
+                                text: "Loan Amount:",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
+                              Expanded(
+                                  child: CustomText(
+                                text: "\$ ${controller.loanAmount.value}",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
                             ],
                           ),
                           5.ph,
                           Row(
                             children: [
                               Expanded(
-                                  child: CustomText(text: "Down Payment:",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,)),
+                                  child: CustomText(
+                                text: "Down Payment:",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
                               Expanded(
                                 child: Obx(
-                                      () {
+                                  () {
                                     // Convert value to double
                                     double numericValue =
                                         controller.downPaymentValue.value;
 
                                     // Format the value with commas and two decimal places
                                     String formattedValue =
-                                    NumberFormat('#,##0.00', 'en_US')
-                                        .format(numericValue);
-
-                                    return CustomText(
-                                      text: "\$ $formattedValue",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          5.ph,
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: CustomText(text: "Total Interest:",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,)),
-                              Expanded(
-                                child: Obx(
-                                      () {
-                                    // Convert value to double
-                                    double numericValue =
-                                        controller.totalInterestt.value;
-
-                                    // Format the value with commas and two decimal places
-                                    String formattedValue =
-                                    NumberFormat('#,##0.00', 'en_US')
-                                        .format(numericValue);
+                                        NumberFormat('#,##0.00', 'en_US')
+                                            .format(numericValue);
 
                                     return CustomText(
                                       text: "\$ $formattedValue",
@@ -456,9 +487,41 @@ class MortgageResultPage extends StatelessWidget {
                             children: [
                               Expanded(
                                   child: CustomText(
-                                      text: "Total Mortgage Payments:",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,)),
+                                text: "Total Interest:",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
+                              Expanded(
+                                child: Obx(
+                                  () {
+                                    // Convert value to double
+                                    double numericValue =
+                                        controller.totalInterestt.value;
+
+                                    // Format the value with commas and two decimal places
+                                    String formattedValue =
+                                        NumberFormat('#,##0.00', 'en_US')
+                                            .format(numericValue);
+
+                                    return CustomText(
+                                      text: "\$ $formattedValue",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          5.ph,
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: CustomText(
+                                text: "Total Mortgage Payments:",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
                               Expanded(
                                 child: Obx(
                                   () {
@@ -486,15 +549,17 @@ class MortgageResultPage extends StatelessWidget {
                             children: [
                               Expanded(
                                   child: CustomText(
-                                      text: "Mortgage Payoff Date:",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,)),
+                                text: "Mortgage Payoff Date:",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
                               Expanded(
                                   child: CustomText(
-                                      text:
-                                          "\$ ${controller.mortgagePayoffDatee.value}",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,)),
+                                text:
+                                    "\$ ${controller.mortgagePayoffDatee.value}",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              )),
                             ],
                           ),
                           5.ph,

@@ -10,6 +10,7 @@ import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -99,7 +100,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 6,
+                          flex: 7,
                           child: Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Container(
@@ -151,7 +152,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                           ),
                         ),
                         Expanded(
-                            flex: 1, child: const SizedBox())
+                            flex: 2, child: const SizedBox())
                       ],
                     ),
                     const SizedBox(
@@ -223,38 +224,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+
                               Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: AppColors.textFieldColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      globalTextPodkova(
-                                        alignment: Alignment.center,
-                                          text: controller.selectedDate
-                                                      ?.value ==
-                                                  null
-                                              ? 'Select Date'
-                                              : DateFormat("MM/yy")
-                                                  .format(controller
-                                                      .selectedDate!
-                                                      .value),
-                                          textSize: 16.0,
-                                          fontWeight: FontWeight.w400),
-                                      10.pw,
-                                      const Icon(
-                                          Icons.keyboard_arrow_down_sharp),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              10.ph,
-                              Container(
+                                margin: const EdgeInsets.only(right: 15),
                                 height: 40,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
@@ -267,13 +239,24 @@ class _MortgageScreenState extends State<MortgageScreen> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        globalTextPodkova(
-                                            text: "Start Date",
+                                        Expanded(
+                                          flex: 4,
+                                          child: globalTextPodkova(
+                                            text:  controller.selectedDate.value ==
+                                                null
+                                                ? 'Select Date'
+                                                : DateFormat("MM/yy").format(
+                                                controller.selectedDate.value ?? DateTime.now()),
                                             textSize: 16.0,
-                                            fontWeight: FontWeight.w400),
+                                            fontWeight:  FontWeight.w400,
+                                            color: controller.selectedDate.value !=
+                                                null ? Colors.black : AppColors.deepGray
+                                        ),),
                                         10.pw,
-                                        const Icon(
-                                            Icons.keyboard_arrow_down_sharp),
+                                        Expanded(
+                                          child: const Icon(
+                                              Icons.keyboard_arrow_down_sharp),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -684,7 +667,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
     final DateTime? picked = await showMonthYearPicker(
       context: context,
       initialDate:
-          (controller.selectedDate?.value.isBefore(DateTime(2000)) ?? false)
+          (controller.selectedDate?.value?.isBefore(DateTime(2000)) ?? false)
               ? DateTime.now()
               : (controller.selectedDate?.value ?? DateTime.now()),
       firstDate: DateTime(2000),
