@@ -17,6 +17,9 @@ class CommonTextFieldCustom extends StatelessWidget {
   final TextAlign? textAlign;
   final bool? onlyNeedSuffix;
   final int? flex;
+  final double? headingFontSize;
+  final FontWeight? headingFontWeight;
+  final Color? headingTextColor;
   CommonTextFieldCustom(
       {super.key,
        this.headingName,
@@ -25,7 +28,7 @@ class CommonTextFieldCustom extends StatelessWidget {
       required this.keyboardType,
       required this.needPadding,
       this.prefixIcon,this.suffixIcon, this.flex,
-        this.suffixText, this.textAlign, this.hint, this.onlyNeedSuffix});
+        this.suffixText, this.textAlign, this.hint, this.onlyNeedSuffix, this.headingFontSize, this.headingFontWeight, this.headingTextColor});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class CommonTextFieldCustom extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if(headingName?.isNotEmpty ?? false)
-        globalText16(text: headingName ?? '', fontWeight: FontWeight.normal, textAlign: TextAlign.start),
+        globalText16(text: headingName ?? '', fontWeight: headingFontWeight ?? FontWeight.normal, color: headingTextColor ?? Colors.black, fontSize: headingFontSize ?? 16 ,textAlign: TextAlign.start),
         5.ph,
         Row(
 

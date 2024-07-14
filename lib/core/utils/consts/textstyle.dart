@@ -220,6 +220,7 @@ globalText16(
     TextAlign? textAlign,
     Color? color,
     HexColor? hexColor,
+      double?fontSize,
     FontWeight? fontWeight}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
@@ -231,7 +232,7 @@ globalText16(
       style: GoogleFonts.poppins(
         letterSpacing: 0.2,
         color: color ?? hexColor,
-        fontSize: 16.0,
+        fontSize: fontSize ?? 16.0,
         fontWeight: fontWeight ?? FontWeight.w700,
       ),
     ),

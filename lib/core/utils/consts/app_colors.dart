@@ -6,6 +6,7 @@ class AppColors {
   static final Color suffixIconColor = HexColor("80848A");
   static final Color textFieldColor = HexColor("EEF2F6");
   static final Color deepGray = HexColor("80848A");
+  static final Color deepGray1 = HexColor("8E8E8E");
   static final Color blue = HexColor("458EEC");
   static final Color deepBlue = HexColor("437AFF");
   static const Color white = Colors.white;

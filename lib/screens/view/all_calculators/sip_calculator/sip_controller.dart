@@ -74,7 +74,7 @@ var list = [].obs;
       return PieChartSectionData(
         color: colors[i],
         value: list[i] / total.value * 100,
-        title: '${(list[i] / total.value * 100).round()}%',
+        title: '',
         radius: 20,
         titleStyle: const TextStyle(
           fontSize: 8,

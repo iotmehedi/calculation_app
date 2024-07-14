@@ -120,6 +120,9 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
                         }
                         return null;
                       },
+                      headingFontSize: 20,
+                      headingFontWeight: FontWeight.w400,
+                      headingTextColor: Colors.black,
                     ),
                     10.ph,
                     CommonRichTextFieldCustom(
@@ -166,10 +169,10 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
                       width: MediaQuery.of(context).size.width,
                       child: CustomElevatedButton(
                         color: HexColor("244384"),
-                        onPress: (){
-                          if(controller.selectedButton.value){
+                        onPress: () {
+                          if (controller.selectedButton.value) {
                             controller.calculateSIP();
-                          }else{
+                          } else {
                             controller.calculateLumpsum();
                           }
                         },
@@ -182,7 +185,6 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-
                   ],
                 ),
               ),

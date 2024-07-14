@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/brm_calculator/brm_result_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/sip_calculator/sip_controller.dart';
@@ -6,6 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/custom_text/custom_text.dart';
@@ -25,20 +27,35 @@ var controller = Get.find<SIPController>();
             20.ph,
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Card(
-                color: Colors.white,
-                elevation: 0,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x07101010),
+                      blurRadius: 45,
+                      offset: Offset(0, 8),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      CustomRow(title: "Investment Amount:", value: "\$ ${controller.investmentAmount.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal),
+                      CustomRow(title: "Investment Amount:", value: "\₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.investmentAmount.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.w500,titleColor: AppColors.deepGray1),
                       10.ph,
-                      CustomRow(title: "Est. Return:", value: "\$ ${controller.estReturn.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal),
+                      CustomRow(title: "Est. Return:", value: "\₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.estReturn.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.normal,titleColor: AppColors.deepGray1),
                       Divider(
                         thickness: 0.5,
                       ),
-                      CustomRow(title: "Total Value:", value: "\$ ${controller.totalValue.round()}", titleFontWeight: FontWeight.normal, headingFontWeight: FontWeight.normal, titleColor: Colors.blue, headingColor: Colors.blue),
+                      CustomRow(title: "Total Value:", value: "\₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.totalValue.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.w500, titleColor: AppColors.blue, headingColor: Colors.blue),
 
                     ],
                   ),
@@ -46,51 +63,64 @@ var controller = Get.find<SIPController>();
               ),
             ),
             20.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                height: 150,
-                child: Card(
+            SizedBox(
+              height: 150,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
                   color: Colors.white,
-                  elevation: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 140,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: PieChart(
-                                PieChartData(
-                                  sections: controller.showingSections(),
-                                  borderData: FlBorderData(
-                                    show: true,
-                                  ),
-                                  sectionsSpace: 0,
-                                  centerSpaceRadius: 40,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x07101010),
+                      blurRadius: 45,
+                      offset: Offset(0, 8),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 140,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: PieChart(
+                              PieChartData(
+                                sections: controller.showingSections(),
+                                borderData: FlBorderData(
+                                  show: true,
                                 ),
+                                sectionsSpace: 0,
+                                centerSpaceRadius: 40,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomRoww(
-                                color: HexColor("458EEC"), text: "Principal"),
-                            CustomRoww(
-                                color: HexColor("99CBF7"), text: "Interest"),
-                          ],
-                        ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomRoww(
+                              color: HexColor("458EEC"), text: "Investment Amount"),
+                          10.ph,
+                          CustomRoww(
+                              color: HexColor("99CBF7"), text: "Est.Return"),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -112,6 +142,7 @@ var controller = Get.find<SIPController>();
          CustomText(
            text: text,
            fontSize: 14,
+           fontWeight: FontWeight.w400,
          ),
        ],
      );
