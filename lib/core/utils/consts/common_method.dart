@@ -18,7 +18,8 @@ class CommonMethod{
       return PieChartSectionData(
         color: colors[i],
         value: list[i] / total * 100,
-        title: '${(list[i] / total * 100).round()}%',
+        // title: '${(list[i] / total * 100).round()}%',
+        title: '',
         radius: 20,
         titleStyle: const TextStyle(
           fontSize: 8,

@@ -159,7 +159,7 @@ Widget CustomRow({required String title, required String value, FontWeight? titl
             child: globalText16(
                 text: value,
                 alignment: Alignment.centerLeft,
-                fontWeight: headingFontWeight ?? FontWeight.w700, color: headingColor)),
+                fontWeight: headingFontWeight ?? FontWeight.w500, color: headingColor)),
       ],
     ),
   );

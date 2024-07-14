@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/emi_calculator/emi_controller.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                       controller: controller.loanAmountController.value,
                       keyboardType: TextInputType.number,
                       needPadding: true,
-                      prefixIcon: Icon(
+                      suffixIcon: Icon(
                         Icons.attach_money,
                         size: 16,
                       ),
@@ -54,7 +55,7 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                       controller: controller.interestRateController.value,
                       keyboardType: TextInputType.number,
                       needPadding: true,
-                      prefixIcon: Icon(
+                      suffixIcon: Icon(
                         Icons.percent,
                         size: 16,
                       ),
@@ -93,13 +94,15 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                       headingFontWeight: FontWeight.normal,
                     ),
                     20.ph,
-                    CustomCalculateClearWidget(
+                    CustomCalculateClearWidget1(
                       onPressCalculate: () {
                         if (controller.formKey.value.currentState!.validate()) {
                           controller.calculateEmi();
                         }
                       },
                       onPressClear: controller.allFieldClear,
+                      clearButtonTitleFontSize: 20,
+                      clearButtonFontWeight: FontWeight.w600,
                     ),
                     SizedBox(height: 20),
                   ],

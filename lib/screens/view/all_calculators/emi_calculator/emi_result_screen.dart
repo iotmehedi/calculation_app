@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/common_method.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/emi_calculator/emi_controller.dart';
@@ -5,7 +6,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_text/custom_text.dart';
@@ -24,6 +27,14 @@ class EMIResultScreen extends StatelessWidget {
           children: [
             const CommonResultHeading(headingName: "Calculation"),
             20.ph,
+            CustomResultMonthly(
+              title:
+              NumberFormat('#,##0.00', 'en_US').format(controller.monthlyEmi.value),
+              heading: "Monthly EMI:",
+              headingColor: Colors.green,
+              titleColor: Colors.white,
+            ),
+            20.ph,
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
@@ -35,30 +46,30 @@ class EMIResultScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+
                       CustomRow(
                           title: "Loan Amount:",
                           value:
-                              "\$ ${controller.loanAmountController.value.text}",
+                              "₹ ${NumberFormat('#,##0.00', 'en_US').format(double.tryParse(controller.loanAmountController.value.text)).replaceAll(".00", '')}",
                           titleFontWeight: FontWeight.normal,
-                          headingFontWeight: FontWeight.normal),
+                      headingColor: AppColors.yellowType,
+                        headingFontWeight: FontWeight.normal,
+                      ),
                       10.ph,
                       CustomRow(
                           title: "Total Interest Payable:",
-                          value: "\$ ${controller.totalInterest.round()}",
+                          value: "₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.totalInterest.round()).replaceAll(".00", '')}",
                           titleFontWeight: FontWeight.normal,
-                          headingFontWeight: FontWeight.normal),
+                          headingFontWeight: FontWeight.normal,
+                      headingColor: AppColors.black
+                      ),
                       10.ph,
                       Divider(
                         thickness: 0.5,
                       ),
-                      Center(
-                          child: CustomRow(
-                              title: "Total Payable Amount:",
-                              value: "\$ ${controller.totalPayment.round()}",
-                              titleFontWeight: FontWeight.normal,
-                              headingFontWeight: FontWeight.normal,
-                              titleColor: Colors.blue,
-                              headingColor: Colors.blue)),
+                    globalText16(text: "Total Payable Amount", fontWeight: FontWeight.w600, color: AppColors.deepBlue, textAlign: TextAlign.center, alignment: Alignment.center, fontSize: 16),
+                    globalText16(text: "₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.totalPayment.round()).replaceAll(".00", '')}", fontWeight: FontWeight.w600, color: AppColors.black, textAlign: TextAlign.center, alignment: Alignment.center, fontSize: 16),
+
                     ],
                   ),
                 ),
@@ -107,6 +118,7 @@ class EMIResultScreen extends StatelessWidget {
                           children: [
                             CustomRoww(
                                 color: HexColor("FF9466"), text: "Loan Amount"),
+                            10.ph,
                             CustomRoww(
                                 color: HexColor("0F182E"),
                                 text: "Total Interest"),

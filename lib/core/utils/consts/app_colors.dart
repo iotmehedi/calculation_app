@@ -9,6 +9,7 @@ class AppColors {
   static final Color deepGray1 = HexColor("8E8E8E");
   static final Color blue = HexColor("458EEC");
   static final Color deepBlue = HexColor("437AFF");
+  static final Color yellowType = HexColor("FF9466");
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static final Color off_white_color = HexColor('#959595');
