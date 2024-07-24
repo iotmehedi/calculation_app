@@ -17,6 +17,7 @@ class SalaryResultCalculator extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Salary Calculator",
+        fontFamily: "Podkova",
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -45,10 +46,10 @@ class SalaryResultCalculator extends StatelessWidget {
                           child: Padding(
                               padding: EdgeInsets.only(left: 10, right: 10),
                               child: globalText10(
-                                  text: 'Payable',
+                                  text: 'Adjusted',
                                   color: Colors.white,
                                   alignment: Alignment.centerRight,
-                                  fontWeight: FontWeight.w400)),
+                                  fontWeight: FontWeight.w500)),
                         ),
                       ),
                       DataColumn(
@@ -59,7 +60,7 @@ class SalaryResultCalculator extends StatelessWidget {
                                   text: 'Holidays & vacation\ndays adjusted',
                                   color: Colors.white,
                                   alignment: Alignment.centerRight,
-                                  fontWeight: FontWeight.w400)),
+                                  fontWeight: FontWeight.w500)),
                         ),
                       ),
                     ],

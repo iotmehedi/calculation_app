@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../core/utils/consts/textstyle.dart';
+import '../custom_richtext/custom_richtext.dart';
 import '../textfield/textField_widget.dart';
 
 class CommonTextFieldCustom extends StatelessWidget {
-  final String? headingName;
+  final String? headingName, titleName;
   final TextEditingController? controller;
   String? Function(String?)? validator;
   final TextInputType keyboardType;
@@ -17,29 +18,50 @@ class CommonTextFieldCustom extends StatelessWidget {
   final TextAlign? textAlign;
   final bool? onlyNeedSuffix;
   final int? flex;
-  final double? headingFontSize;
-  final FontWeight? headingFontWeight;
-  final Color? headingTextColor;
+  final double? headingFontSize, fontSize, titleFontSize;
+  final FontWeight? headingFontWeight, fontWeight, titleFontWeight;
+  final Color? headingTextColor, titleTextColor;
   CommonTextFieldCustom(
       {super.key,
-       this.headingName,
+      this.headingName,
+      this.titleName,
       required this.controller,
       required this.validator,
       required this.keyboardType,
       required this.needPadding,
-      this.prefixIcon,this.suffixIcon, this.flex,
-        this.suffixText, this.textAlign, this.hint, this.onlyNeedSuffix, this.headingFontSize, this.headingFontWeight, this.headingTextColor});
+      this.prefixIcon,
+      this.suffixIcon,
+      this.flex,
+      this.suffixText,
+      this.textAlign,
+      this.hint,
+      this.onlyNeedSuffix,
+      this.headingFontSize,
+      this.headingFontWeight,
+      this.headingTextColor,
+        this.titleFontSize,
+      this.titleFontWeight,
+      this.titleTextColor,
+      this.fontWeight,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if(headingName?.isNotEmpty ?? false)
-        globalText16(text: headingName ?? '', fontWeight: headingFontWeight ?? FontWeight.normal, color: headingTextColor ?? Colors.black, fontSize: headingFontSize ?? 16 ,textAlign: TextAlign.start),
+        if (headingName?.isNotEmpty ?? false)
+        CustomRichText(
+          title: titleName ?? '',
+          titleTextColor: titleTextColor ?? Colors.blue,
+          heading: headingName ?? "",
+          headingFontWeight: headingFontWeight ?? FontWeight.w400,
+          titleFontWeight: titleFontWeight ?? FontWeight.w400,
+          headingFontSize: headingFontSize ?? 15,
+          titleFontSIze: titleFontSize ?? 15,
+        ),
         5.ph,
         Row(
-
           children: [
             Expanded(
               flex: flex ?? 3,
@@ -58,16 +80,18 @@ class CommonTextFieldCustom extends StatelessWidget {
                     textAlign: textAlign,
                     onlyNeedSuffix: onlyNeedSuffix,
                     hint: hint,
+                    fontSize: fontSize,
+                    fontWeight: fontWeight,
                   )),
             ),
-            if(headingName?.isNotEmpty ?? false)
-            const SizedBox(
-              width: 10,
-            ),
-            if(headingName?.isNotEmpty ?? false)
-            Expanded(
-              child: SizedBox(),
-            ),
+            if (headingName?.isNotEmpty ?? false)
+              const SizedBox(
+                width: 10,
+              ),
+            if (headingName?.isNotEmpty ?? false)
+              Expanded(
+                child: SizedBox(),
+              ),
           ],
         ),
       ],

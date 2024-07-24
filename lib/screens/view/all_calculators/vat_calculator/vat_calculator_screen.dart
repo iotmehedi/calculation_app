@@ -33,7 +33,12 @@ var controller = Get.put(VatController());
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CommonTextFieldCustom(
-                  headingName: 'VAT Rate (%)',
+                  headingName: 'VAT Rate ',
+                  titleName: "(%)",
+                  headingFontSize: 16,
+                  titleFontSize: 14,
+                  headingTextColor: Colors.black,
+                  headingFontWeight: FontWeight.w400,
                   controller: controller.vatRateController.value,
                   keyboardType: TextInputType.number,
                   needPadding: true,
@@ -70,7 +75,7 @@ var controller = Get.put(VatController());
                 ),
             
                 SizedBox(height: 16),
-                CustomCalculateClearWidget(
+                CustomCalculateClearWidget1(
                   onPressCalculate: () {
                     if (controller.formKey.value.currentState!
                         .validate()) {

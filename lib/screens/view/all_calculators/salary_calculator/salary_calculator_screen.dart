@@ -66,7 +66,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                             needPadding: true,
                             onlyNeedSuffix: true,
                             suffixIcon: const Icon(
-                              Icons.percent,
+                              Icons.attach_money_rounded,
                               size: 16,
                             ),
                             validator: (value) {
@@ -156,10 +156,8 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                             needPadding: false,
                             onlyNeedSuffix: true,
                             textAlign: TextAlign.center,
-                            suffixIcon: const Icon(
-                              Icons.percent,
-                              size: 16,
-                            ),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter the hours per week';
@@ -191,10 +189,8 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                               needPadding: false,
                               onlyNeedSuffix: true,
                               textAlign: TextAlign.center,
-                              suffixIcon: const Icon(
-                                Icons.percent,
-                                size: 16,
-                              ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter the days per week';
@@ -225,10 +221,8 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                               needPadding: false,
                               onlyNeedSuffix: true,
                               textAlign: TextAlign.center,
-                              suffixIcon: const Icon(
-                                Icons.percent,
-                                size: 16,
-                              ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter the holidays per year';
@@ -259,10 +253,8 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                               needPadding: false,
                               onlyNeedSuffix: true,
                               textAlign: TextAlign.center,
-                              suffixIcon: const Icon(
-                                Icons.percent,
-                                size: 16,
-                              ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter the vacation days per year';
@@ -293,19 +285,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                         clearButtonTitleFontSize: 20,
                         clearButtonFontWeight: FontWeight.w600
                     ),
-                    // if (controller.unadjustedSalaries.isNotEmpty) ...[
-                    //   Text('Unadjusted Salaries:',
-                    //       style: TextStyle(fontWeight: FontWeight.bold)),
-                    //   ...controller.unadjustedSalaries.entries.map((entry) => Text(
-                    //       '${entry.key}: \$${entry.value.toStringAsFixed(2)}')),
-                    // ],
-                    // SizedBox(height: 20),
-                    // if (controller.adjustedSalaries.isNotEmpty) ...[
-                    //   Text('Adjusted Salaries:',
-                    //       style: TextStyle(fontWeight: FontWeight.bold)),
-                    //   ...controller.adjustedSalaries.entries.map((entry) => Text(
-                    //       '${entry.key}: \$${entry.value.toStringAsFixed(2)}')),
-                    // ],
+
                   ],
                 ),
               ),

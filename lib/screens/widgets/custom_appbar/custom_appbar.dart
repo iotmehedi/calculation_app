@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBackPressed;
+  final String? fontFamily;
 
   const CustomAppBar({
     Key? key,
     required this.title,
     this.onBackPressed,
+    this.fontFamily
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
         style:
-            const TextStyle(fontWeight: FontWeight.w600, fontFamily: "Poppins", fontSize: 20,),
+             TextStyle(fontWeight: FontWeight.w600, fontFamily: fontFamily ?? "Poppins", fontSize: 20,),
       ),
       leading: onBackPressed != null
           ? IconButton(
