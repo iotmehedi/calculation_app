@@ -1,12 +1,16 @@
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/loan_calculator/loan_calculator_controller.dart';
+import 'package:calculation_app/screens/widgets/show_result_title/show_result_value.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/common_result_heading/common_result_heading.dart';
+import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
+import '../../../widgets/custom_richtext/custom_richtext.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 import '../../../widgets/custom_two_row_widget/custom_row_widget.dart';
 
@@ -27,50 +31,42 @@ class LoanCalculatorResult extends StatelessWidget {
         child: Column(
           children: [
             const CommonResultHeading(headingName: "Result"),
-            10.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Card(
-                elevation: 0,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CustomHalfRow(
-                        title: "Payment every year",
-                        value:
-                            '\$${controller.monthlyPayment.toStringAsFixed(2)}',
-                        headingColor: HexColor("555656"),
-                        valueColor: HexColor("101010"),
-                      ),
-                      10.ph,
-                      CustomHalfRow(
-                        title:
-                            "Total of ${controller.loanTermController.value.text} Payments",
-                        value:
-                            '\$${controller.totalPayments.toStringAsFixed(2)}',
-                        headingColor: HexColor("555656"),
-                        valueColor: HexColor("101010"),
-                      ),
-                      10.ph,
-                      CustomHalfRow(
-                        title: "Total Interest",
-                        value:
-                            '\$${controller.totalInterest.toStringAsFixed(2)}',
-                        headingColor: HexColor("555656"),
-                        valueColor: HexColor("101010"),
-                      ),
-                      10.ph,
-                    ],
-                  ),
+            20.ph,
+            ShowResultValue(value: NumberFormat('#,##0.00', 'en_US')
+                .format(double.parse(controller.monthlyPayment.value.toStringAsFixed(2))), title: "Payback Payment:  "),
+            20.ph,
+            ContainerShadowWidget(
+              widget: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+
+                    CustomHalfRow(
+                      title:
+                          "Total of Payments",
+                      value:
+                          '\$${NumberFormat('#,##0.00', 'en_US')
+                              .format(double.tryParse(controller.totalPayments.value.toStringAsFixed(2)))}',
+                      headingColor: HexColor("8E8E8E"),
+                      valueColor: HexColor("101010"),
+                    ),
+                    10.ph,
+                    CustomHalfRow(
+                      title: "Total Interest",
+                      value:
+                          '\$${NumberFormat('#,##0.00', 'en_US')
+                              .format(double.tryParse(controller.totalInterest.value.toStringAsFixed(2)))}',
+                      headingColor: HexColor("8E8E8E"),
+                      valueColor: HexColor("101010"),
+                    ),
+                    10.ph,
+                  ],
                 ),
               ),
             ),
-            10.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
+            20.ph,
+            ContainerShadowWidget(
+              widget: SizedBox(
                 height: 150,
                 child: Card(
                   color: Colors.white,

@@ -68,7 +68,9 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
                         headingName: 'Loan Term (years)',
                         controller: controller.loanTermController.value,
                         keyboardType: TextInputType.number,
-                        needPadding: false,
+                        needPadding: true,
+                        onlyNeedSuffix: true,
+
                         hint: "Year",
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -76,7 +78,6 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
                           }
                           return null;
                         },
-                        textAlign: TextAlign.end
                       ),
                       10.ph,
                       CommonTextFieldCustom(
@@ -91,7 +92,7 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
                           return null;
                         },
 
-                        suffixIcon: Icon(Icons.percent, size: 16,)
+                        suffixIcon: Icon(Icons.percent, size: 16,color: HexColor("80848A"),)
                       ),
                       10.ph,
                       CustomDropdownbutton(value: controller.compoundOption.value, onChanged: (String? newValue) {

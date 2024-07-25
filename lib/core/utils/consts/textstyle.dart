@@ -221,7 +221,7 @@ globalText16(
     Color? color,
     HexColor? hexColor,
       double?fontSize,
-    FontWeight? fontWeight}) {
+    FontWeight? fontWeight,  bool? fontFamily}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: Text(
@@ -229,7 +229,12 @@ globalText16(
       maxLines: 2,
       textAlign:  textAlign ??TextAlign.center,
       overflow: TextOverflow.ellipsis,
-      style: GoogleFonts.poppins(
+      style: fontFamily == true ? GoogleFonts.podkova(
+        letterSpacing: 0.2,
+        color: color ?? hexColor,
+        fontSize: fontSize ?? 16.0,
+        fontWeight: fontWeight ?? FontWeight.w700,
+      ) : GoogleFonts.poppins(
         letterSpacing: 0.2,
         color: color ?? hexColor,
         fontSize: fontSize ?? 16.0,

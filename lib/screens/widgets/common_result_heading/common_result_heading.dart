@@ -14,16 +14,17 @@ class CommonResultHeading extends StatelessWidget {
       height: 56,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            HexColor('33743A'),
-            HexColor('FAFFFA'),
-          ],
-          stops: [
-            0.0,
-            1.0,
-          ],
-        ),
+        // gradient: LinearGradient(
+        //   colors: [
+        //     HexColor('33743A'),
+        //     HexColor('FAFFFA'),
+        //   ],
+        //   stops: [
+        //     0.0,
+        //     1.0,
+        //   ],
+        // ),
+        color: HexColor("33743A"),
         borderRadius: BorderRadius.circular(0),
       ),
       child: Padding(

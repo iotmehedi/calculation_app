@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/common_result_heading/common_result_heading.dart';
+import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 
 class CompoundResultScreen extends StatelessWidget {
   CompoundResultScreen({super.key});
@@ -35,36 +37,30 @@ class CompoundResultScreen extends StatelessWidget {
               children: [
                 const CommonResultHeading(headingName: "Results"),
                 20.ph,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Card(
-                    elevation: 0,
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        20.ph,
-                        globalText16(
-                            text: "Total Balance", alignment: Alignment.center),
-                        10.ph,
-                        globalText20(
-                            text:
-                                "\$ ${controller.result.value.toStringAsFixed(2).toString()}",
-                            alignment: Alignment.center,
-                            color: HexColor("437AFF")),
-                        20.ph,
-                      ],
-                    ),
+                ContainerShadowWidget(
+                  widget: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      20.ph,
+                      globalText16(
+                          text: "Total Balance",
+                          alignment: Alignment.center,
+                          fontWeight: FontWeight.w600),
+                      10.ph,
+                      globalText20(
+                          text:
+                              "\$ ${NumberFormat('#,##0.00', 'en_US').format(controller.result.value)}",
+                          alignment: Alignment.center,
+                          color: HexColor("437AFF"),
+                          fontWeight: FontWeight.w600),
+                      20.ph,
+                    ],
                   ),
                 ),
                 20.ph,
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 20),
-                  child: Container(
-                    padding: EdgeInsets.only(
+                ContainerShadowWidget(
+                  widget: Container(
+                    padding: const EdgeInsets.only(
                         left: 10, right: 20, top: 20, bottom: 10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2),
@@ -79,6 +75,8 @@ class CompoundResultScreen extends StatelessWidget {
                             tooltipHorizontalAlignment:
                                 FLHorizontalAlignment.left,
                             fitInsideHorizontally: true,
+                              tooltipHorizontalOffset: 0.0,
+                              fitInsideVertically:true,
                             getTooltipItems: (touchedSpots) {
                               if (touchedSpots.isEmpty) {
                                 return [];
@@ -235,7 +233,7 @@ class CompoundResultScreen extends StatelessWidget {
                           10.pw,
                           globalText10(
                               text: "Total Interest",
-                              fontWeight: FontWeight.normal)
+                              fontWeight: FontWeight.w400)
                         ],
                       ),
                       20.pw,
@@ -249,7 +247,8 @@ class CompoundResultScreen extends StatelessWidget {
                           10.pw,
                           globalText10(
                               text: "Principal Value",
-                              fontWeight: FontWeight.normal)
+                              fontWeight: FontWeight.w400
+                          )
                         ],
                       ),
                     ],

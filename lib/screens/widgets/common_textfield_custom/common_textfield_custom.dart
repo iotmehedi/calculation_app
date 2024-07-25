@@ -16,7 +16,7 @@ class CommonTextFieldCustom extends StatelessWidget {
   final Icon? suffixIcon;
   final String? suffixText, hint;
   final TextAlign? textAlign;
-  final bool? onlyNeedSuffix;
+  final bool? onlyNeedSuffix, fontFamily;
   final int? flex;
   final double? headingFontSize, fontSize, titleFontSize;
   final FontWeight? headingFontWeight, fontWeight, titleFontWeight;
@@ -43,7 +43,7 @@ class CommonTextFieldCustom extends StatelessWidget {
       this.titleFontWeight,
       this.titleTextColor,
       this.fontWeight,
-      this.fontSize});
+      this.fontSize, this.fontFamily});
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +57,9 @@ class CommonTextFieldCustom extends StatelessWidget {
           heading: headingName ?? "",
           headingFontWeight: headingFontWeight ?? FontWeight.w400,
           titleFontWeight: titleFontWeight ?? FontWeight.w400,
-          headingFontSize: headingFontSize ?? 15,
-          titleFontSIze: titleFontSize ?? 15,
+          headingFontSize: headingFontSize ?? 16,
+          titleFontSIze: titleFontSize ?? 14,
+          fontFamily: fontFamily
         ),
         5.ph,
         Row(

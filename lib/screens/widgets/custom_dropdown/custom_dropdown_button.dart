@@ -12,7 +12,8 @@ class CustomDropdownbutton extends StatelessWidget {
       {super.key,
       required this.value,
       required this.onChanged,
-      required this.items, required this.headingName});
+      required this.items,
+      required this.headingName});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,13 @@ class CustomDropdownbutton extends StatelessWidget {
                     items: items.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: globalText16(
+                              text: value,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16),
+                        ),
                       );
                     }).toList(),
                   ),

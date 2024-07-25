@@ -43,6 +43,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Salary Calculator",
+        fontFamily: "Podkova",
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -65,6 +66,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                             keyboardType: TextInputType.number,
                             needPadding: true,
                             onlyNeedSuffix: true,
+                            fontFamily: true,
                             suffixIcon: const Icon(
                               Icons.attach_money_rounded,
                               size: 16,
@@ -119,7 +121,10 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                                         value: value,
                                         child: globalText16(
                                             text: value,
-                                            fontWeight: FontWeight.w400),
+                                            fontWeight: FontWeight.w400,
+                                        fontFamily: true,
+                                          color: HexColor("80848A")
+                                        ),
                                       );
                                     }).toList(),
                                     onChanged: (newValue) {
@@ -143,7 +148,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                           flex: 2,
                           child: globalText16(
                               text: "Hours per Week",
-                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                              fontWeight: FontWeight.w500, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                         ),
                         Expanded(
                           child: Align(
@@ -176,7 +181,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                           flex: 2,
                           child: globalText16(
                               text: "Days per week",
-                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                              fontWeight: FontWeight.w500, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                         ),
                         Expanded(
                           child: Align(
@@ -208,7 +213,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                           flex: 2,
                           child: globalText16(
                               text: "Holidays per year",
-                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                              fontWeight: FontWeight.w500, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                         ),
                         Expanded(
                           child: Align(
@@ -240,7 +245,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                           flex: 2,
                           child: globalText16(
                               text: "Vacation days per year",
-                              fontWeight: FontWeight.w600, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
+                              fontWeight: FontWeight.w500, alignment: Alignment.centerLeft, textAlign: TextAlign.start),
                         ),
                         Expanded(
                           child: Align(
@@ -268,7 +273,8 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
                     10.ph,
                     const SizedBox(height: 20),
 
-                    CustomCalculateClearWidget(
+                    CustomCalculateClearWidget1(
+                      clearButtonTextColor: HexColor("244384"),
                       onPressCalculate: () {
                         if (controller.formKey.value.currentState?.validate() ??
                             false) {

@@ -7,6 +7,7 @@ class CustomRichText extends StatelessWidget {
   final Color? titleTextColor, headingTextColor;
   final double? headingFontSize, titleFontSIze;
   final FontWeight? titleFontWeight, headingFontWeight;
+  final bool? fontFamily;
   const CustomRichText(
       {super.key,
       required this.title,
@@ -16,7 +17,7 @@ class CustomRichText extends StatelessWidget {
       this.headingTextColor,
       this.titleFontSIze,
       this.titleFontWeight,
-      this.headingFontWeight,
+      this.headingFontWeight, this.fontFamily,
       });
 
   @override
@@ -24,7 +25,10 @@ class CustomRichText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: heading,
-        style: GoogleFonts.poppins(
+        style: fontFamily == true ?  GoogleFonts.podkova(
+            fontWeight: headingFontWeight ?? FontWeight.w600,
+            fontSize: headingFontSize ?? 16,
+            color: headingTextColor ?? Colors.black): GoogleFonts.poppins(
             fontWeight: headingFontWeight ?? FontWeight.w600,
             fontSize: headingFontSize ?? 16,
             color: headingTextColor ?? Colors.black),

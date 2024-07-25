@@ -96,7 +96,9 @@ class CustomSimpleTextField extends StatelessWidget {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-          color: HexColor("#F3F6F9"), borderRadius: BorderRadius.circular(12)),
+        color: HexColor("#EEF2F6"),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: TextFormField(
         keyboardType: keyboardType ?? TextInputType.number,
         textInputAction: textInputAction,
@@ -121,18 +123,19 @@ class CustomSimpleTextField extends StatelessWidget {
           hintText: hint,
           border: InputBorder.none,
           suffixIcon: suffixIcon,
+          hintTextDirection: TextDirection.rtl,
           suffixText: suffixText,
           suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
           contentPadding: EdgeInsets.only(
               left: 10,
-              top: paddingNeed == false ? 0 : 10,
-              bottom: paddingNeed == false ? 0 : 15,
+              top: paddingNeed == false ? 0 : 0,
+              bottom: paddingNeed == false ? 0 : 10,
               right: paddingNeed == false ? 0 : 10),
           hintStyle: TextStyle(
-            fontSize: hintTextFontSize ?? 16,
-            fontWeight: hintFontWeight ?? FontWeight.w400,
-            color: hintTextColor ?? Colors.black,
-          ),
+              fontSize: hintTextFontSize ?? 16,
+              fontWeight: hintFontWeight ?? FontWeight.w400,
+              color: hintTextColor ?? HexColor("80848A"),
+              fontFamily: "Podkova"),
         ),
         // : InputDecoration(
         //     hintText: hint,

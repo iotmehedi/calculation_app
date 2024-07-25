@@ -53,14 +53,15 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 child: Column(
                   children: <Widget>[
                     CommonTextFieldCustom(
-                      headingName: 'Initial Investment',
+                      headingName: 'Initial Investment:',
                       controller: controller.initialDepositController.value,
                       keyboardType: TextInputType.number,
                       needPadding: true,
                       onlyNeedSuffix: true,
                       suffixIcon: Icon(
-                        Icons.percent,
+                        Icons.attach_money_sharp,
                         size: 16,
+                        color: HexColor("80848A"),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -77,8 +78,9 @@ class _CalculatorFormState extends State<CalculatorForm> {
                       needPadding: true,
                       onlyNeedSuffix: true,
                       suffixIcon: Icon(
-                        Icons.percent,
+                        Icons.attach_money_sharp,
                         size: 16,
+                        color: HexColor("80848A"),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -88,6 +90,8 @@ class _CalculatorFormState extends State<CalculatorForm> {
                       },
                     ),
                     10.ph,
+                    globalText16(text: "Contribution frequency", fontWeight: FontWeight.w400, fontSize: 16),
+                    5.ph,
                     Row(
                       children: [
                         Expanded(
@@ -110,7 +114,9 @@ class _CalculatorFormState extends State<CalculatorForm> {
                               child: globalText16(
                                   text: "Monthly",
                                   fontWeight: FontWeight.normal,
-                                  alignment: Alignment.center),
+                                  alignment: Alignment.center,
+                              fontFamily: true,
+                              ),
                             ),
                           ),
                         ),
@@ -134,7 +140,9 @@ class _CalculatorFormState extends State<CalculatorForm> {
                               child: globalText16(
                                   text: "Yearly",
                                   fontWeight: FontWeight.normal,
-                                  alignment: Alignment.center),
+                                  alignment: Alignment.center,
+                              fontFamily: true,
+                              ),
                             ),
                           ),
                         ),
@@ -158,15 +166,17 @@ class _CalculatorFormState extends State<CalculatorForm> {
                     //   },
                     // ),
                     CommonTextFieldCustom(
-                      headingName: 'Years of growth',
+                      headingName: 'Years to grow',
                       controller: controller.yearsOfGrowthController.value,
                       keyboardType: TextInputType.number,
                       needPadding: true,
                       onlyNeedSuffix: true,
-                      suffixIcon: Icon(
-                        Icons.percent,
-                        size: 16,
-                      ),
+                      hint: "Year",
+
+                      // suffixIcon: Icon(
+                      //   Icons.percent,
+                      //   size: 16,
+                      // ),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter the years of growth';
@@ -184,6 +194,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                       suffixIcon: Icon(
                         Icons.percent,
                         size: 16,
+                        color: HexColor("80848A"),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -194,7 +205,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                     ),
                     10.ph,
                     globalText16(
-                        text: "Compounding", fontWeight: FontWeight.normal),
+                        text: "Compounding", fontWeight: FontWeight.normal, fontFamily: true),
                     5.ph,
                     Row(
                       children: [
@@ -222,7 +233,9 @@ class _CalculatorFormState extends State<CalculatorForm> {
                                           value: value,
                                           child: globalText16(
                                               text: value,
-                                              fontWeight: FontWeight.normal),
+                                              fontWeight: FontWeight.normal,
+                                          fontFamily: true,
+                                          ),
                                         );
                                       }).toList(),
                                       onChanged: (newValue) {

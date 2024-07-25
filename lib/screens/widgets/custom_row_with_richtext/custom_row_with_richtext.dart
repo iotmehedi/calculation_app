@@ -34,7 +34,7 @@ class CustomRowWithRichtext extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -44,8 +44,7 @@ class CustomRowWithRichtext extends StatelessWidget {
                   fontWeight: titleFontWeight ?? FontWeight.w500,
                   color: titleColor,
                   textAlign: TextAlign.start)),
-          Expanded(
-            child: CustomRichText(
+           CustomRichText(
               title: richTextValue,
               titleTextColor: richTextValueColor,
               heading: richTextTitle,
@@ -55,7 +54,7 @@ class CustomRowWithRichtext extends StatelessWidget {
               titleFontSIze: titleFontSIze,
               headingFontSize: headingFontSize,
             ),
-          ),
+
         ],
       ),
     );

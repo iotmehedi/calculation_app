@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../core/utils/consts/common_method.dart';
+import '../container_shadow_widget/container_shadow_widget.dart';
 import '../custom_text/custom_text.dart';
 
 class CommonPieChartWidget extends StatelessWidget {
@@ -22,53 +23,48 @@ class CommonPieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-        height: 150,
-        child: Card(
-          color: Colors.white,
-          elevation: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 140,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: PieChart(
-                        PieChartData(
-                          sections: CommonMethod().showingSections(
-                              list: list,
-                              total: total,
-                              principalColor: netPriceColor,
-                              interestColor: taxAmountColor),
-                          borderData: FlBorderData(
-                            show: true,
-                          ),
-                          sectionsSpace: 0,
-                          centerSpaceRadius: 40,
+    return SizedBox(
+      height: 150,
+      child: ContainerShadowWidget(
+        widget: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: 140,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: PieChart(
+                      PieChartData(
+                        sections: CommonMethod().showingSections(
+                            list: list,
+                            total: total,
+                            principalColor: netPriceColor,
+                            interestColor: taxAmountColor),
+                        borderData: FlBorderData(
+                          show: true,
                         ),
+                        sectionsSpace: 0,
+                        centerSpaceRadius: 40,
                       ),
                     ),
                   ),
                 ),
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomRoww(color: HexColor(netPriceColor), text: netTitle),
-                    CustomRoww(color: HexColor(taxAmountColor), text: taxTitle),
-                  ],
-                ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomRoww(color: HexColor(netPriceColor), text: netTitle),
+                  CustomRoww(color: HexColor(taxAmountColor), text: taxTitle),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
+import '../../../widgets/custom_richtext/custom_richtext.dart';
 import '../../../widgets/textfield/textField_widget.dart';
 
 void main() {
@@ -67,7 +68,8 @@ var controller = Get.put(StocksCalculatorController());
                                 borderRadius:
                                 BorderRadius.circular(12)),
                             child: CustomSimpleTextField(
-                              paddingNeed: false,
+                              paddingNeed: true,
+                              onlyNeedSuffix: true,
                               controller: controller.sharesController.value,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -103,7 +105,8 @@ var controller = Get.put(StocksCalculatorController());
                                 borderRadius:
                                 BorderRadius.circular(12)),
                             child: CustomSimpleTextField(
-                              paddingNeed: false,
+                              paddingNeed: true,
+                              onlyNeedSuffix: true,
                               controller: controller.buyingPriceController.value,
                               keyboardType: TextInputType.number,
                               validator: (value) {
@@ -141,7 +144,8 @@ var controller = Get.put(StocksCalculatorController());
                                 borderRadius:
                                 BorderRadius.circular(12)),
                             child: CustomSimpleTextField(
-                              paddingNeed: false,
+                              paddingNeed: true,
+                              onlyNeedSuffix: true,
                               controller: controller.sellingPriceController.value,
                               keyboardType: TextInputType.number,
                               validator: (value) {
@@ -178,7 +182,8 @@ var controller = Get.put(StocksCalculatorController());
                                 borderRadius:
                                 BorderRadius.circular(12)),
                             child: CustomSimpleTextField(
-                              paddingNeed: false,
+                              paddingNeed: true,
+                              onlyNeedSuffix: true,
                               controller: controller.buyingCommissionController.value,
                               keyboardType: TextInputType.number,
                               validator: (value) {
@@ -215,7 +220,8 @@ var controller = Get.put(StocksCalculatorController());
                                 borderRadius:
                                 BorderRadius.circular(12)),
                             child: CustomSimpleTextField(
-                              paddingNeed: false,
+                              paddingNeed: true,
+                              onlyNeedSuffix: true,
                               controller: controller.sellingCommissionController.value,
                               keyboardType: TextInputType.number,
                               validator: (value) {
@@ -240,7 +246,16 @@ var controller = Get.put(StocksCalculatorController());
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  globalText16(text: "CGT Rate (%)", fontWeight: FontWeight.normal),
+                  CustomRichText(
+                    title: "(%)",
+                    titleTextColor: Colors.blue,
+                    heading: "CGT Rate",
+                    headingFontWeight: FontWeight.w400,
+                    titleFontWeight: FontWeight.w400,
+                    headingFontSize: 16,
+                    titleFontSIze: 16,
+                  ),
+                  // globalText16(text: "CGT Rate (%)", fontWeight: FontWeight.normal),
                   5.ph,
                   Row(
                     children: [
@@ -252,7 +267,8 @@ var controller = Get.put(StocksCalculatorController());
                                 borderRadius:
                                 BorderRadius.circular(12)),
                             child: CustomSimpleTextField(
-                              paddingNeed: false,
+                              paddingNeed: true,
+                              onlyNeedSuffix: true,
                               controller: controller.cgtRateController.value,
                               keyboardType: TextInputType.number,
                               validator: (value) {
@@ -282,14 +298,14 @@ var controller = Get.put(StocksCalculatorController());
                     Expanded(
                       flex: 2,
                       child: CustomElevatedButton(
-                        color: HexColor("0F182E"),
+                        color: HexColor("244384"),
                         onPress: controller.calculate,
                         // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
                         text: const Text(
                           "Calculate",
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600, fontSize: 20),
                         ),
                       ),
                     ),
@@ -301,8 +317,10 @@ var controller = Get.put(StocksCalculatorController());
                         text: Text(
                           "Clear",
                           style: TextStyle(
-                              color: HexColor("0F182E"),
-                              fontWeight: FontWeight.w500),
+                              color: HexColor("2B2E63"),
+                              fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          ),
                         ),
                       ),
                     ),

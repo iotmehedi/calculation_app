@@ -8,7 +8,12 @@ class CustomCalculateClearWidget extends StatelessWidget {
   final VoidCallback? onPressCalculate, onPressClear;
   final double? clearButtonTitleFontSize;
   final FontWeight? clearButtonFontWeight;
-  const CustomCalculateClearWidget({super.key, required this.onPressCalculate, required this.onPressClear, this.clearButtonTitleFontSize, this.clearButtonFontWeight});
+  const CustomCalculateClearWidget(
+      {super.key,
+      required this.onPressCalculate,
+      required this.onPressClear,
+      this.clearButtonTitleFontSize,
+      this.clearButtonFontWeight});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +29,8 @@ class CustomCalculateClearWidget extends StatelessWidget {
               // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
               text: const Text(
                 "Calculate",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
               ),
             ),
           ),
@@ -38,7 +42,7 @@ class CustomCalculateClearWidget extends StatelessWidget {
               text: Text(
                 "Clear",
                 style: TextStyle(
-                  fontSize: clearButtonTitleFontSize ??  14,
+                    fontSize: clearButtonTitleFontSize ?? 14,
                     color: HexColor("0F182E"),
                     fontWeight: clearButtonFontWeight ?? FontWeight.w500),
               ),
@@ -50,12 +54,18 @@ class CustomCalculateClearWidget extends StatelessWidget {
   }
 }
 
-
 class CustomCalculateClearWidget1 extends StatelessWidget {
   final VoidCallback? onPressCalculate, onPressClear;
   final double? clearButtonTitleFontSize;
   final FontWeight? clearButtonFontWeight;
-  const CustomCalculateClearWidget1({super.key, required this.onPressCalculate, required this.onPressClear, this.clearButtonTitleFontSize, this.clearButtonFontWeight});
+  final Color? clearButtonTextColor;
+  const CustomCalculateClearWidget1(
+      {super.key,
+      required this.onPressCalculate,
+      required this.onPressClear,
+      this.clearButtonTitleFontSize,
+      this.clearButtonFontWeight,
+      this.clearButtonTextColor});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +73,6 @@ class CustomCalculateClearWidget1 extends StatelessWidget {
       height: 50,
       child: Row(
         children: [
-
           Expanded(
             child: CustomElevatedButton(
               color: HexColor("F3F6F9"),
@@ -71,8 +80,8 @@ class CustomCalculateClearWidget1 extends StatelessWidget {
               text: Text(
                 "Clear",
                 style: TextStyle(
-                    fontSize: clearButtonTitleFontSize ??  14,
-                    color: HexColor("0F182E"),
+                    fontSize: clearButtonTitleFontSize ?? 14,
+                    color: clearButtonTextColor ?? HexColor("0F182E"),
                     fontWeight: clearButtonFontWeight ?? FontWeight.w500),
               ),
             ),
@@ -87,9 +96,9 @@ class CustomCalculateClearWidget1 extends StatelessWidget {
               text: const Text(
                 "Calculate",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
                 ),
               ),
             ),

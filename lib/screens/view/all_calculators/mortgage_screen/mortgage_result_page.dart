@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../../../widgets/common_result_heading/common_result_heading.dart';
+import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 
 class MortgageResultPage extends StatelessWidget {
   MortgageResultPage({super.key});
@@ -59,8 +60,8 @@ class MortgageResultPage extends StatelessWidget {
                 ),
                 20.ph,
                 CustomResultMonthly(
-                  title:
-                      NumberFormat('#,##0.00', 'en_US').format(controller.principalAndInterest.value),
+                  title: NumberFormat('#,##0.00', 'en_US')
+                      .format(controller.principalAndInterest.value),
                   heading: "Monthly Payment:",
                   headingColor: Colors.green,
                   titleColor: Colors.white,
@@ -70,26 +71,8 @@ class MortgageResultPage extends StatelessWidget {
                   visible: controller.isChecked.value == true ? true : false,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        shadows: [
-                          BoxShadow(
-                            color: Color(0x07101010),
-                            blurRadius: 45,
-                            offset: Offset(0, 8),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-
-                      child: Padding(
+                    child: ContainerShadowWidget(
+                      widget: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -307,16 +290,16 @@ class MortgageResultPage extends StatelessWidget {
                   ),
                 ),
                 10.ph,
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              clipBehavior: Clip.antiAlias,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
@@ -393,7 +376,8 @@ class MortgageResultPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
                         borderRadius: BorderRadius.circular(4),
-                      ),),
+                      ),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
