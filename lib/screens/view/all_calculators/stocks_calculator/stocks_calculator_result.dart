@@ -51,7 +51,8 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         child: CustomHalfRow(
                           title: "Selling Commission",
                           value:
-                              "\$ ${controller.sellingCommissionController.value.text}",
+                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                                  .format(controller.sellingCommissionController.value.text)}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
                         ),
