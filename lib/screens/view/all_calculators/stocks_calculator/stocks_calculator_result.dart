@@ -4,6 +4,7 @@ import 'package:calculation_app/screens/widgets/common_result_heading/common_res
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
@@ -35,7 +36,8 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
                         child: CustomHalfRow(
                           title: "Net buying price",
-                          value: "\$ ${controller.netBuyingPrice.value}",
+                          value: "\$ ${NumberFormat('#,##0.00', 'en_US')
+                              .format(controller.netBuyingPrice.value)}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
                         ),
