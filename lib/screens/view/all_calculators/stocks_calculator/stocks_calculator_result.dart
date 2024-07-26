@@ -123,7 +123,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                               "\$ ${NumberFormat('#,##0.00', 'en_US')
                                   .format(controller.profitOrLoss.value)}",
                           headingColor: HexColor("244384"),
-                          valueColor: HexColor("0F182E"),
+                          valueColor: HexColor("0F182E"),//test
                         ),
                       ],
                     ),
