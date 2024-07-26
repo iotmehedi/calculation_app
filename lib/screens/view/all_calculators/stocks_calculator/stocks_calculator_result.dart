@@ -16,6 +16,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: 'Stock Calculator',
         onBackPressed: () {
@@ -27,6 +28,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const CommonResultHeading(headingName: "Result"),
+                30.ph,
                 ContainerShadowWidget(
                   widget: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +54,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                           title: "Selling Commission",
                           value:
                               "\$ ${NumberFormat('#,##0.00', 'en_US')
-                                  .format(controller.sellingCommissionController.value.text)}",
+                                  .format(double.parse(controller.sellingCommissionController.value.text))}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
                         ),
@@ -66,7 +68,8 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         child: CustomHalfRow(
                           title: "Net Selling price",
                           value:
-                              "\$ ${controller.netSellingPrice.toStringAsFixed(2)}",
+                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                                  .format(controller.netSellingPrice.value)}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
                         ),
@@ -80,7 +83,8 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         child: CustomHalfRow(
                           title: "Buying Commission",
                           value:
-                              "\$ ${controller.buyingCommissionController.value.text}",
+                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                                  .format(double.parse(controller.buyingCommissionController.value.text))}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
                         ),
@@ -92,30 +96,32 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                 30.ph,
                 ContainerShadowWidget(
                   widget: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomHalfRow(
                           title: "Breaking-even selling price",
-                          value: controller.breakEvenSellingPrice
-                              .toStringAsFixed(2),
+                          value: NumberFormat('#,##0.00', 'en_US')
+                              .format(controller.breakEvenSellingPrice.value),
                           headingColor: HexColor("244384"),
                           valueColor: HexColor("0F182E"),
                         ),
-                        10.ph,
+                        15.ph,
                         CustomHalfRow(
                           title: "Return On Investment",
                           value:
-                              "${controller.returnOnInvestment.toStringAsFixed(2)}%",
+                              "${NumberFormat('#,##0.00', 'en_US')
+                                  .format(controller.returnOnInvestment.value)}%",
                           headingColor: HexColor("244384"),
                           valueColor: HexColor("0F182E"),
                         ),
-                        10.ph,
+                        15.ph,
                         CustomHalfRow(
                           title: "Profit/Loss:",
                           value:
-                              "\$ ${controller.profitOrLoss.toStringAsFixed(2)}",
+                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                                  .format(controller.profitOrLoss.value)}",
                           headingColor: HexColor("244384"),
                           valueColor: HexColor("0F182E"),
                         ),
@@ -148,7 +154,9 @@ class StocksCalculatorResultScreen extends StatelessWidget {
             text: value,
             color: valueColor,
             fontWeight: FontWeight.w500,
-            textAlign: TextAlign.end),
+            textAlign: TextAlign.end,
+        fontFamily: true,
+        ),
       ],
     );
   }
