@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/gst_calculator/gst_calculator_controller.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
+import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 
 void main() {
@@ -38,6 +40,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "GST Calculator",
         onBackPressed: () {
@@ -95,7 +98,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
               controller: controller.amountController.value,
               keyboardType: TextInputType.number,
               needPadding: true,
-              prefixIcon: Icon(Icons.attach_money,size: 16, ),
+              suffixIcon: Icon(Icons.attach_money,size: 16, color: AppColors.deepGray1,),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter the total amount';
@@ -111,7 +114,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
               keyboardType: TextInputType.number,
               needPadding: true,
               onlyNeedSuffix: true,
-              suffixIcon: Icon(Icons.percent,size: 16, ),
+              suffixIcon: Icon(Icons.percent,size: 16, color: AppColors.deepGray1,),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter the tax slab';
@@ -123,46 +126,21 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
 
 
             SizedBox(height: 16),
-            SizedBox(
-              height: 50,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: CustomElevatedButton(
-                      color: HexColor("244384"),
-                      onPress: (){
-                        if(controller.radioButtonStatus.value == "1"){
-                          controller.calculateGSTExclusive();
-                        }else{
-                          controller.calculateGSTInclusive();
-                        }
-                      },
-                      text: const Text(
-                        "Calculate",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                  10.pw,
-                  Expanded(
-                    child: CustomElevatedButton(
-                      color: HexColor("F3F6F9"),
-                      onPress: (){
-                        controller.clearFields();
-                      },
-                      text: Text(
-                        "Clear",
-                        style: TextStyle(
-                            color: HexColor("0F182E"),
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            CustomCalculateClearWidget(
+              onPressCalculate: () {
+                if (controller.formKey.value.currentState!
+                    .validate()) {
+                  if(controller.radioButtonStatus.value == "1"){
+                    controller.calculateGSTExclusive();
+                  }else{
+                    controller.calculateGSTInclusive();
+                  }
+                }
+              },
+              onPressClear: controller.clearFields,
+              clearButtonTextColor: Colors.black,
+              clearButtonFontWeight: FontWeight.w500,
+              clearButtonTitleFontSize: 20,
             ),
 
             SizedBox(height: 16),

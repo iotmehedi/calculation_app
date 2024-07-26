@@ -6,7 +6,7 @@ import '../../../../core/routes/router.dart';
 import '../../../../main.dart';
 
 class GSTCalculatorController extends GetxController{
-  var radioButtonStatus = "".obs;
+  var radioButtonStatus = "1".obs;
   var amountController = TextEditingController().obs;
   var taxSlabController = TextEditingController().obs;
   var formKey = GlobalKey<FormState>().obs;

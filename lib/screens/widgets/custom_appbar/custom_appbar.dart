@@ -1,5 +1,6 @@
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -16,6 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: HexColor("FAFAFA"),
       centerTitle: true,
       title: Text(
         title,

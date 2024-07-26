@@ -60,7 +60,7 @@ class MortgageResultPage extends StatelessWidget {
                 ),
                 20.ph,
                 CustomResultMonthly(
-                  title: NumberFormat('#,##0.00', 'en_US')
+                  title: NumberFormat('#,##,##0.00', 'en_US')
                       .format(controller.principalAndInterest.value),
                   heading: "Monthly Payment:",
                   headingColor: Colors.green,
@@ -96,7 +96,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                          NumberFormat('#,##0.00', 'en_US')
+                                          NumberFormat('#,##,##0.00', 'en_US')
                                               .format(numericValue);
 
                                       return CustomText(
@@ -129,7 +129,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                          NumberFormat('#,##0.00', 'en_US')
+                                          NumberFormat('#,##,##0.00', 'en_US')
                                               .format(numericValue);
 
                                       return CustomText(
@@ -160,7 +160,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                          NumberFormat('#,##0.00', 'en_US')
+                                          NumberFormat('#,##,##0.00', 'en_US')
                                               .format(numericValue);
 
                                       return CustomText(
@@ -191,7 +191,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                          NumberFormat('#,##0.00', 'en_US')
+                                          NumberFormat('#,##,##0.00', 'en_US')
                                               .format(numericValue);
 
                                       return CustomText(
@@ -222,7 +222,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                          NumberFormat('#,##0.00', 'en_US')
+                                          NumberFormat('#,##,##0.00', 'en_US')
                                               .format(numericValue);
 
                                       return CustomText(
@@ -261,7 +261,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                       // Format the value with commas and two decimal places
                                       String formattedValue =
-                                          NumberFormat('#,##0.00', 'en_US')
+                                          NumberFormat('#,##,##0.00', 'en_US')
                                               .format(numericValue);
 
                                       return CustomText(
@@ -403,7 +403,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                     // Format the value with commas and two decimal places
                                     String formattedValue =
-                                        NumberFormat('#,##0.00', 'en_US')
+                                        NumberFormat('#,##,##0.00', 'en_US')
                                             .format(numericValue);
 
                                     return CustomText(
@@ -453,7 +453,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                     // Format the value with commas and two decimal places
                                     String formattedValue =
-                                        NumberFormat('#,##0.00', 'en_US')
+                                        NumberFormat('#,##,##0.00', 'en_US')
                                             .format(numericValue);
 
                                     return CustomText(
@@ -484,7 +484,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                     // Format the value with commas and two decimal places
                                     String formattedValue =
-                                        NumberFormat('#,##0.00', 'en_US')
+                                        NumberFormat('#,##,##0.00', 'en_US')
                                             .format(numericValue);
 
                                     return CustomText(
@@ -515,7 +515,7 @@ class MortgageResultPage extends StatelessWidget {
 
                                     // Format the value with commas and two decimal places
                                     String formattedValue =
-                                        NumberFormat('#,##0.00', 'en_US')
+                                        NumberFormat('#,##,##0.00', 'en_US')
                                             .format(numericValue);
 
                                     return CustomText(

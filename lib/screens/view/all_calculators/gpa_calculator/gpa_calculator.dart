@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/gpa_calculator/gpa_controller.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
@@ -49,6 +50,7 @@ class _CourseFormState extends State<CourseForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "GPA Calculator",
         onBackPressed: () {
@@ -84,6 +86,7 @@ class _CourseFormState extends State<CourseForm> {
                             color: Colors.blue)),
                   ],
                 ),
+                10.ph,
                 Expanded(
                   child: ListView.builder(
                     itemCount: controller.courseControllers.length,

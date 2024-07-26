@@ -6,24 +6,26 @@ import '../../../core/utils/consts/textstyle.dart';
 
 class CommonResultHeading extends StatelessWidget {
   final String headingName;
-  const CommonResultHeading({super.key, required this.headingName});
+  final bool? gradiantColorNeed;
+  const CommonResultHeading({super.key, required this.headingName, this.gradiantColorNeed});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 56,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        // gradient: LinearGradient(
-        //   colors: [
-        //     HexColor('33743A'),
-        //     HexColor('FAFFFA'),
-        //   ],
-        //   stops: [
-        //     0.0,
-        //     1.0,
-        //   ],
-        // ),
+      decoration: gradiantColorNeed == true ? BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            HexColor('33743A'),
+            Colors.white
+          ],
+          stops: [
+            0.4,
+            1.0,
+          ],
+        ),
+      ) : BoxDecoration(
         color: HexColor("33743A"),
         borderRadius: BorderRadius.circular(0),
       ),

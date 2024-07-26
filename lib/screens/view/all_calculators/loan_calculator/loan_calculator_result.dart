@@ -32,7 +32,7 @@ class LoanCalculatorResult extends StatelessWidget {
           children: [
             const CommonResultHeading(headingName: "Result"),
             20.ph,
-            ShowResultValue(value: NumberFormat('#,##0.00', 'en_US')
+            ShowResultValue(value: NumberFormat('#,##,##0.00', 'en_US')
                 .format(double.parse(controller.monthlyPayment.value.toStringAsFixed(2))), title: "Payback Payment:  "),
             20.ph,
             ContainerShadowWidget(
@@ -45,7 +45,7 @@ class LoanCalculatorResult extends StatelessWidget {
                       title:
                           "Total of Payments",
                       value:
-                          '\$${NumberFormat('#,##0.00', 'en_US')
+                          '\$${NumberFormat('#,##,##0.00', 'en_US')
                               .format(double.tryParse(controller.totalPayments.value.toStringAsFixed(2)))}',
                       headingColor: HexColor("8E8E8E"),
                       valueColor: HexColor("101010"),
@@ -54,7 +54,7 @@ class LoanCalculatorResult extends StatelessWidget {
                     CustomHalfRow(
                       title: "Total Interest",
                       value:
-                          '\$${NumberFormat('#,##0.00', 'en_US')
+                          '\$${NumberFormat('#,##,##0.00', 'en_US')
                               .format(double.tryParse(controller.totalInterest.value.toStringAsFixed(2)))}',
                       headingColor: HexColor("8E8E8E"),
                       valueColor: HexColor("101010"),

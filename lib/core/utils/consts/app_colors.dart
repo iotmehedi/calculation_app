@@ -27,4 +27,5 @@ class AppColors {
   static final HexColor calculateButtonColor = HexColor('244384');
   static final HexColor unselectButtonTextColor = HexColor('0F182E');
   static final HexColor unselectButtonColor = HexColor('EEF2F6');
+  static final Color scaffoldBackgroundColor = HexColor("FAFAFA");
 }

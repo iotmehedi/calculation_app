@@ -49,7 +49,7 @@ class CompoundResultScreen extends StatelessWidget {
                       10.ph,
                       globalText20(
                           text:
-                              "\$ ${NumberFormat('#,##0.00', 'en_US').format(controller.result.value)}",
+                              "\$ ${NumberFormat('#,##,##0.00', 'en_US').format(controller.result.value)}",
                           alignment: Alignment.center,
                           color: HexColor("437AFF"),
                           fontWeight: FontWeight.w600),

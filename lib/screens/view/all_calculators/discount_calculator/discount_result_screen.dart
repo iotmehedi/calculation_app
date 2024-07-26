@@ -1,11 +1,15 @@
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/discount_calculator/discount_controller.dart';
 import 'package:calculation_app/screens/view/all_calculators/vat_calculator/vat_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_divider/custom_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/common_pie_chart/common_pie_chart_widget.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
+import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart';
 import '../brm_calculator/brm_result_screen.dart';
@@ -16,6 +20,7 @@ class DiscountResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: "Discount Calculator",
         onBackPressed: () {
@@ -27,16 +32,12 @@ class DiscountResultScreen extends StatelessWidget {
           children: [
             const CommonResultHeading(headingName: "Calculation"),
             20.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Card(
-                elevation: 0.4,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
+            ContainerShadowWidget(
+              widget: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
+                    10.ph,
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomRowWithRichtext(
@@ -45,12 +46,13 @@ class DiscountResultScreen extends StatelessWidget {
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.blue,
-                        richTextValue: '${controller.payableAmount.toStringAsFixed(2)}',
+                        richTextValue: '${NumberFormat('#,##,##0.00', 'en_US')
+                            .format(controller.payableAmount.value)}',
                         richTextValueFontWeight: FontWeight.w500,
 
                       ),
                     ),
-                    Divider(thickness: 0.4,),
+                    CustomDivider(),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomRowWithRichtext(
@@ -59,18 +61,19 @@ class DiscountResultScreen extends StatelessWidget {
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.blue,
-                        richTextValue: '${controller.discountAmount.toStringAsFixed(2)}',
+                        richTextValue: '${NumberFormat('#,##,##0.00', 'en_US')
+                            .format(controller.discountAmount.value)}',
                         richTextValueFontWeight: FontWeight.w500,
                       ),
                     ),
-                    Divider(thickness: 0.5, color: Colors.grey.withOpacity(0.2),),
 
                     10.ph,
                   ],
                 ),
               ),
             ),
-            CommonPieChartWidget(list: controller.list, total: controller.total.value, netPriceColor: "FF9466", taxAmountColor: "66D1FF", netTitle: "Payable Amount", taxTitle: "Discount"),
+            20.ph,
+            CommonPieChartWidget(list: controller.list, total: controller.total.value, netPriceColor: "FF9466", taxAmountColor: "66D1FF", netTitle: "Payable Amount", taxTitle: "Discount", badgeWidgetVisibleOrNot: true),
           ],
         ),
       ),

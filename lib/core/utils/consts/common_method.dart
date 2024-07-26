@@ -9,7 +9,7 @@ class CommonMethod {
       {required RxList list,
       required double total,
       required String principalColor,
-      required String interestColor}) {
+      required String interestColor, bool? badgeWidgetVisibleOrNot}) {
     List<HexColor> colors = [];
     colors = [
       HexColor(principalColor),
@@ -22,7 +22,7 @@ class CommonMethod {
       const fontSize = isTouched == true ? 25.0 : 16.0;
       const radius = isTouched == true ? 60.0 : 50.0;
       return PieChartSectionData(
-        badgeWidget: Container(
+        badgeWidget: badgeWidgetVisibleOrNot == true ? const SizedBox.shrink() : Container(
           height: 12,
           width: 30,
           decoration: BoxDecoration(
@@ -35,7 +35,7 @@ class CommonMethod {
           ),
           child: Center(
             child: Text(
-              "\$${NumberFormat('#,##', 'en_US').format((list[i]).round())}",
+              "\$${NumberFormat('#,##,##', 'en_US').format((list[i]).round())}",
               style:  TextStyle(
                   color: HexColor("1E1E1E"),
                   fontWeight: FontWeight.w400,

@@ -12,6 +12,7 @@ class CommonPieChartWidget extends StatelessWidget {
   final RxList list;
   final double total;
   final String netPriceColor, taxAmountColor, netTitle, taxTitle;
+  final bool? badgeWidgetVisibleOrNot;
   const CommonPieChartWidget(
       {super.key,
       required this.total,
@@ -19,12 +20,12 @@ class CommonPieChartWidget extends StatelessWidget {
       required this.netPriceColor,
       required this.taxAmountColor,
       required this.netTitle,
-      required this.taxTitle});
+      required this.taxTitle, this.badgeWidgetVisibleOrNot});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: 160,
       child: ContainerShadowWidget(
         widget: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +43,9 @@ class CommonPieChartWidget extends StatelessWidget {
                             list: list,
                             total: total,
                             principalColor: netPriceColor,
-                            interestColor: taxAmountColor),
+                            interestColor: taxAmountColor,
+                            badgeWidgetVisibleOrNot: badgeWidgetVisibleOrNot
+                        ),
                         borderData: FlBorderData(
                           show: true,
                         ),
@@ -60,6 +63,7 @@ class CommonPieChartWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomRoww(color: HexColor(netPriceColor), text: netTitle),
+                  10.ph,
                   CustomRoww(color: HexColor(taxAmountColor), text: taxTitle),
                 ],
               ),
@@ -149,7 +153,9 @@ class CommonThreePieChartWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomRoww(color: HexColor(netPriceColor), text: netTitle),
+                    10.ph,
                     CustomRoww(color: HexColor(taxAmountColor), text: taxTitle),
+                    10.ph,
                     CustomRoww(color: HexColor(lastColor), text: lastTitle),
                   ],
                 ),

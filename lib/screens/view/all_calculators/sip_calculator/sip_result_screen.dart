@@ -49,13 +49,13 @@ var controller = Get.find<SIPController>();
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      CustomRow(title: "Investment Amount:", value: "\₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.investmentAmount.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.w500,titleColor: AppColors.deepGray1),
+                      CustomRow(title: "Investment Amount:", value: "\₹ ${NumberFormat('#,##,##0.00', 'en_US').format(controller.investmentAmount.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.w500,titleColor: AppColors.deepGray1),
                       10.ph,
-                      CustomRow(title: "Est. Return:", value: "\₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.estReturn.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.normal,titleColor: AppColors.deepGray1),
+                      CustomRow(title: "Est. Return:", value: "\₹ ${NumberFormat('#,##,##0.00', 'en_US').format(controller.estReturn.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.normal,titleColor: AppColors.deepGray1),
                       Divider(
                         thickness: 0.5,
                       ),
-                      CustomRow(title: "Total Value:", value: "\₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.totalValue.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.w500, titleColor: AppColors.blue, headingColor: Colors.blue),
+                      CustomRow(title: "Total Value:", value: "\₹ ${NumberFormat('#,##,##0.00', 'en_US').format(controller.totalValue.round()).replaceAll(".00", "")}", titleFontWeight: FontWeight.w500, headingFontWeight: FontWeight.w500, titleColor: AppColors.blue, headingColor: Colors.blue),
 
                     ],
                   ),

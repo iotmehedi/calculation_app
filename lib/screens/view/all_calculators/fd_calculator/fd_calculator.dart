@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/fd_calculator/fd_controller.dart';
 import 'package:calculation_app/screens/view/all_calculators/sip_calculator/sip_controller.dart';
@@ -10,6 +11,8 @@ import 'package:hexcolor/hexcolor.dart';
 
 import '../../../widgets/common_custom_richText/common_custom_richText.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
+import '../../../widgets/custom_appbar/custom_appbar.dart';
+import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 
 class FDCalculatorHome extends StatefulWidget {
@@ -22,8 +25,12 @@ class _FDCalculatorHomeState extends State<FDCalculatorHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('FD Calculator'),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(
+        title: 'FD Calculator',
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
       ),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
@@ -38,7 +45,9 @@ class _FDCalculatorHomeState extends State<FDCalculatorHome> {
                       headingName: 'Total Investment',
                       controller: controller.investmentController.value,
                       keyboardType: TextInputType.number,
-                      needPadding: false,
+                      hint: "₹",
+                      needPadding: true,
+                      onlyNeedSuffix: true,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter total investment';
@@ -59,6 +68,7 @@ class _FDCalculatorHomeState extends State<FDCalculatorHome> {
                       controller: controller.rateOfReturnController.value,
                       keyboardType: TextInputType.number,
                       needPadding: false,
+                      suffixIcon: Icon(Icons.percent, color: AppColors.deepGray1, size: 14,),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter expected of return';
@@ -87,20 +97,18 @@ class _FDCalculatorHomeState extends State<FDCalculatorHome> {
                     ),
                     10.ph,
                     const SizedBox(height: 20),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: CustomElevatedButton(
-                        color: HexColor("244384"),
-                        onPress: (){
-                            controller.calculateFD();
-                        },
-                        // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
-                        text: const Text(
-                          "Calculate",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w500),
-                        ),
-                      ),
+
+                    CustomCalculateClearWidget(
+                      onPressCalculate: () {
+                        if (controller.formKey.value.currentState!
+                            .validate()) {
+                          controller.calculateFD();
+                        }
+                      },
+                      onPressClear: controller.allFieldClear,
+                      clearButtonTextColor: HexColor("244384"),
+                      clearButtonFontWeight: FontWeight.w500,
+                      clearButtonTitleFontSize: 20,
                     ),
                     const SizedBox(height: 20),
 

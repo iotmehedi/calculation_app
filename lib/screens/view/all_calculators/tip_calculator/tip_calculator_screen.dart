@@ -3,6 +3,7 @@ import 'package:calculation_app/screens/view/all_calculators/tip_calculator/tip_
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
@@ -18,6 +19,7 @@ class _TipCalculatorState extends State<TipCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: "Tip Calculator",
         onBackPressed: () {
@@ -40,6 +42,7 @@ class _TipCalculatorState extends State<TipCalculator> {
                         suffixIcon: Icon(
                           Icons.attach_money,
                           size: 16,
+                          color: HexColor("80848A"),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -51,6 +54,10 @@ class _TipCalculatorState extends State<TipCalculator> {
                       10.ph,
                       CommonTextFieldCustom(
                         headingName: 'Tip',
+                        titleName: "(%)",
+                        titleFontSize: 16,
+                        titleFontWeight: FontWeight.normal,
+                        titleTextColor: HexColor("437AFF"),
                         controller: controller.tipController.value,
                         keyboardType: TextInputType.number,
                         needPadding: true,
@@ -58,6 +65,7 @@ class _TipCalculatorState extends State<TipCalculator> {
                         suffixIcon: Icon(
                           Icons.percent,
                           size: 16,
+                          color: HexColor("80848A"),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -80,7 +88,7 @@ class _TipCalculatorState extends State<TipCalculator> {
                         },
                       ),
                       SizedBox(height: 20),
-                      CustomCalculateClearWidget(
+                      CustomCalculateClearWidget1(
                         onPressCalculate: () {
                           if (controller.formKey.value.currentState!
                               .validate()) {
@@ -88,6 +96,9 @@ class _TipCalculatorState extends State<TipCalculator> {
                           }
                         },
                         onPressClear: controller.allFieldClear,
+                        clearButtonTextColor: HexColor("0F182E"),
+                        clearButtonFontWeight: FontWeight.w500,
+                        clearButtonTitleFontSize: 20,
                       ),
                       SizedBox(height: 20),
                     ],

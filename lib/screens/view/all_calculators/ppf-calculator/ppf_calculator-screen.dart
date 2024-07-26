@@ -2,6 +2,7 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/ppf-calculator/ppf_calculator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../../widgets/common_custom_richText/common_custom_richText.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
@@ -29,7 +30,12 @@ class PPFCalculatorScreen extends StatelessWidget {
                           headingName: 'Yearly Investment',
                           controller: controller.investmentController.value,
                           keyboardType: TextInputType.number,
-                          needPadding: false,
+                          hint: "₹",
+                          headingFontSize: 16,
+                          headingFontWeight: FontWeight.w400,
+                          headingTextColor: HexColor("8E8E8E"),
+                          needPadding: true,
+                          onlyNeedSuffix: true,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your yearly investment';
@@ -83,6 +89,9 @@ class PPFCalculatorScreen extends StatelessWidget {
                       }
                     },
                     onPressClear: controller.allFieldClear,
+                    clearButtonTextColor: HexColor("244384"),
+                    clearButtonFontWeight: FontWeight.w500,
+                    clearButtonTitleFontSize: 20,
                   ),
                   SizedBox(height: 20),
                   

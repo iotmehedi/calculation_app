@@ -42,7 +42,7 @@ class VatResultScreen extends StatelessWidget {
                         headingFontWeight: FontWeight.normal,
                         richTextTitle: '\$',
                         richtextTitleColor: Colors.blue,
-                        richTextValue: '${NumberFormat('#,##', 'en_US')
+                        richTextValue: '${NumberFormat('#,##,##0.00', 'en_US')
                             .format(controller.grossPrice.round())}',
                         richTextValueFontWeight: FontWeight.w500,
                       ),

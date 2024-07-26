@@ -66,24 +66,20 @@ class CommonTextFieldCustom extends StatelessWidget {
           children: [
             Expanded(
               flex: flex ?? 3,
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: HexColor("#F3F6F9"),
-                      borderRadius: BorderRadius.circular(12)),
-                  child: CustomSimpleTextField(
-                    paddingNeed: needPadding,
-                    controller: controller,
-                    validator: validator,
-                    keyboardType: keyboardType,
-                    prefixIcon: prefixIcon,
-                    suffixIcon: suffixIcon,
-                    suffixText: suffixText,
-                    textAlign: textAlign,
-                    onlyNeedSuffix: onlyNeedSuffix,
-                    hint: hint,
-                    fontSize: fontSize,
-                    fontWeight: fontWeight,
-                  )),
+              child: CustomSimpleTextField(
+                paddingNeed: needPadding,
+                controller: controller,
+                validator: validator,
+                keyboardType: keyboardType,
+                prefixIcon: prefixIcon,
+                suffixIcon: suffixIcon,
+                suffixText: suffixText,
+                textAlign: textAlign,
+                onlyNeedSuffix: onlyNeedSuffix,
+                hint: hint,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+              ),
             ),
             if (headingName?.isNotEmpty ?? false)
               const SizedBox(

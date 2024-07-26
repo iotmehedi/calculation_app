@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/grade_calculator/grade_controller.dart';
 import 'package:calculation_app/screens/view/all_calculators/grade_calculator/grade_widget.dart';
@@ -29,6 +30,7 @@ class _GPAFormState extends State<GPAForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Grade Calculator",
         onBackPressed: () {

@@ -118,14 +118,14 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                               children: [
                                 CustomRow(
                                     title: "Loan Amount",
-                                    value: NumberFormat('#,##0.00', 'en_US')
+                                    value: NumberFormat('#,##,##0.00', 'en_US')
                                         .format(controller.loanAmount)
                                         .toString(),
                                     titleColor: Colors.black),
                                 10.ph,
                                 CustomRow(
                                     title: "Sales Tax",
-                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                    value:  NumberFormat('#,##,##0.00', 'en_US')
                                         .format(controller.salesTaxAmount)
                                         .toString(),
                                     titleColor: Colors.black
@@ -133,7 +133,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                                 10.ph,
                                 CustomRow(
                                     title: "Upfront Payment",
-                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                    value:  NumberFormat('#,##,##0.00', 'en_US')
                                         .format(controller.upfrontPayment)
                                         .toString(),
                                     titleColor: Colors.black),
@@ -151,14 +151,14 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                               children: [
                                 CustomRow(
                                     title: "Total Interest Cost",
-                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                    value:  NumberFormat('#,##,##0.00', 'en_US')
                                         .format(controller.totalLoanInterest)
                                         .toString(),
                                     titleColor: Colors.black),
                                 10.ph,
                                 CustomRow(
                                     title: "Total of ${controller.loanTermController.value.text} Loan Payments",
-                                    value:  NumberFormat('#,##0.00', 'en_US')
+                                    value:  NumberFormat('#,##,##0.00', 'en_US')
                                         .format(controller.totalLoanPayments)
                                         .toString(),
                                     titleColor: AppColors.deepBlue,
@@ -183,7 +183,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                             child: CustomRow(
                                 title: "Total All Cost:",
-                                value: NumberFormat('#,##0.00', 'en_US')
+                                value: NumberFormat('#,##,##0.00', 'en_US')
                                     .format((controller.loanAmount + controller.salesTaxAmount + controller.upfrontPayment + controller.totalLoanInterest + controller.totalLoanPayments))
                                     .toString(),
                                 titleColor: AppColors.deepBlue,

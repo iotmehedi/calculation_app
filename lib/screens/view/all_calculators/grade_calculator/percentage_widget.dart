@@ -21,20 +21,26 @@ class PercentageWidget extends StatelessWidget {
                   child: globalText12(
                       text: "Assignment (Optional)",
                       fontWeight: FontWeight.w500,
-                      color: Colors.blue)),
+                      color: Colors.blue,
+                  alignment: Alignment.center
+                  )),
               Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: globalText12(
                         text: "Grade %",
                         fontWeight: FontWeight.w500,
-                        color: Colors.blue),
+                        color: Colors.blue,
+                        alignment: Alignment.center
+                    ),
                   )),
               Expanded(
                   child: globalText12(
                       text: "Weight",
                       fontWeight: FontWeight.w500,
-                      color: Colors.blue)),
+                      color: Colors.blue,
+                      alignment: Alignment.center
+                  )),
             ],
           ),
           Expanded(

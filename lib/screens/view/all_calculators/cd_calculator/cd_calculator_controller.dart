@@ -79,6 +79,7 @@ class CDCalculatorController extends GetxController {
     list.add(interestAfterTax.value);
     list.add(totalTax.value);
     total.value = initialDeposit + interestAfterTax.value + totalTax.value ;
+    print("End balance $endBalance");
     RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.cdResultScreen);
   }
 

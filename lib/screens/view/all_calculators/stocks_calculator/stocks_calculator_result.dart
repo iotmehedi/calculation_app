@@ -35,10 +35,10 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                     children: [
                       10.ph,
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                         child: CustomHalfRow(
                           title: "Net buying price",
-                          value: "\$ ${NumberFormat('#,##0.00', 'en_US')
+                          value: "\$ ${NumberFormat('#,##,##0.00', 'en_US')
                               .format(controller.netBuyingPrice.value)}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
@@ -49,11 +49,11 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         color: HexColor("F3F3F3"),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                         child: CustomHalfRow(
                           title: "Selling Commission",
                           value:
-                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                              "\$ ${NumberFormat('#,##,##0.00', 'en_US')
                                   .format(double.parse(controller.sellingCommissionController.value.text))}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
@@ -64,11 +64,11 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         color: HexColor("F3F3F3"),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                         child: CustomHalfRow(
                           title: "Net Selling price",
                           value:
-                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                              "\$ ${NumberFormat('#,##,##0.00', 'en_US')
                                   .format(controller.netSellingPrice.value)}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
@@ -79,11 +79,11 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         color: HexColor("F3F3F3"),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                         child: CustomHalfRow(
                           title: "Buying Commission",
                           value:
-                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                              "\$ ${NumberFormat('#,##,##0.00', 'en_US')
                                   .format(double.parse(controller.buyingCommissionController.value.text))}",
                           headingColor: HexColor("555656"),
                           valueColor: HexColor("101010"),
@@ -96,13 +96,13 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                 30.ph,
                 ContainerShadowWidget(
                   widget: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomHalfRow(
                           title: "Breaking-even selling price",
-                          value: NumberFormat('#,##0.00', 'en_US')
+                          value: NumberFormat('#,##,##0.00', 'en_US')
                               .format(controller.breakEvenSellingPrice.value),
                           headingColor: HexColor("244384"),
                           valueColor: HexColor("0F182E"),
@@ -111,7 +111,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         CustomHalfRow(
                           title: "Return On Investment",
                           value:
-                              "${NumberFormat('#,##0.00', 'en_US')
+                              "${NumberFormat('#,##,##0.00', 'en_US')
                                   .format(controller.returnOnInvestment.value)}%",
                           headingColor: HexColor("244384"),
                           valueColor: HexColor("0F182E"),
@@ -120,7 +120,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
                         CustomHalfRow(
                           title: "Profit/Loss:",
                           value:
-                              "\$ ${NumberFormat('#,##0.00', 'en_US')
+                              "\$ ${NumberFormat('#,##,##0.00', 'en_US')
                                   .format(controller.profitOrLoss.value)}",
                           headingColor: HexColor("244384"),
                           valueColor: HexColor("0F182E"),//test

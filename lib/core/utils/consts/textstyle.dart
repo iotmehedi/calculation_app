@@ -293,7 +293,7 @@ globalTextStyle() {
   return GoogleFonts.poppins(
     letterSpacing: 0.2,
     color: HexColor('80848A'),
-    fontSize: 16.0,
+    fontSize: 12.0,
     fontWeight: FontWeight.normal,
   );
 }

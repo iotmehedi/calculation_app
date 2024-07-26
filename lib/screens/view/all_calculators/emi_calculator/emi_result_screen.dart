@@ -29,7 +29,7 @@ class EMIResultScreen extends StatelessWidget {
             20.ph,
             CustomResultMonthly(
               title:
-              NumberFormat('#,##0.00', 'en_US').format(controller.monthlyEmi.value),
+              NumberFormat('#,##,##0.00', 'en_US').format(controller.monthlyEmi.value),
               heading: "Monthly EMI:",
               headingColor: Colors.green,
               titleColor: Colors.white,
@@ -50,7 +50,7 @@ class EMIResultScreen extends StatelessWidget {
                       CustomRow(
                           title: "Loan Amount:",
                           value:
-                              "₹ ${NumberFormat('#,##0.00', 'en_US').format(double.tryParse(controller.loanAmountController.value.text)).replaceAll(".00", '')}",
+                              "₹ ${NumberFormat('#,##,##0.00', 'en_US').format(double.tryParse(controller.loanAmountController.value.text)).replaceAll(".00", '')}",
                           titleFontWeight: FontWeight.normal,
                       headingColor: AppColors.yellowType,
                         headingFontWeight: FontWeight.normal,
@@ -58,7 +58,7 @@ class EMIResultScreen extends StatelessWidget {
                       10.ph,
                       CustomRow(
                           title: "Total Interest Payable:",
-                          value: "₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.totalInterest.round()).replaceAll(".00", '')}",
+                          value: "₹ ${NumberFormat('#,##,##0.00', 'en_US').format(controller.totalInterest.round()).replaceAll(".00", '')}",
                           titleFontWeight: FontWeight.normal,
                           headingFontWeight: FontWeight.normal,
                       headingColor: AppColors.black
@@ -68,7 +68,7 @@ class EMIResultScreen extends StatelessWidget {
                         thickness: 0.5,
                       ),
                     globalText16(text: "Total Payable Amount", fontWeight: FontWeight.w600, color: AppColors.deepBlue, textAlign: TextAlign.center, alignment: Alignment.center, fontSize: 16),
-                    globalText16(text: "₹ ${NumberFormat('#,##0.00', 'en_US').format(controller.totalPayment.round()).replaceAll(".00", '')}", fontWeight: FontWeight.w600, color: AppColors.black, textAlign: TextAlign.center, alignment: Alignment.center, fontSize: 16),
+                    globalText16(text: "₹ ${NumberFormat('#,##,##0.00', 'en_US').format(controller.totalPayment.round()).replaceAll(".00", '')}", fontWeight: FontWeight.w600, color: AppColors.black, textAlign: TextAlign.center, alignment: Alignment.center, fontSize: 16),
 
                     ],
                   ),

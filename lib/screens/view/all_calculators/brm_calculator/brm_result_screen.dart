@@ -153,7 +153,7 @@ Widget CustomRow({required String title, required String value, FontWeight? titl
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-            flex: 1,
+            flex: 2,
             child: globalText16(text: title, fontWeight: titleFontWeight ?? FontWeight.w500, color: titleColor, textAlign: TextAlign.start)),
         Expanded(
             child: globalText16(

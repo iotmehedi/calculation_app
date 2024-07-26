@@ -1,6 +1,7 @@
 import 'package:calculation_app/screens/view/all_calculators/discount_calculator/discount_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -16,6 +17,7 @@ var controller = Get.put(DiscountController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: "Discount Calculator",
         onBackPressed: () {
@@ -38,6 +40,7 @@ var controller = Get.put(DiscountController());
                   suffixIcon: Icon(
                     Icons.attach_money_outlined,
                     size: 16,
+                    color: HexColor("80848A"),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -51,11 +54,16 @@ var controller = Get.put(DiscountController());
                   headingName: 'Percentage Rate',
                   controller: controller.discountRateController.value,
                   keyboardType: TextInputType.number,
+                  titleTextColor: HexColor("437AFF"),
+                  titleName: "(%)",
+                  titleFontWeight: FontWeight.normal,
+                  titleFontSize: 16,
                   needPadding: true,
                   onlyNeedSuffix: true,
                   suffixIcon: Icon(
                     Icons.percent,
                     size: 16,
+                    color: HexColor("80848A"),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -66,13 +74,16 @@ var controller = Get.put(DiscountController());
                 ),
             
                 SizedBox(height: 16.0),
-                CustomCalculateClearWidget(
+                CustomCalculateClearWidget1(
                   onPressCalculate: () {
                     if (controller.formKey.value.currentState?.validate() ?? false) {
                       controller.calculateDiscount();
                     }
                   },
                   onPressClear: controller.allFieldClear,
+                  clearButtonTextColor: HexColor("0F182E"),
+                  clearButtonFontWeight: FontWeight.w500,
+                  clearButtonTitleFontSize: 20,
                 ),
                 SizedBox(height: 16.0),
               ],

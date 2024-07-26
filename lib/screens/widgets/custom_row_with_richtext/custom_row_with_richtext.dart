@@ -12,6 +12,7 @@ class CustomRowWithRichtext extends StatelessWidget {
   final Color? titleColor, richtextTitleColor, richTextValueColor;
   final Color? headingColor;
   final double? headingFontSize, titleFontSIze;
+  final bool? textAlignMostRight, titleFontFamily,richtextFontFamily, richTextTitleFontFamily;
   const CustomRowWithRichtext({
     super.key,
     required this.title,
@@ -26,7 +27,11 @@ class CustomRowWithRichtext extends StatelessWidget {
     this.richTextValueColor,
     this.richTextValueFontWeight,
     this.titleFontSIze,
-    this.headingFontSize
+    this.headingFontSize,
+    this.textAlignMostRight,
+    this.titleFontFamily,
+    this.richtextFontFamily,
+    this.richTextTitleFontFamily
   });
 
   @override
@@ -38,13 +43,31 @@ class CustomRowWithRichtext extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              flex: 1,
+              flex: textAlignMostRight == false ? 2 : 1,
               child: globalText16(
                   text: title,
                   fontWeight: titleFontWeight ?? FontWeight.w500,
                   color: titleColor,
-                  textAlign: TextAlign.start)),
-           CustomRichText(
+                  textAlign: TextAlign.start, fontFamily: titleFontFamily)),
+           Visibility(
+             visible: textAlignMostRight == false ? false : true,
+             child: CustomRichText(
+                title: richTextValue,
+                titleTextColor: richTextValueColor,
+                heading: richTextTitle,
+                headingTextColor: richtextTitleColor,
+                titleFontWeight: richTextValueFontWeight,
+                headingFontWeight: richTextTitleFontWeight,
+                titleFontSIze: titleFontSIze,
+                headingFontSize: headingFontSize,
+               fontFamily: richtextFontFamily,
+               titleFontFamily: richTextTitleFontFamily,
+              ),
+           ),
+          Visibility(
+            visible: textAlignMostRight == false ? true : false,
+            child: Expanded(
+            child: CustomRichText(
               title: richTextValue,
               titleTextColor: richTextValueColor,
               heading: richTextTitle,
@@ -53,8 +76,10 @@ class CustomRowWithRichtext extends StatelessWidget {
               headingFontWeight: richTextTitleFontWeight,
               titleFontSIze: titleFontSIze,
               headingFontSize: headingFontSize,
+              fontFamily: richtextFontFamily,
+              titleFontFamily: richTextTitleFontFamily,
             ),
-
+          ),)
         ],
       ),
     );

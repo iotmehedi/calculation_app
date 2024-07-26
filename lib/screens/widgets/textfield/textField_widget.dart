@@ -97,7 +97,7 @@ class CustomSimpleTextField extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: HexColor("#EEF2F6"),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: TextFormField(
         keyboardType: keyboardType ?? TextInputType.number,

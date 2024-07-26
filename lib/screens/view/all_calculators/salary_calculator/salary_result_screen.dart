@@ -117,13 +117,13 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.unAdjustedWeeklySalary.value).round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.unAdjustedWeeklySalary.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * controller.hoursPerWeek.value).round() : controller.weeklySalary.value.round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * controller.hoursPerWeek.value).round() : controller.weeklySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -138,13 +138,13 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.unAdjustedBiweeklySalary.value).round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.unAdjustedBiweeklySalary.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * controller.hoursPerWeek.value * 2).round() : controller.biweeklySalary.value.round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.adjustedHourlySalary.value * controller.hoursPerWeek.value * 2).round() : controller.biweeklySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -159,13 +159,13 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.unAdjustedSemimonthlySalary.value).round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.unAdjustedSemimonthlySalary.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 24).round() : controller.semimonthlySalary.value.round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 24).round() : controller.semimonthlySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -180,13 +180,13 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.unAdjustedMonthlySalary.value).round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.unAdjustedMonthlySalary.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 12).round() : controller.monthlySalary.value.round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 12).round() : controller.monthlySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -201,13 +201,13 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.unAdjustedQuarterlySalary.value).round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.unAdjustedQuarterlySalary.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 4).round() : controller.quarterlySalary.value.round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value / 4).round() : controller.quarterlySalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
@@ -222,13 +222,13 @@ class SalaryResultCalculator extends StatelessWidget {
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.unAdjustedAnnuallySalary.value).round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.unAdjustedAnnuallySalary.value).round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),
                           DataCell(globalText14(
                               text:
-                                  '\$${NumberFormat('#,##0', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value).round() : controller.annualSalary.value.round())}',
+                                  '\$${NumberFormat('#,##,##0.00', 'en_US').format((controller.selectedInterval.value == "Hour" || controller.selectedInterval.value == "Day") ? (controller.annualAdjustedSalary.value).round() : controller.annualSalary.value.round())}',
                               alignment: Alignment.centerRight,
                               textAlign: TextAlign.end,
                               fontWeight: FontWeight.w500)),

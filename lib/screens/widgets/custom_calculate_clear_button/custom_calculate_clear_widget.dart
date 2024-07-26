@@ -8,12 +8,14 @@ class CustomCalculateClearWidget extends StatelessWidget {
   final VoidCallback? onPressCalculate, onPressClear;
   final double? clearButtonTitleFontSize;
   final FontWeight? clearButtonFontWeight;
+  final Color? clearButtonTextColor;
   const CustomCalculateClearWidget(
       {super.key,
       required this.onPressCalculate,
       required this.onPressClear,
       this.clearButtonTitleFontSize,
-      this.clearButtonFontWeight});
+      this.clearButtonFontWeight,
+      this.clearButtonTextColor});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +28,13 @@ class CustomCalculateClearWidget extends StatelessWidget {
             child: CustomElevatedButton(
               color: HexColor("244384"),
               onPress: onPressCalculate,
-              // RouteGenerator.pushNamed(context, Routes.mortgageResultPage);
               text: const Text(
                 "Calculate",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
@@ -43,7 +47,7 @@ class CustomCalculateClearWidget extends StatelessWidget {
                 "Clear",
                 style: TextStyle(
                     fontSize: clearButtonTitleFontSize ?? 14,
-                    color: HexColor("0F182E"),
+                    color: clearButtonTextColor ?? HexColor("0F182E"),
                     fontWeight: clearButtonFontWeight ?? FontWeight.w500),
               ),
             ),

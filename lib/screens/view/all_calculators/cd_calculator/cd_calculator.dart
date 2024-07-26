@@ -21,6 +21,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: "CD Calculator",
         onBackPressed: () {
@@ -38,10 +39,11 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                     controller: controller.initialDepositController.value,
                     keyboardType: TextInputType.number,
                     needPadding: true,
-                    // onlyNeedSuffix: true,
-                    prefixIcon: Icon(
-                      Icons.attach_money_outlined,
+                    onlyNeedSuffix: true,
+                    suffixIcon: Icon(
+                      Icons.attach_money_sharp,
                       size: 16,
+                      color: HexColor("80848A"),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -53,6 +55,10 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                   10.ph,
                   CommonTextFieldCustom(
                     headingName: 'Interest Rate',
+                    titleTextColor: HexColor("437AFF"),
+                    titleName: "(%)",
+                    titleFontWeight: FontWeight.normal,
+                    titleFontSize: 16,
                     controller: controller.interestRateController.value,
                     keyboardType: TextInputType.number,
                     needPadding: true,
@@ -60,6 +66,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                     suffixIcon: Icon(
                       Icons.percent,
                       size: 16,
+                      color: HexColor("80848A"),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -77,28 +84,37 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                         children: [
                           Expanded(
                             flex: 3,
-                            child: DropdownButtonFormField(
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              value: controller.compoundFrequency,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                  color: HexColor("EEF2F6")
                               ),
-                              items: controller.compoundOptions.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Center(child: globalText14(text: value, fontWeight: FontWeight.normal, textAlign: TextAlign.center),),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  controller.compoundFrequency = newValue!;
-                                });
-                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                child: DropdownButtonFormField(
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  value: controller.compoundFrequency,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                  ),
+                                  items: controller.compoundOptions.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Center(child: globalText14(text: value, fontWeight: FontWeight.normal, textAlign: TextAlign.center),),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      controller.compoundFrequency = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
                             ),
                           ),
-                          Expanded(child: SizedBox()),
+                          const Expanded(child: SizedBox()),
                         ],
                       ),
                     ],
@@ -120,10 +136,10 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
+                                  hintText: "Year",
+                                    hintTextDirection: TextDirection.rtl,
                                     hintStyle: globalTextStyle(),
                                     contentPadding: const EdgeInsets.only(right: 10, left: 10),
-                                  suffixText: "years",
-                                  suffixStyle: TextStyle(color: HexColor("8E8E8E"), fontSize: 12, fontWeight: FontWeight.normal),
                                   ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -134,7 +150,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
@@ -143,12 +159,12 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                                 controller: controller.monthsController.value,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                  hintText: "months",
+                                  hintText: "Months",
                                   border: InputBorder.none,
-                                  hintStyle: TextStyle(color: HexColor("8E8E8E"), fontSize: 12, fontWeight: FontWeight.normal),
+                                  hintTextDirection: TextDirection.rtl,
+                                  hintStyle: globalTextStyle(),
                                   contentPadding: const EdgeInsets.only(right: 10, left: 10),
-                                  suffixText: "months",
-                                  suffixStyle: TextStyle(color: HexColor("8E8E8E"), fontSize: 12, fontWeight: FontWeight.normal),
+
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -163,8 +179,9 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                       ),
                     ],
                   ),
+                  10.ph,
                   CommonTextFieldCustom(
-                    headingName: 'Marginal Tax Rate',
+                    headingName: 'Marginal Tax Rate ?',
                     controller: controller.taxRateController.value,
                     keyboardType: TextInputType.number,
                     needPadding: true,
@@ -172,6 +189,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                     suffixIcon: Icon(
                       Icons.percent,
                       size: 16,
+                      color: HexColor("80848A"),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -181,7 +199,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                     },
                   ),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   CustomCalculateClearWidget(
                     onPressCalculate: () {
                       if (controller.formKey.value.currentState?.validate() ?? false) {
@@ -189,17 +207,13 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                       }
                     },
                     onPressClear: controller.allFieldClear,
+                    clearButtonTextColor: HexColor("244384"),
+                    clearButtonFontWeight: FontWeight.w500,
+                    clearButtonTitleFontSize: 20,
                   ),
 
-                  SizedBox(height: 20),
-                  Text(
-                      'Total Interest: \$${controller.totalInterest.toStringAsFixed(2)}'),
-                  Text(
-                      'Total Tax: \$${controller.totalTax.toStringAsFixed(2)}'),
-                  Text(
-                      'Interest After Tax: \$${controller.interestAfterTax.toStringAsFixed(2)}'),
-                  Text(
-                      'End Balance: \$${controller.endBalance.toStringAsFixed(2)}'),
+                  const SizedBox(height: 20),
+
                 ],
               ),
             )),

@@ -2,11 +2,15 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/cd_calculator/cd_calculator_controller.dart';
 import 'package:calculation_app/screens/view/all_calculators/discount_calculator/discount_controller.dart';
 import 'package:calculation_app/screens/view/all_calculators/vat_calculator/vat_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_divider/custom_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/common_pie_chart/common_pie_chart_widget.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
+import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart';
 import '../brm_calculator/brm_result_screen.dart';
@@ -17,6 +21,7 @@ class CDResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: "CD Calculator",
         onBackPressed: () {
@@ -26,72 +31,84 @@ class CDResultScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const CommonResultHeading(headingName: "Calculation"),
+            const CommonResultHeading(headingName: "Calculation", gradiantColorNeed: true),
             20.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Card(
-                elevation: 0.4,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomRowWithRichtext(
-                        title: "Total interest:",
-                        titleFontWeight: FontWeight.w600,
-                        headingFontWeight: FontWeight.normal,
-                        richTextTitle: '\$',
-                        richtextTitleColor: Colors.blue,
-                        richTextValue:
-                            '${controller.totalInterest.toStringAsFixed(2)}',
-                        richTextValueFontWeight: FontWeight.w500,
-                      ),
+            ContainerShadowWidget(
+              widget: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomRowWithRichtext(
+                      textAlignMostRight: false,
+                      title: "Total interest:",
+                      titleFontWeight: FontWeight.w600,
+                      headingFontWeight: FontWeight.normal,
+                      richTextTitle: '\$',
+                      richtextTitleColor: Colors.black,
+                      richTextValue:
+                          '${NumberFormat('#,##,##0.00', 'en_US')
+                              .format(controller.totalInterest.value)}',
+                      richTextValueFontWeight: FontWeight.w500,
                     ),
-                    Divider(
-                      thickness: 0.4,
+                  ),
+                  10.ph,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomRowWithRichtext(
+                      textAlignMostRight: false,
+                      title: "Total tax:",
+                      titleFontWeight: FontWeight.w600,
+                      headingFontWeight: FontWeight.normal,
+                      richTextTitle: '\$',
+                      richtextTitleColor: Colors.black,
+                      richTextValue:
+                          '${NumberFormat('#,##,##0.00', 'en_US')
+                              .format(controller.totalTax.value)}',
+                      richTextValueFontWeight: FontWeight.w500,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomRowWithRichtext(
-                        title: "Total tax:",
-                        titleFontWeight: FontWeight.w600,
-                        headingFontWeight: FontWeight.normal,
-                        richTextTitle: '\$',
-                        richtextTitleColor: Colors.blue,
-                        richTextValue:
-                            '${controller.totalTax.toStringAsFixed(2)}',
-                        richTextValueFontWeight: FontWeight.w500,
-                      ),
+                  ),
+                  10.ph,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomRowWithRichtext(
+                      textAlignMostRight: false,
+                      title: "Interest after tax:",
+                      titleFontWeight: FontWeight.w600,
+                      headingFontWeight: FontWeight.normal,
+                      richTextTitle: '\$',
+                      richtextTitleColor: Colors.black,
+                      richTextValue:
+                          '${NumberFormat('#,##,##0.00', 'en_US')
+                              .format(controller.interestAfterTax.value)}',
+                      richTextValueFontWeight: FontWeight.w500,
                     ),
-                    Divider(
-                      thickness: 0.4,
+                  ),
+                  CustomDivider(),
+                  10.ph,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
+                    child: CustomRowWithRichtext(
+                      textAlignMostRight: false,
+                      title: "End Balance:",
+                      titleFontWeight: FontWeight.w600,
+                      headingFontWeight: FontWeight.w600,
+                      titleFontSIze: 16,
+                      headingColor: HexColor("437AFF"),
+                      titleColor: HexColor("437AFF"),
+                      richTextTitle: '\$',
+                      richtextTitleColor: HexColor("437AFF"),
+                      richTextValue:
+                      '${NumberFormat('#,##,##0.00', 'en_US')
+                          .format(controller.interestAfterTax.value)}',
+                      richTextValueFontWeight: FontWeight.w500,
+                      richTextValueColor: HexColor("437AFF"),
+
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomRowWithRichtext(
-                        title: "Interest after tax:",
-                        titleFontWeight: FontWeight.w600,
-                        headingFontWeight: FontWeight.normal,
-                        richTextTitle: '\$',
-                        richtextTitleColor: Colors.blue,
-                        richTextValue:
-                            '${controller.interestAfterTax.toStringAsFixed(2)}',
-                        richTextValueFontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Divider(
-                      thickness: 0.5,
-                      color: Colors.grey.withOpacity(0.2),
-                    ),
-                    10.ph,
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
+            20.ph,
             CommonThreePieChartWidget(
               list: controller.list,
               total: controller.total.value,

@@ -45,5 +45,9 @@ var total = 0.0.obs;
     }
 
   }
-
+  allFieldClear(){
+    investmentController.value.clear();
+    rateOfReturnController.value.clear();
+    timePeriodController.value.clear();
+  }
 }
