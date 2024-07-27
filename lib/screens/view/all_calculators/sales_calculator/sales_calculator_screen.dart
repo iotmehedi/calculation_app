@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/sales_calculator/sales_calculator_controller.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _TaxCalculatorPageState extends State<TaxCalculatorPage> {
                 controller: controller.priceController.value,
                 keyboardType: TextInputType.number,
                 needPadding: true,
-                prefixIcon: Icon(Icons.attach_money,size: 16, ),
+                suffixIcon: Icon(Icons.attach_money,size: 16, color: AppColors.deepGray1,),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter the before tax price';
@@ -55,8 +56,7 @@ class _TaxCalculatorPageState extends State<TaxCalculatorPage> {
                 keyboardType: TextInputType.number,
                 needPadding: true,
                 onlyNeedSuffix: true,
-                suffixIcon: Icon(Icons.percent, size: 16,),
-                prefixIcon: Icon(Icons.attach_money,size: 16, ),
+                suffixIcon: Icon(Icons.percent, size: 16,color: AppColors.deepGray1,),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter the sales tax rate';
@@ -74,6 +74,9 @@ class _TaxCalculatorPageState extends State<TaxCalculatorPage> {
                   }
                 },
                 onPressClear: controller.allFieldClear,
+                clearButtonTextColor: HexColor("244384"),
+                clearButtonFontWeight: FontWeight.w500,
+                clearButtonTitleFontSize: 20,
               ),
 
               SizedBox(height: 20),

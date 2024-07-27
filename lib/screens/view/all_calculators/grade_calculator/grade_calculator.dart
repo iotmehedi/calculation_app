@@ -41,92 +41,94 @@ class _GPAFormState extends State<GPAForm> {
         key: controller.formKey.value,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Container(
-                height: 56,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: HexColor("244384"),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              controller.selectedButton.value = true;
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: controller.selectedButton.value ==
-                                    true
-                                    ? Colors.white
-                                    : HexColor("244384"),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Center(
-                                    child: CustomText(
-                                      text: "Grade",
-                                      fontSize: 20,
-                                      textColor:
-                                      controller.selectedButton.value ==
-                                          true
-                                          ? Colors.black
-                                          : Colors.white,
-                                    )),
-                              ),
-                            ),
-                          ),
-                        ),
-                        5.pw,
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              controller.selectedButton.value = false;
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: controller.selectedButton.value ==
-                                    false
-                                    ? Colors.white
-                                    : HexColor("244384"),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Center(
-                                    child: CustomText(
-                                      text: "Final Grade",
-                                      fontSize: 20,
-                                      textColor:
-                                      controller.selectedButton.value ==
-                                          false
-                                          ? HexColor("244384")
-                                          : Colors.white,
-                                    )),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  height: 56,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: HexColor("244384"),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectedButton.value = true;
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: controller.selectedButton.value ==
+                                      true
+                                      ? Colors.white
+                                      : HexColor("244384"),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Center(
+                                      child: CustomText(
+                                        text: "Grade",
+                                        fontSize: 20,
+                                        textColor:
+                                        controller.selectedButton.value ==
+                                            true
+                                            ? Colors.black
+                                            : Colors.white,
+                                      )),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          5.pw,
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectedButton.value = false;
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: controller.selectedButton.value ==
+                                      false
+                                      ? Colors.white
+                                      : HexColor("244384"),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child: Center(
+                                      child: CustomText(
+                                        text: "Final Grade",
+                                        fontSize: 20,
+                                        textColor:
+                                        controller.selectedButton.value ==
+                                            false
+                                            ? HexColor("244384")
+                                            : Colors.white,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              20.ph,
+                20.ph,
 
-              controller.selectedButton.value == true ?  GradeWidget(controller: controller) : FinalGradeWidget(controller:controller)
-              // Text('Average Grade: ${controller.averageGrade.toStringAsFixed(2)}%'),
-              // Text('Average Letter Grade: ${controller.averageLetterGrade}'),
+                controller.selectedButton.value == true ?  GradeWidget(controller: controller) : FinalGradeWidget(controller:controller)
+                // Text('Average Grade: ${controller.averageGrade.toStringAsFixed(2)}%'),
+                // Text('Average Letter Grade: ${controller.averageLetterGrade}'),
 
-            ],
+              ],
+            ),
           ),
         ),
       )),

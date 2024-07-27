@@ -27,7 +27,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const CommonResultHeading(headingName: "Result"),
+            const CommonResultHeading(headingName: "Result", gradiantColorNeed: true,),
             20.ph,
             Container(
               height: 80,
@@ -93,7 +93,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
                               text: "Course",
                               textColor: Colors.white,
                               fontWeight: FontWeight.normal,
-                              fontSize: 14,
+                              fontSize: 12,
                             )),
                           ),
                           Expanded(
@@ -102,7 +102,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
                               text: "Credit",
                               textColor: Colors.white,
                               fontWeight: FontWeight.normal,
-                              fontSize: 14,
+                              fontSize: 12,
                             )),
                           ),
                           Expanded(
@@ -111,7 +111,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
                               text: "Grade",
                               textColor: Colors.white,
                               fontWeight: FontWeight.normal,
-                              fontSize: 14,
+                              fontSize: 12,
                             )),
                           ),
                           Expanded(
@@ -120,7 +120,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
                               text: "Grade Point",
                               textColor: Colors.white,
                               fontWeight: FontWeight.normal,
-                              fontSize: 14,
+                              fontSize: 12,
                             )),
                           ),
                         ],
@@ -133,43 +133,61 @@ class GPACalculatorResultScreen extends StatelessWidget {
                       itemCount: controller.courseControllers.length,
                       itemBuilder: (_, index) {
                         return Table(
-                          border:
-                              TableBorder.all(width: 0.9, color: Colors.grey),
+                          defaultColumnWidth: const FixedColumnWidth(20),
+                          border: TableBorder.all(
+                              width: 1.0, color: HexColor("F3F3F3")),
                           children: [
                             TableRow(children: [
                               Center(
-                                  child: CustomText(
-                                text: controller.courseControllers[index].text,
-                                textColor: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
+                                  child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: CustomText(
+                                  text:
+                                      controller.courseControllers[index].text,
+                                  textColor: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                ),
                               )),
                               Center(
-                                  child: CustomText(
-                                text: controller
-                                    .instructorControllers[index].text,
-                                textColor: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
+                                  child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: CustomText(
+                                  text: controller
+                                      .instructorControllers[index].text,
+                                  textColor: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                ),
                               )),
                               Center(
-                                  child: CustomText(
-                                text: controller.selectedGrades[index],
-                                textColor: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
+                                  child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: CustomText(
+                                  text: controller.selectedGrades[index],
+                                  textColor: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                ),
                               )),
                               Center(
-                                  child: CustomText(
-                                text: (controller.selectedGrades[index] ==
-                                            "P") ||
-                                        (controller.selectedGrades[index] ==
-                                            "NP")
-                                    ? "Not Counted"
-                                    : "${controller.instructorControllers[index].text} * ${controller.returnValue(controller.selectedGrades[index])} = ${(controller.returnValue(controller.selectedGrades[index]) * int.parse(controller.instructorControllers[index].text)).toStringAsFixed(1)}",
-                                textColor: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
+                                  child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 5),
+                                child: CustomText(
+                                  text: (controller.selectedGrades[index] ==
+                                              "P") ||
+                                          (controller.selectedGrades[index] ==
+                                              "NP")
+                                      ? "Not Counted"
+                                      : "${controller.instructorControllers[index].text} * ${controller.returnValue(controller.selectedGrades[index])} = ${(controller.returnValue(controller.selectedGrades[index]) * int.parse(controller.instructorControllers[index].text)).toStringAsFixed(1)}",
+                                  textColor: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                ),
                               )),
                             ]),
                           ],

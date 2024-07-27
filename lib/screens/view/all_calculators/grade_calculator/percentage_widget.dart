@@ -12,14 +12,16 @@ class PercentageWidget extends StatelessWidget {
    PercentageWidget({super.key, required this.controller});
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Expanded(
+    return Obx(() => SizedBox(
+      height: 360,
       child: Column(
         children: [
           Row(
             children: [
               Expanded(
+                flex: 2,
                   child: globalText12(
-                      text: "Assignment (Optional)",
+                      text: "Assignment/Exam (Optional)",
                       fontWeight: FontWeight.w500,
                       color: Colors.blue,
                   alignment: Alignment.center
@@ -43,6 +45,7 @@ class PercentageWidget extends StatelessWidget {
                   )),
             ],
           ),
+          10.ph,
           Expanded(
             child: ListView.builder(
               itemCount: controller.courseControllers.length,
@@ -54,6 +57,7 @@ class PercentageWidget extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
+                            flex: 2,
                             child: Container(
                               decoration: BoxDecoration(
                                   color: HexColor("#F3F6F9"),

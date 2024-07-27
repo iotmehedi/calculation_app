@@ -227,5 +227,9 @@ class GradeController extends GetxController{
 
   }
 
-
+allFieldClear(){
+  currentGradeController.value.clear();
+  targetGradeController.value.clear();
+  finalExamWeightController.value.clear();
+}
 }

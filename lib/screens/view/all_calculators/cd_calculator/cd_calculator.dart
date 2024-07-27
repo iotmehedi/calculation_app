@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/cd_calculator/cd_calculator_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -124,55 +125,55 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
                   Column(
                     children: [
                       globalText16(text: "Deposit length", fontWeight: FontWeight.normal),
-                      5.ph,
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: HexColor("#F3F6F9"), borderRadius: BorderRadius.circular(12)),
-                              child: TextFormField(
-                                controller: controller.yearsController.value,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                  hintText: "Year",
-                                    hintTextDirection: TextDirection.rtl,
-                                    hintStyle: globalTextStyle(),
-                                    contentPadding: const EdgeInsets.only(right: 10, left: 10),
-                                  ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter the number of years';
-                                  }
-                                  return null;
-                                },
-                              ),
+                            flex: 1,
+                            child: CommonTextFieldCustom(
+                              isInRow: "need",
+                              flex: 1,
+                              headingName: '',
+                              titleTextColor: HexColor("437AFF"),
+                              titleName: "",
+                              titleFontWeight: FontWeight.normal,
+                              titleFontSize: 16,
+                              controller: controller.yearsController.value,
+                              keyboardType: TextInputType.number,
+                              needPadding: true,
+                              onlyNeedSuffix: true,
+                              hint: "Year",
+                              textAlign: TextAlign.start,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter year';
+                                }
+                                return null;
+                              },
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          const SizedBox(width: 10,),
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: HexColor("#F3F6F9"), borderRadius: BorderRadius.circular(12)),
-                              child: TextFormField(
-                                controller: controller.monthsController.value,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: "Months",
-                                  border: InputBorder.none,
-                                  hintTextDirection: TextDirection.rtl,
-                                  hintStyle: globalTextStyle(),
-                                  contentPadding: const EdgeInsets.only(right: 10, left: 10),
-
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter the number of months';
-                                  }
-                                  return null;
-                                },
-                              ),
+                            flex: 1,
+                            child: CommonTextFieldCustom(
+                              isInRow: "need",
+                              flex: 1,
+                              headingName: '',
+                              titleTextColor: HexColor("437AFF"),
+                              titleName: "",
+                              titleFontWeight: FontWeight.normal,
+                              titleFontSize: 16,
+                              controller: controller.monthsController.value,
+                              keyboardType: TextInputType.number,
+                              needPadding: true,
+                              onlyNeedSuffix: true,
+                              hint: "Month",
+                              textAlign: TextAlign.start,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter month';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ],

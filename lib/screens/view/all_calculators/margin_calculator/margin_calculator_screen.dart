@@ -2,7 +2,9 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/margin_calculator/margin_calculator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
@@ -19,6 +21,7 @@ var controller = Get.put(MarginCalculatorController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("FAFAFA"),
       appBar: CustomAppBar(
         title: "Margin Calculator",
         onBackPressed: () {
@@ -39,9 +42,10 @@ var controller = Get.put(MarginCalculatorController());
                   needPadding: true,
                   onlyNeedSuffix: false,
                   textAlign: TextAlign.start,
-                  prefixIcon: Icon(
+                  suffixIcon: Icon(
                     Icons.attach_money,
                     size: 16,
+                    color: AppColors.deepGray1,
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -58,9 +62,10 @@ var controller = Get.put(MarginCalculatorController());
                   needPadding: true,
                   onlyNeedSuffix: false,
                   textAlign: TextAlign.start,
-                  prefixIcon: Icon(
+                  suffixIcon: Icon(
                     Icons.attach_money,
                     size: 16,
+                    color: AppColors.deepGray1,
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -79,6 +84,9 @@ var controller = Get.put(MarginCalculatorController());
                     }
                   },
                   onPressClear: controller.allFieldClear,
+                  clearButtonTextColor: Colors.black,
+                  clearButtonFontWeight: FontWeight.w500,
+                  clearButtonTitleFontSize: 20,
                 ),
                 SizedBox(height: 20),
                 

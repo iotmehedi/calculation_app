@@ -3,12 +3,13 @@ import 'package:hexcolor/hexcolor.dart';
 
 class ContainerShadowWidget extends StatelessWidget {
   final Widget widget;
-  const ContainerShadowWidget({super.key, required this.widget});
+  final double? margin;
+  const ContainerShadowWidget({super.key, required this.widget, this.margin});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin:  EdgeInsets.symmetric(horizontal: margin ?? 20),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: Colors.white,

@@ -16,11 +16,12 @@ class CommonTextFieldCustom extends StatelessWidget {
   final Icon? suffixIcon;
   final String? suffixText, hint;
   final TextAlign? textAlign;
-  final bool? onlyNeedSuffix, fontFamily;
+   final bool? onlyNeedSuffix, fontFamily;
   final int? flex;
   final double? headingFontSize, fontSize, titleFontSize;
   final FontWeight? headingFontWeight, fontWeight, titleFontWeight;
   final Color? headingTextColor, titleTextColor;
+  final String? isInRow;
   CommonTextFieldCustom(
       {super.key,
       this.headingName,
@@ -43,7 +44,7 @@ class CommonTextFieldCustom extends StatelessWidget {
       this.titleFontWeight,
       this.titleTextColor,
       this.fontWeight,
-      this.fontSize, this.fontFamily});
+      this.fontSize, this.fontFamily, this.isInRow});
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +82,11 @@ class CommonTextFieldCustom extends StatelessWidget {
                 fontWeight: fontWeight,
               ),
             ),
-            if (headingName?.isNotEmpty ?? false)
-              const SizedBox(
-                width: 10,
-              ),
-            if (headingName?.isNotEmpty ?? false)
+            if ((headingName?.isNotEmpty ?? false) || (isInRow?.isEmpty ?? false))
+                          const SizedBox(
+                            width: 10,
+                          ),
+            if ((headingName?.isNotEmpty ?? false) || (isInRow?.isEmpty ?? false))
               Expanded(
                 child: SizedBox(),
               ),

@@ -94,11 +94,11 @@ class CustomSimpleTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      decoration: BoxDecoration(
-        color: HexColor("#EEF2F6"),
-        borderRadius: BorderRadius.circular(4),
-      ),
+      // height: 40,
+      // decoration: BoxDecoration(
+      //   color: HexColor("#EEF2F6"),
+      //   borderRadius: BorderRadius.circular(4),
+      // ),
       child: TextFormField(
         keyboardType: keyboardType ?? TextInputType.number,
         textInputAction: textInputAction,
@@ -120,15 +120,28 @@ class CustomSimpleTextField extends StatelessWidget {
             //     : onlyNeedSuffix == true
             //         ?
             InputDecoration(
-          hintText: hint,
+              isDense: true,
+              isCollapsed: true,
+              hintText: hint,
           border: InputBorder.none,
           suffixIcon: suffixIcon,
           hintTextDirection: TextDirection.rtl,
           suffixText: suffixText,
           suffixStyle: TextStyle(color: Colors.black, fontSize: 20),
+              filled: true,
+          fillColor: HexColor("#EEF2F6"),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor("#EEF2F6")),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(4),
+              ),
+
           contentPadding: EdgeInsets.only(
               left: 10,
-              top: paddingNeed == false ? 0 : 0,
+              top: paddingNeed == false ? 0 : 10,
               bottom: paddingNeed == false ? 0 : 10,
               right: paddingNeed == false ? 0 : 10),
           hintStyle: TextStyle(

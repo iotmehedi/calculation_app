@@ -13,7 +13,9 @@ class LetterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Expanded(child: Column(
+    return Obx(() => SizedBox(
+        height: 300,
+        child: Column(
       children: [
         Row(
           children: [
