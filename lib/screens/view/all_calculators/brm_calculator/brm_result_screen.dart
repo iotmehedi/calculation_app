@@ -1,4 +1,5 @@
 import 'package:calculation_app/core/utils/consts/app_assets.dart';
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
@@ -13,133 +14,124 @@ class BRMResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Results',
         onBackPressed: () {
           Navigator.pop(context);
         },
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 56,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  HexColor('33743A'),
-                  HexColor('FAFFFA'),
-                ],
-                stops: [
-                  0.0,
-                  1.0,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 56,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    HexColor('33743A'),
+                    HexColor('FAFFFA'),
+                  ],
+                  stops: [
+                    0.0,
+                    1.0,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: globalText24(text: "Calculator", color: Colors.white),
+              ),
+            ),
+            Container(
+              height: 120,
+              color: HexColor("0F182E"),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.brmCalculationPic,
+                    height: 67.58,
+                    width: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText20(
+                            text: "Basal Metabolic Rate",
+                            color: HexColor("7BFF80")),
+                        CustomRichText(
+                          heading: '$bmiresult',
+                          title: '/ Kcal Day',
+                          headingTextColor: HexColor('7BFF80'),
+                          titleTextColor: HexColor('FFFFFF'),
+                          headingFontSize: 24.0,
+                          titleFontSIze: 18,
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-              borderRadius: BorderRadius.circular(0),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: globalText24(text: "Calculator", color: Colors.white),
+            const SizedBox(
+              height: 70,
             ),
-          ),
-          Container(
-            height: 120,
-            color: HexColor("0F182E"),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+            Row(
               children: [
-                Image.asset(
-                  AppAssets.brmCalculationPic,
-                  height: 67.58,
-                  width: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      globalText20(
-                          text: "Basal Metabolic Rate",
-                          color: HexColor("7BFF80")),
-                      CustomRichText(
-                        heading: '$bmiresult',
-                        title: '/ Kcal Day',
-                        headingTextColor: HexColor('7BFF80'),
-                        titleTextColor: HexColor('FFFFFF'),
-                        headingFontSize: 24.0,
-                        titleFontSIze: 18,
-                      ),
-                    ],
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    height: 64,
+                    color: HexColor("247C2C"),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: globalText16(
+                          text: "Activity Level", color: Colors.white),
+                    ),
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 1.5,
+                ),
+                Expanded(
+                  child: Container(
+                    height: 64,
+                    color: HexColor("247C2C"),
+                    child: Center(
+                      child: globalText16(
+                          text: "Calorie",
+                          color: Colors.white,
+                          alignment: Alignment.center),
+                    ),
+                  ),
+                ),
               ],
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  height: 64,
-                  color: HexColor("247C2C"),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: globalText16(
-                        text: "Activity Level", color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 1.5,
-              ),
-              Expanded(
-                child: Container(
-                  height: 64,
-                  color: HexColor("247C2C"),
-                  child: Center(
-                    child: globalText16(
-                        text: "Calorie",
-                        color: Colors.white,
-                        alignment: Alignment.center),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomRow(title: "Sedentary: little or no exercise", value: "1,926"),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomRow(title: "Exercise 1-3 times/week", value: "2,207"),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomRow(title: "Exercise 4-5 times/week", value: "2,351"),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomRow(title: "Daily exercise 6-7 times/week", value: "2,769"),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomRow(
-              title: "Daily  Hard exercise 6-7 times/week", value: "3,050"),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
+        
+            CustomRow(title: "Sedentary: little or no exercise", value: "1,926"),
+        
+            CustomRow(title: "Exercise 1-3 times/week", value: "2,207"),
+        
+            CustomRow(title: "Exercise 4-5 times/week", value: "2,351"),
+        
+            CustomRow(title: "Daily exercise 6-7 times/week", value: "2,769"),
+        
+            CustomRow(
+                title: "Daily  Hard exercise 6-7 times/week", value: "3,050"),
+        
+          ],
+        ),
       ),
     );
   }
@@ -153,13 +145,27 @@ Widget CustomRow({required String title, required String value, FontWeight? titl
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-            flex: 2,
-            child: globalText16(text: title, fontWeight: titleFontWeight ?? FontWeight.w500, color: titleColor, textAlign: TextAlign.start)),
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Center(child: globalText16(text: title, fontWeight: titleFontWeight ?? FontWeight.w500, color: titleColor, textAlign: TextAlign.start),),
+            )),
+        Container(
+          margin: EdgeInsets.only(right: 5, left: 5),
+          height: 60,
+          width: 1,
+          color: HexColor("DDD5D5"),
+        ),
         Expanded(
-            child: globalText16(
-                text: value,
-                alignment: Alignment.centerLeft,
-                fontWeight: headingFontWeight ?? FontWeight.w500, color: headingColor)),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Center(
+                child: globalText16(
+                    text: value,
+                    alignment: Alignment.center,
+                    fontWeight: headingFontWeight ?? FontWeight.w500, color: headingColor),
+              ),
+            )),
       ],
     ),
   );

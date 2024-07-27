@@ -9,8 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+
 class BodyfatResultScreen extends StatelessWidget {
-  final String maintainWeight, type, weight;
+  final String maintainWeight, weight;
+  final bool type;
   BodyfatResultScreen({
     super.key,
     required this.maintainWeight,
@@ -23,7 +26,7 @@ class BodyfatResultScreen extends StatelessWidget {
   double caloriesToBurnFor1PercentFat = 0.0;
   @override
   Widget build(BuildContext context) {
-    double weightInLbs = type != "usUnit"
+    double weightInLbs = type == false
         ? ((double.tryParse(weight) ?? 0.0) / 0.453592)
         : (double.tryParse(weight) ?? 0.0);
     bodyFatWeightLbs =
@@ -89,7 +92,7 @@ class BodyfatResultScreen extends StatelessWidget {
                         CustomRichText(
                           heading: maintainWeight,
                           title:
-                              '% = ${bodyFatWeightLbs.toStringAsFixed(1)} ${type == "usUnit" ? 'lbs' : 'Kg'}',
+                              '% = ${bodyFatWeightLbs.toStringAsFixed(1)} ${type == false ? 'lbs' : 'Kg'}',
                           headingTextColor: HexColor('7BFF80'),
                           titleTextColor: HexColor("7BFF80"),
                           headingFontSize: 20.0,
@@ -155,7 +158,8 @@ class BodyfatResultScreen extends StatelessWidget {
                         ),
                         children: <TextSpan>[
                           TextSpan(
-                            text: ' $caloriesToBurnFor1PercentFat',
+                            text: ' ${NumberFormat('#,##,##', 'en_US')
+                          .format(caloriesToBurnFor1PercentFat.round())}',
                             style: GoogleFonts.poppins(
                               letterSpacing: 0.2,
                               color: Colors.red,

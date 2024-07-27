@@ -1,7 +1,9 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/Colors.dart';
@@ -147,6 +149,7 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Simple Calculator',
         onBackPressed: () {
@@ -154,7 +157,7 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
         },
       ),
       body: SizedBox(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height * 0.7,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -165,31 +168,34 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
               flex: 1,
               child: SingleChildScrollView(
                 reverse: true,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.fromLTRB(10, 0, 20, 0),
-                        child: Text(
-                          equation,
-                          // maxLines: 4,
-                          style: TextStyle(
-                              fontSize: equation.length >= 65 ? 12 : 30),
+                child: Container(
+                  color: HexColor("F3F6F9"),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.fromLTRB(10, 0, 20, 0),
+                          child: Text(
+                            equation,
+                            // maxLines: 4,
+                            style: TextStyle(
+                                fontSize: equation.length >= 65 ? 12 : 30),
+                          ),
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                        child: Text(
-                          result.replaceAll(".0", '').replaceAll(".00", ''),
-                          // maxLines: 3,
-                          style: TextStyle(fontSize: resultFontSize),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
+                          child: Text(
+                            result.replaceAll(".0", '').replaceAll(".00", ''),
+                            // maxLines: 3,
+                            style: TextStyle(fontSize: resultFontSize),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:calculation_app/core/utils/consts/app_assets.dart';
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,14 @@ import 'package:hexcolor/hexcolor.dart';
 
 class CalorieResultScrren extends StatelessWidget {
   final int maintainWeight, mildWeightLoss, weightLoss, extremeWeightLoss;
+  final bool unitOrMatrics;
   const CalorieResultScrren({
     super.key,
     required this.maintainWeight,
     required this.mildWeightLoss,
     required this.weightLoss,
     required this.extremeWeightLoss,
+    required this.unitOrMatrics,
   });
 
   @override
@@ -90,49 +93,85 @@ class CalorieResultScrren extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Container(
-              height: 120,
+              height: 130,
               color: HexColor("0F182E"),
               child: Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    globalText20(
-                        text: "Mild weight loss (0.5 kg/week):",
-                        color: HexColor("7BFF80")),
-                    CustomRichText(
-                      heading: '$mildWeightLoss',
-                      title: '/ Calories/day',
-                      headingTextColor: HexColor('7BFF80'),
-                      titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 24.0,
-                      titleFontSIze: 18,
-                    ),
-                  ],
+                padding: const EdgeInsets.only(left: 30, top: 10),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      globalText16(
+                          text: "Estimated daily calories needed to lose weight:",
+                          color: HexColor("F3F3F3"),
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start),
+                      5.ph,
+                      CustomRichText(
+                        heading: '$mildWeightLoss',
+                        title: '/ Calories/day',
+                        headingTextColor: HexColor('7BFF80'),
+                        titleTextColor: HexColor('FFFFFF'),
+                        headingFontSize: 18.0,
+                        titleFontSIze: 16,
+                      ),
+                      5.ph,
+                      CustomRichThreeText(
+                        title: unitOrMatrics == false ?"Pound /" : "Kg /",
+                        heading: unitOrMatrics == false ? "0.5 " : "0.25 ",
+                        value: "Week",
+                        headingTextColor: HexColor('7BFF80'),
+                        headingFontWeight: FontWeight.bold,
+                        titleFontWeight: FontWeight.w500,
+                        titleFontSIze: 14,
+                        titleTextColor: HexColor('F3F3F3'),
+                        valueFontSize: 12,
+                        valueFontWeight: FontWeight.normal,
+                        valueTextColor: AppColors.deepGray1,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 10),
             Container(
-              height: 120,
+              height: 130,
               color: HexColor("0F182E"),
               child: Padding(
-                padding: const EdgeInsets.only(left: 30),
+                padding: const EdgeInsets.only(left: 30, top: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    globalText20(
-                        text: "Weight loss (1 kg/week):",
-                        color: HexColor("7BFF80")),
+                    globalText16(
+                        text: "Estimated daily calories needed to lose weight:",
+                        color: HexColor("F3F3F3"),
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start),
+                    5.ph,
                     CustomRichText(
                       heading: '$weightLoss',
                       title: '/ Calories/day',
                       headingTextColor: HexColor('7BFF80'),
                       titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 24.0,
-                      titleFontSIze: 18,
+                      headingFontSize: 18.0,
+                      titleFontSIze: 16,
+                    ),
+                    5.ph,
+                    CustomRichThreeText(
+                      title: unitOrMatrics == false ?"Pound /" : "Kg /",
+                      heading: unitOrMatrics == false ? "1 " : "0.5 ",
+                      value: "Week",
+                      headingTextColor: HexColor('7BFF80'),
+                      headingFontWeight: FontWeight.bold,
+                      titleFontWeight: FontWeight.w500,
+                      titleFontSIze: 14,
+                      titleTextColor: HexColor('F3F3F3'),
+                      valueFontSize: 12,
+                      valueFontWeight: FontWeight.normal,
+                      valueTextColor: AppColors.deepGray1,
                     ),
                   ],
                 ),
@@ -140,7 +179,7 @@ class CalorieResultScrren extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Container(
-              height: 120,
+              height: 130,
               color: HexColor("0F182E"),
               child: Padding(
                 padding: const EdgeInsets.only(left: 30),
@@ -148,16 +187,33 @@ class CalorieResultScrren extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    globalText20(
-                        text: "Extreme weight loss (2 kg/week):",
-                        color: HexColor("7BFF80")),
+                    globalText16(
+                        text: "Estimated daily calories needed to lose weight:",
+                        color: HexColor("F3F3F3"),
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start),
+                    5.ph,
                     CustomRichText(
                       heading: '$extremeWeightLoss',
                       title: '/ Calories/day',
                       headingTextColor: HexColor('7BFF80'),
                       titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 24.0,
-                      titleFontSIze: 18,
+                      headingFontSize: 18.0,
+                      titleFontSIze: 16,
+                    ),
+                    5.ph,
+                    CustomRichThreeText(
+                      title: unitOrMatrics == false ?"Pound /" : "Kg /",
+                      heading: unitOrMatrics == false ? "2 " : "1 ",
+                      value: "Week",
+                      headingTextColor: HexColor('7BFF80'),
+                      headingFontWeight: FontWeight.bold,
+                      titleFontWeight: FontWeight.w500,
+                      titleFontSIze: 14,
+                      titleTextColor: HexColor('F3F3F3'),
+                      valueFontSize: 12,
+                      valueFontWeight: FontWeight.normal,
+                      valueTextColor: AppColors.deepGray1,
                     ),
                   ],
                 ),

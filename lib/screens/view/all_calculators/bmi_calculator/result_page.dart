@@ -9,7 +9,8 @@ import 'package:hexcolor/hexcolor.dart';
 class ResultScrren extends StatelessWidget {
   final double bmiresult;
   final double progressValue;
-  final String bmiValueName, type;
+  final String bmiValueName;
+  final bool type;
   const ResultScrren(
       {super.key,
       required this.bmiresult,
@@ -92,11 +93,11 @@ class ResultScrren extends StatelessWidget {
                             child: Row(
                               children: [
                                 Expanded(
-                                    child: globalText12(text: "Underweight")),
-                                Expanded(child: globalText12(text: "Normal")),
+                                    child: globalText12(text: "Underweight", fontWeight: FontWeight.normal)),
+                                Expanded(child: globalText12(text: "Normal", fontWeight: FontWeight.normal)),
                                 Expanded(
-                                    child: globalText12(text: "Overweight")),
-                                Expanded(child: globalText12(text: "Obese")),
+                                    child: globalText12(text: "Overweight", fontWeight: FontWeight.normal)),
+                                Expanded(child: globalText12(text: "Obese", fontWeight: FontWeight.normal)),
                               ],
                             ),
                           ),
@@ -110,19 +111,19 @@ class ResultScrren extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.91,
                             child: Row(
                               children: [
-                                Expanded(child: globalText14(text: "18.5")),
+                                Expanded(child: globalText14(text: "18.5", fontWeight: FontWeight.normal)),
                                 Expanded(
                                     child: globalText14(
                                         text: "18.5 - 24.9",
-                                        alignment: Alignment.centerRight)),
+                                        alignment: Alignment.centerRight, fontWeight: FontWeight.normal)),
                                 Expanded(
                                     child: globalText14(
                                         text: "25 - 29.9",
-                                        alignment: Alignment.centerRight)),
+                                        alignment: Alignment.centerRight, fontWeight: FontWeight.normal)),
                                 Expanded(
                                     child: globalText14(
                                         text: "30+",
-                                        alignment: Alignment.centerRight)),
+                                        alignment: Alignment.centerRight, fontWeight: FontWeight.normal)),
                               ],
                             ),
                           ),

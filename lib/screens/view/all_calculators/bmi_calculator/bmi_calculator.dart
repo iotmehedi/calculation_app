@@ -2,6 +2,7 @@ import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/core/routes/router.dart';
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_eleveted_button.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../widgets/custom_text/custom_text.dart';
+
 class BMICalculatorScreen extends StatefulWidget {
   @override
   _BMICalculatorScreenState createState() => _BMICalculatorScreenState();
@@ -20,12 +23,13 @@ class BMICalculatorScreen extends StatefulWidget {
 class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   TextEditingController ageController = TextEditingController();
   TextEditingController heightFeetController = TextEditingController();
-  TextEditingController heightInchesController = TextEditingController();
+  TextEditingController heightInchesController = TextEditingController(text: '0');
   TextEditingController heightCmController = TextEditingController();
   TextEditingController weightKgController = TextEditingController();
   double bmiResult = 0.0;
-  String? type = 'usUnit';
+  // String? type = 'usUnit';
   String? bmiValueName;
+  var selectedButton = true;
   Gender selectedGender = Gender.male;
   double progressValue = 0.0; // Initial value for progress indicator
   void calculateUsUnitBMI() {
@@ -83,59 +87,116 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Container(
+                height: 56,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: HexColor("244384"),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedButton = true;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: selectedButton ==
+                                    true
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Us Unit",
+                                      fontSize: 20,
+                                      textColor:
+                                      selectedButton ==
+                                          true
+                                          ? Colors.black
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                        5.pw,
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedButton = false;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: selectedButton ==
+                                    false
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Matrics Units",
+                                      fontSize: 20,
+                                      textColor:
+                                      selectedButton ==
+                                          false
+                                          ? HexColor("244384")
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+
               Row(
                 children: [
                   Expanded(
-                      child: CustomElevatedButton(
-                    text: globalText18(
-                        text: 'Us Unit',
-                        color: type != 'usUnit' && (type?.isNotEmpty ?? false)
-                            ? HexColor('0F182E')
-                            : Colors.white,
-                        alignment: Alignment.center,
-                        fontWeight: FontWeight.normal),
-                    color: type == 'usUnit' && (type?.isNotEmpty ?? false)
-                        ? AppColors.calculateButtonColor
-                        : HexColor('EEF2F6'),
-                    onPress: () {
-                      setState(() {
-                        type = "usUnit";
-                        ageController.text = '';
-                        heightFeetController.text = '';
-                        heightInchesController.text = '';
-                        heightCmController.text = '';
-                        weightKgController.text = '';
-                      });
-                    },
-                  )),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Expanded(
-                    child: CustomElevatedButton(
-                      onPress: () {
-                        setState(() {
-                          type = 'matrics';
-                          ageController.text = '';
-                          heightFeetController.text = '';
-                          heightInchesController.text = '';
-                          heightCmController.text = '';
-                          weightKgController.text = '';
-                        });
-                      },
-                      color: type == 'matrics' && (type?.isNotEmpty ?? false)
-                          ? AppColors.calculateButtonColor
-                          : HexColor('EEF2F6'),
-                      text: globalText18(
-                          text: 'Matrics Units',
-                          color:
-                              type != 'matrics' && (type?.isNotEmpty ?? false)
-                                  ? HexColor('0F182E')
-                                  : Colors.white,
-                          alignment: Alignment.center,
-                          fontWeight: FontWeight.normal),
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(text: "Age", fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        CustomSimpleTextField(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            hexColor: HexColor('80848A'),
+                            onlyNeedSuffix: true,
+                            controller: ageController,
+                            keyboardType: TextInputType.number,
+                            paddingNeed: true,
+                            hint: "Age",
+                            textAlign: TextAlign.start),
+                      ],
                     ),
                   ),
+                  Expanded(child: SizedBox())
                 ],
               ),
               const SizedBox(
@@ -152,11 +213,11 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                       onChanged: (value) {
                         setState(() {
                           selectedGender =
-                              value! ? Gender.male : selectedGender;
+                          value! ? Gender.male : selectedGender;
                         });
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: Colors.blue, // Set your desired color
+                      activeColor: HexColor("244384"), // Set your desired color
                     ),
                   ),
                   const Text('Male'),
@@ -172,43 +233,14 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                       onChanged: (value) {
                         setState(() {
                           selectedGender =
-                              value! ? Gender.female : selectedGender;
+                          value! ? Gender.female : selectedGender;
                         });
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: Colors.blue, // Set your desired color
+                      activeColor: HexColor("244384"), // Set your desired color
                     ),
                   ),
                   const Text('Female'),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        globalText16(text: "Age", fontWeight: FontWeight.w500),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        CustomSimpleTextField(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                            hexColor: HexColor('80848A'),
-                            controller: ageController,
-                            keyboardType: TextInputType.number,
-                            paddingNeed: false,
-                            hint: "Age",
-                            textAlign: TextAlign.start),
-                      ],
-                    ),
-                  ),
-                  Expanded(child: SizedBox())
                 ],
               ),
               const SizedBox(
@@ -226,29 +258,29 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
                         hexColor: HexColor('80848A'),
-                        controller: type != 'usUnit'
+                        controller: selectedButton == false
                             ? heightCmController
                             : heightFeetController,
                         keyboardType: TextInputType.number,
-                        paddingNeed: false,
-                        hint: type != 'usUnit' ? "cm" : "Feet",
-                        textAlign: TextAlign.end),
+                        paddingNeed: true,
+                        hint: selectedButton == false ? "cm" : "Feet",
+                        textAlign: TextAlign.start),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                     child: Visibility(
-                      visible: type == 'matrics' ? false : true,
+                      visible: selectedButton == false ? false : true,
                       child: CustomSimpleTextField(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
                           hexColor: HexColor('80848A'),
                           controller: heightInchesController,
                           keyboardType: TextInputType.number,
-                          paddingNeed: false,
+                          paddingNeed: true,
                           hint: "Inch",
-                          textAlign: TextAlign.end),
+                          textAlign: TextAlign.start),
                     ),
                   ),
                 ],
@@ -274,9 +306,9 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                             hexColor: HexColor('80848A'),
                             controller: weightKgController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
-                            hint: type != 'usUnit' ? "kg" : "Pounds",
-                            textAlign: TextAlign.end),
+                            paddingNeed: true,
+                            hint: selectedButton == false ? "kg" : "Pounds",
+                            textAlign: TextAlign.start),
                       ],
                     ),
                   ),
@@ -294,15 +326,15 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                     if (ageController.text.isEmpty) {
                       errorToast(context: context, msg: "Please enter age");
                     } else if (heightFeetController.text.isEmpty &&
-                        type == 'usUnit') {
+                        selectedButton == true) {
                       errorToast(context: context, msg: "Please enter feet");
                     } else if (heightInchesController.text.isEmpty &&
-                        type == 'usUnit') {
-                      errorToast(context: context, msg: "Please enter inch");
+                        selectedButton == false) {
+                      errorToast(context: context, msg: "Please enter height");
                     } else if (weightKgController.text.isEmpty) {
                       errorToast(context: context, msg: "Please enter weight");
                     } else {
-                      if (type == 'matrics') {
+                      if (selectedButton == false) {
                         calculateMatricsBMI();
                       } else {
                         calculateUsUnitBMI();
@@ -312,7 +344,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                         bmiResult,
                         progressValue,
                         bmiValueName,
-                        type
+                        selectedButton
                       ]);
                     }
                   }),

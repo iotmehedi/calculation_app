@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../widgets/custom_text/custom_text.dart';
 
 // class CalorieCalculatorApp extends StatelessWidget {
 //   @override
@@ -61,9 +62,10 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
   // bool maleChecked = true;
   // bool femaleChecked = false;
   late ActivityLevel activityLevel;
+  var selectedButton = true;
   late int calculatedCalories;
   late Map<String, int> weightLossCalories;
-  late bool isMetricUnit; // Flag to track if Metric unit is selected
+  // late bool isMetricUnit; // Flag to track if Metric unit is selected
 
   @override
   void initState() {
@@ -76,7 +78,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
       'Weight loss (1 kg/week)': 0,
       'Extreme weight loss (2 kg/week)': 0,
     };
-    isMetricUnit = false; // Default to US units
+    selectedButton = false; // Default to US units
   }
 
   void calculateCalories() {
@@ -88,7 +90,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
     double height = double.tryParse(heightFeetController.text) ?? 0.0;
     double heightInch = double.tryParse(heightInchesController.text) ?? 0.0;
     double heightCm;
-    if (isMetricUnit == true) {
+    if (selectedButton == true) {
       heightCm = double.tryParse(heightCmController.text) ?? 0.0;
       // weightKg = weightKg * 2.20462;
     } else {
@@ -98,7 +100,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
     int age = int.tryParse(ageController.text) ?? 0;
     print("heightCm $heightCm $heightInch");
     if (selectedGender == Gender.male) {
-      if (isMetricUnit == true) {
+      if (selectedButton == true) {
         bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
       } else {
         bmr = (9 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
@@ -138,8 +140,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
         result = bmr * 1.9; // very intense exercise daily or physical job
         break;
     }
-    print(bmr);
-    double percentage = (result / bmr) * 100; // Calculate percentage of BMR
+     // Calculate percentage of BMR
     setState(() {
       calculatedCalories = result.round();
       // Calculate weight loss calories
@@ -156,6 +157,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Calorie Calculator',
         onBackPressed: () {
@@ -167,44 +169,88 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                    child: CustomElevatedButton(
-                  text: globalText20(
-                      text: 'Us Unit',
-                      color: isMetricUnit ? HexColor('0F182E') : Colors.white,
-                      alignment: Alignment.center,
-                      fontWeight: FontWeight.normal),
-                  color: !isMetricUnit
-                      ? AppColors.calculateButtonColor
-                      : HexColor('EEF2F6'),
-                  onPress: () {
-                    setState(() {
-                      isMetricUnit = false;
-                    });
-                  },
-                )),
-                10.pw,
-                Expanded(
-                    child: CustomElevatedButton(
-                  text: globalText20(
-                      text: 'Matrics',
-                      color: !isMetricUnit ? HexColor('0F182E') : Colors.white,
-                      alignment: Alignment.center,
-                      fontWeight: FontWeight.normal),
-                  color: isMetricUnit
-                      ? AppColors.calculateButtonColor
-                      : HexColor('EEF2F6'),
-                  onPress: () {
-                    setState(() {
-                      isMetricUnit = true;
-                    });
-                  },
-                )),
-              ],
+            Container(
+              height: 56,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: HexColor("244384"),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              selectedButton = true;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: selectedButton ==
+                                  true
+                                  ? Colors.white
+                                  : HexColor("244384"),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Center(
+                                  child: CustomText(
+                                    text: "Us Unit",
+                                    fontSize: 20,
+                                    textColor:
+                                    selectedButton ==
+                                        true
+                                        ? Colors.black
+                                        : Colors.white,
+                                  )),
+                            ),
+                          ),
+                        ),
+                      ),
+                      5.pw,
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              selectedButton = false;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: selectedButton ==
+                                  false
+                                  ? Colors.white
+                                  : HexColor("244384"),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: Center(
+                                  child: CustomText(
+                                    text: "Matrics Units",
+                                    fontSize: 20,
+                                    textColor:
+                                    selectedButton ==
+                                        false
+                                        ? HexColor("244384")
+                                        : Colors.white,
+                                  )),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
+
             const SizedBox(height: 16.0),
             // Text('Gender'),
 
@@ -281,50 +327,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
             //         ],
             //       ),
 
-            Row(
-              children: [
-                Transform.scale(
-                  scale: 1.1,
-                  child: Checkbox(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    value: selectedGender == Gender.male,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedGender = value! ? Gender.male : selectedGender;
-                      });
-                    },
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    activeColor: Colors.blue, // Set your desired color
-                  ),
-                ),
-                const Text('Male'),
-                const SizedBox(
-                  width: 10,
-                ),
-                Transform.scale(
-                  scale: 1.1,
-                  child: Checkbox(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    value: selectedGender == Gender.female,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedGender =
-                            value! ? Gender.female : selectedGender;
-                      });
-                    },
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    activeColor: Colors.blue, // Set your desired color
-                  ),
-                ),
-                const Text('Female'),
-              ],
-            ),
 
-            const SizedBox(
-              height: 20,
-            ),
             Row(
               children: [
                 Expanded(
@@ -342,7 +345,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           hexColor: HexColor('80848A'),
                           controller: ageController,
                           keyboardType: TextInputType.number,
-                          paddingNeed: false,
+                          paddingNeed: true,
                           hint: "Age",
                           textAlign: TextAlign.start),
                     ],
@@ -351,6 +354,50 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                 const Expanded(child: SizedBox())
               ],
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Transform.scale(
+                  scale: 1.1,
+                  child: Checkbox(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    value: selectedGender == Gender.male,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender = value! ? Gender.male : selectedGender;
+                      });
+                    },
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    activeColor: HexColor("244384"), // Set your desired color
+                  ),
+                ),
+                const Text('Male'),
+                const SizedBox(
+                  width: 10,
+                ),
+                Transform.scale(
+                  scale: 1.1,
+                  child: Checkbox(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    value: selectedGender == Gender.female,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender =
+                        value! ? Gender.female : selectedGender;
+                      });
+                    },
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    activeColor: HexColor("244384"), // Set your desired color
+                  ),
+                ),
+                const Text('Female'),
+              ],
+            ),
+
             const SizedBox(
               height: 20,
             ),
@@ -366,29 +413,29 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       hexColor: HexColor('80848A'),
-                      controller: isMetricUnit == true
+                      controller: selectedButton == true
                           ? heightCmController
                           : heightFeetController,
                       keyboardType: TextInputType.number,
-                      paddingNeed: false,
-                      hint: isMetricUnit == true ? "cm" : "Feet",
-                      textAlign: TextAlign.end),
+                      paddingNeed: true,
+                      hint: selectedButton == true ? "cm" : "Feet",
+                      textAlign: TextAlign.start),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Expanded(
                   child: Visibility(
-                    visible: isMetricUnit == true ? false : true,
+                    visible: selectedButton == true ? false : true,
                     child: CustomSimpleTextField(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
                         hexColor: HexColor('80848A'),
                         controller: heightInchesController,
                         keyboardType: TextInputType.number,
-                        paddingNeed: false,
+                        paddingNeed: true,
                         hint: "Inch",
-                        textAlign: TextAlign.end),
+                        textAlign: TextAlign.start),
                   ),
                 ),
               ],
@@ -413,9 +460,9 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           hexColor: HexColor('80848A'),
                           controller: weightKgController,
                           keyboardType: TextInputType.number,
-                          paddingNeed: false,
-                          hint: isMetricUnit == true ? "kg" : "Pounds",
-                          textAlign: TextAlign.end),
+                          paddingNeed: true,
+                          hint: selectedButton == true ? "kg" : "Pounds",
+                          textAlign: TextAlign.start),
                     ],
                   ),
                 ),
@@ -491,12 +538,12 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                   if (ageController.text.isEmpty) {
                     errorToast(context: context, msg: "Please enter age");
                   } else if (heightFeetController.text.isEmpty &&
-                      isMetricUnit == false) {
+                      selectedButton == false) {
                     errorToast(context: context, msg: "Please enter feet");
                   } else if (heightInchesController.text.isEmpty &&
-                      isMetricUnit == false) {
+                      selectedButton == false) {
                     errorToast(context: context, msg: "Please enter inch");
-                  } else if (isMetricUnit == true &&
+                  } else if (selectedButton == true &&
                       heightCmController.text.isEmpty) {
                   } else if (weightKgController.text.isEmpty) {
                     errorToast(context: context, msg: "Please enter weight");
@@ -508,7 +555,8 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           weightLossCalories['Maintain weight'],
                           weightLossCalories['Mild weight loss (0.5 kg/week)'],
                           weightLossCalories['Weight loss (1 kg/week)'],
-                          weightLossCalories['Extreme weight loss (2 kg/week)']
+                          weightLossCalories['Extreme weight loss (2 kg/week)'],
+                          selectedButton
                         ]);
                   }
                 }),

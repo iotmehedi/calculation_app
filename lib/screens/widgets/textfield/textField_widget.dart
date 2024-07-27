@@ -120,8 +120,8 @@ class CustomSimpleTextField extends StatelessWidget {
             //     : onlyNeedSuffix == true
             //         ?
             InputDecoration(
-              isDense: true,
-              isCollapsed: true,
+              isDense: false,
+              isCollapsed: false,
               hintText: hint,
           border: InputBorder.none,
           suffixIcon: suffixIcon,
@@ -135,7 +135,7 @@ class CustomSimpleTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: BorderSide(color: HexColor("#EEF2F6")),
                 borderRadius: BorderRadius.circular(4),
               ),
 

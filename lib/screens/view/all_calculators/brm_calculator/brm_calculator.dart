@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/core/routes/router.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../widgets/custom_text/custom_text.dart';
+
 class BmrCalculator extends StatefulWidget {
   @override
   _BmrCalculatorState createState() => _BmrCalculatorState();
@@ -25,8 +28,8 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   TextEditingController weightKgController = TextEditingController();
   final TextEditingController weightPoundsController = TextEditingController();
   double bmiResult = 0.0;
-  String? type = 'usUnit';
-
+  // String? type = 'usUnit';
+  var selectedButton = true;
   double bmr = 0.0;
   Gender selectedGender = Gender.male;
   Future<bool> calculateBmr() async {
@@ -105,6 +108,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'BRM Calculator',
         onBackPressed: () {
@@ -118,60 +122,86 @@ class _BmrCalculatorState extends State<BmrCalculator> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                      child: CustomElevatedButton(
-                    text: globalText18(
-                        text: 'Us Unit',
-                        color: type != 'usUnit' && (type?.isNotEmpty ?? false)
-                            ? HexColor('0F182E')
-                            : Colors.white,
-                        alignment: Alignment.center,
-                        fontWeight: FontWeight.normal),
-                    color: type == 'usUnit' && (type?.isNotEmpty ?? false)
-                        ? AppColors.calculateButtonColor
-                        : HexColor('EEF2F6'),
-                    onPress: () {
-                      setState(() {
-                        type = "usUnit";
-                        ageController.text = '';
-                        heightFeetController.text = '';
-                        heightInchesController.text = '';
-                        heightCmController.text = '';
-                        weightKgController.text = '';
-                      });
-                    },
-                  )),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Expanded(
-                    child: CustomElevatedButton(
-                      onPress: () {
-                        setState(() {
-                          type = 'matrics';
-                          ageController.text = '';
-                          heightFeetController.text = '';
-                          heightInchesController.text = '';
-                          heightCmController.text = '';
-                          weightKgController.text = '';
-                        });
-                      },
-                      color: type == 'matrics' && (type?.isNotEmpty ?? false)
-                          ? AppColors.calculateButtonColor
-                          : HexColor('EEF2F6'),
-                      text: globalText18(
-                          text: 'Matrics Units',
-                          color:
-                              type != 'matrics' && (type?.isNotEmpty ?? false)
-                                  ? HexColor('0F182E')
-                                  : Colors.white,
-                          // alignment: Alignment.center,
-                          fontWeight: FontWeight.normal),
+              Container(
+                height: 56,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: HexColor("244384"),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedButton = true;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: selectedButton ==
+                                    true
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Us Unit",
+                                      fontSize: 20,
+                                      textColor:
+                                      selectedButton ==
+                                          true
+                                          ? Colors.black
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                        5.pw,
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedButton = false;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: selectedButton ==
+                                    false
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Matrics Units",
+                                      fontSize: 20,
+                                      textColor:
+                                      selectedButton ==
+                                          false
+                                          ? HexColor("244384")
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -193,7 +223,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                             hexColor: HexColor('80848A'),
                             controller: ageController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
+                            paddingNeed: true,
                             hint: "Age",
                             textAlign: TextAlign.start),
                       ],
@@ -221,7 +251,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                         });
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: Colors.blue, // Set your desired color
+                      activeColor: HexColor("244384"), // Set your desired color
                     ),
                   ),
                   const Text('Male'),
@@ -241,7 +271,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                         });
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: Colors.blue, // Set your desired color
+                      activeColor: HexColor("244384"), // Set your desired color
                     ),
                   ),
                   const Text('Female'),
@@ -263,29 +293,29 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
                         hexColor: HexColor('80848A'),
-                        controller: type != 'usUnit'
+                        controller: selectedButton == false
                             ? heightCmController
                             : heightFeetController,
                         keyboardType: TextInputType.number,
-                        paddingNeed: false,
-                        hint: type != 'usUnit' ? "cm" : "Feet",
-                        textAlign: TextAlign.end),
+                        paddingNeed: true,
+                        hint: selectedButton == false ? "cm" : "Feet",
+                        textAlign: TextAlign.start),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                     child: Visibility(
-                      visible: type == 'matrics' ? false : true,
+                      visible: selectedButton == false ? false : true,
                       child: CustomSimpleTextField(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
                           hexColor: HexColor('80848A'),
                           controller: heightInchesController,
                           keyboardType: TextInputType.number,
-                          paddingNeed: false,
+                          paddingNeed: true,
                           hint: "Inch",
-                          textAlign: TextAlign.end),
+                          textAlign: TextAlign.start),
                     ),
                   ),
                 ],
@@ -309,13 +339,13 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20.0,
                             hexColor: HexColor('80848A'),
-                            controller: type != 'matrics'
+                            controller: selectedButton == true
                                 ? weightPoundsController
                                 : weightKgController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
-                            hint: type != 'usUnit' ? "kg" : "Pounds",
-                            textAlign: TextAlign.end),
+                            paddingNeed: true,
+                            hint: selectedButton == false ? "kg" : "Pounds",
+                            textAlign: TextAlign.start),
                       ],
                     ),
                   ),
@@ -331,7 +361,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                       color: Colors.white),
                   hexColor: AppColors.calculateButtonColor,
                   onPress: () {
-                    if (type == 'matrics') {
+                    if (selectedButton == false) {
                       calculateBmr().then((value) {
                         if (value == true) {
                           RouteGenerator().pushNamedSms(

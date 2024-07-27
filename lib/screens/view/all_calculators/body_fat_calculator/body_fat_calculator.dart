@@ -12,6 +12,8 @@ import 'dart:math';
 
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../widgets/custom_text/custom_text.dart';
+
 class BodyFatCalculator extends StatefulWidget {
   @override
   _BodyFatCalculatorState createState() => _BodyFatCalculatorState();
@@ -28,7 +30,8 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   String gender = 'Male';
   double result = 0.0;
   bool isUSCUnit = true;
-  String? type = 'usUnit';
+  // String? type = 'usUnit';
+  var selectedButton = true;
   Gender selectedGender = Gender.male;
   Future<bool> calculateBodyFat() async {
     if (_validateInputs()) {
@@ -137,6 +140,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text('Body Fat Calculator'),
       ),
@@ -146,64 +150,86 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                      child: CustomElevatedButton(
-                    text: globalText20(
-                        text: 'Us Unit',
-                        color: type != 'usUnit' && (type?.isNotEmpty ?? false)
-                            ? HexColor('0F182E')
-                            : Colors.white,
-                        alignment: Alignment.center,
-                        fontWeight: FontWeight.normal),
-                    color: type == 'usUnit' && (type?.isNotEmpty ?? false)
-                        ? AppColors.calculateButtonColor
-                        : HexColor('EEF2F6'),
-                    onPress: () {
-                      setState(() {
-                        type = "usUnit";
-                        ageController.text = '';
-                        heightFeetController.text = '';
-                        heightInchesController.text = '';
-                        weightController.text = '';
-                        neckController.text = '';
-                        waistController.text = '';
-                        hipController.text = '';
-                      });
-                    },
-                  )),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Expanded(
-                    child: CustomElevatedButton(
-                      onPress: () {
-                        setState(() {
-                          type = 'matrics';
-                          ageController.text = '';
-                          heightFeetController.text = '';
-                          heightInchesController.text = '';
-                          weightController.text = '';
-                          neckController.text = '';
-                          waistController.text = '';
-                          hipController.text = '';
-                        });
-                      },
-                      color: type == 'matrics' && (type?.isNotEmpty ?? false)
-                          ? AppColors.calculateButtonColor
-                          : HexColor('EEF2F6'),
-                      text: globalText20(
-                          text: 'Matrics Units',
-                          color:
-                              type != 'matrics' && (type?.isNotEmpty ?? false)
-                                  ? HexColor('0F182E')
-                                  : Colors.white,
-                          alignment: Alignment.center,
-                          fontWeight: FontWeight.normal),
+              Container(
+                height: 56,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: HexColor("244384"),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedButton = true;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: selectedButton ==
+                                    true
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Us Unit",
+                                      fontSize: 20,
+                                      textColor:
+                                      selectedButton ==
+                                          true
+                                          ? Colors.black
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                        5.pw,
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedButton = false;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: selectedButton ==
+                                    false
+                                    ? Colors.white
+                                    : HexColor("244384"),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Center(
+                                    child: CustomText(
+                                      text: "Matrics Units",
+                                      fontSize: 20,
+                                      textColor:
+                                      selectedButton ==
+                                          false
+                                          ? HexColor("244384")
+                                          : Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -225,7 +251,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                             hexColor: HexColor('80848A'),
                             controller: ageController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
+                            paddingNeed: true,
                             hint: "Age",
                             textAlign: TextAlign.start),
                       ],
@@ -252,7 +278,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                         });
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: Colors.blue, // Set your desired color
+                      activeColor: HexColor("244384"), // Set your desired color
                     ),
                   ),
                   const Text('Male'),
@@ -272,7 +298,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                         });
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: Colors.blue, // Set your desired color
+                      activeColor: HexColor("244384"), // Set your desired color
                     ),
                   ),
                   const Text('Female'),
@@ -299,9 +325,9 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                             hexColor: HexColor('80848A'),
                             controller: weightController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
-                            hint: type != 'usUnit' ? "kg" : "Pounds",
-                            textAlign: TextAlign.end),
+                            paddingNeed: true,
+                            hint: selectedButton == false ? "kg" : "Pounds",
+                            textAlign: TextAlign.start),
                       ],
                     ),
                   ),
@@ -323,25 +349,25 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                         hexColor: HexColor('80848A'),
                         controller: heightFeetController,
                         keyboardType: TextInputType.number,
-                        paddingNeed: false,
-                        hint: type != 'usUnit' ? "cm" : "Feet",
-                        textAlign: TextAlign.end),
+                        paddingNeed: true,
+                        hint: selectedButton == false ? "cm" : "Feet",
+                        textAlign: TextAlign.start),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                     child: Visibility(
-                      visible: type == 'matrics' ? false : true,
+                      visible: selectedButton == false ? false : true,
                       child: CustomSimpleTextField(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
                           hexColor: HexColor('80848A'),
                           controller: heightInchesController,
                           keyboardType: TextInputType.number,
-                          paddingNeed: false,
+                          paddingNeed: true,
                           hint: "Inch",
-                          textAlign: TextAlign.end),
+                          textAlign: TextAlign.start),
                     ),
                   ),
                 ],
@@ -366,9 +392,9 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                             hexColor: HexColor('80848A'),
                             controller: neckController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
-                            hint: type != 'usUnit' ? "cm" : "inchs",
-                            textAlign: TextAlign.end),
+                            paddingNeed: true,
+                            hint: selectedButton == false ? "cm" : "inchs",
+                            textAlign: TextAlign.start),
                       ],
                     ),
                   ),
@@ -397,9 +423,9 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                             hexColor: HexColor('80848A'),
                             controller: waistController,
                             keyboardType: TextInputType.number,
-                            paddingNeed: false,
-                            hint: type != 'usUnit' ? "cm" : "inchs",
-                            textAlign: TextAlign.end),
+                            paddingNeed: true,
+                            hint: selectedButton == false ? "cm" : "inchs",
+                            textAlign: TextAlign.start),
                       ],
                     ),
                   ),
@@ -428,9 +454,9 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                               hexColor: HexColor('80848A'),
                               controller: hipController,
                               keyboardType: TextInputType.number,
-                              paddingNeed: false,
-                              hint: type != 'usUnit' ? "cm" : "inchs",
-                              textAlign: TextAlign.end),
+                              paddingNeed: true,
+                              hint: selectedButton == false ? "cm" : "inchs",
+                              textAlign: TextAlign.start),
                         ],
                       ),
                     ),
@@ -451,11 +477,11 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                     } else if (heightFeetController.text.isEmpty) {
                       errorToast(context: context, msg: "Please enter feet");
                     } else if (heightInchesController.text.isEmpty &&
-                        type == 'usUnit') {
+                        selectedButton == true) {
                       errorToast(context: context, msg: "Please enter inch");
                     } else if (weightController.text.isEmpty) {
                       errorToast(context: context, msg: "Please enter weight");
-                    } else if (hipController.text.isEmpty && type != "usUnit") {
+                    } else if (hipController.text.isEmpty && selectedButton == false && selectedGender == Gender.female) {
                       errorToast(context: context, msg: "Please enter hip");
                     } else {
                       calculateBodyFat().then((value) {
@@ -463,7 +489,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                           RouteGenerator().pushNamedSms(
                               context, Routes.bodyfatResultScreen, arguments: [
                             result.toStringAsFixed(0),
-                            type,
+                            selectedButton,
                             weightController.text
                           ]);
                           print("this is result $result");

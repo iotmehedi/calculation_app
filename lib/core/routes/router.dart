@@ -147,7 +147,7 @@ class RouteGenerator {
               bmiresult: arguments[0] as double,
               progressValue: arguments[1] as double,
               bmiValueName: arguments[2] as String,
-              type: arguments[3] as String,
+              type: arguments[3] as bool,
             ),
           );
         }
@@ -181,6 +181,7 @@ class RouteGenerator {
               mildWeightLoss: arguments[1] as int,
               weightLoss: arguments[2] as int,
               extremeWeightLoss: arguments[3] as int,
+              unitOrMatrics: arguments[4] as bool
             ),
           );
         }
@@ -196,7 +197,7 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder: (context) => BodyfatResultScreen(
               maintainWeight: arguments[0] as String,
-              type: arguments[1] as String,
+              type: arguments[1] as bool,
               weight: arguments[2] as String,
             ),
           );
@@ -522,7 +523,7 @@ class RouteGenerator {
         case Routes.retirementForm:
         {
           return MaterialPageRoute(
-            builder: (context) => RetirementCalculator(),
+            builder: (context) => TimeCalculatorScreen(),
           );
         }
     }
