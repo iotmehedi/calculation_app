@@ -21,11 +21,12 @@ var controller = Get.put(MarginCalculatorController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Margin Calculator",
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(()=>Padding(

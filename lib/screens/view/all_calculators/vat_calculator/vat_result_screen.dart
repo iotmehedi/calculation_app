@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_pie_chart/common_pie_chart_widget.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
@@ -18,6 +19,7 @@ class VatResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "VAT Calculator",
         onBackPressed: () {

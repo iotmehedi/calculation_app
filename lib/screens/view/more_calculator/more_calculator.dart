@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/routes/route_name.dart';
 import '../../../core/routes/router.dart';
 import '../../../core/utils/consts/app_assets.dart';
+import '../../../core/utils/consts/app_colors.dart';
 import '../../widgets/homepage_widget/homepage_widget.dart';
 
 class MoreCalculatorPage extends StatelessWidget {
@@ -12,9 +13,12 @@ class MoreCalculatorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "More Calculator", onBackPressed: (){
-        Navigator.pop(context);
-      },
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(
+        title: "More Calculator",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -26,7 +30,8 @@ class MoreCalculatorPage extends StatelessWidget {
                     images: AppAssets.cd,
                     text: "CD\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.cdCalculatorForm);
+                      RouteGenerator.pushNamed(
+                          context, Routes.cdCalculatorForm);
                     },
                   ),
                 ),
@@ -55,7 +60,8 @@ class MoreCalculatorPage extends StatelessWidget {
                     images: AppAssets.gst,
                     text: "GST\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.gstCalculatorScreen);
+                      RouteGenerator.pushNamed(
+                          context, Routes.gstCalculatorScreen);
                     },
                   ),
                 ),
@@ -80,8 +86,7 @@ class MoreCalculatorPage extends StatelessWidget {
                     images: AppAssets.gpa,
                     text: "GPA\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(
-                          context, Routes.courseForm);
+                      RouteGenerator.pushNamed(context, Routes.courseForm);
                     },
                   ),
                 ),
@@ -100,7 +105,8 @@ class MoreCalculatorPage extends StatelessWidget {
                     images: AppAssets.margin,
                     text: "Margin\nCalculator",
                     onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.marginCalculator);
+                      RouteGenerator.pushNamed(
+                          context, Routes.marginCalculator);
                     },
                   ),
                 ),

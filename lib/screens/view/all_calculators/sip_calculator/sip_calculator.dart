@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/sip_calculator/sip_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_custom_richText/common_custom_richText.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
@@ -21,8 +23,11 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SIP Calculator'),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(title: "SIP Calculator",
+      onBackPressed: (){
+        Navigator.pop(context);
+      },
       ),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),

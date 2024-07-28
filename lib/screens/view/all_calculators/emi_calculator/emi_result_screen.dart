@@ -20,8 +20,10 @@ class EMIResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
-      appBar: CustomAppBar(title: "EMI Calculator"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(title: "EMI Calculator", onBackPressed: (){
+        Navigator.pop(context);
+      },),
       body: SingleChildScrollView(
         child: Column(
           children: [

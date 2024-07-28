@@ -36,6 +36,7 @@ class BodyfatResultScreen extends StatelessWidget {
     caloriesToBurnFor1PercentFat = (3500 * weightInLbs) / 100;
     print(caloriesToBurnFor1PercentFat);
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Results',
         onBackPressed: () {

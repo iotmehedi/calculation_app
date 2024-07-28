@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 
@@ -15,6 +16,7 @@ class SalaryResultCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Salary Calculator",
         fontFamily: "Podkova",

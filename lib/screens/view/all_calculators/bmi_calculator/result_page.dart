@@ -21,6 +21,7 @@ class ResultScrren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Results',
         onBackPressed: () {

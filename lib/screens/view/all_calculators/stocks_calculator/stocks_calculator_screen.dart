@@ -11,22 +11,6 @@ import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_richtext/custom_richtext.dart';
 import '../../../widgets/textfield/textField_widget.dart';
 
-void main() {
-  runApp(StockCalculatorApp());
-}
-
-class StockCalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Stock Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: StockCalculatorPage(),
-    );
-  }
-}
 
 class StockCalculatorPage extends StatefulWidget {
   @override
@@ -41,10 +25,12 @@ var controller = Get.put(StocksCalculatorController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Stock Calculator',
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(() => Padding(

@@ -30,6 +30,7 @@ class _FDCalculatorHomeState extends State<FDCalculatorHome> {
         title: 'FD Calculator',
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(() => Padding(

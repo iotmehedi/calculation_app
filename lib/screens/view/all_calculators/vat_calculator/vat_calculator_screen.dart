@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
@@ -18,10 +19,12 @@ class _VATCalculatorHomePageState extends State<VATCalculatorHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "VAT Calculator",
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(() => Padding(

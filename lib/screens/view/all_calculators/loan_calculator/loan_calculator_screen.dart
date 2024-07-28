@@ -1,5 +1,6 @@
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/loan_calculator/loan_calculator_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_dropdown/custom_dropdown_button.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -7,25 +8,11 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 
-void main() {
-  runApp(LoanCalculatorApp());
-}
 
-class LoanCalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Loan Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoanCalculatorScreen(),
-    );
-  }
-}
 
 class LoanCalculatorScreen extends StatefulWidget {
   @override
@@ -37,9 +24,11 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Loan Calculator'),
-      ),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(title: "Loan Calculator", onBackPressed: (){
+        Navigator.pop(context);
+        controller.allFieldClear();
+      },),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

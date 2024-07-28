@@ -117,12 +117,14 @@ class _FractionCalculatorState extends State<FractionCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Fraction Calculator',
         onBackPressed: () async {
           Navigator.pop(context);
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.clear();
+
         },
       ),
       body: Padding(

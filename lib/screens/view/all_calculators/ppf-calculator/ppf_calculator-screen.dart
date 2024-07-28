@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_custom_richText/common_custom_richText.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -17,7 +18,11 @@ class PPFCalculatorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: "PPF Calculator"),
+        backgroundColor: AppColors.scaffoldBackgroundColor,
+        appBar: CustomAppBar(title: "PPF Calculator", onBackPressed: (){
+          Navigator.pop(context);
+          controller.allFieldClear();
+        },),
         body: Obx(()=> Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(

@@ -35,6 +35,7 @@ class _GPAFormState extends State<GPAForm> {
         title: "Grade Calculator",
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(() => Form(

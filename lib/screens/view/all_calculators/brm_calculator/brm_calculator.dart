@@ -110,7 +110,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: 'BRM Calculator',
+        title: 'BMR Calculator',
         onBackPressed: () {
           Navigator.pop(context);
         },

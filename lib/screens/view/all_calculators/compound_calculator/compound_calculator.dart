@@ -9,25 +9,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
-void main() {
-  runApp(CompoundInterestCalculator());
-}
-
-class CompoundInterestCalculator extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Compound Interest Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: CalculatorForm(),
-    );
-  }
-}
 
 class CalculatorForm extends StatefulWidget {
   @override
@@ -39,10 +24,12 @@ class _CalculatorFormState extends State<CalculatorForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Compound Calculator",
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(() => SingleChildScrollView(

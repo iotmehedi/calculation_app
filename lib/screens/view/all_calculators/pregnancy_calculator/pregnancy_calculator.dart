@@ -1,5 +1,6 @@
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnancy_calculator/pregnancy_calculator_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
 
 class PregnancyTimeCalculatorPage extends StatefulWidget {
@@ -305,10 +307,10 @@ void _calculateDifference() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: globalText20(
-            text: "Pregnancy Calculator", fontWeight: FontWeight.w600),
-      ),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(title: "Pregnancy Calculator", onBackPressed: (){
+        Navigator.pop(context);
+      },),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

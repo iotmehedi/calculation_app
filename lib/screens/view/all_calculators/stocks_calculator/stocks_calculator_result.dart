@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -16,7 +17,7 @@ class StocksCalculatorResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Stock Calculator',
         onBackPressed: () {

@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 
@@ -17,7 +18,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "CD Calculator",
         onBackPressed: () {

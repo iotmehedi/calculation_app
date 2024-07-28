@@ -5,12 +5,15 @@ import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:calculation_app/screens/widgets/homepage_widget/homepage_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/consts/app_colors.dart';
+
 class HomepageScreen extends StatelessWidget {
   const HomepageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),

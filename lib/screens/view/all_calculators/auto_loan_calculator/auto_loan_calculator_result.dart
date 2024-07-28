@@ -15,7 +15,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
         leading: InkWell(
             onTap: () {

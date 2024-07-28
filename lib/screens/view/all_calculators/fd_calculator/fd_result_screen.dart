@@ -22,7 +22,7 @@ var controller = Get.find<FDController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'FD Calculator',
         onBackPressed: () {

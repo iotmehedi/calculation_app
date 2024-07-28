@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 
@@ -24,7 +25,7 @@ class CompoundResultScreen extends StatelessWidget {
             : controller.yearsOfGrowthController.value.text);
     double maxX = maxYears.toDouble();
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Compound Calculator",
         onBackPressed: () {

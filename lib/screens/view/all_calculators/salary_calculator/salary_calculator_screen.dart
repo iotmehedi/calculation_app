@@ -10,25 +10,11 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
-void main() {
-  runApp(SalaryCalculatorApp());
-}
 
-class SalaryCalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Salary Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SalaryCalculatorScreen(),
-    );
-  }
-}
 
 class SalaryCalculatorScreen extends StatefulWidget {
   @override
@@ -41,11 +27,13 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: "Salary Calculator",
         fontFamily: "Podkova",
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
       body: Obx(() => Padding(

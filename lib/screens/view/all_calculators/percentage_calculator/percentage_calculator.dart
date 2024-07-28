@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/textfield/textField_widget.dart';
 
 class PercentageCalculator extends StatefulWidget {
@@ -27,6 +28,7 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
             appBar: CustomAppBar(
     title: 'Percentage',
     onBackPressed: () {

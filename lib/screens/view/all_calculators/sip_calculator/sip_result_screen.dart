@@ -18,7 +18,7 @@ var controller = Get.find<SIPController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(title: "SIP Calculator"),
       body: SingleChildScrollView(
         child: Column(

@@ -7,6 +7,7 @@ import 'package:intl/src/intl/date_format.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 
@@ -65,6 +66,7 @@ class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
     int trimesterIndex = (daysDiff / trimesterDays).floor();
     int progressInCurrentTrimester = daysDiff % trimesterDays;
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Due date Calculator',
         onBackPressed: () {

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
+
 class PeriodInputPage extends StatefulWidget {
   @override
   _PeriodInputPageState createState() => _PeriodInputPageState();
@@ -49,6 +51,7 @@ class _PeriodInputPageState extends State<PeriodInputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Ovulation Calculator',
         onBackPressed: () {

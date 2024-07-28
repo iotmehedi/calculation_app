@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/src/intl/date_format.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
+
 class PregnancyTrimester extends StatelessWidget {
   final List<Map<String, Object>> milestones, milestones2,milestones3;
   final String selectedMethod, selectedOption;
@@ -20,6 +22,7 @@ DateTime dueDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Pregnancy Trimester',
         onBackPressed: () {

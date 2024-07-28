@@ -11,22 +11,6 @@ import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 
-void main() {
-  runApp(GSTCalculatorApp());
-}
-
-class GSTCalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'GST Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: GSTCalculatorPage(),
-    );
-  }
-}
 
 class GSTCalculatorPage extends StatefulWidget {
   @override
@@ -45,6 +29,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
         title: "GST Calculator",
         onBackPressed: () {
           Navigator.pop(context);
+          controller.clearFields();
         },
       ),
       body: Obx(() => Form(

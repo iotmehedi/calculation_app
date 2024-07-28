@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/consts/app_colors.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 
@@ -17,7 +18,7 @@ class MortgageResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-          backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {

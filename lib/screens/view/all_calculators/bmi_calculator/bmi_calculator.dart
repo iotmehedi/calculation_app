@@ -74,6 +74,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'BMI Calculator',
         onBackPressed: () {

@@ -32,7 +32,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      backgroundColor: HexColor("FAFAFA"),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {

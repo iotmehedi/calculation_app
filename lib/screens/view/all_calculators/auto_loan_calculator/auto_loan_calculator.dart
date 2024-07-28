@@ -32,10 +32,12 @@ class _AutoLoanCalculatorScreenState extends State<AutoLoanCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
         appBar: CustomAppBar(
           title: "Auto loan Calculator",
           onBackPressed: () {
             Navigator.pop(context);
+            controller.clearFields();
           },
         ),
         body: Obx(() => Padding(

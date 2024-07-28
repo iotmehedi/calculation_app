@@ -20,7 +20,9 @@ class PPFCalculatorResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-      appBar: const CustomAppBar(title: "PPF Calculator"),
+      appBar:  CustomAppBar(title: "PPF Calculator", onBackPressed: (){
+        Navigator.pop(context);
+      },),
       body: SingleChildScrollView(
         child: Column(
           children: [
