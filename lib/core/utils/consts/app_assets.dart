@@ -24,7 +24,7 @@ class AppAssets {
   static const String scientific = 'assets/scientific_cal.png';
   static const String sip = 'assets/sip_cal.png';
   static const String stocks = 'assets/stocks_cal.png';
-  static const String fractionCalculator = 'assets/fraction_image.png';
+  static const String fractionCalculator = 'assets/fraction.png';
   static const String brmCalculationPic = 'assets/brm_calculator_result_pic.png';
   static const String vat = 'assets/vat.png';
   static const String tip = 'assets/tip.png';
@@ -35,6 +35,7 @@ class AppAssets {
   static const String gst = 'assets/gst.png';
   static const String grade = 'assets/grade.png';
   static const String gpa = 'assets/gpa.png';
-  static const String sales = 'assets/sales.png';
+  static const String sales = 'assets/sale.png';
   static const String margin = 'assets/margin.png';
+  static const String time = 'assets/time.png';
 }

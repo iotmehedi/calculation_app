@@ -39,6 +39,7 @@ class _TimeCalculatorScreenState extends State<TimeCalculatorScreen> {
         title: 'Time Calculator',
         onBackPressed: () {
           Navigator.pop(context);
+          controller.allFieldClear();
         },
       ),
           body: Padding(

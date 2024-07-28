@@ -119,8 +119,8 @@ class HomepageScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: HomepageWidget(
-                      images: AppAssets.retirement,
-                      text: "Retirements\nCalculator",
+                      images: AppAssets.time,
+                      text: "Time\nCalculator",
                       onPress: () {
                         RouteGenerator.pushNamed(
                             context, Routes.timeCalculator);
@@ -170,6 +170,62 @@ class HomepageScreen extends StatelessWidget {
                       onPress: () {
                         RouteGenerator.pushNamed(
                             context, Routes.discountCalculatorPage);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "Math Type Calculator",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: HomepageWidget(
+                      images: AppAssets.scientific,
+                      text: "Scientific\nCalculator",
+                      onPress: () {
+                        print("this is");
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: HomepageWidget(
+                      images: AppAssets.percentage,
+                      text: "Percentage\nCalculator",
+                      onPress: () {
+                        RouteGenerator.pushNamed(
+                            context, Routes.percentageCalculator);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: HomepageWidget(
+                      images: AppAssets.normal,
+                      text: "Normal\nCalculator",
+                      onPress: () {
+                        RouteGenerator.pushNamed(
+                            context, Routes.normalCalculatorScreen);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: HomepageWidget(
+                      images: AppAssets.fractionCalculator,
+                      text: "Fraction\nCalculator",
+                      onPress: () {
+                        RouteGenerator.pushNamed(
+                            context, Routes.fractionCalculator);
                       },
                     ),
                   ),
@@ -280,59 +336,7 @@ class HomepageScreen extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Math Type Calculator",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: HomepageWidget(
-                      images: AppAssets.scientific,
-                      text: "Scientific\nCalculator",
-                      onPress: () {
-                        print("this is");
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: HomepageWidget(
-                      images: AppAssets.percentage,
-                      text: "Percentage\nCalculator",
-                      onPress: () {
-                        RouteGenerator.pushNamed(
-                            context, Routes.percentageCalculator);
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: HomepageWidget(
-                      images: AppAssets.normal,
-                      text: "Normal\nCalculator",
-                      onPress: () {
-                        RouteGenerator.pushNamed(
-                            context, Routes.normalCalculatorScreen);
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: HomepageWidget(
-                      images: AppAssets.fractionCalculator,
-                      text: "Fraction\nCalculator",
-                      onPress: () {
-                        RouteGenerator.pushNamed(
-                            context, Routes.fractionCalculator);
-                      },
-                    ),
-                  ),
-                ],
-              ),
+
             ],
           ),
         ),

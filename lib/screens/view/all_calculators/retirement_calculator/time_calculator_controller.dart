@@ -211,5 +211,15 @@ $days days $hours hours $minutes minutes $seconds seconds
 
     return parts.join(' ');
   }
-  allFieldClear() {}
+  allFieldClear() {
+    daysController1.value.clear();
+    hoursController1.value.clear();
+    minutesController1.value.clear();
+    secondsController1.value.clear();
+    daysController2.value.clear();
+    hoursController2.value.clear();
+    minutesController2.value.clear();
+    secondsController2.value.clear();
+    numberController.value.clear();
+  }
 }

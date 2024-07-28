@@ -12,7 +12,7 @@ class MoreCalculatorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Finance Calculator", onBackPressed: (){
+      appBar: CustomAppBar(title: "More Calculator", onBackPressed: (){
         Navigator.pop(context);
       },
       ),
