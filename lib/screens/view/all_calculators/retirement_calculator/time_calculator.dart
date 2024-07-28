@@ -143,17 +143,17 @@ class _TimeCalculatorScreenState extends State<TimeCalculatorScreen> {
                 const SizedBox(height: 40),
 
                 CustomCalculateClearWidget(
-                  onPressCalculate: controller.calculate,
+                  onPressCalculate: (){
+
+                    print(controller.alterDay.value);
+                    controller.calculate();
+                  },
                   onPressClear: controller.allFieldClear,
                   clearButtonTextColor: HexColor("244384"),
                   clearButtonFontWeight: FontWeight.w500,
                   clearButtonTitleFontSize: 20,
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  controller.result.value,
-                  style: const TextStyle(fontSize: 16),
-                ),
+
               ],
             ),
           ),

@@ -123,7 +123,7 @@ class HomepageScreen extends StatelessWidget {
                       text: "Retirements\nCalculator",
                       onPress: () {
                         RouteGenerator.pushNamed(
-                            context, Routes.retirementForm);
+                            context, Routes.timeCalculator);
                       },
                     ),
                   ),

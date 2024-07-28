@@ -17,6 +17,7 @@ import 'package:calculation_app/screens/view/all_calculators/pregnancy_calculato
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/due_date_result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_due_date_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_trimester.dart';
+import 'package:calculation_app/screens/view/all_calculators/retirement_calculator/time_calculator_result_page.dart';
 import 'package:calculation_app/screens/view/all_calculators/salary_calculator/salary_result_screen.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_screen.dart';
@@ -50,7 +51,7 @@ import '../../screens/view/all_calculators/percentage_calculator/percentage_calc
 import '../../screens/view/all_calculators/ppf-calculator/ppf_calculator-screen.dart';
 import '../../screens/view/all_calculators/ppf-calculator/ppf_result.dart';
 import '../../screens/view/all_calculators/pregnancy_calculator/pregnancy_result_page.dart';
-import '../../screens/view/all_calculators/retirement_calculator/retirement_calculation.dart';
+import '../../screens/view/all_calculators/retirement_calculator/time_calculator.dart';
 import '../../screens/view/all_calculators/salary_calculator/salary_calculator_screen.dart';
 import '../../screens/view/all_calculators/sales_calculator/sales_calculator_screen.dart';
 import '../../screens/view/all_calculators/sales_calculator/sales_result.dart';
@@ -520,10 +521,16 @@ class RouteGenerator {
             builder: (context) => CompoundResultScreen(),
           );
         }
-        case Routes.retirementForm:
+        case Routes.timeCalculator:
         {
           return MaterialPageRoute(
             builder: (context) => TimeCalculatorScreen(),
+          );
+        }
+        case Routes.timeCalculatorResultPage:
+        {
+          return MaterialPageRoute(
+            builder: (context) => TimeCalculatorResultPage(),
           );
         }
     }

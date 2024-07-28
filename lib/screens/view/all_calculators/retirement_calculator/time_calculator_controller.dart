@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/routes/route_name.dart';
+import '../../../../core/routes/router.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 
@@ -16,7 +18,18 @@ class TimeCalculatorController extends GetxController {
   var numberController = TextEditingController().obs;
   var selectedOperation = '+ Add'.obs;
   var result = ''.obs;
-
+  var totalDays = 0.0.obs;
+  var totalHours = 0.0.obs;
+  var totalMinutes = 0.0.obs;
+  var totalSeconds = 0.0.obs;
+  var days = 0.obs;
+  var hours = 0.obs;
+  var minutes = 0.obs;
+  var seconds = 0.obs;
+  var alterYear = 0.obs;
+  var alterMonths = 0.obs;
+  var alterWeek = 0.obs;
+  var alterDay = 0.obs;
   void calculate() {
     if (daysController1.value.text.isEmpty &&
         hoursController1.value.text.isEmpty &&
@@ -120,19 +133,25 @@ class TimeCalculatorController extends GetxController {
       }
 
       result.value = resultText;
+      alterYear.value = (days.value ~/ 365);
+      alterMonths.value = (days.value % 365)~/ 30;
+      alterWeek.value = ((days.value % 365)% 30)~/ 7;
+      alterDay.value = ((days.value % 365)% 30)% 7;
+      RouteGenerator.pushNamed(
+          navigatorKey.currentContext!, Routes.timeCalculatorResultPage);
     }
   }
 
   String formatDuration(Duration duration) {
-    int days = duration.inDays;
-    int hours = duration.inHours.remainder(24);
-    int minutes = duration.inMinutes.remainder(60);
-    int seconds = duration.inSeconds.remainder(60);
+     days.value = duration.inDays;
+     hours.value = duration.inHours.remainder(24);
+     minutes.value = duration.inMinutes.remainder(60);
+     seconds.value = duration.inSeconds.remainder(60);
 
-    double totalDays = duration.inSeconds / (24 * 3600);
-    double totalHours = duration.inSeconds / 3600;
-    double totalMinutes = duration.inSeconds / 60;
-    double totalSeconds = duration.inSeconds.toDouble();
+     totalDays.value = duration.inSeconds / (24 * 3600);
+     totalHours.value = duration.inSeconds / 3600;
+     totalMinutes.value = duration.inSeconds / 60;
+     totalSeconds.value = duration.inSeconds.toDouble();
 
     return '''
 Answer:
@@ -151,10 +170,10 @@ ${days ~/ 7} weeks ${days % 7} days $hours hours $minutes minutes $seconds secon
 
   String formatDivisionResult(
       double divisionResult, int wholeTimes, Duration remainderDuration) {
-    int days = remainderDuration.inDays;
-    int hours = remainderDuration.inHours.remainder(24);
-    int minutes = remainderDuration.inMinutes.remainder(60);
-    int seconds = remainderDuration.inSeconds.remainder(60);
+     days.value = remainderDuration.inDays;
+     hours.value = remainderDuration.inHours.remainder(24);
+     minutes.value = remainderDuration.inMinutes.remainder(60);
+     seconds.value = remainderDuration.inSeconds.remainder(60);
 
     return '''
 Answer:
@@ -164,6 +183,33 @@ or
 $days days $hours hours $minutes minutes $seconds seconds
     ''';
   }
+  String buildTimeString() {
+     // Replace with your actual controller
+    List<String> parts = [];
 
+    if (alterYear.value > 0) {
+      parts.add("${alterYear.value} years");
+    }
+    if (alterMonths.value > 0) {
+      parts.add("${alterMonths.value} months");
+    }
+    if (alterWeek.value > 0) {
+      parts.add("${alterWeek.value} weeks");
+    }
+    if (alterDay.value > 0) {
+      parts.add("${alterDay.value} days");
+    }
+    if (hours.value > 0) {
+      parts.add("${hours.value} hours");
+    }
+    if (minutes.value > 0) {
+      parts.add("${minutes.value} minutes");
+    }
+    if (seconds.value > 0) {
+      parts.add("${seconds.value} seconds");
+    }
+
+    return parts.join(' ');
+  }
   allFieldClear() {}
 }
