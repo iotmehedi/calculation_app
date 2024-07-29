@@ -38,4 +38,13 @@ class AppAssets {
   static const String sales = 'assets/sale.png';
   static const String margin = 'assets/margin.png';
   static const String time = 'assets/time.png';
+  static const String tenX = 'assets/10x.png';
+  static const String antiCos = 'assets/anti_cos.png';
+  static const String antiSin = 'assets/anti_sin.png';
+  static const String antiTan = 'assets/anti_tan.png';
+  static const String ex = 'assets/ex.png';
+  static const String x2 = 'assets/x2.png';
+  static const String x3 = 'assets/x3.png';
+  static const String xy = 'assets/xy.png';
+  static const String plusMinus = 'assets/plus_minus.png';
 }

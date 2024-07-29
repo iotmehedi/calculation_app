@@ -64,6 +64,7 @@ import '../../screens/view/all_calculators/tip_calculator/tip_calculator_screen.
 import '../../screens/view/all_calculators/vat_calculator/vat_calculator_screen.dart';
 import '../../screens/view/all_calculators/vat_calculator/vat_result_screen.dart';
 import '../../screens/view/more_calculator/more_calculator.dart';
+import '../../screens/view/scientific_calculator/scientific_calculator.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -531,6 +532,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => TimeCalculatorResultPage(),
+          );
+        }
+        case Routes.scientificCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => MyCalculator(),
           );
         }
     }

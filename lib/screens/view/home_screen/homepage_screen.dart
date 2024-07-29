@@ -4,6 +4,7 @@ import 'package:calculation_app/core/utils/consts/app_assets.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:calculation_app/screens/widgets/homepage_widget/homepage_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../../core/utils/consts/app_colors.dart';
 
@@ -15,6 +16,7 @@ class HomepageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: HexColor("FAFAFA"),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
@@ -199,6 +201,9 @@ class HomepageScreen extends StatelessWidget {
                       text: "Scientific\nCalculator",
                       onPress: () {
                         print("this is");
+                        RouteGenerator.pushNamed(
+                            context, Routes.scientificCalculator);
+
                       },
                     ),
                   ),

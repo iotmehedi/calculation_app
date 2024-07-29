@@ -62,4 +62,5 @@ class Routes {
   static const compoundScreenResult = "/compoundScreenResult";
   static const timeCalculator = "/timeCalculator";
   static const timeCalculatorResultPage = "/timeCalculatorResultPage";
+  static const scientificCalculator = "/scientificCalculator";
 }
