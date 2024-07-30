@@ -115,8 +115,9 @@ class _SciCalState extends State<SciCal> {
         expression = equation;
         expression = expression.replaceAll('×', '*');
         expression = expression.replaceAll('÷', '/');
-        expression = expression.replaceAll('π', pi);
         expression = expression.replaceAll('e', 'e^(1)');
+
+        expression = expression.replaceAll('π', pi);
 
         try {
           Parser p = Parser();
