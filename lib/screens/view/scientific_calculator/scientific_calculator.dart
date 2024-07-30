@@ -12,7 +12,7 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:logger/logger.dart';
 
 import '../../../core/utils/consts/textstyle.dart';
-
+import 'package:expressions/expressions.dart' as ex;
 void main() {
   runApp(const MyApp());
 }
@@ -89,6 +89,39 @@ class _MyCalculatorState extends State<MyCalculator> {
            print("the user input $userinput");
            if(userinput.contains("logBase")){
              output = math.log(int.parse(input.replaceAll("log(", '').replaceAll(")", ''))).toStringAsFixed(2);
+           }else if(userinput.contains("%")){
+             List<String> operators = ['+', '-', 'x', '/', '^'];
+             bool containsOperator = operators.any((op) => input.contains(op));
+
+             if (containsOperator) {
+               String convertedInput = convertPercentages(input);
+
+               // Parse the expression
+               ex.Expression expression = ex.Expression.parse(convertedInput);
+
+               // Evaluate the expression
+               final evaluator = const ex.ExpressionEvaluator();
+               output1 = evaluator.eval(expression, {}).toString();
+             }else{
+               output1 = (double.parse(input.replaceAll("%", "")) / 100).toStringAsFixed(2);
+             }
+           }else if(userinput.contains("!")){
+             List<String> operators = ['+', '-', 'x', '/', '^'];
+             bool containsOperator = operators.any((op) => input.contains(op));
+
+             if (containsOperator) {
+               String convertedInput = convertFactorials(input);
+
+               // Parse the expression
+               ex.Expression expression = ex.Expression.parse(convertedInput);
+
+               // Evaluate the expression
+               const evaluator = ex.ExpressionEvaluator();
+               output1 = evaluator.eval(expression, {}).toString();
+             }else{
+               // output1 = (double.parse(input.replaceAll("%", "")) / 100).toStringAsFixed(2);
+               output1  = factorial(int.parse(input.replaceAll("!", ""))).toString();
+             }
            }
            else{
              Parser p = Parser();
@@ -106,48 +139,7 @@ class _MyCalculatorState extends State<MyCalculator> {
          //   errorToast(context: context, msg: "Please enter valid value");
          // }
       }
-      // if (input.isNotEmpty) {
-      //
-      //    var userinput = input;
-      //
-      //
-      //   userinput = userinput.replaceAll('÷', '/');
-      //   userinput = userinput.replaceAll('e', 'e^(1)');
-      //   userinput = userinput.replaceAll("log", "logBase");
-      //   userinput = userinput.replaceAll("exp", "expBase");
-      //   userinput = userinput.replaceAll("3√x", "^(1/3)");
-      //   userinput = userinput.replaceAll("x", "*"); // Replace 'x' with '*'
-      //
-      //   print("User input after replacement: $userinput"); // Debugging line
-      //
-      //   Parser p = Parser();
-      //   Expression exp;
-      //
-      //   try {
-      //     exp = p.parse( userinput);
-      //   } catch (e) {
-      //     print("Parsing error: ${e.toString()}"); // Error handling
-      //     return;
-      //   }
-      //
-      //   ContextModel cm = ContextModel();
-      //   cm.bindVariable(Variable('pi'), Number(math.pi)); // Bind the value of pi
-      //
-      //   var result;
-      //   try {
-      //     result = exp.evaluate(EvaluationType.REAL, cm);
-      //   } catch (e) {
-      //     print("Evaluation error: ${e.toString()}"); // Error handling
-      //     return;
-      //   }
-      //
-      //   output = result.toString();
-      //   if (output.endsWith(".0")) {
-      //     output = output.substring(0, output.length - 2);
-      //   }
-      //
-      //   print("Result: $output"); // Final result
-      // }
+
     } else if (value == "(") {
       input += "(";
     } else if (value == ")") {
@@ -209,7 +201,7 @@ class _MyCalculatorState extends State<MyCalculator> {
         // Parser p = Parser();
         // input = input.replaceAll("∛", "^(1/3)");
 
-        input = '(' + input + ')^(1/3)';
+        input = '($input)^(1/3)';
         // exp = p.parse('(' + input + ')^(1/3)');
         // ContextModel cm = ContextModel();
         // cm.bindVariable(Variable('pi'), Number(math.pi));
@@ -221,7 +213,7 @@ class _MyCalculatorState extends State<MyCalculator> {
         input = '1/';
       }
       else {
-        input = input + '1/';
+        input = '${input}1/';
       }
     }  else if (value == '√x') {
       if (output == '0') {
@@ -239,51 +231,71 @@ class _MyCalculatorState extends State<MyCalculator> {
         input = 'Error';
       }
       else {
-        input = '(' + input + ')^(';
+        input = '($input)^(';
       }
     } else if (value == 'eˣ') {
       if (output == '0') {
         input = 'e^(';
       }
       else {
-        input = input + 'e^(';
+        input = '${input}e^(';
+      }
+    }else if (value == '10ˣ') {
+      if (output == '0') {
+        input = '10^(';
+      }
+      else {
+        input = '${input}10^(';
       }
     } else if (value == 'x²') {
       if (output == '0') {
         input = 'Error';
       }
       else {
-        input = '(' + input + ')^2';
+        input = '($input)^2';
+      }
+    }else if (value == 'x³') {
+      if (output == '0') {
+        input = 'Error';
+      }
+      else {
+        input = '($input)^3';
       }
     }else if (value == "n!") {
+      input = "$input!";
       // Check for operators in the input
-      List<String> operators = ['+', '-', 'x', '/', '^'];
-      bool containsOperator = operators.any((op) => input.contains(op));
+      // List<String> operators = ['+', '-', 'x', '/', '^'];
+      // bool containsOperator = operators.any((op) => input.contains(op));
+      //
+      // if (containsOperator) {
+      //   input = output; // Use the output as the input if operators are found
+      // }
+      //
+      // try {
+      //   // Parse the input to a double
+      //   double num1 = double.parse(input);
+      //   print("The number is $num1");
+      //
+      //   // Calculate the factorial if the number is an integer and non-negative
+      //   if (num1 == num1.toInt() && num1 >= 0) {
+      //     setState(() {
+      //       output = factorial(num1.toInt()).toString();
+      //     });
+      //   } else {
+      //     setState(() {
+      //       output = "Error"; // Show error for non-integer or negative numbers
+      //     });
+      //   }
+      // } catch (e) {
+      //   setState(() {
+      //     output = "Error"; // Handle parsing error
+      //   });
+      // }
+    }else if (value == "%") {
+      // num1 = double.parse(input);
 
-      if (containsOperator) {
-        input = output; // Use the output as the input if operators are found
-      }
-
-      try {
-        // Parse the input to a double
-        double num1 = double.parse(input);
-        print("The number is $num1");
-
-        // Calculate the factorial if the number is an integer and non-negative
-        if (num1 == num1.toInt() && num1 >= 0) {
-          setState(() {
-            output = factorial(num1.toInt()).toString();
-          });
-        } else {
-          setState(() {
-            output = "Error"; // Show error for non-integer or negative numbers
-          });
-        }
-      } catch (e) {
-        setState(() {
-          output = "Error"; // Handle parsing error
-        });
-      }
+     input = '$input%';
+        // input = (double.parse(input) / 100).toString();
     }
     else {
       input += value;
@@ -303,18 +315,18 @@ class _MyCalculatorState extends State<MyCalculator> {
     //   }
     // }
     // Evaluate exponent if input starts with "exp("
-    if (input.startsWith("exp(")) {
-      try {
-        var expression = input.substring(4, input.length - 1);
-        var result = exp(double.parse(expression));
-        output = result.toString();
-        if (output.endsWith(".0")) {
-          output = output.substring(0, output.length - 2);
-        }
-      } catch (e) {
-        output = 'Error';
-      }
-    }
+    // if (input.startsWith("exp(")) {
+    //   try {
+    //     var expression = input.substring(4, input.length - 1);
+    //     var result = exp(double.parse(expression));
+    //     output = result.toString();
+    //     if (output.endsWith(".0")) {
+    //       output = output.substring(0, output.length - 2);
+    //     }
+    //   } catch (e) {
+    //     output = 'Error';
+    //   }
+    // }
 
     setState(() {});
   }
@@ -327,6 +339,25 @@ class _MyCalculatorState extends State<MyCalculator> {
     }
     return n * factorial(n - 1);
   }
+  String convertPercentages(String input) {
+    RegExp exp = RegExp(r'(\d+)%');
+    return input.replaceAllMapped(exp, (Match match) {
+      double value = double.parse(match.group(1)!) / 100;
+      return value.toString();
+    });
+  }
+  String convertFactorials(String input) {
+    RegExp exp = RegExp(r'(\d+)!');
+    return input.replaceAllMapped(exp, (Match match) {
+      int value = int.parse(match.group(1)!);
+      int factorial = 1;
+      for (int i = 1; i <= value; i++) {
+        factorial *= i;
+      }
+      return factorial.toString();
+    });
+  }
+
   @override
   @override
   Widget build(BuildContext context) {
@@ -504,13 +535,13 @@ class _MyCalculatorState extends State<MyCalculator> {
                   children: [
                     button("xʸ", HexColor("2E250F"), Colors.white,
                         image: AppAssets.xy, height: 14, weight: 14),
-                    button("", HexColor("2E250F"), Colors.white,
+                    button("x³", HexColor("2E250F"), Colors.white,
                         image: AppAssets.x3, height: 14, weight: 14),
                     button("x²", HexColor("2E250F"), Colors.white,
                         image: AppAssets.x2, height: 14, weight: 14),
                     button("eˣ", HexColor("2E250F"), Colors.white,
                         image: AppAssets.ex, height: 15, weight: 15),
-                    button("", HexColor("2E250F"), Colors.white,
+                    button("10ˣ", HexColor("2E250F"), Colors.white,
                         image: AppAssets.tenX, height: 19, weight: 19),
                   ],
                 ),

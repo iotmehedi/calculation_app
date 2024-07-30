@@ -49,6 +49,7 @@ dependencies:
   collection: ^1.16.0
   syncfusion_flutter_charts: ^25.2.7
   intl:
+  expressions:
 
 
 dependency_overrides:
