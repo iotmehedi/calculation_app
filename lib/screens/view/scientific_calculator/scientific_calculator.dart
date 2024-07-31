@@ -13,6 +13,7 @@ import 'package:logger/logger.dart';
 
 import '../../../core/utils/consts/textstyle.dart';
 import 'package:expressions/expressions.dart' as ex;
+
 void main() {
   runApp(const MyApp());
 }
@@ -72,74 +73,103 @@ class _MyCalculatorState extends State<MyCalculator> {
       }
     } else if (value == "=" || value == "Ans") {
       print("the value is $value");
-       if (input.isNotEmpty) {
-         // try{
-           userinput = input;
-           userinput = userinput.replaceAll('÷', '/');
-           userinput = userinput.replaceAll('e', 'e^(1)');
-           // userinput = userinput.replaceAll("log", "logBase");
-           userinput = userinput.replaceAll("exp", "expBase");
-           userinput = userinput.replaceAll("3√x", "^(1/3)");
-           userinput = userinput.replaceAll("log", "logBase");
-           // userinput = userinput.replaceAll("ln(", "ln(");
-           userinput = userinput.replaceAllMapped(RegExp(r'√(\d+(\.\d+)?)'), (match) {
-             return "(${match[1]})^(1/2)";
-           });
-           userinput = userinput.replaceAll("x", "*");
-           print("the user input $userinput");
-           if(userinput.contains("logBase")){
-             output = math.log(int.parse(input.replaceAll("log(", '').replaceAll(")", ''))).toStringAsFixed(2);
-           }else if(userinput.contains("%")){
-             List<String> operators = ['+', '-', 'x', '/', '^'];
-             bool containsOperator = operators.any((op) => input.contains(op));
+      if (input.isNotEmpty) {
+        // try{
+        userinput = input;
+        userinput = userinput.replaceAll('÷', '/');
+        userinput = userinput.replaceAll('e', 'e^(1)');
+        // userinput = userinput.replaceAll("log", "logBase");
+        userinput = userinput.replaceAll("exp", "expBase");
+        userinput = userinput.replaceAll("3√x", "^(1/3)");
+        userinput = userinput.replaceAll("log", "logBase");
 
-             if (containsOperator) {
-               String convertedInput = convertPercentages(input);
+        userinput =
+            userinput.replaceAllMapped(RegExp(r'√(\d+(\.\d+)?)'), (match) {
+          return "(${match[1]})^(1/2)";
+        });
+        userinput = userinput.replaceAll("x", "*");
 
-               // Parse the expression
-               ex.Expression expression = ex.Expression.parse(convertedInput);
+        if (userinput.contains("logBase")) {
+          output = math
+              .log(int.parse(input.replaceAll("log(", '').replaceAll(")", '')))
+              .toStringAsFixed(2);
+        } else if (userinput.contains("%")) {
+          List<String> operators = ['+', '-', 'x', '/', '^'];
+          bool containsOperator = operators.any((op) => input.contains(op));
 
-               // Evaluate the expression
-               final evaluator = const ex.ExpressionEvaluator();
-               output1 = evaluator.eval(expression, {}).toString();
-             }else{
-               output1 = (double.parse(input.replaceAll("%", "")) / 100).toStringAsFixed(2);
-             }
-           }else if(userinput.contains("!")){
-             List<String> operators = ['+', '-', 'x', '/', '^'];
-             bool containsOperator = operators.any((op) => input.contains(op));
+          if (containsOperator) {
+            String convertedInput = convertPercentages(input);
 
-             if (containsOperator) {
-               String convertedInput = convertFactorials(input);
+            // Parse the expression
+            ex.Expression expression = ex.Expression.parse(convertedInput);
 
-               // Parse the expression
-               ex.Expression expression = ex.Expression.parse(convertedInput);
+            // Evaluate the expression
+            final evaluator = const ex.ExpressionEvaluator();
+            output1 = evaluator.eval(expression, {}).toString();
+          } else {
+            output1 = (double.parse(input.replaceAll("%", "")) / 100)
+                .toStringAsFixed(2);
+          }
+        } else if (userinput.contains("!")) {
+          List<String> operators = ['+', '-', 'x', '/', '^'];
+          bool containsOperator = operators.any((op) => input.contains(op));
 
-               // Evaluate the expression
-               const evaluator = ex.ExpressionEvaluator();
-               output1 = evaluator.eval(expression, {}).toString();
-             }else{
-               // output1 = (double.parse(input.replaceAll("%", "")) / 100).toStringAsFixed(2);
-               output1  = factorial(int.parse(input.replaceAll("!", ""))).toString();
-             }
-           }
-           else{
-             Parser p = Parser();
-             Expression exp = p.parse(userinput);
-             ContextModel cm = ContextModel();
-             var result = exp.evaluate(EvaluationType.REAL, cm);
-             output = result.toString();
-             output1 = result.toString();
-             if (output.endsWith(".0")) {
-               output = output.substring(0, output.length - 2);
-             }
-             print("Result: $output $input");
-           } // Final result
-         // }catch(e){
-         //   errorToast(context: context, msg: "Please enter valid value");
-         // }
+          if (containsOperator) {
+            String convertedInput = convertFactorials(input);
+
+            // Parse the expression
+            ex.Expression expression = ex.Expression.parse(convertedInput);
+
+            // Evaluate the expression
+            const evaluator = ex.ExpressionEvaluator();
+            output1 = evaluator.eval(expression, {}).toString();
+          } else {
+            // output1 = (double.parse(input.replaceAll("%", "")) / 100).toStringAsFixed(2);
+            output1 =
+                factorial(int.parse(input.replaceAll("!", ""))).toString();
+          }
+        } else if (userinput.contains("sin")) {
+          // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
+          // double radians = degrees * (pi / 180); // Convert degrees to radians
+          // double sineValue = sin(radians);
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
+        } else if (userinput.contains("cos")) {
+          // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
+          // double radians = degrees * (pi / 180); // Convert degrees to radians
+          // double sineValue = cos(radians);
+          // output1 = sineValue.toString();
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
+        } else if (userinput.contains("tan")) {
+          // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
+          // double radians = degrees * (pi / 180); // Convert degrees to radians
+          // double sineValue = tan(radians);
+          // output1 = sineValue.toString();
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
+        } else {
+          Parser p = Parser();
+          Expression exp = p.parse(userinput);
+          ContextModel cm = ContextModel();
+          var result = exp.evaluate(EvaluationType.REAL, cm);
+          output = result.toString();
+          output1 = result.toString();
+          if (output.endsWith(".0")) {
+            output = output.substring(0, output.length - 2);
+          }
+          print("Result: $output $input");
+        } // Final result
+        // }catch(e){
+        //   errorToast(context: context, msg: "Please enter valid value");
+        // }
       }
-
     } else if (value == "(") {
       input += "(";
     } else if (value == ")") {
@@ -177,26 +207,26 @@ class _MyCalculatorState extends State<MyCalculator> {
       }
     } else if (value == "Back") {
       // Recall memory value
-      output =
-          output.substring(0, output.length - 1); // to remove one character
-      if (output == '') {
-        output = '0';
+      input = input.substring(0, input.length - 1); // to remove one character
+      if (input == '') {
+        input = '';
       }
-    } else if(value == "π"){
+    } else if (value == "π") {
       // if (output.isNotEmpty && output != 'Error') {
-        setState(() {
-          input = math.pi.toStringAsFixed(2);
-        });
+      setState(() {
+        input += "3.1415";
+        //math.pi.toStringAsFixed(2);
+      });
       // }
     } else if (value == "e") {
       // setState(() {
-        input = math.e.toStringAsFixed(2);
+      input += "2.72";
+      //math.e.toStringAsFixed(2);
       // });
-    }else if (value == '3√x') {
+    } else if (value == '3√x') {
       if (output == '0') {
         output = 'Error';
-      }
-      else {
+      } else {
         // Expression exp;
         // Parser p = Parser();
         // input = input.replaceAll("∛", "^(1/3)");
@@ -211,124 +241,169 @@ class _MyCalculatorState extends State<MyCalculator> {
     } else if (value == '1/x') {
       if (output == '0') {
         input = '1/';
-      }
-      else {
+      } else {
         input = '${input}1/';
       }
-    }  else if (value == '√x') {
+    } else if (value == '√x') {
       if (output == '0') {
         input = 'Error';
-      }
-      else {
+      } else {
         input = '√';
       }
-    }  else if (value == "ln") {
+    } else if (value == "ln") {
       input += "ln("; // Natural log function
     } else if (value == "log") {
       input += "log("; // Add base log function
     } else if (value == 'xʸ') {
       if (output == '0') {
         input = 'Error';
-      }
-      else {
-        input = '($input)^(';
+      } else {
+        input = '$input^';
       }
     } else if (value == 'eˣ') {
       if (output == '0') {
-        input = 'e^(';
+        input = 'e^';
+      } else {
+        input = '${input}e^';
       }
-      else {
-        input = '${input}e^(';
-      }
-    }else if (value == '10ˣ') {
+    } else if (value == '10ˣ') {
       if (output == '0') {
-        input = '10^(';
-      }
-      else {
-        input = '${input}10^(';
+        input = '10^';
+      } else {
+        input = '${input}10^';
       }
     } else if (value == 'x²') {
       if (output == '0') {
         input = 'Error';
+      } else {
+        input = '$input^2';
       }
-      else {
-        input = '($input)^2';
-      }
-    }else if (value == 'x³') {
+    } else if (value == 'x³') {
       if (output == '0') {
         input = 'Error';
+      } else {
+        input = '$input^3';
       }
-      else {
-        input = '($input)^3';
-      }
-    }else if (value == "n!") {
+    } else if (value == "n!") {
       input = "$input!";
-      // Check for operators in the input
-      // List<String> operators = ['+', '-', 'x', '/', '^'];
-      // bool containsOperator = operators.any((op) => input.contains(op));
-      //
-      // if (containsOperator) {
-      //   input = output; // Use the output as the input if operators are found
-      // }
-      //
-      // try {
-      //   // Parse the input to a double
-      //   double num1 = double.parse(input);
-      //   print("The number is $num1");
-      //
-      //   // Calculate the factorial if the number is an integer and non-negative
-      //   if (num1 == num1.toInt() && num1 >= 0) {
-      //     setState(() {
-      //       output = factorial(num1.toInt()).toString();
-      //     });
-      //   } else {
-      //     setState(() {
-      //       output = "Error"; // Show error for non-integer or negative numbers
-      //     });
-      //   }
-      // } catch (e) {
-      //   setState(() {
-      //     output = "Error"; // Handle parsing error
-      //   });
-      // }
-    }else if (value == "%") {
+    } else if (value == "%") {
       // num1 = double.parse(input);
 
-     input = '$input%';
-        // input = (double.parse(input) / 100).toString();
+      input = '$input%';
+      // input = (double.parse(input) / 100).toString();
+    } else if (value == "Sin") {
+      input += "sin(";
+    } else if (value == "Cos") {
+      input += "cos(";
+    } else if (value == "Tan") {
+      input += "tan(";
+    } else {
+      handleInput(value);
     }
-    else {
-      input += value;
-    }
-
-    // Evaluate logarithm if input ends with ")"
-    // if (input.endsWith(")")) {
-    //   try {
-    //     var expression = input.substring(4, input.length - 1);
-    //     var result = log(double.parse(expression));
-    //     output = result.toString();
-    //     if (output.endsWith(".0")) {
-    //       output = output.substring(0, output.length - 2);
-    //     }
-    //   } catch (e) {
-    //     output = '';
-    //   }
-    // }
-    // Evaluate exponent if input starts with "exp("
-    // if (input.startsWith("exp(")) {
-    //   try {
-    //     var expression = input.substring(4, input.length - 1);
-    //     var result = exp(double.parse(expression));
-    //     output = result.toString();
-    //     if (output.endsWith(".0")) {
-    //       output = output.substring(0, output.length - 2);
-    //     }
-    //   } catch (e) {
-    //     output = 'Error';
-    //   }
-    // }
 
     setState(() {});
+  }
+  void handleInput(String value) {
+    if (value == "Sin" || value == "Cos" || value == "Tan") {
+      input += "$value(";
+    } else if (value == ")" || value == "°") {
+      input += value;
+    } else {
+      // Handle numeric input or operators
+      // input += value;
+
+      // Check if we need to append the degree symbol
+      if (value == "Sin" || value == "Cos" || value == "Tan") {
+        input += "$value(";
+      } else if (value == ")" || value == "°") {
+        // Directly append parentheses or degree symbol if pressed
+        input += value;
+      } else {
+        // Handle numeric input or operators
+        input += value;
+
+        // Check if we need to append the degree symbol and closing parenthesis
+        if ((input.contains("sin(") ||
+            input.contains("cos(") ||
+            input.contains("tan(")) &&
+            !input.endsWith("°)") &&
+            RegExp(r'\d$').hasMatch(input) &&  // Check if ends with a digit
+            !RegExp(r'[+\-*/]$').hasMatch(input.substring(input.length - 2, input.length - 1))) {
+          // Add degree symbol and closing parenthesis if the last character is a digit and previous character is not an arithmetic operator
+          input += "°)";
+        }
+      }
+    }
+
+    print(input); // For debugging
+  }
+
+  String sanitizeInput(String input) {
+    // Convert sin(), cos(), and tan() functions to their computed values
+    String sanitized = input
+        .replaceAllMapped(RegExp(r'sin\((\d+)°\)'), (match) {
+      double degrees = double.parse(match.group(1)!);
+      double radians = degrees * (pi / 180);
+      double sinValue = sin(radians);
+      return sinValue.toString();
+    })
+        .replaceAllMapped(RegExp(r'cos\((\d+)°\)'), (match) {
+      double degrees = double.parse(match.group(1)!);
+      double radians = degrees * (pi / 180);
+      double cosValue = cos(radians);
+      return cosValue.toString();
+    })
+        .replaceAllMapped(RegExp(r'tan\((\d+)°\)'), (match) {
+      double degrees = double.parse(match.group(1)!);
+      double radians = degrees * (pi / 180);
+      double tanValue = tan(radians);
+      return tanValue.toString();
+    });
+
+    // Replace exponentiation operator ^ with Dart's power function operator **
+    sanitized = sanitized.replaceAllMapped(RegExp(r'(\d+)\^(\d+)'), (match) {
+      double base = double.parse(match.group(1)!);
+      double exponent = double.parse(match.group(2)!);
+      return pow(base, exponent).toString();
+    });
+
+    return sanitized;
+  }
+
+  double evaluateExpression(String input) {
+    // Parse and evaluate the expression
+    ex.Expression expression = ex.Expression.parse(input);
+    final evaluator = const ex.ExpressionEvaluator();
+    var result = evaluator.eval(expression, {});
+    return result;
+  }
+  String extractDigit(String input) {
+    RegExp regExp = RegExp(r'cos\((\d+)°\)');
+    Match? match = regExp.firstMatch(input);
+
+    if (match != null) {
+      return match.group(1)!; // Extracts the digit part
+    }
+
+    return "No digit found"; // Default return value if no match is found
+  }
+  String convertTrigonometricFunctions(String input) {
+    print("this is input value $input");
+    RegExp exp = RegExp(r'sin\((\d+)°\)');
+    return input.replaceAllMapped(exp, (Match match) {
+      double degrees = double.parse(match.group(1)!);
+      double radians = degrees * (pi / 180);
+      double sinValue = sin(radians);
+      return sinValue.toString();
+    });
+  }
+
+  String backspace(String output) {
+    if (output.isNotEmpty) {
+      return output.substring(0, output.length - 1);
+    } else {
+      return output;
+    }
   }
 
   double logBase(num x, num base) => log(x) / log(base);
@@ -339,6 +414,7 @@ class _MyCalculatorState extends State<MyCalculator> {
     }
     return n * factorial(n - 1);
   }
+
   String convertPercentages(String input) {
     RegExp exp = RegExp(r'(\d+)%');
     return input.replaceAllMapped(exp, (Match match) {
@@ -346,6 +422,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       return value.toString();
     });
   }
+
   String convertFactorials(String input) {
     RegExp exp = RegExp(r'(\d+)!');
     return input.replaceAllMapped(exp, (Match match) {
@@ -355,6 +432,16 @@ class _MyCalculatorState extends State<MyCalculator> {
         factorial *= i;
       }
       return factorial.toString();
+    });
+  }
+
+  String handleExponentiation(String input) {
+    print("input is $input");
+    RegExp exp = RegExp(r'(\d+)\^(\d+)');
+    return input.replaceAllMapped(exp, (Match match) {
+      String base = match.group(1)!;
+      String exponent = match.group(2)!;
+      return '($base)^$exponent';
     });
   }
 
@@ -388,7 +475,17 @@ class _MyCalculatorState extends State<MyCalculator> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    input == userinput ? double.tryParse(output1)?.toStringAsFixed(2).toString().replaceAll(".00", '') ?? '' : double.tryParse(output)?.toStringAsFixed(2).toString().replaceAll(".00", '') ?? '',
+                    input == userinput
+                        ? double.tryParse(output1)
+                                ?.toStringAsFixed(9)
+                                .toString()
+                                .replaceAll(".00", '') ??
+                            ''
+                        : double.tryParse(output)
+                                ?.toStringAsFixed(2)
+                                .toString()
+                                .replaceAll(".00", '') ??
+                            '',
                     style: TextStyle(
                       fontSize: 30,
                       color: Colors.black.withOpacity(0.7),
