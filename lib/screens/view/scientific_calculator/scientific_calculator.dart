@@ -154,6 +154,32 @@ class _MyCalculatorState extends State<MyCalculator> {
 
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
+        }else if (userinput.contains("sin-¹")) {
+          // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
+          // double radians = degrees * (pi / 180); // Convert degrees to radians
+          // double sineValue = sin(radians);
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
+        } else if (userinput.contains("cos-¹")) {
+          // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
+          // double radians = degrees * (pi / 180); // Convert degrees to radians
+          // double sineValue = cos(radians);
+          // output1 = sineValue.toString();
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
+        } else if (userinput.contains("tan-¹")) {
+          // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
+          // double radians = degrees * (pi / 180); // Convert degrees to radians
+          // double sineValue = tan(radians);
+          // output1 = sineValue.toString();
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
         } else {
           Parser p = Parser();
           Expression exp = p.parse(userinput);
@@ -297,6 +323,19 @@ class _MyCalculatorState extends State<MyCalculator> {
       input += "cos(";
     } else if (value == "Tan") {
       input += "tan(";
+    }else if (value == "sin-¹") {
+      input += "sin-¹(";
+    } else if (value == "cos-¹") {
+      input += "cos-¹(";
+    } else if (value == "tan-¹") {
+      input += "tan-¹(";
+    } else if(value == "±"){
+      if (output == '0') {
+        input = 'Error';
+      }else{
+      input = '-$input';
+      }
+
     } else {
       handleInput(value);
     }
@@ -339,7 +378,7 @@ class _MyCalculatorState extends State<MyCalculator> {
   }
 
   String sanitizeInput(String input) {
-    // Convert sin(), cos(), and tan() functions to their computed values
+    // Convert sin(), cos(), tan(), sin⁻¹(), cos⁻¹(), and tan⁻¹() functions to their computed values
     String sanitized = input
         .replaceAllMapped(RegExp(r'sin\((\d+)°\)'), (match) {
       double degrees = double.parse(match.group(1)!);
@@ -358,6 +397,21 @@ class _MyCalculatorState extends State<MyCalculator> {
       double radians = degrees * (pi / 180);
       double tanValue = tan(radians);
       return tanValue.toString();
+    })
+        .replaceAllMapped(RegExp(r'sin-¹\(([^)]+)\)'), (match) {
+      double value = double.parse(match.group(1)!);
+      double asinValue = asin(value);
+      return asinValue.toString();
+    })
+        .replaceAllMapped(RegExp(r'cos-¹\(([^)]+)\)'), (match) {
+      double value = double.parse(match.group(1)!);
+      double acosValue = acos(value);
+      return acosValue.toString();
+    })
+        .replaceAllMapped(RegExp(r'tan-¹\(([^)]+)\)'), (match) {
+      double value = double.parse(match.group(1)!);
+      double atanValue = atan(value);
+      return atanValue.toString();
     });
 
     // Replace exponentiation operator ^ with Dart's power function operator **
@@ -444,7 +498,21 @@ class _MyCalculatorState extends State<MyCalculator> {
       return '($base)^$exponent';
     });
   }
+  String formatResult(String input) {
+    // Try parsing the input to a double
+    double? value = double.tryParse(input);
+    if (value == null) {
+      return ''; // Return an empty string if parsing fails
+    }
 
+    // Convert the double to a string with fixed precision and then remove trailing zeros
+    String result = value.toStringAsFixed(9);
+
+    // Remove unnecessary trailing zeros and the decimal point if not needed
+    result = result.replaceAll(RegExp(r'([.]*0+)(?!.*\d)'), '');
+
+    return result;
+  }
   @override
   @override
   Widget build(BuildContext context) {
@@ -456,47 +524,29 @@ class _MyCalculatorState extends State<MyCalculator> {
           Navigator.pop(context);
         },
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(right: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              height: 200,
-              width: double.infinity,
-              color: Colors.transparent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    input,
-                    style: TextStyle(fontSize: 48, color: Colors.black),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    input == userinput
-                        ? double.tryParse(output1)
-                                ?.toStringAsFixed(9)
-                                .toString()
-                                .replaceAll(".00", '') ??
-                            ''
-                        : double.tryParse(output)
-                                ?.toStringAsFixed(2)
-                                .toString()
-                                .replaceAll(".00", '') ??
-                            '',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black.withOpacity(0.7),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            height: 64,
+            width: MediaQuery.of(context).size.width,
+            color: HexColor("F3F6F9"),
+            child: Padding(padding: EdgeInsets.only(right: 10), child: globalText24(text: input, alignment: Alignment.centerRight, fontWeight: FontWeight.normal)),
+          ),
+          Container(
+            height: 64,
+            width: MediaQuery.of(context).size.width,
+            color: HexColor("0F182E"),
+            child: Padding(padding: const EdgeInsets.only(right: 10), child: globalText24(text: input == userinput
+                ? formatResult(output1)
+                : formatResult(output), alignment: Alignment.centerRight, fontWeight: FontWeight.normal, color: Colors.white),)
+          ),
+          20.ph,
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
-              children: [
+                            children: [
                 Row(
                   children: [
                     button("Sin", HexColor("2E250F"), Colors.white),
@@ -618,11 +668,11 @@ class _MyCalculatorState extends State<MyCalculator> {
                 ),
                 Row(
                   children: [
-                    button("", HexColor("2E250F"), Colors.white,
+                    button("sin-¹", HexColor("2E250F"), Colors.white,
                         image: AppAssets.antiSin, height: 25, weight: 25),
-                    button("", HexColor("2E250F"), Colors.white,
+                    button("cos-¹", HexColor("2E250F"), Colors.white,
                         image: AppAssets.antiCos, height: 25, weight: 25),
-                    button("", HexColor("2E250F"), Colors.white,
+                    button("tan-¹", HexColor("2E250F"), Colors.white,
                         image: AppAssets.antiTan, height: 25, weight: 25),
                     button("π", HexColor("2E250F"), Colors.white),
                     button("e", HexColor("2E250F"), Colors.white),
@@ -700,7 +750,7 @@ class _MyCalculatorState extends State<MyCalculator> {
                   children: [
                     button("AC", HexColor("F3F6F9"), HexColor("0F182E")),
                     button("=", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("", HexColor("244384"), Colors.white,
+                    button("±", HexColor("244384"), Colors.white,
                         image: AppAssets.plusMinus, height: 15, weight: 15),
                     button("RND", HexColor("244384"), Colors.white),
                     button("MR", HexColor("244384"), Colors.white),
@@ -755,10 +805,10 @@ class _MyCalculatorState extends State<MyCalculator> {
                 //     button("+", Colors.black, Colors.orangeAccent),
                 //   ],
                 // ),
-              ],
-            ))
-          ],
-        ),
+                            ],
+                          ),
+              ))
+        ],
       ),
     );
   }
