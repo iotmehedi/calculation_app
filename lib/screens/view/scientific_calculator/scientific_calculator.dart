@@ -58,6 +58,7 @@ class _MyCalculatorState extends State<MyCalculator> {
   double mMinusValue = 0.0; // M- value
   var radioButtonStatus = "";
   var getRadioButtonValue = '';
+  var isAntiCosSinTan = false;
 
   _onButtonClicked(value) {
     if (value == "AC") {
@@ -68,6 +69,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       mPlusValue = 0.0;
       mMinusValue = 0.0;
     } else if (value == "DEL") {
+      isAntiCosSinTan = true;
       if (input.isNotEmpty) {
         input = input.substring(0, input.length - 1);
       }
@@ -93,7 +95,8 @@ class _MyCalculatorState extends State<MyCalculator> {
           output = math
               .log(int.parse(input.replaceAll("log(", '').replaceAll(")", '')))
               .toStringAsFixed(2);
-        } else if (userinput.contains("%")) {
+        }
+        else if (userinput.contains("%")) {
           List<String> operators = ['+', '-', 'x', '/', '^'];
           bool containsOperator = operators.any((op) => input.contains(op));
 
@@ -110,7 +113,8 @@ class _MyCalculatorState extends State<MyCalculator> {
             output1 = (double.parse(input.replaceAll("%", "")) / 100)
                 .toStringAsFixed(2);
           }
-        } else if (userinput.contains("!")) {
+        }
+        else if (userinput.contains("!")) {
           List<String> operators = ['+', '-', 'x', '/', '^'];
           bool containsOperator = operators.any((op) => input.contains(op));
 
@@ -128,7 +132,8 @@ class _MyCalculatorState extends State<MyCalculator> {
             output1 =
                 factorial(int.parse(input.replaceAll("!", ""))).toString();
           }
-        } else if (userinput.contains("sin")) {
+        }
+        else if (userinput.contains("sin")) {
           // double degrees = double.tryParse(extractDigit(input))  ?? 0.0;
           // double radians = degrees * (pi / 180); // Convert degrees to radians
           // double sineValue = sin(radians);
@@ -176,11 +181,23 @@ class _MyCalculatorState extends State<MyCalculator> {
           // double radians = degrees * (pi / 180); // Convert degrees to radians
           // double sineValue = tan(radians);
           // output1 = sineValue.toString();
-          String sanitizedInput = sanitizeInput(input);
+          String result1 = input.replaceAll("RND", '');
+          String sanitizedInput = sanitizeInput(result1);
 
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
-        } else {
+        }
+        else if(userinput.contains("RND")){
+          RegExp regExp = RegExp(r'RND\d+(\.\d+)?');
+
+          // Replace all occurrences with 'RND'
+          String result = input.replaceAll("RND", '');
+          print("this is RND $result");
+          // String sanitizedInput = sanitizeInput(result);
+          // double result1 = evaluateExpression(sanitizedInput);
+          // output1 = result1.toString();
+        }
+        else {
           Parser p = Parser();
           Expression exp = p.parse(userinput);
           ContextModel cm = ContextModel();
@@ -199,7 +216,8 @@ class _MyCalculatorState extends State<MyCalculator> {
     } else if (value == "(") {
       input += "(";
     } else if (value == ")") {
-      input += ")";
+      // input += ")";
+      handleInput(value);
     } else if (value == "log") {
       input += "log(";
     } else if (value == "EXP") {
@@ -213,13 +231,13 @@ class _MyCalculatorState extends State<MyCalculator> {
       }
     } else if (value == "M-") {
       // Subtract current output value from memory
-      if (output.isNotEmpty && output != 'Error') {
+      if (output1.isNotEmpty && output1 != 'Error') {
         memory -= double.parse(input);
         mMinusValue = memory;
-        if (output == '0.0') {
-          output = '0.0';
+        if (output1 == '0.0') {
+          output1 = '0.0';
         } else {
-          output = mMinusValue.toString();
+          output1 = mMinusValue.toString();
         }
       }
     } else if (value == "MR") {
@@ -318,11 +336,12 @@ class _MyCalculatorState extends State<MyCalculator> {
       input = '$input%';
       // input = (double.parse(input) / 100).toString();
     } else if (value == "Sin") {
-      input += "sin(";
+      // input += "sin(";
+       handleInput("sin");
     } else if (value == "Cos") {
-      input += "cos(";
+      handleInput("cos");
     } else if (value == "Tan") {
-      input += "tan(";
+      handleInput("tan");
     }else if (value == "sin-¹") {
       input += "sin-¹(";
     } else if (value == "cos-¹") {
@@ -336,101 +355,190 @@ class _MyCalculatorState extends State<MyCalculator> {
       input = '-$input';
       }
 
+    } else if(value == "RND"){
+
+      handleInput(value);
     } else {
       handleInput(value);
     }
 
     setState(() {});
   }
+  bool insideTrigFunction = false;
   void handleInput(String value) {
-    if (value == "Sin" || value == "Cos" || value == "Tan") {
+    // If the input is a trigonometric function, set the flag and append the function
+    if (value == "sin" || value == "cos" || value == "tan") {
       input += "$value(";
-    } else if (value == ")" || value == "°") {
+      insideTrigFunction = true;
+    } else if (value == ")") {
       input += value;
+      insideTrigFunction = false;
+    } else if(value == "RND"){
+      print("this is random");
+      input += Random().nextDouble().toStringAsFixed(9);
     } else {
-      // Handle numeric input or operators
-      // input += value;
-
-      // Check if we need to append the degree symbol
-      if (value == "Sin" || value == "Cos" || value == "Tan") {
-        input += "$value(";
-      } else if (value == ")" || value == "°") {
-        // Directly append parentheses or degree symbol if pressed
-        input += value;
+      // If inside a trigonometric function, append the value and degree symbol if it's a number
+      if (insideTrigFunction && RegExp(r'\d$').hasMatch(value)) {
+        input += value + "°";
       } else {
-        // Handle numeric input or operators
         input += value;
-
-        // Check if we need to append the degree symbol and closing parenthesis
-        if ((input.contains("sin(") ||
-            input.contains("cos(") ||
-            input.contains("tan(")) &&
-            !input.endsWith("°)") &&
-            RegExp(r'\d$').hasMatch(input) &&  // Check if ends with a digit
-            !RegExp(r'[+\-*/]$').hasMatch(input.substring(input.length - 2, input.length - 1))) {
-          // Add degree symbol and closing parenthesis if the last character is a digit and previous character is not an arithmetic operator
-          input += "°)";
-        }
       }
     }
 
-    print(input); // For debugging
+    print("input $input"); // For debugging
+  }
+
+
+
+
+
+
+  double evaluateInnerExpression(String expression) {
+    // Replace degree symbols
+    expression = expression.replaceAll('°', '');
+
+    // Evaluate the arithmetic expression
+    try {
+      print("Evaluating Inner Expression: $expression");
+      final expressionObject = ex.Expression.parse(expression);
+      final evaluator = const ex.ExpressionEvaluator();
+      // Ensure result is double
+      var result = evaluator.eval(expressionObject, {});
+      if (result is int) {
+        result = result.toDouble(); // Convert int to double
+      }
+      return result as double;
+    } catch (e) {
+      print("Error evaluating inner expression: $e");
+      return double.nan;
+    }
+  }
+
+  double evaluateTrigonometricFunction(String function, double valueInDegrees) {
+    double result;
+    double valueInRadians = valueInDegrees * (pi / 180);
+
+    switch (function) {
+      case 'sin':
+        result = sin(valueInRadians);
+        break;
+      case 'cos':
+        result = cos(valueInRadians);
+        break;
+      case 'tan':
+        result = tan(valueInRadians);
+        break;
+      default:
+        throw ArgumentError('Unsupported function: $function');
+    }
+
+    return result;
+  }
+
+  double evaluateInverseTrigonometricFunction(String function, double valueInDegrees) {
+    double result;
+    double valueInRadians = valueInDegrees * (pi / 180);
+
+    switch (function) {
+      case 'sin-1':
+        result = asin(valueInRadians);
+        break;
+      case 'cos-1':
+        result = acos(valueInRadians);
+        break;
+      case 'tan-1':
+        result = atan(valueInRadians);
+        break;
+      default:
+        throw ArgumentError('Unsupported function: $function');
+    }
+
+    return result;
   }
 
   String sanitizeInput(String input) {
-    // Convert sin(), cos(), tan(), sin⁻¹(), cos⁻¹(), and tan⁻¹() functions to their computed values
-    String sanitized = input
-        .replaceAllMapped(RegExp(r'sin\((\d+)°\)'), (match) {
-      double degrees = double.parse(match.group(1)!);
-      double radians = degrees * (pi / 180);
-      double sinValue = sin(radians);
-      return sinValue.toString();
-    })
-        .replaceAllMapped(RegExp(r'cos\((\d+)°\)'), (match) {
-      double degrees = double.parse(match.group(1)!);
-      double radians = degrees * (pi / 180);
-      double cosValue = cos(radians);
+    // Process cosine
+    input = input.replaceAllMapped(RegExp(r'cos\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double totalDegrees = evaluateInnerExpression(innerExpression);
+      double cosValue = evaluateTrigonometricFunction('cos', totalDegrees);
       return cosValue.toString();
-    })
-        .replaceAllMapped(RegExp(r'tan\((\d+)°\)'), (match) {
-      double degrees = double.parse(match.group(1)!);
-      double radians = degrees * (pi / 180);
-      double tanValue = tan(radians);
-      return tanValue.toString();
-    })
-        .replaceAllMapped(RegExp(r'sin-¹\(([^)]+)\)'), (match) {
-      double value = double.parse(match.group(1)!);
-      double asinValue = asin(value);
-      return asinValue.toString();
-    })
-        .replaceAllMapped(RegExp(r'cos-¹\(([^)]+)\)'), (match) {
-      double value = double.parse(match.group(1)!);
-      double acosValue = acos(value);
-      return acosValue.toString();
-    })
-        .replaceAllMapped(RegExp(r'tan-¹\(([^)]+)\)'), (match) {
-      double value = double.parse(match.group(1)!);
-      double atanValue = atan(value);
-      return atanValue.toString();
     });
 
+    // Process sine
+    input = input.replaceAllMapped(RegExp(r'sin\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double totalDegrees = evaluateInnerExpression(innerExpression);
+      double sinValue = evaluateTrigonometricFunction('sin', totalDegrees);
+      return sinValue.toString();
+    });
+
+    // Process tangent
+    input = input.replaceAllMapped(RegExp(r'tan\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double totalDegrees = evaluateInnerExpression(innerExpression);
+      double tanValue = evaluateTrigonometricFunction('tan', totalDegrees);
+      return tanValue.toString();
+    });
+
+    // Process inverse sine
+    input = input.replaceAllMapped(RegExp(r'sin-¹\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double totalDegrees = evaluateInnerExpression(innerExpression);
+      double sinInverseValue = evaluateInverseTrigonometricFunction('sin-1', totalDegrees);
+      return sinInverseValue.toString();
+    });
+
+    // Process inverse cosine
+    input = input.replaceAllMapped(RegExp(r'cos-¹\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double totalDegrees = evaluateInnerExpression(innerExpression);
+      double cosInverseValue = evaluateInverseTrigonometricFunction('cos-1', totalDegrees);
+      return cosInverseValue.toString();
+    });
+
+    // Process inverse tangent
+    input = input.replaceAllMapped(RegExp(r'tan-¹\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double totalDegrees = evaluateInnerExpression(innerExpression);
+      double tanInverseValue = evaluateInverseTrigonometricFunction('tan-1', totalDegrees);
+      return tanInverseValue.toString();
+    });
+
+    // Process RND function
+
+
     // Replace exponentiation operator ^ with Dart's power function operator **
-    sanitized = sanitized.replaceAllMapped(RegExp(r'(\d+)\^(\d+)'), (match) {
+    input = input.replaceAllMapped(RegExp(r'(\d+)\^(\d+)'), (match) {
       double base = double.parse(match.group(1)!);
       double exponent = double.parse(match.group(2)!);
       return pow(base, exponent).toString();
     });
 
-    return sanitized;
+    // Remove any remaining degree symbols
+    input = input.replaceAll('°', '');
+
+    return input;
   }
 
   double evaluateExpression(String input) {
-    // Parse and evaluate the expression
-    ex.Expression expression = ex.Expression.parse(input);
-    final evaluator = const ex.ExpressionEvaluator();
-    var result = evaluator.eval(expression, {});
-    return result;
+    try {
+      // Debug: print the expression to ensure it's correctly formatted
+      print("Evaluating Expression: $input");
+
+      final expressionObject = ex.Expression.parse(input);
+      final evaluator = const ex.ExpressionEvaluator();
+      var result = evaluator.eval(expressionObject, {});
+      return result;
+    } catch (e) {
+      print("Error parsing expression: $e");
+      return double.nan;
+    }
   }
+
+
+
+
   String extractDigit(String input) {
     RegExp regExp = RegExp(r'cos\((\d+)°\)');
     Match? match = regExp.firstMatch(input);
@@ -528,10 +636,10 @@ class _MyCalculatorState extends State<MyCalculator> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            height: 64,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             width: MediaQuery.of(context).size.width,
             color: HexColor("F3F6F9"),
-            child: Padding(padding: EdgeInsets.only(right: 10), child: globalText24(text: input, alignment: Alignment.centerRight, fontWeight: FontWeight.normal)),
+            child: Padding(padding: EdgeInsets.only(right: 10), child: globalText24(text: input.replaceAll("RND", ''), alignment: Alignment.centerRight, fontWeight: FontWeight.normal, visibleOrNot: true)),
           ),
           Container(
             height: 64,

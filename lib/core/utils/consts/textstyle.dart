@@ -84,13 +84,14 @@ globalText24(
     {required String text,
     Alignment? alignment,
     Color? color,
-    FontWeight? fontWeight}) {
+    FontWeight? fontWeight, bool? visibleOrNot}) {
   return Align(
     alignment: alignment ?? Alignment.centerLeft,
     child: SizedBox(
       child: Text(
         text,
-        overflow: TextOverflow.ellipsis,
+        overflow: visibleOrNot == true ? TextOverflow.visible : TextOverflow.ellipsis,
+
         style: GoogleFonts.poppins(
           letterSpacing: 0.2,
           color: color ?? Colors.black,
