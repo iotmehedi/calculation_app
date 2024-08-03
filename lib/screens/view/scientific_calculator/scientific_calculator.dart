@@ -92,9 +92,19 @@ class _MyCalculatorState extends State<MyCalculator> {
         userinput = userinput.replaceAll("x", "*");
 
         if (userinput.contains("logBase")) {
-          output = math
-              .log(int.parse(input.replaceAll("log(", '').replaceAll(")", '')))
-              .toStringAsFixed(2);
+          String sanitizedInput = sanitizeInput(input);
+
+          double result = evaluateExpression(sanitizedInput);
+          output = result.toString();
+        } else if(input.contains("^(1/3)")){
+          String sanitizedExpression = sanitizeInput(input);
+          double result = evaluateInnerExpression(sanitizedExpression);
+          output = result.toString();
+        }else if(input.contains("√")){
+          String sanitizedExpression = sanitizeInput(input);
+          double result = evaluateInnerExpression(sanitizedExpression);
+          print("result make: $result");
+          output = result.toString();
         }
         else if (userinput.contains("%")) {
           List<String> operators = ['+', '-', 'x', '/', '^'];
@@ -275,7 +285,7 @@ class _MyCalculatorState extends State<MyCalculator> {
         // Parser p = Parser();
         // input = input.replaceAll("∛", "^(1/3)");
 
-        input = '($input)^(1/3)';
+        input = '$input^(1/3)';
         // exp = p.parse('(' + input + ')^(1/3)');
         // ContextModel cm = ContextModel();
         // cm.bindVariable(Variable('pi'), Number(math.pi));
@@ -292,7 +302,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       if (output == '0') {
         input = 'Error';
       } else {
-        input = '√';
+        input += '√';
       }
     } else if (value == "ln") {
       input += "ln("; // Natural log function
@@ -393,6 +403,17 @@ class _MyCalculatorState extends State<MyCalculator> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
   double evaluateInnerExpression(String expression) {
     // Replace degree symbols
     expression = expression.replaceAll('°', '');
@@ -456,6 +477,22 @@ class _MyCalculatorState extends State<MyCalculator> {
     return result;
   }
 
+  double evaluateNaturalLogarithm(double value) {
+    return log(value);
+  }
+
+  double evaluateCommonLogarithm(double value) {
+    return log(value) / ln10;
+  }
+
+  double evaluateSquareRoot(double value) {
+    return sqrt(value);
+  }
+
+  double evaluatePower(double base, double exponent) {
+    return pow(base, exponent).toDouble();
+  }
+
   String sanitizeInput(String input) {
     // Process cosine
     input = input.replaceAllMapped(RegExp(r'cos\(([^)]+)\)'), (match) {
@@ -505,8 +542,37 @@ class _MyCalculatorState extends State<MyCalculator> {
       return tanInverseValue.toString();
     });
 
-    // Process RND function
+    // Process natural logarithm
+    input = input.replaceAllMapped(RegExp(r'ln\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double innerValue = evaluateInnerExpression(innerExpression);
+      double lnValue = evaluateNaturalLogarithm(innerValue);
+      return lnValue.toString();
+    });
 
+    // Process common logarithm (base 10)
+    input = input.replaceAllMapped(RegExp(r'log\(([^)]+)\)'), (match) {
+      String innerExpression = match.group(1)!;
+      double innerValue = evaluateInnerExpression(innerExpression);
+      double logValue = evaluateCommonLogarithm(innerValue);
+      return logValue.toString();
+    });
+
+    // Process square root
+    input = input.replaceAllMapped(RegExp(r'√(\d+(\.\d+)?)'), (match) {
+      double value = double.parse(match.group(1)!);
+      double sqrtValue = evaluateSquareRoot(value);
+      return sqrtValue.toString();
+    });
+
+    // Process fractional exponentiation (e.g., a^(1/b))
+    input = input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?|\d+(\.\d+)?\^\d+(\.\d+)?|\d+\.\d+|\d+)\^\((\d+)/(\d+)\)'), (match) {
+      double base = evaluateInnerExpression(match.group(1)!);
+      double numerator = double.parse(match.group(5)!);
+      double denominator = double.parse(match.group(6)!);
+      double exponent = numerator / denominator;
+      return evaluatePower(base, exponent).toString();
+    });
 
     // Replace exponentiation operator ^ with Dart's power function operator **
     input = input.replaceAllMapped(RegExp(r'(\d+)\^(\d+)'), (match) {
@@ -521,6 +587,7 @@ class _MyCalculatorState extends State<MyCalculator> {
     return input;
   }
 
+
   double evaluateExpression(String input) {
     try {
       // Debug: print the expression to ensure it's correctly formatted
@@ -529,6 +596,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       final expressionObject = ex.Expression.parse(input);
       final evaluator = const ex.ExpressionEvaluator();
       var result = evaluator.eval(expressionObject, {});
+      print("Result make $result");
       return result;
     } catch (e) {
       print("Error parsing expression: $e");
