@@ -365,7 +365,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       input = '-$input';
       }
 
-    } else if(value == "RND"){
+    }  else if(value == "RND"){
 
       handleInput(value);
     } else {
@@ -493,6 +493,13 @@ class _MyCalculatorState extends State<MyCalculator> {
     return pow(base, exponent).toDouble();
   }
 
+  double evaluateReciprocal(double value) {
+    if (value == 0) {
+      throw ArgumentError('Division by zero is not allowed.');
+    }
+    return 1 / value;
+  }
+
   String sanitizeInput(String input) {
     // Process cosine
     input = input.replaceAllMapped(RegExp(r'cos\(([^)]+)\)'), (match) {
@@ -579,6 +586,12 @@ class _MyCalculatorState extends State<MyCalculator> {
       double base = double.parse(match.group(1)!);
       double exponent = double.parse(match.group(2)!);
       return pow(base, exponent).toString();
+    });
+
+    // Process reciprocal (1/x)
+    input = input.replaceAllMapped(RegExp(r'1/(\d+(\.\d+)?)'), (match) {
+      double value = double.parse(match.group(1)!);
+      return evaluateReciprocal(value).toString();
     });
 
     // Remove any remaining degree symbols
