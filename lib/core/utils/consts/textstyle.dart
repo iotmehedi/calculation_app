@@ -91,7 +91,6 @@ globalText24(
       child: Text(
         text,
         overflow: visibleOrNot == true ? TextOverflow.visible : TextOverflow.ellipsis,
-
         style: GoogleFonts.poppins(
           letterSpacing: 0.2,
           color: color ?? Colors.black,

@@ -55,12 +55,14 @@ class _MyCalculatorState extends State<MyCalculator> {
   double mMinusValue = 0.0; // M- value
   var radioButtonStatus = "";
   var getRadioButtonValue = '';
+  var isHaveOrOrNot = '';
 
   _onButtonClicked(value) {
     if (value == "AC") {
       input = '';
       output = '';
       output1 = '';
+      isHaveOrOrNot = '';
       memory = 0.0;
       memoryValue = 0.0;
       mrValue = 0.0;
@@ -76,10 +78,11 @@ class _MyCalculatorState extends State<MyCalculator> {
         // try{
         userinput = input;
         userinput = userinput.replaceAll('÷', '/');
+        userinput = userinput.replaceAll('x', '*');
         userinput = userinput.replaceAll('e', 'e^(1)');
         // userinput = userinput.replaceAll("log", "logBase");
         // userinput = userinput.replaceAll("exp", "expBase");
-        userinput = userinput.replaceAll("3√x", "^(1/3)");
+        // userinput = userinput.replaceAll("3√x", "^(1/3)");
         userinput = userinput.replaceAll("log", "logBase");
 
         userinput =
@@ -93,17 +96,17 @@ class _MyCalculatorState extends State<MyCalculator> {
 
           double result = evaluateExpression(sanitizedInput);
           output = result.toString();
-        } else if(input.contains("^(1/3)")){
+        } else if (input.contains("^(1/3)")) {
           String sanitizedExpression = sanitizeInput(input);
           double result = evaluateInnerExpression(sanitizedExpression);
+          output1 = result.toString();
           output = result.toString();
-        }else if(input.contains("√")){
+        } else if (input.contains("√")) {
           String sanitizedExpression = sanitizeInput(input);
           double result = evaluateInnerExpression(sanitizedExpression);
           print("result make: $result");
           output = result.toString();
-        }
-        else if (userinput.contains("%")) {
+        } else if (userinput.contains("%")) {
           List<String> operators = ['+', '-', 'x', '/', '^'];
           bool containsOperator = operators.any((op) => input.contains(op));
 
@@ -120,15 +123,19 @@ class _MyCalculatorState extends State<MyCalculator> {
             output1 = (double.parse(input.replaceAll("%", "")) / 100)
                 .toStringAsFixed(2);
           }
-        }
-        else if (userinput.contains("!")) {
+        } else if (userinput.contains("!")) {
           String sanitizedInput = sanitizeInput(input);
           double result = evaluateInnerExpression(sanitizedInput);
           output1 = result.toString();
-        }
-        else if (userinput.contains("sin")) {
+        }else if (userinput.contains("^(1/3)")) {
+          String sanitizedInput = sanitizeInput(input);
+          double result = evaluateInnerExpression(sanitizedInput);
+          output1 = result.toString();
+        } else if (userinput.contains("sin")) {
+          print("this is value sin");
           String sanitizedInput = sanitizeInput(input);
           double result = evaluateExpression(sanitizedInput);
+          output = result.toString();
           output1 = result.toString();
         } else if (userinput.contains("cos")) {
           String sanitizedInput = sanitizeInput(input);
@@ -138,7 +145,7 @@ class _MyCalculatorState extends State<MyCalculator> {
           String sanitizedInput = sanitizeInput(input);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
-        }else if (userinput.contains("sin-¹")) {
+        } else if (userinput.contains("sin-¹")) {
           String sanitizedInput = sanitizeInput(input);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
@@ -151,17 +158,27 @@ class _MyCalculatorState extends State<MyCalculator> {
           String sanitizedInput = sanitizeInput(result1);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
-        }
-        else if(userinput.contains("±")){
-         setState(() {
-           String sanitizedInput = sanitizeInput(input);
-         });
-        }else if(userinput.contains("MR") || userinput.contains("M+") || userinput.contains("M-")){
+        } else if(userinput.contains("eˣ")){
+          print("this is debug ");
+          String sanitizedInput = sanitizeInput(input);
+          double result = evaluateInnerExpression(sanitizedInput);
+          output = result.toString();
+        } else if (userinput.contains("±")) {
+          setState(() {
+            String sanitizedInput = sanitizeInput(input);
+            output1 = sanitizedInput.toString();
+          });
+        } else if (userinput.contains("MR") ||
+            userinput.contains("M+") ||
+            userinput.contains("M-")) {
           String sanitizedInput = sanitizeInput(input);
           double result = evaluateInnerExpression(sanitizedInput);
           output1 = result.toString();
-        }
-        else {
+        } else if(userinput.contains("±")){
+          String sanitizedInput = sanitizeInput(input);
+          double result = evaluateExpression(sanitizedInput);
+          output1 = result.toString();
+        }else {
           Parser p = Parser();
           Expression exp = p.parse(userinput);
           ContextModel cm = ContextModel();
@@ -195,14 +212,14 @@ class _MyCalculatorState extends State<MyCalculator> {
     } else if (value == "MR") {
       // Recall memory value
       input += "MR";
-      output = memory.toString();
-      mrValue = memory;
-      if (output == '') {
-        output = '0';
-      }
     } else if (value == "Back") {
       // Recall memory value
-      input = input.substring(0, input.length - 1); // to remove one character
+      if(input.isEmpty){
+        input = '';
+      }else{
+        input = input.substring(0, input.length - 1);
+      }
+      // to remove one character
       if (input == '') {
         input = '';
       }
@@ -227,7 +244,7 @@ class _MyCalculatorState extends State<MyCalculator> {
         input = '${input}1/';
       }
     } else if (value == '√x') {
-        input += '√';
+      input += '√';
     } else if (value == "ln") {
       input += "ln("; // Natural log function
     } else if (value == "log") {
@@ -268,35 +285,34 @@ class _MyCalculatorState extends State<MyCalculator> {
       input = '$input%';
     } else if (value == "Sin") {
       // input += "sin(";
-       handleInput("sin");
+      handleInput("sin");
     } else if (value == "Cos") {
       handleInput("cos");
     } else if (value == "Tan") {
       handleInput("tan");
-    }else if (value == "sin-¹") {
+    } else if (value == "sin-¹") {
       input += "sin-¹(";
     } else if (value == "cos-¹") {
       input += "cos-¹(";
     } else if (value == "tan-¹") {
       input += "tan-¹(";
-    } else if(value == "±"){
+    } else if (value == "±") {
       if (output == '0') {
         input = 'Error';
-      }else{
-      input = '$input±';
+      } else {
+        input = '$input±';
       }
-
-    }  else if(value == "RND"){
-
+    } else if (value == "RND") {
       handleInput(value);
-    } else if(value == "y√x"){
-          input += '√';
+    } else if (value == "y√x") {
+      input += '√';
     } else {
       handleInput(value);
     }
 
     setState(() {});
   }
+
   bool insideTrigFunction = false;
   void handleInput(String value) {
     // If the input is a trigonometric function, set the flag and append the function
@@ -306,7 +322,7 @@ class _MyCalculatorState extends State<MyCalculator> {
     } else if (value == ")") {
       input += value;
       insideTrigFunction = false;
-    } else if(value == "RND"){
+    } else if (value == "RND") {
       print("this is random");
       input += Random().nextDouble().toStringAsFixed(9);
     } else {
@@ -322,7 +338,7 @@ class _MyCalculatorState extends State<MyCalculator> {
   }
 
   double evaluateInnerExpression(String expression) {
-    // Replace degree symbols
+    // Replace degree symbols and other custom symbols if necessary
     expression = expression.replaceAll('°', '');
 
     // Evaluate the arithmetic expression
@@ -342,6 +358,10 @@ class _MyCalculatorState extends State<MyCalculator> {
     }
   }
 
+
+  double evaluatePower(double base, double exponent) {
+    return pow(base, exponent).toDouble();
+  }
   double evaluateTrigonometricFunction(String function, double valueInDegrees) {
     double result;
     double valueInRadians = valueInDegrees * (pi / 180);
@@ -363,7 +383,8 @@ class _MyCalculatorState extends State<MyCalculator> {
     return result;
   }
 
-  double evaluateInverseTrigonometricFunction(String function, double valueInDegrees) {
+  double evaluateInverseTrigonometricFunction(
+      String function, double valueInDegrees) {
     double result;
     double valueInRadians = valueInDegrees * (pi / 180);
 
@@ -409,7 +430,8 @@ class _MyCalculatorState extends State<MyCalculator> {
   }
 
   int evaluateFactorial(int value) {
-    if (value < 0) throw ArgumentError('Factorial is not defined for negative numbers');
+    if (value < 0)
+      throw ArgumentError('Factorial is not defined for negative numbers');
     if (value == 0 || value == 1) return 1;
     int result = 1;
     for (int i = 2; i <= value; i++) {
@@ -417,6 +439,7 @@ class _MyCalculatorState extends State<MyCalculator> {
     }
     return result;
   }
+
 //for m+
   void addToMemory(double value) {
     memoryValue += value;
@@ -436,9 +459,6 @@ class _MyCalculatorState extends State<MyCalculator> {
   }
 
 
-  double evaluatePower(double base, double exponent) {
-    return pow(base, exponent).toDouble();
-  }
 
   double evaluateReciprocal(double value) {
     if (value == 0) {
@@ -446,8 +466,11 @@ class _MyCalculatorState extends State<MyCalculator> {
     }
     return 1 / value;
   }
-
+  double evaluateMemoryRecall() {
+    return 3.5;
+  }
   String sanitizeInput(String input) {
+    input = input.replaceAll("x", "*").replaceAll('÷', '/');
     // Process cosine
     input = input.replaceAllMapped(RegExp(r'cos\(([^)]+)\)'), (match) {
       String innerExpression = match.group(1)!;
@@ -455,9 +478,9 @@ class _MyCalculatorState extends State<MyCalculator> {
       double cosValue = evaluateTrigonometricFunction('cos', totalDegrees);
       return cosValue.toString();
     });
-
+print("hudai");
     // Process sine
-    input = input.replaceAllMapped(RegExp(r'sin\(([^)]+)\)'), (match) {
+    input = input.replaceAllMapped(RegExp(r'sin\(([^)x]+)\)'), (match) {
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
       double sinValue = evaluateTrigonometricFunction('sin', totalDegrees);
@@ -476,7 +499,8 @@ class _MyCalculatorState extends State<MyCalculator> {
     input = input.replaceAllMapped(RegExp(r'sin-¹\(([^)]+)\)'), (match) {
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
-      double sinInverseValue = evaluateInverseTrigonometricFunction('sin-1', totalDegrees);
+      double sinInverseValue =
+          evaluateInverseTrigonometricFunction('sin-1', totalDegrees);
       return sinInverseValue.toString();
     });
 
@@ -484,7 +508,8 @@ class _MyCalculatorState extends State<MyCalculator> {
     input = input.replaceAllMapped(RegExp(r'cos-¹\(([^)]+)\)'), (match) {
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
-      double cosInverseValue = evaluateInverseTrigonometricFunction('cos-1', totalDegrees);
+      double cosInverseValue =
+          evaluateInverseTrigonometricFunction('cos-1', totalDegrees);
       return cosInverseValue.toString();
     });
 
@@ -492,7 +517,8 @@ class _MyCalculatorState extends State<MyCalculator> {
     input = input.replaceAllMapped(RegExp(r'tan-¹\(([^)]+)\)'), (match) {
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
-      double tanInverseValue = evaluateInverseTrigonometricFunction('tan-1', totalDegrees);
+      double tanInverseValue =
+          evaluateInverseTrigonometricFunction('tan-1', totalDegrees);
       return tanInverseValue.toString();
     });
 
@@ -520,7 +546,10 @@ class _MyCalculatorState extends State<MyCalculator> {
     });
 
     // Process fractional exponentiation (e.g., a^(1/b))
-    input = input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?|\d+(\.\d+)?\^\d+(\.\d+)?|\d+\.\d+|\d+)\^\((\d+)/(\d+)\)'), (match) {
+    input = input.replaceAllMapped(
+        RegExp(
+            r'(\d+(\.\d+)?|\d+(\.\d+)?\^\d+(\.\d+)?|\d+\.\d+|\d+)\^\((\d+)/(\d+)\)'),
+        (match) {
       double base = evaluateInnerExpression(match.group(1)!);
       double numerator = double.parse(match.group(5)!);
       double denominator = double.parse(match.group(6)!);
@@ -562,21 +591,23 @@ class _MyCalculatorState extends State<MyCalculator> {
     });
 
     input = input.replaceAllMapped(RegExp(r'M\+'), (match) {
-      double lastResult = evaluateInnerExpression(input.substring(0, match.start));
+      double lastResult =
+          evaluateInnerExpression(input.substring(0, match.start));
       addToMemory(lastResult);
       return '';
     });
 
     // Handle M-
     input = input.replaceAllMapped(RegExp(r'M-'), (match) {
-      double lastResult = evaluateInnerExpression(input.substring(0, match.start));
+      double lastResult =
+          evaluateInnerExpression(input.substring(0, match.start));
       subtractFromMemory(lastResult);
       return '';
     });
 
-    // Handle MR
+    // Process memory recall (MR)
     input = input.replaceAllMapped(RegExp(r'MR'), (match) {
-      return recallMemory().toString();
+      return evaluateMemoryRecall().toString();
     });
 
     // Handle RAD
@@ -602,10 +633,21 @@ class _MyCalculatorState extends State<MyCalculator> {
     });
 
 // Handle ± (plus-minus)
-    input = input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?)±(\d+(\.\d+)?)'), (match) {
+    input =
+        input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?)±(\d+(\.\d+)?)'), (match) {
       double base = double.parse(match.group(1)!);
       double offset = double.parse(match.group(3)!);
       return '${base + offset} or ${base - offset}';
+    });
+
+
+    // Handle expressions like "2^(1/3)"
+    input = input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?|\d+)\^\((\d+)/(\d+)\)'), (match) {
+      double base = double.parse(match.group(1)!);
+      double numerator = double.parse(match.group(3)!);
+      double denominator = double.parse(match.group(4)!);
+      double exponent = numerator / denominator;
+      return evaluatePower(base, exponent).toString();
     });
     // Remove any remaining degree symbols
     input = input.replaceAll('°', '');
@@ -613,17 +655,42 @@ class _MyCalculatorState extends State<MyCalculator> {
     return input;
   }
 
-
   double evaluateExpression(String input) {
     try {
+
       // Debug: print the expression to ensure it's correctly formatted
       print("Evaluating Expression: $input");
+      if (input.contains("or")) {
+        // Split the input on "or" to handle multiple possible expressions
+        List<String> parts = input.split(RegExp(r'\sor\s'));
 
-      final expressionObject = ex.Expression.parse(input);
-      final evaluator = const ex.ExpressionEvaluator();
-      var result = evaluator.eval(expressionObject, {});
-      print("Result make $result");
-      return result;
+        if (parts.length != 2) {
+          print("Unexpected format in the expression.");
+          return double.nan;
+        }
+
+        // Parse and evaluate both expressions
+        final expressionObject1 = ex.Expression.parse(parts[0].trim());
+        final expressionObject2 = ex.Expression.parse(parts[1].trim());
+        final evaluator = const ex.ExpressionEvaluator();
+        var result1 = evaluator.eval(expressionObject1, {});
+        var result2 = evaluator.eval(expressionObject2, {});
+        print("this is result $result2");
+        print("this is result $result1");
+
+        isHaveOrOrNot = "${double.tryParse(result1.toString())?.toStringAsFixed(4).toString()} or ${double.tryParse(result2.toString())?.toStringAsFixed(4).toString()}";
+        // Handle the case where both results need to be returned or selected
+        // For now, we'll just return the first result for demonstration purposes
+        return result1 is num ? result1.toDouble() : double.nan;
+      }else{
+        isHaveOrOrNot = '';
+        final expressionObject = ex.Expression.parse(input);
+        final evaluator = const ex.ExpressionEvaluator();
+        var result = evaluator.eval(expressionObject, {});
+        print("Result make $result");
+        return result;
+      }
+
     } catch (e) {
       print("Error parsing expression: $e");
       return double.nan;
@@ -659,6 +726,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       return '($base)^$exponent';
     });
   }
+
   String formatResult(String input) {
     // Try parsing the input to a double
     double? value = double.tryParse(input);
@@ -674,6 +742,7 @@ class _MyCalculatorState extends State<MyCalculator> {
 
     return result;
   }
+
   @override
   @override
   Widget build(BuildContext context) {
@@ -692,24 +761,45 @@ class _MyCalculatorState extends State<MyCalculator> {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             width: MediaQuery.of(context).size.width,
             color: HexColor("F3F6F9"),
-            child: Padding(padding: EdgeInsets.only(right: 10), child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: globalText24(text: input.replaceAll("RND", ''), alignment: Alignment.centerRight, fontWeight: FontWeight.normal, visibleOrNot: true),)),
+            child: Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: SingleChildScrollView(
+                reverse: true,
+                scrollDirection: Axis.horizontal,
+                child: globalText24(
+                    text: input.replaceAll("RND", ''),
+                    alignment: Alignment.centerRight,
+                    fontWeight: FontWeight.normal,
+                    visibleOrNot: true),
+              ),
+            ),
           ),
           Container(
-            height: 64,
-            width: MediaQuery.of(context).size.width,
-            color: HexColor("0F182E"),
-            child: Padding(padding: const EdgeInsets.only(right: 10), child: input.contains("±")? globalText24(text:output1.toString(), alignment: Alignment.centerRight, fontWeight: FontWeight.normal, color: Colors.white) : globalText24(text: input == userinput
-                ? formatResult(output1)
-                : formatResult(output), alignment: Alignment.centerRight, fontWeight: FontWeight.normal, color: Colors.white),)
-          ),
+              height: 64,
+              width: MediaQuery.of(context).size.width,
+              color: HexColor("0F182E"),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: isHaveOrOrNot.isNotEmpty
+                    ? globalText24(
+                        text: isHaveOrOrNot.toString(),
+                        alignment: Alignment.centerRight,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white)
+                    : globalText24(
+                        text: input == userinput
+                            ? formatResult(output1)
+                            : formatResult(output),
+                        alignment: Alignment.centerRight,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white),
+              )),
           20.ph,
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                            children: [
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
                 Row(
                   children: [
                     button("Sin", HexColor("2E250F"), Colors.white),
@@ -726,7 +816,6 @@ class _MyCalculatorState extends State<MyCalculator> {
                               radioButtonStatus = "1";
                               input += "RAD(";
                             });
-
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -773,7 +862,7 @@ class _MyCalculatorState extends State<MyCalculator> {
                               radioButtonStatus = "2";
                             });
                             // if (output.isNotEmpty && output != 'Error') {
-                              input += "°";
+                            input += "°";
                             // }
                           },
                           child: Row(
@@ -959,9 +1048,9 @@ class _MyCalculatorState extends State<MyCalculator> {
                 //     button("+", Colors.black, Colors.orangeAccent),
                 //   ],
                 // ),
-                            ],
-                          ),
-              ))
+              ],
+            ),
+          ))
         ],
       ),
     );
