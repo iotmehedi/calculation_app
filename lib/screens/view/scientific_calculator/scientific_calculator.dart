@@ -43,7 +43,8 @@ class MyCalculator extends StatefulWidget {
 class _MyCalculatorState extends State<MyCalculator> {
   double num1 = 0.0;
   double num2 = 0.0;
-  var input = '';
+  var input = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   var input1 = '';
   var output = '';
   var output1 = '';
@@ -56,10 +57,29 @@ class _MyCalculatorState extends State<MyCalculator> {
   var radioButtonStatus = "";
   var getRadioButtonValue = '';
   var isHaveOrOrNot = '';
+  @override
+  void initState() {
+    super.initState();
+    input.addListener(_scrollToEnd);
+  }
 
+  @override
+  void dispose() {
+    input.removeListener(_scrollToEnd);
+    input.dispose();
+    _scrollController.dispose();
+    _focusScopeNode.dispose();
+    super.dispose();
+  }
+
+  void _scrollToEnd() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
+  }
   _onButtonClicked(value) {
     if (value == "AC") {
-      input = '';
+      input.text = '';
       output = '';
       output1 = '';
       isHaveOrOrNot = '';
@@ -69,14 +89,14 @@ class _MyCalculatorState extends State<MyCalculator> {
       mPlusValue = 0.0;
       mMinusValue = 0.0;
     } else if (value == "DEL") {
-      if (input.isNotEmpty) {
-        input = input.substring(0, input.length - 1);
+      if (input.text.isNotEmpty) {
+        input.text = input.text.substring(0, input.text.length - 1);
       }
     } else if (value == "=" || value == "Ans") {
       print("the value is $value");
-      if (input.isNotEmpty) {
+      if (input.text.isNotEmpty) {
         // try{
-        userinput = input;
+        userinput = input.text;
         userinput = userinput.replaceAll('÷', '/');
         userinput = userinput.replaceAll('x', '*');
         userinput = userinput.replaceAll('e', 'e^(1)');
@@ -87,31 +107,32 @@ class _MyCalculatorState extends State<MyCalculator> {
 
         userinput =
             userinput.replaceAllMapped(RegExp(r'√(\d+(\.\d+)?)'), (match) {
-          return "(${match[1]})^(1/2)";
-        });
+              return "(${match[1]})^(1/2)";
+            });
         userinput = userinput.replaceAll("x", "*");
 
         if (userinput.contains("logBase")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
 
           double result = evaluateExpression(sanitizedInput);
           output = result.toString();
-        } else if (input.contains("^(1/3)")) {
-          String sanitizedExpression = sanitizeInput(input);
+        } else if (input.text.contains("^(1/3)")) {
+          String sanitizedExpression = sanitizeInput(input.text);
           double result = evaluateInnerExpression(sanitizedExpression);
           output1 = result.toString();
           output = result.toString();
-        } else if (input.contains("√")) {
-          String sanitizedExpression = sanitizeInput(input);
+        } else if (input.text.contains("√")) {
+          String sanitizedExpression = sanitizeInput(input.text);
           double result = evaluateInnerExpression(sanitizedExpression);
           print("result make: $result");
           output = result.toString();
         } else if (userinput.contains("%")) {
           List<String> operators = ['+', '-', 'x', '/', '^'];
-          bool containsOperator = operators.any((op) => input.contains(op));
+          bool containsOperator =
+          operators.any((op) => input.text.contains(op));
 
           if (containsOperator) {
-            String convertedInput = convertPercentages(input);
+            String convertedInput = convertPercentages(input.text);
 
             // Parse the expression
             ex.Expression expression = ex.Expression.parse(convertedInput);
@@ -120,65 +141,61 @@ class _MyCalculatorState extends State<MyCalculator> {
             final evaluator = const ex.ExpressionEvaluator();
             output1 = evaluator.eval(expression, {}).toString();
           } else {
-            output1 = (double.parse(input.replaceAll("%", "")) / 100)
+            output1 = (double.parse(input.text.replaceAll("%", "")) / 100)
                 .toStringAsFixed(2);
           }
         } else if (userinput.contains("!")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateInnerExpression(sanitizedInput);
           output1 = result.toString();
-        }else if (userinput.contains("^(1/3)")) {
-          String sanitizedInput = sanitizeInput(input);
+        } else if (userinput.contains("^(1/3)")) {
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateInnerExpression(sanitizedInput);
           output1 = result.toString();
         } else if (userinput.contains("sin")) {
           print("this is value sin");
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateExpression(sanitizedInput);
           output = result.toString();
           output1 = result.toString();
         } else if (userinput.contains("cos")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
         } else if (userinput.contains("tan")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
         } else if (userinput.contains("sin-¹")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
         } else if (userinput.contains("cos-¹")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
         } else if (userinput.contains("tan-¹")) {
-          String result1 = input.replaceAll("RND", '');
+          String result1 = input.text.replaceAll("RND", '');
           String sanitizedInput = sanitizeInput(result1);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
-        } else if(userinput.contains("eˣ")){
+          output = result.toString();
+        } else if (userinput.contains("eˣ")) {
           print("this is debug ");
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateInnerExpression(sanitizedInput);
           output = result.toString();
-        } else if (userinput.contains("±")) {
-          setState(() {
-            String sanitizedInput = sanitizeInput(input);
-            output1 = sanitizedInput.toString();
-          });
         } else if (userinput.contains("MR") ||
             userinput.contains("M+") ||
             userinput.contains("M-")) {
-          String sanitizedInput = sanitizeInput(input);
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateInnerExpression(sanitizedInput);
           output1 = result.toString();
-        } else if(userinput.contains("±")){
-          String sanitizedInput = sanitizeInput(input);
+        } else if (userinput.contains("±")) {
+          String sanitizedInput = sanitizeInput(input.text);
           double result = evaluateExpression(sanitizedInput);
           output1 = result.toString();
-        }else {
+        } else {
           Parser p = Parser();
           Expression exp = p.parse(userinput);
           ContextModel cm = ContextModel();
@@ -195,117 +212,112 @@ class _MyCalculatorState extends State<MyCalculator> {
         // }
       }
     } else if (value == "(") {
-      input += "(";
+      input.text += "(";
     } else if (value == ")") {
-      // input += ")";
+      // input.text += ")";
       handleInput(value);
     } else if (value == "log") {
-      input += "log(";
+      input.text += "log(";
     } else if (value == "EXP") {
-      input += "EXP(";
+      input.text += "EXP(";
     } else if (value == "M+") {
       // Add current output value to memory
-      input += "M+";
+      input.text += "M+";
     } else if (value == "M-") {
       // Subtract current output value from memory
-      input += "M-";
+      input.text += "M-";
     } else if (value == "MR") {
       // Recall memory value
-      input += "MR";
+      input.text += "MR";
     } else if (value == "Back") {
       // Recall memory value
-      if(input.isEmpty){
-        input = '';
-      }else{
-        input = input.substring(0, input.length - 1);
-      }
-      // to remove one character
-      if (input == '') {
-        input = '';
-      }
+      _backspace();
     } else if (value == "π") {
       // if (output.isNotEmpty && output != 'Error') {
       setState(() {
-        input += "3.1415";
+        input.text += "3.1415";
       });
       // }
     } else if (value == "e") {
-      input += "2.72";
+      input.text += "2.72";
     } else if (value == '3√x') {
       if (output == '0') {
         output = 'Error';
       } else {
-        input = '$input^(1/3)';
+        input.text = '${input.text}^(1/3)';
       }
     } else if (value == '1/x') {
       if (output == '0') {
-        input = '1/';
+        input.text = '1/';
       } else {
-        input = '${input}1/';
+        input.text = '${input.text}1/';
       }
     } else if (value == '√x') {
-      input += '√';
+      input.text += '√';
     } else if (value == "ln") {
-      input += "ln("; // Natural log function
+      input.text += "ln("; // Natural log function
     } else if (value == "log") {
-      input += "log("; // Add base log function
+      input.text += "log("; // Add base log function
     } else if (value == 'xʸ') {
       if (output == '0') {
-        input = 'Error';
+        input.text = 'Error';
       } else {
-        input = '$input^';
+        input.text = '${input.text}^';
       }
     } else if (value == 'eˣ') {
       if (output == '0') {
-        input = 'e^';
+        input.text = 'e^';
       } else {
-        input = '${input}e^';
+        input.text = '${input.text}e^';
       }
     } else if (value == '10ˣ') {
       if (output == '0') {
-        input = '10^';
+        input.text = '10^';
       } else {
-        input = '${input}10^';
+        input.text = '${input.text}10^';
       }
     } else if (value == 'x²') {
       if (output == '0') {
-        input = 'Error';
+        input.text = 'Error';
       } else {
-        input = '$input^2';
+        input.text = '${input.text}^2';
       }
     } else if (value == 'x³') {
       if (output == '0') {
-        input = 'Error';
+        input.text = 'Error';
       } else {
-        input = '$input^3';
+        input.text = '${input.text}^3';
       }
     } else if (value == "n!") {
-      input = "$input!";
+      input.text = "${input.text}!";
     } else if (value == "%") {
-      input = '$input%';
+      input.text = '${input.text}%';
     } else if (value == "Sin") {
-      // input += "sin(";
+      // input.text += "sin(";
       handleInput("sin");
     } else if (value == "Cos") {
       handleInput("cos");
     } else if (value == "Tan") {
       handleInput("tan");
     } else if (value == "sin-¹") {
-      input += "sin-¹(";
+      // input.text += "sin-¹(";
+      handleInput("sin-¹(");
     } else if (value == "cos-¹") {
-      input += "cos-¹(";
+      // input.text += "cos-¹";
+      handleInput("cos-¹(");
     } else if (value == "tan-¹") {
-      input += "tan-¹(";
+      // input.text += "tan-¹(";
+      handleInput("tan-¹(");
     } else if (value == "±") {
       if (output == '0') {
-        input = 'Error';
+        input.text = 'Error';
       } else {
-        input = '$input±';
+        input.text = '${input.text}±';
       }
     } else if (value == "RND") {
       handleInput(value);
     } else if (value == "y√x") {
-      input += '√';
+      input.text += '√';
     } else {
       handleInput(value);
     }
@@ -313,28 +325,84 @@ class _MyCalculatorState extends State<MyCalculator> {
     setState(() {});
   }
 
+  void _backspace() {
+    final text = input.text;
+    final selection = input.selection;
+    final int cursorPosition = selection.start;
+
+    if (cursorPosition > 0) {
+      final newText = text.substring(0, cursorPosition - 1) +
+          text.substring(cursorPosition);
+      setState(() {
+        input.text = newText;
+        input.selection = TextSelection.fromPosition(
+            TextPosition(offset: cursorPosition - 1));
+      });
+    }
+  }
+
   bool insideTrigFunction = false;
   void handleInput(String value) {
-    // If the input is a trigonometric function, set the flag and append the function
-    if (value == "sin" || value == "cos" || value == "tan") {
-      input += "$value(";
-      insideTrigFunction = true;
-    } else if (value == ")") {
-      input += value;
-      insideTrigFunction = false;
-    } else if (value == "RND") {
-      print("this is random");
-      input += Random().nextDouble().toStringAsFixed(9);
-    } else {
-      // If inside a trigonometric function, append the value and degree symbol if it's a number
-      if (insideTrigFunction && RegExp(r'\d$').hasMatch(value)) {
-        input += value + "°";
-      } else {
-        input += value;
-      }
+    final currentText = input.text;
+    final selection = input.selection;
+
+    if (selection.start < 0 || selection.end < 0) {
+      // If the selection indices are invalid, set them to the end of the text
+      input.selection = TextSelection.fromPosition(
+        TextPosition(offset: currentText.length),
+      );
     }
 
-    print("input $input"); // For debugging
+    // Update the selection after ensuring it's valid
+    final validSelection = input.selection;
+
+    String newText;
+    if (value == "sin" || value == "cos" || value == "tan") {
+      newText = currentText.replaceRange(
+        validSelection.start,
+        validSelection.end,
+        "$value(",
+      );
+      insideTrigFunction = true;
+    } else if (value == ")") {
+      newText = currentText.replaceRange(
+        validSelection.start,
+        validSelection.end,
+        value,
+      );
+      insideTrigFunction = false;
+    } else if (value == "RND") {
+      newText = currentText.replaceRange(
+        validSelection.start,
+        validSelection.end,
+        Random().nextDouble().toStringAsFixed(9),
+      );
+    } else {
+      // if (insideTrigFunction && RegExp(r'\d$').hasMatch(value)) {
+      //   newText = currentText.replaceRange(
+      //     validSelection.start,
+      //     validSelection.end,
+      //     value + "°",
+      //   );
+      // } else {
+      newText = currentText.replaceRange(
+        validSelection.start,
+        validSelection.end,
+        value,
+      );
+      // }
+    }
+
+    final newSelectionIndex =
+        validSelection.start + newText.length - currentText.length;
+
+    input.value = TextEditingValue(
+      text: newText,
+      selection:
+      TextSelection.fromPosition(TextPosition(offset: newSelectionIndex)),
+    );
+
+    print("input ${input.text}"); // For debugging
   }
 
   double evaluateInnerExpression(String expression) {
@@ -358,10 +426,10 @@ class _MyCalculatorState extends State<MyCalculator> {
     }
   }
 
-
   double evaluatePower(double base, double exponent) {
     return pow(base, exponent).toDouble();
   }
+
   double evaluateTrigonometricFunction(String function, double valueInDegrees) {
     double result;
     double valueInRadians = valueInDegrees * (pi / 180);
@@ -458,17 +526,17 @@ class _MyCalculatorState extends State<MyCalculator> {
     memoryValue -= value;
   }
 
-
-
   double evaluateReciprocal(double value) {
     if (value == 0) {
       throw ArgumentError('Division by zero is not allowed.');
     }
     return 1 / value;
   }
+
   double evaluateMemoryRecall() {
     return 3.5;
   }
+
   String sanitizeInput(String input) {
     input = input.replaceAll("x", "*").replaceAll('÷', '/');
     // Process cosine
@@ -478,7 +546,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       double cosValue = evaluateTrigonometricFunction('cos', totalDegrees);
       return cosValue.toString();
     });
-print("hudai");
+    print("hudai");
     // Process sine
     input = input.replaceAllMapped(RegExp(r'sin\(([^)x]+)\)'), (match) {
       String innerExpression = match.group(1)!;
@@ -500,7 +568,7 @@ print("hudai");
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
       double sinInverseValue =
-          evaluateInverseTrigonometricFunction('sin-1', totalDegrees);
+      evaluateInverseTrigonometricFunction('sin-1', totalDegrees);
       return sinInverseValue.toString();
     });
 
@@ -509,7 +577,7 @@ print("hudai");
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
       double cosInverseValue =
-          evaluateInverseTrigonometricFunction('cos-1', totalDegrees);
+      evaluateInverseTrigonometricFunction('cos-1', totalDegrees);
       return cosInverseValue.toString();
     });
 
@@ -518,7 +586,7 @@ print("hudai");
       String innerExpression = match.group(1)!;
       double totalDegrees = evaluateInnerExpression(innerExpression);
       double tanInverseValue =
-          evaluateInverseTrigonometricFunction('tan-1', totalDegrees);
+      evaluateInverseTrigonometricFunction('tan-1', totalDegrees);
       return tanInverseValue.toString();
     });
 
@@ -549,13 +617,13 @@ print("hudai");
     input = input.replaceAllMapped(
         RegExp(
             r'(\d+(\.\d+)?|\d+(\.\d+)?\^\d+(\.\d+)?|\d+\.\d+|\d+)\^\((\d+)/(\d+)\)'),
-        (match) {
-      double base = evaluateInnerExpression(match.group(1)!);
-      double numerator = double.parse(match.group(5)!);
-      double denominator = double.parse(match.group(6)!);
-      double exponent = numerator / denominator;
-      return evaluatePower(base, exponent).toString();
-    });
+            (match) {
+          double base = evaluateInnerExpression(match.group(1)!);
+          double numerator = double.parse(match.group(5)!);
+          double denominator = double.parse(match.group(6)!);
+          double exponent = numerator / denominator;
+          return evaluatePower(base, exponent).toString();
+        });
 
     // Replace exponentiation operator ^ with Dart's power function operator **
     input = input.replaceAllMapped(RegExp(r'(\d+)\^(\d+)'), (match) {
@@ -592,7 +660,7 @@ print("hudai");
 
     input = input.replaceAllMapped(RegExp(r'M\+'), (match) {
       double lastResult =
-          evaluateInnerExpression(input.substring(0, match.start));
+      evaluateInnerExpression(input.substring(0, match.start));
       addToMemory(lastResult);
       return '';
     });
@@ -600,7 +668,7 @@ print("hudai");
     // Handle M-
     input = input.replaceAllMapped(RegExp(r'M-'), (match) {
       double lastResult =
-          evaluateInnerExpression(input.substring(0, match.start));
+      evaluateInnerExpression(input.substring(0, match.start));
       subtractFromMemory(lastResult);
       return '';
     });
@@ -635,14 +703,14 @@ print("hudai");
 // Handle ± (plus-minus)
     input =
         input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?)±(\d+(\.\d+)?)'), (match) {
-      double base = double.parse(match.group(1)!);
-      double offset = double.parse(match.group(3)!);
-      return '${base + offset} or ${base - offset}';
-    });
-
+          double base = double.parse(match.group(1)!);
+          double offset = double.parse(match.group(3)!);
+          return '${base + offset} or ${base - offset}';
+        });
 
     // Handle expressions like "2^(1/3)"
-    input = input.replaceAllMapped(RegExp(r'(\d+(\.\d+)?|\d+)\^\((\d+)/(\d+)\)'), (match) {
+    input = input.replaceAllMapped(
+        RegExp(r'(\d+(\.\d+)?|\d+)\^\((\d+)/(\d+)\)'), (match) {
       double base = double.parse(match.group(1)!);
       double numerator = double.parse(match.group(3)!);
       double denominator = double.parse(match.group(4)!);
@@ -657,7 +725,6 @@ print("hudai");
 
   double evaluateExpression(String input) {
     try {
-
       // Debug: print the expression to ensure it's correctly formatted
       print("Evaluating Expression: $input");
       if (input.contains("or")) {
@@ -678,11 +745,12 @@ print("hudai");
         print("this is result $result2");
         print("this is result $result1");
 
-        isHaveOrOrNot = "${double.tryParse(result1.toString())?.toStringAsFixed(4).toString()} or ${double.tryParse(result2.toString())?.toStringAsFixed(4).toString()}";
+        isHaveOrOrNot =
+        "${double.tryParse(result1.toString())?.toStringAsFixed(4).toString()} or ${double.tryParse(result2.toString())?.toStringAsFixed(4).toString()}";
         // Handle the case where both results need to be returned or selected
         // For now, we'll just return the first result for demonstration purposes
         return result1 is num ? result1.toDouble() : double.nan;
-      }else{
+      } else {
         isHaveOrOrNot = '';
         final expressionObject = ex.Expression.parse(input);
         final evaluator = const ex.ExpressionEvaluator();
@@ -690,7 +758,6 @@ print("hudai");
         print("Result make $result");
         return result;
       }
-
     } catch (e) {
       print("Error parsing expression: $e");
       return double.nan;
@@ -743,6 +810,8 @@ print("hudai");
     return result;
   }
 
+  FocusNode _focusNode = FocusNode();
+  final FocusScopeNode _focusScopeNode = FocusScopeNode();
   @override
   @override
   Widget build(BuildContext context) {
@@ -758,19 +827,28 @@ print("hudai");
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
             width: MediaQuery.of(context).size.width,
             color: HexColor("F3F6F9"),
             child: Padding(
               padding: EdgeInsets.only(right: 10),
-              child: SingleChildScrollView(
-                reverse: true,
-                scrollDirection: Axis.horizontal,
-                child: globalText24(
-                    text: input.replaceAll("RND", ''),
-                    alignment: Alignment.centerRight,
-                    fontWeight: FontWeight.normal,
-                    visibleOrNot: true),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+                child: TextField(
+                  scrollPadding: EdgeInsets.only(right: 10),
+                  scrollController: _scrollController,
+                  controller: input,
+                  showCursor: true,
+                  maxLines: 1,
+                  minLines: 1,
+                  textAlign: TextAlign.right,
+                  focusNode: _focusScopeNode,
+                  keyboardType: TextInputType.none,
+                  style: TextStyle(fontSize: 24, fontFamily: "Poppins"),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
             ),
           ),
@@ -782,275 +860,275 @@ print("hudai");
                 padding: const EdgeInsets.only(right: 10),
                 child: isHaveOrOrNot.isNotEmpty
                     ? globalText24(
-                        text: isHaveOrOrNot.toString(),
-                        alignment: Alignment.centerRight,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white)
+                    text: isHaveOrOrNot.toString(),
+                    alignment: Alignment.centerRight,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white)
                     : globalText24(
-                        text: input == userinput
-                            ? formatResult(output1)
-                            : formatResult(output),
-                        alignment: Alignment.centerRight,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white),
+                    text: input.text == userinput
+                        ? formatResult(output1)
+                        : formatResult(output),
+                    alignment: Alignment.centerRight,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white),
               )),
           20.ph,
           Expanded(
               child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
                   children: [
-                    button("Sin", HexColor("2E250F"), Colors.white),
-                    button("Cos", HexColor("2E250F"), Colors.white),
-                    button("Tan", HexColor("2E250F"), Colors.white),
-                    10.pw,
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              radioButtonStatus = "1";
-                              input += "RAD(";
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 8,
-                                width: 8,
-                                child: Radio<String>(
-                                  fillColor: MaterialStateProperty.resolveWith(
-                                      (Set states) {
-                                    if (states
-                                        .contains(MaterialState.disabled)) {
-                                      return HexColor("0F182E");
-                                    }
-                                    return HexColor("0F182E");
-                                  }),
-                                  groupValue: radioButtonStatus,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      getRadioButtonValue = value ?? '';
-                                    });
-                                  },
-                                  value: "1",
-                                ),
-                              ),
-                              10.pw,
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 12),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: HexColor("F3F3F3")),
-                                child: globalText14(
-                                    text: "Rad", fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
-                        ),
+                        button("Sin", HexColor("2E250F"), Colors.white),
+                        button("Cos", HexColor("2E250F"), Colors.white),
+                        button("Tan", HexColor("2E250F"), Colors.white),
                         10.pw,
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              radioButtonStatus = "2";
-                            });
-                            // if (output.isNotEmpty && output != 'Error') {
-                            input += "°";
-                            // }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 8,
-                                width: 8,
-                                child: Radio<String>(
-                                  fillColor: MaterialStateProperty.resolveWith(
-                                      (Set states) {
-                                    if (states
-                                        .contains(MaterialState.disabled)) {
-                                      return HexColor("0F182E");
-                                    }
-                                    return HexColor("0F182E");
-                                  }),
-                                  groupValue: radioButtonStatus,
-                                  onChanged: (value) {
-                                    // controller.instructorControllers.clear();
-                                    setState(() {
-                                      radioButtonStatus = value ?? '';
-                                    });
-                                    // controller.addCourseLetter();
-                                    // controller.initialCourse();
-                                  },
-                                  value: "2",
-                                ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  radioButtonStatus = "1";
+                                  input.text += "RAD(";
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 8,
+                                    width: 8,
+                                    child: Radio<String>(
+                                      fillColor: MaterialStateProperty.resolveWith(
+                                              (Set states) {
+                                            if (states
+                                                .contains(MaterialState.disabled)) {
+                                              return HexColor("0F182E");
+                                            }
+                                            return HexColor("0F182E");
+                                          }),
+                                      groupValue: radioButtonStatus,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          getRadioButtonValue = value ?? '';
+                                        });
+                                      },
+                                      value: "1",
+                                    ),
+                                  ),
+                                  10.pw,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 12),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: HexColor("F3F3F3")),
+                                    child: globalText14(
+                                        text: "Rad", fontWeight: FontWeight.w500),
+                                  )
+                                ],
                               ),
-                              10.pw,
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 12),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: HexColor("F3F3F3")),
-                                child: globalText14(
-                                    text: "DEG", fontWeight: FontWeight.w500),
+                            ),
+                            10.pw,
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  radioButtonStatus = "2";
+                                });
+                                // if (output.isNotEmpty && output != 'Error') {
+                                input.text += "°";
+                                // }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 8,
+                                    width: 8,
+                                    child: Radio<String>(
+                                      fillColor: MaterialStateProperty.resolveWith(
+                                              (Set states) {
+                                            if (states
+                                                .contains(MaterialState.disabled)) {
+                                              return HexColor("0F182E");
+                                            }
+                                            return HexColor("0F182E");
+                                          }),
+                                      groupValue: radioButtonStatus,
+                                      onChanged: (value) {
+                                        // controller.instructorControllers.clear();
+                                        setState(() {
+                                          radioButtonStatus = value ?? '';
+                                        });
+                                        // controller.addCourseLetter();
+                                        // controller.initialCourse();
+                                      },
+                                      value: "2",
+                                    ),
+                                  ),
+                                  10.pw,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 12),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: HexColor("F3F3F3")),
+                                    child: globalText14(
+                                        text: "DEG", fontWeight: FontWeight.w500),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
+                    Row(
+                      children: [
+                        button("sin-¹", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.antiSin, height: 25, weight: 25),
+                        button("cos-¹", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.antiCos, height: 25, weight: 25),
+                        button("tan-¹", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.antiTan, height: 25, weight: 25),
+                        button("π", HexColor("2E250F"), Colors.white),
+                        button("e", HexColor("2E250F"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("xʸ", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.xy, height: 14, weight: 14),
+                        button("x³", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.x3, height: 14, weight: 14),
+                        button("x²", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.x2, height: 14, weight: 14),
+                        button("eˣ", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.ex, height: 15, weight: 15),
+                        button("10ˣ", HexColor("2E250F"), Colors.white,
+                            image: AppAssets.tenX, height: 19, weight: 19),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("y√x", HexColor("2E250F"), Colors.white),
+                        button("3√x", HexColor("2E250F"), Colors.white),
+                        button("√x", HexColor("2E250F"), Colors.white),
+                        button("ln", HexColor("2E250F"), Colors.white),
+                        button("log", HexColor("2E250F"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("(", HexColor("2E250F"), Colors.white),
+                        button(")", HexColor("2E250F"), Colors.white),
+                        button("1/x", HexColor("2E250F"), Colors.white),
+                        button("%", HexColor("2E250F"), Colors.white),
+                        button("n!", HexColor("2E250F"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("7", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("8", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("9", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("+", HexColor("244384"), Colors.white),
+                        button("Back", HexColor("244384"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("4", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("5", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("6", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("-", HexColor("244384"), Colors.white),
+                        button("Ans", HexColor("244384"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("1", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("2", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("3", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("x", HexColor("244384"), Colors.white),
+                        button("M+", HexColor("244384"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("0", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button(".", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("EXP", HexColor("244384"), Colors.white),
+                        button("÷", HexColor("244384"), Colors.white),
+                        button("M-", HexColor("244384"), Colors.white),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        button("AC", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("=", HexColor("F3F6F9"), HexColor("0F182E")),
+                        button("±", HexColor("244384"), Colors.white,
+                            image: AppAssets.plusMinus, height: 15, weight: 15),
+                        button("RND", HexColor("244384"), Colors.white),
+                        button("MR", HexColor("244384"), Colors.white),
+                      ],
+                    ),
+                    // Row(
+                    //   children: [
+                    //     button("MR", Colors.black, Colors.orangeAccent),
+                    //     button("log", Colors.black, Colors.orangeAccent),
+                    //     button("(", Colors.black, Colors.orangeAccent),
+                    //     button(")", Colors.black, Colors.orangeAccent),
+                    //     button("AC", Colors.black, Colors.white),
+                    //     button("DEL", Colors.black, Colors.white),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     button("M+", Colors.black, Colors.orangeAccent),
+                    //     button("exp", Colors.black, Colors.orangeAccent),
+                    //     button("7", Colors.black, Colors.white),
+                    //     button("8", Colors.black, Colors.white),
+                    //     button("9", Colors.black, Colors.white),
+                    //     button("/", Colors.black, Colors.orangeAccent),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     button("M-", Colors.black, Colors.orangeAccent),
+                    //     button("sin", Colors.black, Colors.orangeAccent),
+                    //     button("4", Colors.black, Colors.white),
+                    //     button("5", Colors.black, Colors.white),
+                    //     button("6", Colors.black, Colors.white),
+                    //     button("*", Colors.black, Colors.orangeAccent),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     button("tan", Colors.black, Colors.orangeAccent),
+                    //     button("cos", Colors.black, Colors.orangeAccent),
+                    //     button("1", Colors.black, Colors.white),
+                    //     button("2", Colors.black, Colors.white),
+                    //     button("3", Colors.black, Colors.white),
+                    //     button("-", Colors.black, Colors.orangeAccent),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     button("ln", Colors.black, Colors.orangeAccent),
+                    //     button("0", Colors.black, Colors.orangeAccent),
+                    //     button(".", Colors.black, Colors.white),
+                    //     button("=", Colors.orangeAccent, Colors.white),
+                    //     button("+", Colors.black, Colors.orangeAccent),
+                    //   ],
+                    // ),
                   ],
                 ),
-                Row(
-                  children: [
-                    button("sin-¹", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.antiSin, height: 25, weight: 25),
-                    button("cos-¹", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.antiCos, height: 25, weight: 25),
-                    button("tan-¹", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.antiTan, height: 25, weight: 25),
-                    button("π", HexColor("2E250F"), Colors.white),
-                    button("e", HexColor("2E250F"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("xʸ", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.xy, height: 14, weight: 14),
-                    button("x³", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.x3, height: 14, weight: 14),
-                    button("x²", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.x2, height: 14, weight: 14),
-                    button("eˣ", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.ex, height: 15, weight: 15),
-                    button("10ˣ", HexColor("2E250F"), Colors.white,
-                        image: AppAssets.tenX, height: 19, weight: 19),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("y√x", HexColor("2E250F"), Colors.white),
-                    button("3√x", HexColor("2E250F"), Colors.white),
-                    button("√x", HexColor("2E250F"), Colors.white),
-                    button("ln", HexColor("2E250F"), Colors.white),
-                    button("log", HexColor("2E250F"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("(", HexColor("2E250F"), Colors.white),
-                    button(")", HexColor("2E250F"), Colors.white),
-                    button("1/x", HexColor("2E250F"), Colors.white),
-                    button("%", HexColor("2E250F"), Colors.white),
-                    button("n!", HexColor("2E250F"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("7", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("8", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("9", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("+", HexColor("244384"), Colors.white),
-                    button("Back", HexColor("244384"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("4", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("5", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("6", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("-", HexColor("244384"), Colors.white),
-                    button("Ans", HexColor("244384"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("1", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("2", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("3", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("x", HexColor("244384"), Colors.white),
-                    button("M+", HexColor("244384"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("0", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button(".", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("EXP", HexColor("244384"), Colors.white),
-                    button("÷", HexColor("244384"), Colors.white),
-                    button("M-", HexColor("244384"), Colors.white),
-                  ],
-                ),
-                Row(
-                  children: [
-                    button("AC", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("=", HexColor("F3F6F9"), HexColor("0F182E")),
-                    button("±", HexColor("244384"), Colors.white,
-                        image: AppAssets.plusMinus, height: 15, weight: 15),
-                    button("RND", HexColor("244384"), Colors.white),
-                    button("MR", HexColor("244384"), Colors.white),
-                  ],
-                ),
-                // Row(
-                //   children: [
-                //     button("MR", Colors.black, Colors.orangeAccent),
-                //     button("log", Colors.black, Colors.orangeAccent),
-                //     button("(", Colors.black, Colors.orangeAccent),
-                //     button(")", Colors.black, Colors.orangeAccent),
-                //     button("AC", Colors.black, Colors.white),
-                //     button("DEL", Colors.black, Colors.white),
-                //   ],
-                // ),
-                // Row(
-                //   children: [
-                //     button("M+", Colors.black, Colors.orangeAccent),
-                //     button("exp", Colors.black, Colors.orangeAccent),
-                //     button("7", Colors.black, Colors.white),
-                //     button("8", Colors.black, Colors.white),
-                //     button("9", Colors.black, Colors.white),
-                //     button("/", Colors.black, Colors.orangeAccent),
-                //   ],
-                // ),
-                // Row(
-                //   children: [
-                //     button("M-", Colors.black, Colors.orangeAccent),
-                //     button("sin", Colors.black, Colors.orangeAccent),
-                //     button("4", Colors.black, Colors.white),
-                //     button("5", Colors.black, Colors.white),
-                //     button("6", Colors.black, Colors.white),
-                //     button("*", Colors.black, Colors.orangeAccent),
-                //   ],
-                // ),
-                // Row(
-                //   children: [
-                //     button("tan", Colors.black, Colors.orangeAccent),
-                //     button("cos", Colors.black, Colors.orangeAccent),
-                //     button("1", Colors.black, Colors.white),
-                //     button("2", Colors.black, Colors.white),
-                //     button("3", Colors.black, Colors.white),
-                //     button("-", Colors.black, Colors.orangeAccent),
-                //   ],
-                // ),
-                // Row(
-                //   children: [
-                //     button("ln", Colors.black, Colors.orangeAccent),
-                //     button("0", Colors.black, Colors.orangeAccent),
-                //     button(".", Colors.black, Colors.white),
-                //     button("=", Colors.orangeAccent, Colors.white),
-                //     button("+", Colors.black, Colors.orangeAccent),
-                //   ],
-                // ),
-              ],
-            ),
-          ))
+              ))
         ],
       ),
     );
@@ -1074,18 +1152,18 @@ print("hudai");
           onPressed: () => _onButtonClicked(text),
           child: text.toString().isNotEmpty && (image?.isNotEmpty ?? false)
               ? Image.asset(
-                  image ?? '',
-                  height: height,
-                  width: weight,
-                )
+            image ?? '',
+            height: height,
+            width: weight,
+          )
               : Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.013,
-                    fontWeight: FontWeight.bold,
-                    color: tcolor,
-                  ),
-                ),
+            text,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.height * 0.013,
+              fontWeight: FontWeight.bold,
+              color: tcolor,
+            ),
+          ),
         ),
       ),
     );
