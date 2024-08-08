@@ -60,7 +60,21 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
   DateTime get _selectedDate {
     return DateTime(_selectedYear, _selectedMonth, _selectedDay);
   }
+  int calculateWeekDifference(int selectedYear, int selectedMonth, int selectedDay) {
+    // Step 1: Create the selected date
+    DateTime selectedDate = DateTime(selectedYear, selectedMonth, selectedDay);
 
+    // Step 2: Get the current date
+    DateTime currentDate = DateTime.now();
+
+    // Step 3: Calculate the difference in days
+    Duration difference = currentDate.difference(selectedDate);
+
+    // Step 4: Convert the difference into weeks
+    int weekDifference = (difference.inDays / 7).floor();
+
+    return weekDifference;
+  }
   void _calculateTimeline() {
     switch (_selectedMethod) {
       case 'Last Period':
@@ -828,7 +842,8 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
       print("month['week_name'] ${month['weeks']}");
       if (mostRecentPastDate == null || weekDate.isAfter(mostRecentPastDate)) {
         mostRecentPastDate = weekDate;
-        associatedWeekName = month["week_name"] as String;
+        associatedWeekName = calculateWeekDifference(_selectedYear, _selectedMonth, _selectedDay).toString();
+        print("month difference of ${calculateWeekDifference(_selectedYear, _selectedMonth, _selectedDay)}");
       }
       }
     }

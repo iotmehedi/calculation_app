@@ -116,7 +116,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
                       alignment: Alignment.center),
                   globalText24(
                       text:
-                          "${DateFormat('d MMMM, yyyy').format(widget.lastMonthName.add(const Duration(days: 7)))}",
+                          "${DateFormat('d MMMM, yyyy').format(widget.lastMonthName.subtract(const Duration(days: 7)))}",
                       color: HexColor("7BFF80"),
                       fontWeight: FontWeight.w700,
                       alignment: Alignment.center),
@@ -139,7 +139,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
               child: Center(
                 child: globalText24(
                     text:
-                        "${widget.associatedWeekName.replaceAll("weeks", "")}",
+                        widget.associatedWeekName.replaceAll("weeks", ""),
                     color: HexColor("7BFF80"),
                     fontWeight: FontWeight.w700,
                     alignment: Alignment.center),

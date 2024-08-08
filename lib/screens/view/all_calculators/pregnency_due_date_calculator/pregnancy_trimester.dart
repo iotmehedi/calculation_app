@@ -24,7 +24,7 @@ DateTime dueDate = DateTime.now();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: 'Pregnancy Trimester',
+        title: 'Due Date Trimester',
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -221,7 +221,7 @@ DateTime dueDate = DateTime.now();
                                         text:
                                             "${formatDate(item['weeks'] as DateTime)}",
                                         fontWeight: FontWeight.w500,
-                                        color: formatDate(item['weeks'] as DateTime) == formatDate(milestones3[milestones3.length - 1]['weeks'] as DateTime) ? Colors.green: Colors.black),
+                                        color: formatDate(item['weeks'] as DateTime) == formatDate(milestones3[milestones3.length - 2]['weeks'] as DateTime) ? Colors.green: Colors.black),
                                     20.pw,
                                     Expanded(
                                       child: Column(

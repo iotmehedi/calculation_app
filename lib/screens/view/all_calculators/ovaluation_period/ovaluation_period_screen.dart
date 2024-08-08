@@ -342,9 +342,10 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
         const Duration(days: 266)); // Average pregnancy duration is 266 days
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ovulation Calendar'),
-      ),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(title: 'Ovulation Calendar', onBackPressed: (){
+        Navigator.pop(context);
+      },),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -480,7 +481,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
     return Row(
       children: [
         Expanded(
-          flex: 3,
+          flex: 4,
           child: globalText16(text: text, color: HexColor("534C4C")),
         ),
         Container(

@@ -126,6 +126,7 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
       {bool? calculationButtons}) {
     return InkWell(
       onTap: () => buttonPress(buttonText),
+      borderRadius: BorderRadius.circular(25),
       child: Container(
         height: 56,
         width: 56,
@@ -200,9 +201,9 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
                 ),
               ),
             ),
-            // const SizedBox(
-            //   height: 30,
-            // ),
+            const SizedBox(
+              height: 30,
+            ),
             Expanded(
               flex: 2,
               child: Padding(

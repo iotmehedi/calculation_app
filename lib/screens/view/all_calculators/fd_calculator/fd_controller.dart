@@ -21,30 +21,45 @@ var total = 0.0.obs;
   var estimatedReturn = 0.0.obs;
   var totalValue = 0.0.obs;
 
+  double calculateEst({
+    required double investment,
+    required double rateOfReturn,
+    required int timePeriod,
+    int compoundingFrequency = 4, // Quarterly compounding
+  }) {
+    double ratePerPeriod = rateOfReturn / compoundingFrequency;
+    int totalPeriods = timePeriod * compoundingFrequency;
+
+    double totalValue = investment * pow((1 + ratePerPeriod), totalPeriods);
+    double estimatedReturn = totalValue - investment;
+
+    return estimatedReturn;
+  }
+
   void calculateFD() {
     list.value.clear();
     if (formKey.value.currentState?.validate() ?? false) {
       double investment = double.parse(investmentController.value.text);
-      double rateOfReturn = double.parse(rateOfReturnController.value.text) /
-          100;
+      double rateOfReturn = double.parse(rateOfReturnController.value.text) / 100;
       int timePeriod = int.parse(timePeriodController.value.text);
-      print("this is value $rateOfReturn");
-      // Compound interest formula assuming annual compounding
-      double totalValuee = investment * pow((1 + rateOfReturn), timePeriod);
-      print("this is value ${pow((1 + rateOfReturn), 7)}");
-      double estimatedReturnn = totalValuee - investment;
 
+      double estimatedReturnn = calculateEst(
+        investment: investment,
+        rateOfReturn: rateOfReturn,
+        timePeriod: timePeriod,
+        compoundingFrequency: 4, // Quarterly compounding
+      );
 
       investmentAmount.value = investment;
       estimatedReturn.value = estimatedReturnn;
-      totalValue.value = totalValuee;
-      list.add(investmentAmount.round());
+      totalValue.value = investment + estimatedReturnn;
+      list.add(investmentAmount.value.round());
       list.add(estimatedReturn.value.round());
       total.value = investmentAmount.value + estimatedReturn.value;
       RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.fdResult);
     }
-
   }
+
   allFieldClear(){
     investmentController.value.clear();
     rateOfReturnController.value.clear();

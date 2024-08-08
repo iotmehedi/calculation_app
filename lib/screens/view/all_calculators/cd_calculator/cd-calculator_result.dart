@@ -99,8 +99,9 @@ class CDResultScreen extends StatelessWidget {
                       richTextTitle: '\$',
                       richtextTitleColor: HexColor("437AFF"),
                       richTextValue:
-                      '${NumberFormat('#,##,##0.00', 'en_US')
-                          .format(controller.interestAfterTax.value)}',
+                      NumberFormat('#,##,##0.00', 'en_US')
+                          .format((controller.interestAfterTax.value ?? 0.0) + (double.tryParse(controller.initialDepositController.value.text ?? '') ?? 0.0)),
+
                       richTextValueFontWeight: FontWeight.w500,
                       richTextValueColor: HexColor("437AFF"),
 

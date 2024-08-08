@@ -68,7 +68,7 @@ class _FDCalculatorHomeState extends State<FDCalculatorHome> {
                       headingTextColor: Colors.black,
                       controller: controller.rateOfReturnController.value,
                       keyboardType: TextInputType.number,
-                      needPadding: false,
+                      needPadding: true,
                       suffixIcon: Icon(Icons.percent, color: AppColors.deepGray1, size: 14,),
                       validator: (value) {
                         if (value!.isEmpty) {

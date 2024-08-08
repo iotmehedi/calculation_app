@@ -349,7 +349,7 @@ class _PeriodCalculationCalendarPageState
     Map<DateTime, List<DateTime>> ovulationDays = {};
     DateTime nextDate = startDate;
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
       nextDate = nextDate.add(Duration(days: cycleLength));
       DateTime ovulationDay =
           nextDate.subtract(Duration(days: cycleLength - 14));
@@ -365,8 +365,8 @@ class _PeriodCalculationCalendarPageState
     Map<DateTime, List<DateTime>> periodDays = {};
     DateTime nextDate = startDate;
 
-    for (int i = 0; i < 4; i++) {
-      nextDate = nextDate.add(Duration(days: cycleLength + 1));
+    for (int i = 0; i < 3; i++) {
+      nextDate = nextDate.add(Duration(days: cycleLength));
       DateTime ovulationDay = nextDate.subtract(Duration(days: cycleLength));
       List<DateTime> ovulationPeriod =
           List.generate(widget.howLongDidLast, (index) => ovulationDay.add(Duration(days: index)));
@@ -374,6 +374,19 @@ class _PeriodCalculationCalendarPageState
     }
     return periodDays;
   }
+  // Map<DateTime, List<DateTime>> calculatePeriodDays(
+  //     DateTime startDate, int cycleLength) {
+  //   Map<DateTime, List<DateTime>> periodDays = {};
+  //   DateTime currentDate = startDate;
+  //
+  //   for (int i = 0; i < 4; i++) {
+  //     List<DateTime> periodPeriod = List.generate(widget.howLongDidLast,
+  //             (index) => currentDate.add(Duration(days: index)));
+  //     periodDays[currentDate] = periodPeriod;
+  //     currentDate = currentDate.add(Duration(days: cycleLength));
+  //   }
+  //   return periodDays;
+  // }
 
   @override
   void initState() {
@@ -392,18 +405,19 @@ class _PeriodCalculationCalendarPageState
     List<DateTime> allPeriodDates =
         periodDays.values.expand((dates) => dates).toList();
 
-    DateTime mostProbableOvulationDate = allPeriodDates[2];
+    DateTime mostProbableOvulationDate = allPeriodDates[0];
     DateTime intercourseStart =
-        mostProbableOvulationDate.add(Duration(days: widget.cycleLength));
+        mostProbableOvulationDate;
     DateTime intercourseEnd = mostProbableOvulationDate
-        .add(Duration(days: widget.cycleLength + widget.cycleLength));
+        .add(Duration(days: widget.cycleLength));
     DateTime nextPeriodStart = mostProbableOvulationDate.add(Duration(
-        days: widget.cycleLength + widget.cycleLength + widget.cycleLength));
+        days: widget.cycleLength + widget.cycleLength ));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Period Calendar'),
-      ),
+      backgroundColor: AppColors.scaffoldBackgroundColor,
+      appBar: CustomAppBar(title: 'Period Calendar', onBackPressed: (){
+        Navigator.pop(context);
+      },),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -412,7 +426,7 @@ class _PeriodCalculationCalendarPageState
                   _focusedDay.year, _focusedDay.month, _focusedDay.day),
               firstDay: widget.startDate.subtract(const Duration(days: 0)),
               lastDay: DateTime(
-                      _focusedDay.year, _focusedDay.month + 3, _focusedDay.day)
+                      _focusedDay.year, _focusedDay.month + 2, _focusedDay.day)
                   .add(const Duration(days: 1)),
               // rowHeight: 40,
               calendarStyle: const CalendarStyle(
@@ -551,7 +565,7 @@ class _PeriodCalculationCalendarPageState
                   ),
                   Center(
                     child: globalText16(
-                        text: "Important dates for the next 6 cycles:",
+                        text: "Important dates for the next 3 cycles:",
                         alignment: Alignment.center,
                         hexColor: HexColor("1E1E1E"),
                         fontWeight: FontWeight.w700),
@@ -563,7 +577,7 @@ class _PeriodCalculationCalendarPageState
                       text: "Period Date",
                       value: "${formatDate(intercourseStart)} - ${formatDate(
                         intercourseStart.add(
-                          Duration(days: widget.howLongDidLast),
+                          Duration(days: widget.howLongDidLast - 1),
                         ),
                       )}"),
                   const SizedBox(
@@ -573,7 +587,7 @@ class _PeriodCalculationCalendarPageState
                       text: "Period Next Date",
                       value: "${formatDate(intercourseEnd)} - ${formatDate(
                         intercourseEnd.add(
-                          Duration(days: widget.howLongDidLast),
+                          Duration(days: widget.howLongDidLast - 1),
                         ),
                       )}"),
                   const SizedBox(
@@ -583,7 +597,7 @@ class _PeriodCalculationCalendarPageState
                       text: "Period Next Date",
                       value: "${formatDate(nextPeriodStart)} - ${formatDate(
                         nextPeriodStart.add(
-                          Duration(days: widget.howLongDidLast),
+                          Duration(days: widget.howLongDidLast - 1),
                         ),
                       )}"),
                 ],
