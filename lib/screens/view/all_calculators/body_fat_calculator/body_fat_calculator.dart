@@ -4,6 +4,7 @@ import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/calorie_calculator/calorie_calculator.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_eleveted_button.dart';
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
 import 'package:calculation_app/toast/toast.dart';
@@ -42,49 +43,44 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
       } else {
         setState(() {
           double heightFeet = double.tryParse(heightFeetController.text) ?? 0;
-          double heightInches =
-              double.tryParse(heightInchesController.text) ?? 0;
+          double heightInches = double.tryParse(heightInchesController.text) ?? 0;
           double age = double.tryParse(ageController.text) ?? 0;
           double neck = double.tryParse(neckController.text) ?? 0;
           double waist = double.tryParse(waistController.text) ?? 0;
           double hip = double.tryParse(hipController.text) ?? 0;
 
-          // Convert height to inches
-          double height = (heightFeet * 12) + heightInches;
+          // Convert height to inches if using US units
+          double height = isUSCUnit ? (heightFeet * 12) + heightInches : heightFeet;
 
           // Convert to metric if necessary
-          if (!isUSCUnit) {
-            weight *= 0.453592; // pounds to kg
-            height *= 2.54; // inches to cm
-            neck *= 2.54; // inches to cm
-            waist *= 2.54; // inches to cm
-            hip *= 2.54; // inches to cm
-          }
-
+          // if (!isUSCUnit) {
+          //   weight *= 0.453592; // pounds to kg
+          //   height *= 2.54; // inches to cm
+          //   neck *= 2.54; // inches to cm
+          //   waist *= 2.54; // inches to cm
+          //   hip *= 2.54; // inches to cm
+          // }
+//1.2552725051
+          //2.23044892138
           // Calculate body fat percentage
           double bodyFatPercentage = 0.0;
-          if (gender == 'Male') {
-            if (isUSCUnit) {
-              bodyFatPercentage = (86.010 * log10(waist - neck)) -
-                  (70.041 * log10(height)) +
-                  36.76;
+          if (selectedGender == Gender.male) {
+            print("The log10 value is ${log10(waist - neck)}");
+            if (isUSCUnit == true) {
+              bodyFatPercentage = (86.010 * log10(waist - neck)) - (70.041 * log10(height)) + 36.76;
             } else {
+              print("The log10 value is matrics ${log10(waist - neck)}");
               bodyFatPercentage = (495 /
-                      (1.0324 -
-                          (0.19077 * log10(waist - neck)) +
-                          (0.15456 * log10(height))) -
+                  (1.0324 - 0.19077 * log10(waist - neck) + (0.15456 * log10(height))) -
                   450);
+
             }
           } else {
             if (isUSCUnit) {
-              bodyFatPercentage = (163.205 * log10(waist + hip - neck)) -
-                  (97.684 * log10(height)) -
-                  78.387;
+              bodyFatPercentage = (163.205 * log10(waist + hip - neck)) - (97.684 * log10(height)) - 78.387;
             } else {
               bodyFatPercentage = (495 /
-                      (1.29579 -
-                          (0.35004 * log10(waist + hip - neck)) +
-                          (0.22100 * log10(height))) -
+                  (1.29579 - (0.35004 * log10(waist + hip - neck)) + (0.22100 * log10(height))) -
                   450);
             }
           }
@@ -103,10 +99,11 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
     return log(value) / log(10);
   }
 
+
   bool _validateInputs() {
     if (weightController.text.isEmpty ||
         heightFeetController.text.isEmpty ||
-        heightInchesController.text.isEmpty ||
+        (isUSCUnit == false && heightInchesController.text.isEmpty) ||
         neckController.text.isEmpty ||
         waistController.text.isEmpty ||
         ageController.text.isEmpty ||
@@ -141,9 +138,9 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text('Body Fat Calculator'),
-      ),
+      appBar: CustomAppBar(title: "Body Fat Calculator", onBackPressed: (){
+        Navigator.pop(context);
+      },),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -168,6 +165,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                             onTap: () {
                               setState(() {
                                 selectedButton = true;
+                                isUSCUnit = true;
                               });
                             },
                             child: Container(
@@ -200,6 +198,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
                             onTap: () {
                               setState(() {
                                 selectedButton = false;
+                                isUSCUnit = false;
                               });
                             },
                             child: Container(

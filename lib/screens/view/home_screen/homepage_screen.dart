@@ -30,7 +30,7 @@ class HomepageScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Finance Type Calculator",
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                     ),
@@ -38,7 +38,7 @@ class HomepageScreen extends StatelessWidget {
                         onTap: (){
                           RouteGenerator.pushNamed(context, Routes.moreCalculatorPage);
                         },
-                        child: CustomText(text: "View All", textColor: Colors.blue, fontSize: 14,))
+                        child: const CustomText(text: "View All", textColor: Colors.blue, fontSize: 14,))
                   ],
                 ),
               ),

@@ -53,7 +53,7 @@ class _PeriodInputPageState extends State<PeriodInputPage> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: 'Ovulation Calculator',
+        title: 'Period Calculator',
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -402,7 +402,7 @@ class _PeriodCalculationCalendarPageState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ovulation Calendar'),
+        title: const Text('Period Calendar'),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -50,6 +50,7 @@ dependencies:
   syncfusion_flutter_charts: ^25.2.7
   intl:
   expressions:
+  connectivity_plus: ^6.0.4
 
 
 dependency_overrides:

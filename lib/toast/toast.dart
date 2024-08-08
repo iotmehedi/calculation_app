@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-void errorToast({required BuildContext context, required String msg}) {
+void errorToast({required BuildContext context, required String msg,  Color? color, Color? iconColor, Color? headingTextColor, Color? valueTextColor}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     elevation: 6.0,
-    backgroundColor: Colors.red[400],
+    backgroundColor: color ??  Colors.red[400],
     behavior: SnackBarBehavior.floating,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)),
     ),
     content: Row(
       children: [
-        const Icon(
+         Icon(
           Icons.error,
           size: 50,
-          color: Colors.white,
+          color: iconColor ?? Colors.white,
         ),
         const SizedBox(width: 16),
         Flexible(
@@ -21,10 +21,10 @@ void errorToast({required BuildContext context, required String msg}) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+               Text(
                 "Error",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: headingTextColor ?? Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -35,7 +35,7 @@ void errorToast({required BuildContext context, required String msg}) {
                 overflow: TextOverflow.ellipsis,
                 textDirection: TextDirection.rtl,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white),
+                style:  TextStyle(color: valueTextColor ?? Colors.white),
               ),
             ],
           ),

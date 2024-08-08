@@ -5,6 +5,7 @@ import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 class BRMResultScreen extends StatelessWidget {
   final double bmiresult;
@@ -119,16 +120,16 @@ class BRMResultScreen extends StatelessWidget {
               ],
             ),
         
-            CustomRow(title: "Sedentary: little or no exercise", value: "1,926"),
+            CustomRow(title: "Sedentary: little or no exercise", value: NumberFormat(',###', 'en_US').format(bmiresult * 1.2)),
         
-            CustomRow(title: "Exercise 1-3 times/week", value: "2,207"),
+            CustomRow(title: "Exercise 1-3 times/week", value: NumberFormat(',###', 'en_US').format(bmiresult * 1.375)),
         
-            CustomRow(title: "Exercise 4-5 times/week", value: "2,351"),
+            CustomRow(title: "Exercise 4-5 times/week", value: NumberFormat(',###', 'en_US').format(bmiresult * 1.465)),
         
-            CustomRow(title: "Daily exercise 6-7 times/week", value: "2,769"),
+            CustomRow(title: "Daily exercise 6-7 times/week", value: NumberFormat(',###', 'en_US').format(bmiresult * 1.725)),
         
             CustomRow(
-                title: "Daily  Hard exercise 6-7 times/week", value: "3,050"),
+                title: "Daily  Hard exercise 6-7 times/week", value: NumberFormat(',###', 'en_US').format(bmiresult * 1.9)),
         
           ],
         ),

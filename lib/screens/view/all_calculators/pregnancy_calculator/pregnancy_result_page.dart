@@ -68,7 +68,7 @@ class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: 'Due date Calculator',
+        title: 'Pregnancy Calculator',
         onBackPressed: () {
           Navigator.pop(context);
         },

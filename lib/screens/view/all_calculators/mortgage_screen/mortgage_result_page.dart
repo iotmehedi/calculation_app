@@ -61,8 +61,7 @@ class MortgageResultPage extends StatelessWidget {
                 ),
                 20.ph,
                 CustomResultMonthly(
-                  title: NumberFormat('#,##,##0.00', 'en_US')
-                      .format(controller.principalAndInterest.value),
+                  title: NumberFormat('#,##,##0.00', 'en_US').format(controller.principalAndInterest.value),
                   heading: "Monthly Payment:",
                   headingColor: Colors.green,
                   titleColor: Colors.white,
@@ -411,6 +410,7 @@ class MortgageResultPage extends StatelessWidget {
                                       text: "\$ ${formattedValue}",
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
+                                      textAlign: TextAlign.end,
                                     );
                                   },
                                 ),
@@ -433,6 +433,7 @@ class MortgageResultPage extends StatelessWidget {
                                 text: "\$ ${controller.loanAmount.value}",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
+                                    textAlign: TextAlign.end,
                               )),
                             ],
                           ),
@@ -461,6 +462,7 @@ class MortgageResultPage extends StatelessWidget {
                                       text: "\$ $formattedValue",
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
+                                      textAlign: TextAlign.end,
                                     );
                                   },
                                 ),
@@ -492,6 +494,7 @@ class MortgageResultPage extends StatelessWidget {
                                       text: "\$ $formattedValue",
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
+                                      textAlign: TextAlign.end,
                                     );
                                   },
                                 ),
@@ -506,6 +509,7 @@ class MortgageResultPage extends StatelessWidget {
                                 text: "Total Mortgage Payments:",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
+
                               )),
                               Expanded(
                                 child: Obx(
@@ -523,6 +527,7 @@ class MortgageResultPage extends StatelessWidget {
                                       text: "\$ $formattedValue",
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
+                                      textAlign: TextAlign.end,
                                     );
                                   },
                                 ),
@@ -544,6 +549,7 @@ class MortgageResultPage extends StatelessWidget {
                                     "\$ ${controller.mortgagePayoffDatee.value}",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
+                                    textAlign: TextAlign.end,
                               )),
                             ],
                           ),

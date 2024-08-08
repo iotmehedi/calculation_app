@@ -116,7 +116,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
                       alignment: Alignment.center),
                   globalText24(
                       text:
-                          "${DateFormat('d MMMM, yyyy').format(widget.lastMonthName)}",
+                          "${DateFormat('d MMMM, yyyy').format(widget.lastMonthName.add(const Duration(days: 7)))}",
                       color: HexColor("7BFF80"),
                       fontWeight: FontWeight.w700,
                       alignment: Alignment.center),

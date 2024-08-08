@@ -350,7 +350,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
           children: [
             TableCalendar(
               focusedDay: DateTime(
-                  _focusedDay.year, _focusedDay.month + 1, _focusedDay.day),
+                  _focusedDay.year, _focusedDay.month, _focusedDay.day),
               firstDay: widget.startDate.subtract(const Duration(days: 0)),
               lastDay: DateTime(
                       _focusedDay.year, _focusedDay.month + 3, _focusedDay.day)

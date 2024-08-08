@@ -4,34 +4,12 @@ import 'package:calculation_app/core/utils/consts/app_assets.dart';
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
-import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'dart:math' as math;
 import 'package:math_expressions/math_expressions.dart';
 import 'package:logger/logger.dart';
-
 import '../../../core/utils/consts/textstyle.dart';
 import 'package:expressions/expressions.dart' as ex;
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: MyCalculator(),
-    );
-  }
-}
-
-final logger = Logger();
 
 class MyCalculator extends StatefulWidget {
   const MyCalculator({Key? key});
@@ -45,7 +23,6 @@ class _MyCalculatorState extends State<MyCalculator> {
   double num2 = 0.0;
   var input = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  var input1 = '';
   var output = '';
   var output1 = '';
   var userinput = '';
