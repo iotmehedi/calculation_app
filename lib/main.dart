@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/routes/router.dart';
@@ -130,12 +131,18 @@ class ConnectivityService {
   Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
     // bool isConnected = _connectionStatus != ConnectivityResult.none;
     // ignore: avoid_print
+bool hasInternet = false;
+// bool connectionStatus = false;
+//      connectionStatus = result.first != ConnectivityResult.none;
+//
 
-    bool connectionStatus = result.first != ConnectivityResult.none;
-    isConnected.value = connectionStatus;
-
+    if (result.first != ConnectivityResult.none) {
+      // Check if the network has internet access
+      hasInternet = await InternetConnection().hasInternetAccess;
+    }
+isConnected.value = hasInternet;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("internet", connectionStatus);
+    await prefs.setBool("internet", hasInternet);
     print('Connectivity changed: ${result.first}');
   }
 
@@ -143,3 +150,6 @@ class ConnectivityService {
     _connectivitySubscription.cancel();
   }
 }
+
+
+
