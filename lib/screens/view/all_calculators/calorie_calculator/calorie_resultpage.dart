@@ -79,7 +79,7 @@ class CalorieResultScrren extends StatelessWidget {
                         globalText20(
                             text: "Maintain weight", color: HexColor("7BFF80")),
                         CustomRichText(
-                          heading: '$maintainWeight',
+                          heading: '${maintainWeight + 200}',
                           title: ' Calories/day',
                           headingTextColor: HexColor('7BFF80'),
                           titleTextColor: HexColor('FFFFFF'),
@@ -153,7 +153,7 @@ class CalorieResultScrren extends StatelessWidget {
                         textAlign: TextAlign.start),
                     5.ph,
                     CustomRichText(
-                      heading: '$weightLoss',
+                      heading: '${weightLoss + 300}',
                       title: '/ Calories/day',
                       headingTextColor: HexColor('7BFF80'),
                       titleTextColor: HexColor('FFFFFF'),
@@ -195,7 +195,7 @@ class CalorieResultScrren extends StatelessWidget {
                         textAlign: TextAlign.start),
                     5.ph,
                     CustomRichText(
-                      heading: '$extremeWeightLoss',
+                      heading: '${extremeWeightLoss + 350}',
                       title: '/ Calories/day',
                       headingTextColor: HexColor('7BFF80'),
                       titleTextColor: HexColor('FFFFFF'),

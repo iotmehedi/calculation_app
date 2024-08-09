@@ -8,15 +8,20 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../main.dart';
+import '../../../../toast/toast.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 
 class DueDateResultCalculator extends StatefulWidget {
   final DateTime lastMonthName, firstTrimesterEnd, thirdTrimesterStart;
-  final String mostRecentPastDate, associatedWeekName,selectedMethod, selectedOption;
+  final String mostRecentPastDate,
+      associatedWeekName,
+      selectedMethod,
+      selectedOption;
   final int firstTrimesterDayDifference,
       secondTrimesterDayDifference,
       thirdTrimesterDayDifference;
-  final List<Map<String, Object>> milestones, milestones2,milestones3;
+  final List<Map<String, Object>> milestones, milestones2, milestones3;
   const DueDateResultCalculator(
       {super.key,
       required this.lastMonthName,
@@ -25,7 +30,13 @@ class DueDateResultCalculator extends StatefulWidget {
       required this.thirdTrimesterDayDifference,
       required this.mostRecentPastDate,
       required this.associatedWeekName,
-      required this.milestones, required this.selectedMethod, required this.selectedOption, required this.firstTrimesterEnd, required this.thirdTrimesterStart, required this.milestones2, required this.milestones3});
+      required this.milestones,
+      required this.selectedMethod,
+      required this.selectedOption,
+      required this.firstTrimesterEnd,
+      required this.thirdTrimesterStart,
+      required this.milestones2,
+      required this.milestones3});
 
   @override
   State<DueDateResultCalculator> createState() =>
@@ -34,11 +45,14 @@ class DueDateResultCalculator extends StatefulWidget {
 
 class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
   DateTime presentDate = DateTime.now();
-  
+
   int get daysDifference {
-    return presentDate.difference((widget.milestones[0]["weeks"] as DateTime)).inDays;
+    return presentDate
+        .difference((widget.milestones[0]["weeks"] as DateTime))
+        .inDays;
   }
-   String getOrdinalSuffix(int number) {
+
+  String getOrdinalSuffix(int number) {
     if (number >= 11 && number <= 13) {
       return 'th';
     }
@@ -53,6 +67,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
         return 'th';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     print("this is date ${widget.milestones[0]["weeks"]}");
@@ -138,8 +153,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
                   color: HexColor("0F182E")),
               child: Center(
                 child: globalText24(
-                    text:
-                        widget.associatedWeekName.replaceAll("weeks", ""),
+                    text: widget.associatedWeekName.replaceAll("weeks", ""),
                     color: HexColor("7BFF80"),
                     fontWeight: FontWeight.w700,
                     alignment: Alignment.center),
@@ -157,40 +171,49 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
             ),
             10.ph,
 
-Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Row(
-          children: [
-            for (int i = 0; i < 3; i++)
-              Expanded(
-                child: Column(
-                  children: [
-                    Padding(padding: EdgeInsets.only(left: 15), child: globalText10(text: '${i + 1}${getOrdinalSuffix(i + 1)} Trimester', fontWeight: FontWeight.normal),),
-                    5.ph,
-                    Padding(
-                      padding:  EdgeInsets.only(right: (i + 1 == 3) ? 0 : 10),
-                      child: LinearPercentIndicator(
-                        backgroundColor: HexColor("2FAE3B").withOpacity(0.1),
-                          animation: true,
-                          lineHeight: 20.0,
-                          animationDuration: 3000,
-                          animateFromLastPercent: true,
-                          progressColor: Colors.green,
-                          barRadius: Radius.circular(10),
-                        percent: i < trimesterIndex
-                            ? 1.0
-                            : i == trimesterIndex
-                                ? progressInCurrentTrimester / trimesterDays
-                                : 0.0,
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: [
+                  for (int i = 0; i < 3; i++)
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: globalText10(
+                                text:
+                                    '${i + 1}${getOrdinalSuffix(i + 1)} Trimester',
+                                fontWeight: FontWeight.normal),
+                          ),
+                          5.ph,
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: (i + 1 == 3) ? 0 : 10),
+                            child: LinearPercentIndicator(
+                              backgroundColor:
+                                  HexColor("2FAE3B").withOpacity(0.1),
+                              animation: true,
+                              lineHeight: 20.0,
+                              animationDuration: 3000,
+                              animateFromLastPercent: true,
+                              progressColor: Colors.green,
+                              barRadius: Radius.circular(10),
+                              percent: i < trimesterIndex
+                                  ? 1.0
+                                  : i == trimesterIndex
+                                      ? progressInCurrentTrimester /
+                                          trimesterDays
+                                      : 0.0,
+                            ),
+                          ),
+                          SizedBox(height: 16.0),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 16.0),
-                  ],
-                ),
+                ],
               ),
-          ],
-        ),
-      ),
+            ),
 
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.start,
@@ -277,46 +300,60 @@ Padding(
             //     ),
             //   ],
             // ),
-            
-            
-            
+
             20.ph,
-            Center(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
-                    maximumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width * 0.6, 41),
-                    ),
-                    minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width * 0.6, 35),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    RouteGenerator().pushNamedSms(
-                        context, Routes.pregnancyTrimester,
-                        arguments: [
-                          widget.milestones,
-                          widget.selectedMethod,
-                          widget.selectedOption,
-                          widget.firstTrimesterEnd,
-                          widget.thirdTrimesterStart,
-                          widget.milestones2,
-                          widget.milestones3,
-                        ]);
-                  },
-                  child: globalText12(
-                      text: " Theremistet Chart",
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      alignment: Alignment.center)),
-            ),
+            ValueListenableBuilder<bool>(
+                valueListenable: connectivityService.isConnected,
+                builder: (context, isConnected, child) {
+                  return Center(
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<HexColor>(
+                              HexColor("0F182E")),
+                          maximumSize: MaterialStateProperty.all(
+                            Size(MediaQuery.of(context).size.width * 0.6, 41),
+                          ),
+                          minimumSize: MaterialStateProperty.all(
+                            Size(MediaQuery.of(context).size.width * 0.6, 35),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: isConnected
+                            ? () {
+                                RouteGenerator().pushNamedSms(
+                                    context, Routes.pregnancyTrimester,
+                                    arguments: [
+                                      widget.milestones,
+                                      widget.selectedMethod,
+                                      widget.selectedOption,
+                                      widget.firstTrimesterEnd,
+                                      widget.thirdTrimesterStart,
+                                      widget.milestones2,
+                                      widget.milestones3,
+                                    ]);
+                              }
+                            : () {
+                                errorToast(
+                                    context: context,
+                                    msg:
+                                        "Please check your internet connection",
+                                    color: Colors.grey,
+                                    iconColor: Colors.red,
+                                    headingTextColor: Colors.red,
+                                    valueTextColor: Colors.red);
+                              },
+                        child: globalText12(
+                            text: " Theremistet Chart",
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                            alignment: Alignment.center)),
+                  );
+                }),
           ],
         ),
       ),

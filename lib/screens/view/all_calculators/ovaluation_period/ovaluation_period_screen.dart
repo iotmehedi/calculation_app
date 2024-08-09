@@ -6,6 +6,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/src/intl/date_format.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../main.dart';
+import '../../../../toast/toast.dart';
 
 class OvulationInputPage extends StatefulWidget {
   @override
@@ -233,51 +235,65 @@ class _OvulationInputPageState extends State<OvulationInputPage> {
                 ],
               ),
               const SizedBox(height: 30),
-              Center(
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
-                    maximumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width * 0.8, 61),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OvulationCalendarPage(
-                            startDate: _selectedDate,
-                            cycleLength: _cycleLength,
+              ValueListenableBuilder<bool>(
+                  valueListenable: connectivityService.isConnected,
+                  builder: (context, isConnected, child) {
+
+                    return Center(
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
+                        maximumSize: MaterialStateProperty.all(
+                          Size(MediaQuery.of(context).size.width * 0.8, 61),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
-                      );
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      globalText24(
-                          text: "Get The Date",
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                      const SizedBox(
-                        width: 10,
                       ),
-                      Icon(
-                        Icons.calendar_today,
-                        size: 18,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                ),
+                      onPressed: isConnected ? () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OvulationCalendarPage(
+                                startDate: _selectedDate,
+                                cycleLength: _cycleLength,
+                              ),
+                            ),
+                          );
+                        }
+                      } : () {
+                  errorToast(
+                  context: context,
+                  msg: "Please check your internet connection",
+                  color: Colors.grey,
+                  iconColor: Colors.red,
+                  headingTextColor: Colors.red,
+                  valueTextColor: Colors.red);
+                  },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          globalText24(
+                              text: "Get The Date",
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.calendar_today,
+                            size: 18,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
               ),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:calculation_app/core/routes/router.dart';
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_controller.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_eleveted_button.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
@@ -33,19 +34,9 @@ class _MortgageScreenState extends State<MortgageScreen> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-          appBar: AppBar(
-            leading: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  controller.allFieldClear();
-                },
-                child: const Icon(Icons.arrow_back_ios)),
-            title: const CustomText(
-                text: "Mortgage Calculator",
-                fontWeight: FontWeight.w600,
-                textColor: Colors.black,
-                fontSize: 20.0),
-          ),
+          appBar: CustomAppBar(title: "Mortgage Calculator", onBackPressed: (){
+            Navigator.pop(context);
+          },),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -11,6 +11,9 @@ import 'package:logger/logger.dart';
 import '../../../core/utils/consts/textstyle.dart';
 import 'package:expressions/expressions.dart' as ex;
 
+import '../../../main.dart';
+import '../../../toast/toast.dart';
+
 class MyCalculator extends StatefulWidget {
   const MyCalculator({Key? key});
 
@@ -1114,34 +1117,48 @@ class _MyCalculatorState extends State<MyCalculator> {
   Widget button(text, color, tcolor,
       {String? image, double? height, double? weight}) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.all(6),
-        height: 45,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            padding: EdgeInsets.all(0),
-            backgroundColor: color,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+      child: ValueListenableBuilder<bool>(
+          valueListenable: connectivityService.isConnected,
+          builder: (context, isConnected, child) {
+
+            return Container(
+            padding: EdgeInsets.all(6),
+            height: 45,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                padding: EdgeInsets.all(0),
+                backgroundColor: color,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: isConnected ? () => _onButtonClicked(text) : () {
+                errorToast(
+                    context: context,
+                    msg: "Please check your internet connection",
+                    color: Colors.grey,
+                    iconColor: Colors.red,
+                    headingTextColor: Colors.red,
+                    valueTextColor: Colors.red);
+              },
+              child: text.toString().isNotEmpty && (image?.isNotEmpty ?? false)
+                  ? Image.asset(
+                image ?? '',
+                height: height,
+                width: weight,
+              )
+                  : Text(
+                text,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height * 0.013,
+                  fontWeight: FontWeight.bold,
+                  color: tcolor,
+                ),
+              ),
             ),
-          ),
-          onPressed: () => _onButtonClicked(text),
-          child: text.toString().isNotEmpty && (image?.isNotEmpty ?? false)
-              ? Image.asset(
-            image ?? '',
-            height: height,
-            width: weight,
-          )
-              : Text(
-            text,
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.height * 0.013,
-              fontWeight: FontWeight.bold,
-              color: tcolor,
-            ),
-          ),
-        ),
+          );
+        }
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
-import 'package:calculation_app/screens/view/all_calculators/retirement_calculator/time_calculator_controller.dart';
+import 'package:calculation_app/screens/view/all_calculators/time_calculator/time_calculator_controller.dart';
 import 'package:calculation_app/screens/widgets/container_shadow_widget/container_shadow_widget.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_divider/custom_divider.dart';

@@ -9,6 +9,9 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:calculation_app/screens/view/all_calculators/normal_calculator/Colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../main.dart';
+import '../../../../toast/toast.dart';
+
 class NormalCalculatorScreen extends StatefulWidget {
   // const NormalCalculatorScreen({Key? key}) : super(key: key);
   @override
@@ -124,26 +127,40 @@ class _NormalCalculatorScreenState extends State<NormalCalculatorScreen> {
   Widget buildButton(String buttonText, double buttonHeight, Color buttonColor,
       Color digitTextColor,
       {bool? calculationButtons}) {
-    return InkWell(
-      onTap: () => buttonPress(buttonText),
-      borderRadius: BorderRadius.circular(25),
-      child: Container(
-        height: 56,
-        width: 56,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: buttonColor,
-        ),
-        child: Center(
-          child: Text(
-            buttonText,
-            style: GoogleFonts.podkova(
-                fontSize: calculationButtons == true ? 24.0 : 20.0,
-                fontWeight: FontWeight.w600,
-                color: digitTextColor),
+    return ValueListenableBuilder<bool>(
+        valueListenable: connectivityService.isConnected,
+        builder: (context, isConnected, child) {
+
+          return InkWell(
+          onTap: isConnected ?() => buttonPress(buttonText) : () {
+            errorToast(
+                context: context,
+                msg: "Please check your internet connection",
+                color: Colors.grey,
+                iconColor: Colors.red,
+                headingTextColor: Colors.red,
+                valueTextColor: Colors.red);
+          },
+          borderRadius: BorderRadius.circular(25),
+          child: Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: buttonColor,
+            ),
+            child: Center(
+              child: Text(
+                buttonText,
+                style: GoogleFonts.podkova(
+                    fontSize: calculationButtons == true ? 24.0 : 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: digitTextColor),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 

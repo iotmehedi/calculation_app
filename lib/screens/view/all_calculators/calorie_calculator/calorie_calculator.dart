@@ -78,7 +78,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
       'Weight loss (1 kg/week)': 0,
       'Extreme weight loss (2 kg/week)': 0,
     };
-    selectedButton = false; // Default to US units
+    selectedButton = true; // Default to US units
   }
 
   void calculateCalories() {
@@ -418,7 +418,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           : heightFeetController,
                       keyboardType: TextInputType.number,
                       paddingNeed: true,
-                      hint: selectedButton == true ? "cm" : "Feet",
+                      hint: selectedButton == true ? "Feet" : "cm",
                       textAlign: TextAlign.start),
                 ),
                 const SizedBox(
@@ -426,7 +426,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                 ),
                 Expanded(
                   child: Visibility(
-                    visible: selectedButton == true ? false : true,
+                    visible: selectedButton == true ? true : false,
                     child: CustomSimpleTextField(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,

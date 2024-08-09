@@ -9,6 +9,8 @@ import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../main.dart';
+import '../../../../toast/toast.dart';
 
 class PregnancyCalculatorPage extends StatefulWidget {
   @override
@@ -25,7 +27,7 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
   int _selectedYear = DateTime.now().year;
   String selectedOption = '1';
   List<Map<String, Object>> milestones = [{}];
-  List<Map<String, Object>> milestones2 = [{}];//this is value
+  List<Map<String, Object>> milestones2 = [{}]; //this is value
   List<Map<String, Object>> milestones3 = [{}];
   DateTime dueDate = DateTime.now();
   var firstTrimesterEnd = DateTime.now();
@@ -60,7 +62,9 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
   DateTime get _selectedDate {
     return DateTime(_selectedYear, _selectedMonth, _selectedDay);
   }
-  int calculateWeekDifference(int selectedYear, int selectedMonth, int selectedDay) {
+
+  int calculateWeekDifference(
+      int selectedYear, int selectedMonth, int selectedDay) {
     // Step 1: Create the selected date
     DateTime selectedDate = DateTime(selectedYear, selectedMonth, selectedDay);
 
@@ -75,6 +79,7 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
 
     return weekDifference;
   }
+
   void _calculateTimeline() {
     switch (_selectedMethod) {
       case 'Last Period':
@@ -156,8 +161,6 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
           "line2": "hear your baby's heartbeat",
           "line3": " with a Doppler"
         },
-
-
       ];
       milestones2 = [
         {
@@ -328,8 +331,6 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
             "line2": "hear your baby's heartbeat",
             "line3": " with a Doppler"
           },
-
-
         ];
         milestones2 = [
           {
@@ -498,8 +499,6 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
             "line2": "hear your baby's heartbeat",
             "line3": " with a Doppler"
           },
-
-
         ];
         milestones2 = [
           {
@@ -669,8 +668,6 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
           "line2": "hear your baby's heartbeat",
           "line3": " with a Doppler"
         },
-
-
       ];
       milestones2 = [
         {
@@ -790,14 +787,14 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
             : _selectedMethod == 'IVF' && selectedOption == "2"
                 ? const Duration(days: 27 * 7 - 2)
                 : const Duration(days: 26 * 7));
-     secondTrimesterEnd = _selectedMethod == 'I know my due date'
+    secondTrimesterEnd = _selectedMethod == 'I know my due date'
         ? dueDate.subtract(const Duration(days: 13 * 7))
         : _selectedMethod == 'IVF' && selectedOption == "1"
             ? dueDate.subtract(const Duration(days: 13 * 7 + 3))
             : _selectedMethod == 'IVF' && selectedOption == "2"
                 ? dueDate.subtract(const Duration(days: 13 * 7 + 5))
                 : dueDate.subtract(const Duration(days: 11 * 7));
-     thirdTrimesterStart = secondTrimesterEnd;
+    thirdTrimesterStart = secondTrimesterEnd;
 
     String timeline = 'Pregnancy timeline\n';
     timeline +=
@@ -825,30 +822,60 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
     setState(() {
       _timeline = timeline;
     });
-    var firstTrimesterStart = _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 38 * 7 + 3)) : _selectedMethod == 'IVF' && selectedOption == "2" ? dueDate.subtract(const Duration(days: 38 * 7 + 5)) : dueDate.subtract(const Duration(days: 38 * 7));
+    var firstTrimesterStart = _selectedMethod == 'IVF' && selectedOption == "1"
+        ? dueDate.subtract(const Duration(days: 38 * 7 + 3))
+        : _selectedMethod == 'IVF' && selectedOption == "2"
+            ? dueDate.subtract(const Duration(days: 38 * 7 + 5))
+            : dueDate.subtract(const Duration(days: 38 * 7));
     var firstTrimesterEnds = firstTrimesterEnd;
-    var firstTrimesterdayDifference = firstTrimesterEnds.difference(firstTrimesterStart).inDays;
-    var secondTrimesterStartDate = _selectedMethod == 'Ultra Sound' ? dueDate.subtract(const Duration(days: 24 * 7)) : firstTrimesterEnd;
-    var secondTrimesterEndDate = _selectedMethod == 'Ultra Sound' ? dueDate.subtract(const Duration(days: 10 * 7)) : _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 12 * 7 + 3)) : _selectedMethod == 'IVF' && selectedOption == "2" ? dueDate.subtract(const Duration(days: 12 * 7 + 5)) : dueDate.subtract(const Duration(days: 12 * 7));
-    var secondTrimesterdayDifference = secondTrimesterEndDate.difference(secondTrimesterStartDate).inDays;
-    var thirdTrimesterStartDate = _selectedMethod == 'Ultra Sound' ? dueDate.subtract(const Duration(days: 10 * 7)) : _selectedMethod == 'I know my due date' ? dueDate.subtract(const Duration(days: 12 * 7)) : _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 12 * 7 + 3)) : thirdTrimesterStart;
-    var thirdTrimesterEndDate = _selectedMethod == 'Ultra Sound' ? dueDate.add(const Duration(days: 2 * 7)) : _selectedMethod == 'IVF' && selectedOption == "1" ? dueDate.subtract(const Duration(days: 3)) : dueDate;
-    var thirdTrimesterDifference = thirdTrimesterEndDate.difference(thirdTrimesterStartDate).inDays;
+    var firstTrimesterdayDifference =
+        firstTrimesterEnds.difference(firstTrimesterStart).inDays;
+    var secondTrimesterStartDate = _selectedMethod == 'Ultra Sound'
+        ? dueDate.subtract(const Duration(days: 24 * 7))
+        : firstTrimesterEnd;
+    var secondTrimesterEndDate = _selectedMethod == 'Ultra Sound'
+        ? dueDate.subtract(const Duration(days: 10 * 7))
+        : _selectedMethod == 'IVF' && selectedOption == "1"
+            ? dueDate.subtract(const Duration(days: 12 * 7 + 3))
+            : _selectedMethod == 'IVF' && selectedOption == "2"
+                ? dueDate.subtract(const Duration(days: 12 * 7 + 5))
+                : dueDate.subtract(const Duration(days: 12 * 7));
+    var secondTrimesterdayDifference =
+        secondTrimesterEndDate.difference(secondTrimesterStartDate).inDays;
+    var thirdTrimesterStartDate = _selectedMethod == 'Ultra Sound'
+        ? dueDate.subtract(const Duration(days: 10 * 7))
+        : _selectedMethod == 'I know my due date'
+            ? dueDate.subtract(const Duration(days: 12 * 7))
+            : _selectedMethod == 'IVF' && selectedOption == "1"
+                ? dueDate.subtract(const Duration(days: 12 * 7 + 3))
+                : thirdTrimesterStart;
+    var thirdTrimesterEndDate = _selectedMethod == 'Ultra Sound'
+        ? dueDate.add(const Duration(days: 2 * 7))
+        : _selectedMethod == 'IVF' && selectedOption == "1"
+            ? dueDate.subtract(const Duration(days: 3))
+            : dueDate;
+    var thirdTrimesterDifference =
+        thirdTrimesterEndDate.difference(thirdTrimesterStartDate).inDays;
     DateTime? mostRecentPastDate;
     String? associatedWeekName;
-    for(var month in milestones){
-      if((month['weeks'] as DateTime).isBefore(DateTime.now())){
+    for (var month in milestones) {
+      if ((month['weeks'] as DateTime).isBefore(DateTime.now())) {
         DateTime weekDate = month["weeks"] as DateTime;
-      print("month['week_name'] ${month['weeks']}");
-      if (mostRecentPastDate == null || weekDate.isAfter(mostRecentPastDate)) {
-        mostRecentPastDate = weekDate;
-        associatedWeekName = calculateWeekDifference(_selectedYear, _selectedMonth, _selectedDay).toString();
-        print("month difference of ${calculateWeekDifference(_selectedYear, _selectedMonth, _selectedDay)}");
-      }
+        print("month['week_name'] ${month['weeks']}");
+        if (mostRecentPastDate == null ||
+            weekDate.isAfter(mostRecentPastDate)) {
+          mostRecentPastDate = weekDate;
+          associatedWeekName = calculateWeekDifference(
+                  _selectedYear, _selectedMonth, _selectedDay)
+              .toString();
+          print(
+              "month difference of ${calculateWeekDifference(_selectedYear, _selectedMonth, _selectedDay)}");
+        }
       }
     }
     if (mostRecentPastDate != null && associatedWeekName != null) {
-      print('Most recent past date: ${DateFormat('MMM-d-yyyy').format(mostRecentPastDate)}');
+      print(
+          'Most recent past date: ${DateFormat('MMM-d-yyyy').format(mostRecentPastDate)}');
       print('Associated week name: $associatedWeekName');
       print('last date name: ${milestones[milestones.length - 1]["weeks"]}');
     } else {
@@ -858,8 +885,8 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
     print("difference ${secondTrimesterdayDifference}");
     print("difference ${thirdTrimesterDifference}");
 
-    RouteGenerator().pushNamedSms(
-        context, Routes.pregnancyDueDateResult, arguments: [
+    RouteGenerator()
+        .pushNamedSms(context, Routes.pregnancyDueDateResult, arguments: [
       milestones3[milestones3.length - 1]["weeks"],
       firstTrimesterdayDifference,
       secondTrimesterdayDifference,
@@ -884,9 +911,12 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-      appBar: CustomAppBar(title: "Pregnancy Due Date", onBackPressed: (){
-        Navigator.pop(context);
-      },),
+      appBar: CustomAppBar(
+        title: "Pregnancy Due Date",
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -970,7 +1000,9 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
                               return DropdownMenuItem(
                                 value: index + 1,
                                 child: globalText16(
-                                    text: DateFormat('MMM').format(DateTime(0, index + 1)), fontWeight: FontWeight.normal),
+                                    text: DateFormat('MMM')
+                                        .format(DateTime(0, index + 1)),
+                                    fontWeight: FontWeight.normal),
                               );
                             }).toList(),
                           ),
@@ -1183,44 +1215,59 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
               ),
             ],
             const SizedBox(height: 16.0),
-            Center(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
-                    maximumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width, 51),
-                    ),
-                    minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width * 0.9, 41),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                  onPressed: _calculateTimeline,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      globalText18(
-                          text: "Get The Date",
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white),
-                      10.pw,
-                      const Icon(
-                        Icons.calendar_month_outlined,
-                        color: Colors.white,
-                        size: 18,
-                      )
-                    ],
-                  )),
-            ),
-            
+            ValueListenableBuilder<bool>(
+                valueListenable: connectivityService.isConnected,
+                builder: (context, isConnected, child) {
+                  return Center(
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<HexColor>(
+                              HexColor("0F182E")),
+                          maximumSize: MaterialStateProperty.all(
+                            Size(MediaQuery.of(context).size.width, 51),
+                          ),
+                          minimumSize: MaterialStateProperty.all(
+                            Size(MediaQuery.of(context).size.width * 0.9, 41),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: isConnected
+                            ? _calculateTimeline
+                            : () {
+                                errorToast(
+                                    context: context,
+                                    msg:
+                                        "Please check your internet connection",
+                                    color: Colors.grey,
+                                    iconColor: Colors.red,
+                                    headingTextColor: Colors.red,
+                                    valueTextColor: Colors.red);
+                              },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            globalText18(
+                                text: "Get The Date",
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                            10.pw,
+                            const Icon(
+                              Icons.calendar_month_outlined,
+                              color: Colors.white,
+                              size: 18,
+                            )
+                          ],
+                        )),
+                  );
+                }),
+
             const SizedBox(height: 16.0),
-          //  if(milestones[0]['weeks'] != null && (milestones[0]['weeks'] as DateTime).day.toString().isNotEmpty)
-          
+            //  if(milestones[0]['weeks'] != null && (milestones[0]['weeks'] as DateTime).day.toString().isNotEmpty)
           ],
         ),
       ),

@@ -11,6 +11,8 @@ import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../main.dart';
+import '../../../../toast/toast.dart';
 
 class PregnancyTimeCalculatorPage extends StatefulWidget {
   @override
@@ -665,39 +667,53 @@ void _calculateDifference() {
               ),
             ],
             const SizedBox(height: 16.0),
-            Center(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
-                    maximumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width, 51),
-                    ),
-                    minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery.of(context).size.width * 0.9, 41),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+            ValueListenableBuilder<bool>(
+                valueListenable: connectivityService.isConnected,
+                builder: (context, isConnected, child) {
+
+                  return Center(
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
+                        maximumSize: MaterialStateProperty.all(
+                          Size(MediaQuery.of(context).size.width, 51),
+                        ),
+                        minimumSize: MaterialStateProperty.all(
+                          Size(MediaQuery.of(context).size.width * 0.9, 41),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  onPressed: _calculateTimeline,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      globalText18(
-                          text: "Get The Date",
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white),
-                      10.pw,
-                      const Icon(
-                        Icons.calendar_month_outlined,
-                        color: Colors.white,
-                        size: 18,
-                      )
-                    ],
-                  )),
+                      onPressed: isConnected ? _calculateTimeline : () {
+                        errorToast(
+                            context: context,
+                            msg: "Please check your internet connection",
+                            color: Colors.grey,
+                            iconColor: Colors.red,
+                            headingTextColor: Colors.red,
+                            valueTextColor: Colors.red);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          globalText18(
+                              text: "Get The Date",
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white),
+                          10.pw,
+                          const Icon(
+                            Icons.calendar_month_outlined,
+                            color: Colors.white,
+                            size: 18,
+                          )
+                        ],
+                      )),
+                );
+              }
             ),
             
           //   const SizedBox(height: 16.0),

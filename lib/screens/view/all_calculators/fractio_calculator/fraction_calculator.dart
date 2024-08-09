@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../main.dart';
+
 class Fraction {
   int numerator;
   int denominator;
@@ -116,102 +118,115 @@ class _FractionCalculatorState extends State<FractionCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.scaffoldBackgroundColor,
-      appBar: CustomAppBar(
-        title: 'Fraction Calculator',
-        onBackPressed: () async {
-          Navigator.pop(context);
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.clear();
+    return ValueListenableBuilder<bool>(
+        valueListenable: connectivityService.isConnected,
+        builder: (context, isConnected, child) {
+          return Scaffold(
+            backgroundColor: AppColors.scaffoldBackgroundColor,
+            appBar: CustomAppBar(
+              title: 'Fraction Calculator',
+              onBackPressed: () async {
+                Navigator.pop(context);
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.clear();
+              },
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: buildFractionInput("Fraction 1",
+                              _numeratorController1, _numeratorController2),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        buildOperationDropdown(),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: buildFractionInput("Fraction 2",
+                              _denominatorController1, _denominatorController2),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.calculateButtonColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                      onPressed: isConnected
+                          ? calculate
+                          : () {
+                              errorToast(
+                                  context: context,
+                                  msg: "Please check your internet connection",
+                                  color: Colors.grey,
+                                  iconColor: Colors.red,
+                                  headingTextColor: Colors.red,
+                                  valueTextColor: Colors.red);
+                            },
+                      child: Center(
+                        child: globalText20(
+                            text: "Calculate",
+                            color: Colors.white,
+                            alignment: Alignment.center),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    // text, fontSize, fontWeight, color, TextAlign end
+                    globalText2(
+                        text: "Answer:",
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        textAlignment: TextAlign.start,
+                        alignment: Alignment.centerLeft),
 
-        },
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: buildFractionInput("Fraction 1",
-                        _numeratorController1, _numeratorController2),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  buildOperationDropdown(),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: buildFractionInput("Fraction 2",
-                        _denominatorController1, _denominatorController2),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.calculateButtonColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                onPressed: calculate,
-                child: Center(
-                  child: globalText20(
-                      text: "Calculate",
-                      color: Colors.white,
-                      alignment: Alignment.center),
-                ),
-              ),
-              const SizedBox(height: 40),
-              // text, fontSize, fontWeight, color, TextAlign end
-              globalText2(
-                  text: "Answer:",
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                  textAlignment: TextAlign.start,
-                  alignment: Alignment.centerLeft),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Visibility(
+                        visible: ((selectedOperator == '+') ||
+                                    (selectedOperator == '-')) &&
+                                (_numeratorController1.text.isNotEmpty &&
+                                    _numeratorController2.text.isNotEmpty &&
+                                    _denominatorController1.text.isNotEmpty &&
+                                    _denominatorController2.text.isNotEmpty)
+                            ? true
+                            : false,
+                        child: AddFraction()),
 
-              const SizedBox(
-                height: 10,
-              ),
-              Visibility(
-                  visible: ((selectedOperator == '+') ||
-                              (selectedOperator == '-')) &&
+                    Visibility(
+                      visible: ((selectedOperator == '*') ||
+                              (selectedOperator == 'of')) &&
                           (_numeratorController1.text.isNotEmpty &&
                               _numeratorController2.text.isNotEmpty &&
                               _denominatorController1.text.isNotEmpty &&
-                              _denominatorController2.text.isNotEmpty)
-                      ? true
-                      : false,
-                  child: AddFraction()),
-
-              Visibility(
-                visible:
-                    ((selectedOperator == '*') || (selectedOperator == 'of')) &&
-                        (_numeratorController1.text.isNotEmpty &&
-                            _numeratorController2.text.isNotEmpty &&
-                            _denominatorController1.text.isNotEmpty &&
-                            _denominatorController2.text.isNotEmpty),
-                child: MultiplyWidget(),
+                              _denominatorController2.text.isNotEmpty),
+                      child: MultiplyWidget(),
+                    ),
+                    Visibility(
+                      visible: (selectedOperator == '÷') &&
+                          (_numeratorController1.text.isNotEmpty &&
+                              _numeratorController2.text.isNotEmpty &&
+                              _denominatorController1.text.isNotEmpty &&
+                              _denominatorController2.text.isNotEmpty),
+                      child: DivideWidget(),
+                    ),
+                  ],
+                ),
               ),
-              Visibility(
-                visible: (selectedOperator == '÷') &&
-                    (_numeratorController1.text.isNotEmpty &&
-                        _numeratorController2.text.isNotEmpty &&
-                        _denominatorController1.text.isNotEmpty &&
-                        _denominatorController2.text.isNotEmpty),
-                child: DivideWidget(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   Widget AddFraction() {

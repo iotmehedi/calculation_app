@@ -118,7 +118,7 @@ class GradeWidget extends StatelessWidget {
                     child: CustomElevatedButton(
                       color: HexColor("F3F6F9"),
                       onPress: (){
-                        // controller.clearFields();
+                        controller.clearField();
                       },
                       text: globalText20(text: "Clear", color: HexColor("0F182E"), alignment: Alignment.center, fontWeight: FontWeight.w500),
                     ),

@@ -1,6 +1,6 @@
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
-import 'package:calculation_app/screens/view/all_calculators/retirement_calculator/time_calculator_controller.dart';
+import 'package:calculation_app/screens/view/all_calculators/time_calculator/time_calculator_controller.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +10,6 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
-void main() {
-  runApp(TimeCalculatorApp());
-}
-
-class TimeCalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: TimeCalculatorScreen(),
-    );
-  }
-}
 
 class TimeCalculatorScreen extends StatefulWidget {
   @override

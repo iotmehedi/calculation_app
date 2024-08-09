@@ -226,7 +226,15 @@ class GradeController extends GetxController{
       result.value = requiredFinalExamGrade.toStringAsFixed(2).toString();
 
   }
-
+clearField(){
+  additionalWeightController.value.clear();
+  courseControllers.clear();
+  courseControllersLetter.clear();
+  instructorControllersLetter.clear();
+  selectedGrades.clear();
+  addCourse();
+  addCourseLetter();
+}
 allFieldClear(){
   currentGradeController.value.clear();
   targetGradeController.value.clear();

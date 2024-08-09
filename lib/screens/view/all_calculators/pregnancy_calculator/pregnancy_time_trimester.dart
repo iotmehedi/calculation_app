@@ -1,3 +1,4 @@
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
@@ -20,6 +21,7 @@ DateTime dueDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         title: 'Pregnancy Trimester',
         onBackPressed: () {

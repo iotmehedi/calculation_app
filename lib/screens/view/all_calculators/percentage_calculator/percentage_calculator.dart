@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../main.dart';
+import '../../../../toast/toast.dart';
 import '../../../widgets/textfield/textField_widget.dart';
 
 class PercentageCalculator extends StatefulWidget {
@@ -109,20 +111,35 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
               ],
             ),
             SizedBox(height: 20.0),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: HexColor("244384"),
-                maximumSize: Size(MediaQuery.of(context).size.width * 0.9, 60),
-                minimumSize: Size(MediaQuery.of(context).size.width * 0.9, 60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-              onPressed: calculatePercentage,
-              child: globalText20(
-                  text: 'Calculate',
-                  alignment: Alignment.center,
-                  color: Colors.white),
+            ValueListenableBuilder<bool>(
+                valueListenable: connectivityService.isConnected,
+                builder: (context, isConnected, child) {
+
+                  return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: HexColor("244384"),
+                    maximumSize: Size(MediaQuery.of(context).size.width * 0.9, 60),
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.9, 60),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onPressed: isConnected ? calculatePercentage : () {
+                    errorToast(
+                        context: context,
+                        msg: "Please check your internet connection",
+                        color: Colors.grey,
+                        iconColor: Colors.red,
+                        headingTextColor: Colors.red,
+                        valueTextColor: Colors.red);
+                  },
+
+                    child: globalText20(
+                      text: 'Calculate',
+                      alignment: Alignment.center,
+                      color: Colors.white),
+                );
+              }
             ),
             SizedBox(height: 20.0),
             Row(
