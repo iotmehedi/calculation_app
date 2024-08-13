@@ -138,10 +138,10 @@ class MoreCalculatorPage extends StatelessWidget {
                 Expanded(
                   child: HomepageWidget(
                     images: AppAssets.sales,
-                    text: "Sales Tax\nCalculator",
+                    text: "TDEE Tax\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(
-                          context, Routes.taxCalculatorPage);
+                          context, Routes.tdeeCalculator);
                     },
                   ),
                 ),

@@ -57,6 +57,7 @@ import '../../screens/view/all_calculators/sip_calculator/sip_calculator.dart';
 import '../../screens/view/all_calculators/sip_calculator/sip_result_screen.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_result.dart';
 import '../../screens/view/all_calculators/stocks_calculator/stocks_calculator_screen.dart';
+import '../../screens/view/all_calculators/tdee_calculator/tdee_calculator.dart';
 import '../../screens/view/all_calculators/time_calculator/time_calculator.dart';
 import '../../screens/view/all_calculators/time_calculator/time_calculator_result_page.dart';
 import '../../screens/view/all_calculators/tip_calculator/tip_calculator_result_screen.dart';
@@ -551,6 +552,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => InflationCalculatorPage(),
+          );
+        }
+        case Routes.tdeeCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => TDEECalculator(),
           );
         }
     }
