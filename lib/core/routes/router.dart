@@ -41,6 +41,7 @@ import '../../screens/view/all_calculators/grade_calculator/grade_calculator.dar
 import '../../screens/view/all_calculators/grade_calculator/grade_result_screen.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_result.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_screen.dart';
+import '../../screens/view/all_calculators/inflation_calculator/inflation_calculator.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
 import '../../screens/view/all_calculators/margin_calculator/margin_calculator_result_screen.dart';
@@ -60,6 +61,7 @@ import '../../screens/view/all_calculators/time_calculator/time_calculator.dart'
 import '../../screens/view/all_calculators/time_calculator/time_calculator_result_page.dart';
 import '../../screens/view/all_calculators/tip_calculator/tip_calculator_result_screen.dart';
 import '../../screens/view/all_calculators/tip_calculator/tip_calculator_screen.dart';
+import '../../screens/view/all_calculators/uint_calculator/unit_calculator.dart';
 import '../../screens/view/all_calculators/vat_calculator/vat_calculator_screen.dart';
 import '../../screens/view/all_calculators/vat_calculator/vat_result_screen.dart';
 import '../../screens/view/more_calculator/more_calculator.dart';
@@ -537,6 +539,18 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => MyCalculator(),
+          );
+        }
+        case Routes.unitCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => UnitConverter(),
+          );
+        }
+        case Routes.inflationCalculator:
+        {
+          return MaterialPageRoute(
+            builder: (context) => InflationCalculatorPage(),
           );
         }
     }

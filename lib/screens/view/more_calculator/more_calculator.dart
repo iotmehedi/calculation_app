@@ -115,6 +115,51 @@ class MoreCalculatorPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.grade,
+                    text: "Unit\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(context, Routes.unitCalculator);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.gpa,
+                    text: "Inflation\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(context, Routes.inflationCalculator);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.sales,
+                    text: "Sales Tax\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(
+                          context, Routes.taxCalculatorPage);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.margin,
+                    text: "Margin\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(
+                          context, Routes.marginCalculator);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

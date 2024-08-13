@@ -63,4 +63,6 @@ class Routes {
   static const timeCalculator = "/timeCalculator";
   static const timeCalculatorResultPage = "/timeCalculatorResultPage";
   static const scientificCalculator = "/scientificCalculator";
+  static const unitCalculator = "/unitCalculator";
+  static const inflationCalculator = "/inflationCalculator";
 }
