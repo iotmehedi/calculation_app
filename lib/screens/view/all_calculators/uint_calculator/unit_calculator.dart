@@ -1,9 +1,16 @@
+import 'package:calculation_app/core/utils/consts/app_assets.dart';
+import 'package:calculation_app/core/utils/consts/app_colors.dart';
+import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/uint_calculator/unit_controller.dart';
+import 'package:calculation_app/screens/widgets/container_shadow_widget/container_shadow_widget.dart';
+import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../widgets/custom_text/custom_text.dart';
-
+import '../../../widgets/textfield/textField_widget.dart';
 
 class UnitConverter extends StatefulWidget {
   @override
@@ -11,288 +18,310 @@ class UnitConverter extends StatefulWidget {
 }
 
 class _UnitConverterState extends State<UnitConverter> {
-  final TextEditingController _controller = TextEditingController();
-  String _fromUnit = 'Meter';
-  String _toUnit = 'Kilometer';
-  double? _convertedValue;
-  var selectedButton = "Length";
-
-
-  final Map<String, Map<String, double>> _unitFactors = {
-    'Length': {
-      'Meter': 1.0,
-      'Kilometer': 1000.0,
-      'Centimeter': 0.01,
-      'Millimeter': 0.001,
-      'Micrometer': 1e-6,
-      'Nanometer': 1e-9,
-      'Mile': 1609.34,
-      'Yard': 0.9144,
-      'Foot': 0.3048,
-      'Inch': 0.0254,
-      'Light Year': 9.461e15,
-    },
-    'Weight': {
-      'Kilogram': 1,
-      'Gram': 1e3,
-      'Milligram': 1e6,
-      'Metric Ton': 1e-3,
-      'Long Ton': 9.8421e-4,
-      'Short Ton': 1.1023e-3,
-      'Pound': 2.20462,
-      'Ounce': 35.274,
-      'Carat': 5e3,
-      'Atomic Mass Unit': 6.02214e26,
-    },
-    'Area': {
-      'Square Meter': 1,
-      'Square Kilometer': 1e-6,
-      'Square Centimeter': 1e4,
-      'Square Millimeter': 1e6,
-      'Square Micrometer': 1e12,
-      'Hectare': 1e-4,
-      'Square Mile': 3.861e-7,
-      'Square Yard': 1.19599,
-      'Square Foot': 10.7639,
-      'Square Inch': 1550.0031,
-      'Acre': 2.47105e-4,
-    }
-  };
-  // void _convert() {
-  //   double inputValue = double.tryParse(_controller.text) ?? 0;
-  //   double fromFactor = _unitFactors[selectedButton]!.keys.first;
-  //   double toFactor = _unitFactors[selectedButton]!.keys.first;
-  //
-  //   setState(() {
-  //     _convertedValue = (inputValue * fromFactor) / toFactor;
-  //   });
-  // }
-  void _convert() {
-    double inputValue = double.tryParse(_controller.text) ?? 0;
-    double fromFactor = _unitFactors[selectedButton]![_fromUnit]!;
-    double toFactor = _unitFactors[selectedButton]![_toUnit]!;
-
-    setState(() {
-      _convertedValue = (inputValue * fromFactor) / toFactor;
-    });
-  }
-  void _convertWeight(){
-    double inputValue = double.tryParse(_controller.text) ?? 0;
-    double valueInKilograms = inputValue / _unitFactors[selectedButton]![_fromUnit]!;
-   setState(() {
-     _convertedValue = valueInKilograms * _unitFactors[selectedButton]![_toUnit]!;
-   });
-  }
-  void _convertArea(){
-
-    double inputValue = double.tryParse(_controller.text) ?? 0;
-    double valueInSquareMeters = inputValue / _unitFactors[selectedButton]![_fromUnit]!;
-   setState(() {
-     _convertedValue = valueInSquareMeters * _unitFactors[selectedButton]![_toUnit]!;
-   });
-
-
-  }
-  void _updateUnits() {
-    setState(() {
-      _fromUnit = _unitFactors[selectedButton]!.keys.first;
-      _toUnit = _unitFactors[selectedButton]!.keys.first;
-    });
-  }
-  // String _conversionType = 'Length';
+  var controller = Get.put(UnitController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Unit Converter'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Container(
-              height: 56,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: HexColor("244384"),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              selectedButton = "Length";
-                              _updateUnits();
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: selectedButton ==
-                                  "Length"
-                                  ? Colors.white
-                                  : HexColor("244384"),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Center(
-                                  child: CustomText(
+    return Obx(() => Scaffold(
+          backgroundColor: AppColors.scaffoldBackgroundColor,
+          appBar: CustomAppBar(
+            title: "Unit Converter",
+            onBackPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 56,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: HexColor("244384"),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectedButton.value = "Length";
+                                controller.convertedValue.value = 0.0;
+                                controller.updateUnits();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: controller.selectedButton.value ==
+                                          "Length"
+                                      ? Colors.white
+                                      : HexColor("244384"),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Center(
+                                      child: CustomText(
                                     text: "Length",
                                     fontSize: 20,
                                     textColor:
-                                    selectedButton ==
-                                        "Length"
-                                        ? Colors.black
-                                        : Colors.white,
+                                        controller.selectedButton.value ==
+                                                "Length"
+                                            ? Colors.black
+                                            : Colors.white,
                                   )),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      5.pw,
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              selectedButton = "Weight";
-                              _updateUnits();
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: selectedButton ==
-                                  "Weight"
-                                  ? Colors.white
-                                  : HexColor("244384"),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Center(
-                                  child: CustomText(
+                          5.pw,
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectedButton.value = "Weight";
+                                controller.convertedValue.value = 0.0;
+                                controller.updateUnits();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: controller.selectedButton.value ==
+                                          "Weight"
+                                      ? Colors.white
+                                      : HexColor("244384"),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Center(
+                                      child: CustomText(
                                     text: "Weight",
                                     fontSize: 20,
                                     textColor:
-                                    selectedButton ==
-                                        "Weight"
-                                        ? HexColor("244384")
-                                        : Colors.white,
+                                        controller.selectedButton.value ==
+                                                "Weight"
+                                            ? HexColor("244384")
+                                            : Colors.white,
                                   )),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      5.pw,
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              selectedButton = "Area";
-                              _updateUnits();
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: selectedButton ==
-                                  "Area"
-                                  ? Colors.white
-                                  : HexColor("244384"),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Center(
-                                  child: CustomText(
+                          5.pw,
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.selectedButton.value = "Area";
+                                controller.convertedValue.value = 0.0;
+                                controller.updateUnits();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color:
+                                      controller.selectedButton.value == "Area"
+                                          ? Colors.white
+                                          : HexColor("244384"),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Center(
+                                      child: CustomText(
                                     text: "Area",
                                     fontSize: 20,
                                     textColor:
-                                    selectedButton ==
-                                        "Area"
-                                        ? HexColor("244384")
-                                        : Colors.white,
+                                        controller.selectedButton.value ==
+                                                "Area"
+                                            ? HexColor("244384")
+                                            : Colors.white,
                                   )),
+                                ),
+                              ),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: globalText16(
+                          text: "Amount", fontWeight: FontWeight.w500),
+                    ),
+                    20.pw,
+                    Expanded(
+                        flex: 4,
+                        child: SizedBox(
+                          height: 49,
+                          child: TextField(
+                            controller: controller.textController.value,
+                            decoration: InputDecoration(
+                              isDense: false,
+                              isCollapsed: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: HexColor("EDEBEB"), width: 1.5),
+                              ),
+                              filled: true,
+                              fillColor: HexColor("#FFFFFFF"),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: HexColor("#EDEBEB"), width: 1.5),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ),
+                        ))
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: globalText16(
+                          text: "From", fontWeight: FontWeight.w500),
+                    ),
+                    20.pw,
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                                color: HexColor("EDEBEB"), width: 1.5)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Image.asset(
+                                AppAssets.twoArrow,
+                                height: 24,
+                              ),
+                            ),
+                            value: controller.fromUnit.value,
+                            onChanged: (newValue) {
+                              controller.fromUnit.value = newValue!;
+                            },
+                            items: controller
+                                .unitFactors[controller.selectedButton.value]!
+                                .keys
+                                .map((String unit) {
+                              return DropdownMenuItem<String>(
+                                alignment: AlignmentDirectional.center,
+                                value: unit,
+                                child: CustomText(
+                                  text: unit,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-
-            TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                labelText: 'Enter value',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: _fromUnit,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _fromUnit = newValue!;
-                      });
-                    },
-                    items: _unitFactors[selectedButton]!.keys.map((String unit) {
-                      return DropdownMenuItem<String>(
-                        value: unit,
-                        child: Text(unit),
-                      );
-                    }).toList(),
-                  ),
+                16.ph,
+                Row(
+                  children: [
+                    Expanded(
+                      child:
+                          globalText16(text: "To", fontWeight: FontWeight.w500),
+                    ),
+                    20.pw,
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                                color: HexColor("EDEBEB"), width: 1.5)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Image.asset(
+                                AppAssets.twoArrow,
+                                height: 24,
+                              ),
+                            ),
+                            value: controller.toUnit.value,
+                            onChanged: (newValue) {
+                              controller.toUnit.value = newValue!;
+                              if (controller.selectedButton.value == "Length") {
+                                controller.convert();
+                              } else if (controller.selectedButton.value ==
+                                  "Weight") {
+                                controller.convertWeight();
+                              } else {
+                                controller.convertArea();
+                              }
+                            },
+                            items: controller
+                                .unitFactors[controller.selectedButton.value]!
+                                .keys
+                                .map((String unit) {
+                              return DropdownMenuItem<String>(
+                                alignment: AlignmentDirectional.center,
+                                value: unit,
+                                child: CustomText(
+                                  text: unit,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: _toUnit,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _toUnit = newValue!;
-                      });
-                    },
-                    items: _unitFactors[selectedButton]!.keys.map((String unit) {
-                      return DropdownMenuItem<String>(
-                        value: unit,
-                        child: Text(unit),
-                      );
-                    }).toList(),
+                const SizedBox(height: 24),
+                if (controller.convertedValue.value != 0.0)
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: ContainerShadowWidget(
+                      margin: 0.0,
+                      widget: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 10, bottom: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: "Answer:",
+                              fontSize: 16,
+                              textColor: HexColor("2FAE3B"),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 60, top: 5),
+                              child: CustomText(
+                                text:
+                                    "${controller.textController.value.text} ${controller.fromUnit.value} = ${controller.convertedValue.value} ${controller.toUnit.value}",
+                                fontSize: 14,
+                                textColor: HexColor("2B2E63"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
               ],
             ),
-            SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: (){
-                // _convert();
-                // _convertWeight();
-                _convertArea();
-              },
-              child: Text('Convert'),
-            ),
-            SizedBox(height: 24),
-            if (_convertedValue != null)
-              Text(
-                'Converted Value: $_convertedValue $_toUnit',
-                style: TextStyle(fontSize: 20),
-              ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

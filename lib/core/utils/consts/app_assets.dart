@@ -47,4 +47,8 @@ class AppAssets {
   static const String x3 = 'assets/x3.png';
   static const String xy = 'assets/xy.png';
   static const String plusMinus = 'assets/plus_minus.png';
+  static const String unit = 'assets/unit.png';
+  static const String inflation = 'assets/inflation.png';
+  static const String tdee = 'assets/tdee.png';
+  static const String twoArrow = 'assets/two_arrow.png';
 }
