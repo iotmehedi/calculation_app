@@ -141,7 +141,17 @@ void calculateMonthlyPayment() {
   }
 
 }
-
+clearAllField(){
+  homePriceController.value.clear();
+  downPaymentController.value.clear();
+  loanTermController.value.clear();
+  interestRateController.value.clear();
+  hoaFeeController.value.clear();
+  pmiFeeController.value.clear();
+  homeInsuranceController.value.clear();
+  propertyTaxController.value.clear();
+  otherCostsController.value.clear();
+}
 double calculateMonthlyPropertyTax(double homePrice, double propertyTaxRate, bool isPercentage) {
   if (isPercentage) {
     return (homePrice * (propertyTaxRate / 100)) / 12;

@@ -18,7 +18,7 @@ class MortgageResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      backgroundColor: AppColors.scaffoldBackgroundColor,
+          backgroundColor: AppColors.scaffoldBackgroundColor,
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {
@@ -61,7 +61,8 @@ class MortgageResultPage extends StatelessWidget {
                 ),
                 20.ph,
                 CustomResultMonthly(
-                  title: NumberFormat('#,##,##0.00', 'en_US').format(controller.principalAndInterest.value),
+                  title: NumberFormat('#,##,##0.00', 'en_US')
+                      .format(controller.principalAndInterest.value),
                   heading: "Monthly Payment:",
                   headingColor: Colors.green,
                   titleColor: Colors.white,
@@ -427,13 +428,15 @@ class MortgageResultPage extends StatelessWidget {
                                 text: "Loan Amount:",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
+                                textColor: controller.isChecked.value == true ? HexColor("000000") : HexColor("458EEC") ,
                               )),
                               Expanded(
                                   child: CustomText(
                                 text: "\$ ${controller.loanAmount.value}",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                    textAlign: TextAlign.end,
+                                textAlign: TextAlign.end,
+                                textColor: controller.isChecked.value == true ? HexColor("000000") :  HexColor("458EEC"),
                               )),
                             ],
                           ),
@@ -477,6 +480,7 @@ class MortgageResultPage extends StatelessWidget {
                                 text: "Total Interest:",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
+                                    textColor: controller.isChecked.value == true ? HexColor("000000") :  HexColor("2FAE3B"),
                               )),
                               Expanded(
                                 child: Obx(
@@ -495,6 +499,7 @@ class MortgageResultPage extends StatelessWidget {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       textAlign: TextAlign.end,
+                                      textColor: controller.isChecked.value == true ? HexColor("000000") :  HexColor("2FAE3B"),
                                     );
                                   },
                                 ),
@@ -509,7 +514,7 @@ class MortgageResultPage extends StatelessWidget {
                                 text: "Total Mortgage Payments:",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-
+                                textColor: HexColor("458EEC"),
                               )),
                               Expanded(
                                 child: Obx(
@@ -528,6 +533,7 @@ class MortgageResultPage extends StatelessWidget {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       textAlign: TextAlign.end,
+                                      textColor: HexColor("458EEC"),
                                     );
                                   },
                                 ),
@@ -549,7 +555,7 @@ class MortgageResultPage extends StatelessWidget {
                                     "\$ ${controller.mortgagePayoffDatee.value}",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                    textAlign: TextAlign.end,
+                                textAlign: TextAlign.end,
                               )),
                             ],
                           ),

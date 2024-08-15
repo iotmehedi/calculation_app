@@ -36,6 +36,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
       backgroundColor: AppColors.scaffoldBackgroundColor,
           appBar: CustomAppBar(title: "Mortgage Calculator", onBackPressed: (){
             Navigator.pop(context);
+            controller.clearAllField();
           },),
           body: SingleChildScrollView(
             child: Padding(
@@ -219,13 +220,13 @@ class _MortgageScreenState extends State<MortgageScreen> {
 
                               Container(
                                 margin: const EdgeInsets.only(right: 15),
-                                height: 40,
+                                // height: 40,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   color: AppColors.textFieldColor,
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                                   child: InkWell(
                                     onTap: selectDate,
                                     child: Row(

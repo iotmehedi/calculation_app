@@ -7,7 +7,7 @@ class CustomRichText extends StatelessWidget {
   final Color? titleTextColor, headingTextColor;
   final double? headingFontSize, titleFontSIze;
   final FontWeight? titleFontWeight, headingFontWeight;
-  final bool? fontFamily, titleFontFamily;
+  final bool? fontFamily, titleFontFamily, needAnotherFontFamily;
   const CustomRichText(
       {super.key,
       required this.title,
@@ -17,7 +17,7 @@ class CustomRichText extends StatelessWidget {
       this.headingTextColor,
       this.titleFontSIze,
       this.titleFontWeight,
-      this.headingFontWeight, this.fontFamily, this.titleFontFamily,
+      this.headingFontWeight, this.fontFamily, this.titleFontFamily, this.needAnotherFontFamily,
       });
 
   @override
@@ -25,7 +25,11 @@ class CustomRichText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: heading,
-        style: fontFamily == true ?  GoogleFonts.podkova(
+        style: needAnotherFontFamily == true && titleFontFamily == true ? GoogleFonts.openSans(
+            fontWeight: headingFontWeight ?? FontWeight.w600,
+            fontSize: headingFontSize ?? 16,
+            color: headingTextColor ?? Colors.black
+        ) : fontFamily == true ?  GoogleFonts.podkova(
             fontWeight: headingFontWeight ?? FontWeight.w600,
             fontSize: headingFontSize ?? 16,
             color: headingTextColor ?? Colors.black): GoogleFonts.poppins(
@@ -38,7 +42,11 @@ class CustomRichText extends StatelessWidget {
           ),
           TextSpan(
             text: title,
-            style: titleFontFamily == true ? GoogleFonts.podkova(
+            style: needAnotherFontFamily == true && titleFontFamily == true ? GoogleFonts.openSans(
+              fontWeight: titleFontWeight ?? FontWeight.w600,
+              fontSize: titleFontSIze ?? 16,
+              color: titleTextColor ?? Colors.black,
+            ) : titleFontFamily == true ?  GoogleFonts.podkova(
               fontWeight: titleFontWeight ?? FontWeight.w600,
               fontSize: titleFontSIze ?? 16,
               color: titleTextColor ?? Colors.black,

@@ -51,4 +51,5 @@ class AppAssets {
   static const String inflation = 'assets/inflation.png';
   static const String tdee = 'assets/tdee.png';
   static const String twoArrow = 'assets/two_arrow.png';
+  static const String arrowDown = 'assets/arrow_down.png';
 }

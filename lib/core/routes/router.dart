@@ -42,6 +42,7 @@ import '../../screens/view/all_calculators/grade_calculator/grade_result_screen.
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_result.dart';
 import '../../screens/view/all_calculators/gst_calculator/gst_calculator_screen.dart';
 import '../../screens/view/all_calculators/inflation_calculator/inflation_calculator.dart';
+import '../../screens/view/all_calculators/inflation_calculator/inflation_result_screen.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_result.dart';
 import '../../screens/view/all_calculators/loan_calculator/loan_calculator_screen.dart';
 import '../../screens/view/all_calculators/margin_calculator/margin_calculator_result_screen.dart';
@@ -552,6 +553,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => InflationCalculatorPage(),
+          );
+        }
+        case Routes.inflationCalculatorResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) => InflationResultScreen(),
           );
         }
         case Routes.tdeeCalculator:

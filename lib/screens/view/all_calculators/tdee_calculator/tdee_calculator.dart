@@ -98,7 +98,9 @@ class _TDEECalculatorState extends State<TDEECalculator> {
   }
 
   double calculateBMI() {
-    double heightInMeters = isMetric ? heightCm / 100 : (heightFeet * 0.3048) + (heightInches * 0.0254);
+    double heightInMeters = isMetric
+        ? heightCm / 100
+        : (heightFeet * 0.3048) + (heightInches * 0.0254);
     double heightSquared = pow(heightInMeters, 2).toDouble();
     double weightInKg = isMetric ? weightKg : weight * 0.453592;
     return weightInKg / heightSquared;
@@ -125,7 +127,8 @@ class _TDEECalculatorState extends State<TDEECalculator> {
                         isMetric = value;
                         if (isMetric) {
                           // Convert US units to Metric if necessary
-                          heightCm = (heightFeet * 30.48) + (heightInches * 2.54);
+                          heightCm =
+                              (heightFeet * 30.48) + (heightInches * 2.54);
                           weightKg = weight * 0.453592;
                         } else {
                           // Convert Metric units to US if necessary
@@ -187,7 +190,8 @@ class _TDEECalculatorState extends State<TDEECalculator> {
                     Expanded(
                       child: TextField(
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(labelText: 'Height (inches)'),
+                        decoration:
+                            InputDecoration(labelText: 'Height (inches)'),
                         onChanged: (value) => setState(() {
                           heightInches = double.tryParse(value) ?? 0;
                         }),
@@ -234,13 +238,18 @@ class _TDEECalculatorState extends State<TDEECalculator> {
                   setState(() {
                     double tdee = calculateTDEE();
                     double bmi = calculateBMI();
-                    double weightInPounds = isMetric ? weightKg * 2.20462 : weight;
-                    double heightInInches = isMetric ? heightCm / 2.54 : (heightFeet * 12) + heightInches;
+                    double weightInPounds =
+                        isMetric ? weightKg * 2.20462 : weight;
+                    double heightInInches = isMetric
+                        ? heightCm / 2.54
+                        : (heightFeet * 12) + heightInches;
                     double heightInMeters = heightInInches * 0.0254;
                     double bmiScore = weightInPounds / pow(heightInMeters, 2);
 
-                    tdeeResult = 'The estimated TDEE or body weight maintenance energy requirement is ${tdee.toStringAsFixed(0)} Calories per day.';
-                    bmiResult = 'BMI Score: ${bmiScore.toStringAsFixed(1)} kg/m2 (${_getBMICategory(bmi)})';
+                    tdeeResult =
+                        'The estimated TDEE or body weight maintenance energy requirement is ${tdee.toStringAsFixed(0)} Calories per day.';
+                    bmiResult =
+                        'BMI Score: ${bmiScore.toStringAsFixed(1)} kg/m2 (${_getBMICategory(bmi)})';
                     energyIntake = _getEnergyIntake(tdee);
                   });
                 },
@@ -271,16 +280,16 @@ class _TDEECalculatorState extends State<TDEECalculator> {
 
   String _getActivityText(ActivityLevel activityLevel) {
     switch (activityLevel) {
-    case ActivityLevel.basalMetabolicRate:
-    return 'Basal Metabolic Rate';
-    case ActivityLevel.sedentary:
-    return 'Sedentary: little or no exercise';
-    case ActivityLevel.lightlyActive:
-    return 'Light: exercise 1-3 times/week';
-    case ActivityLevel.moderatelyActive:
-    return 'Moderate: Exercise 4-5 times/week';
-    case ActivityLevel.active:
-      return 'Active: daily exercise or intense exercise 3-4 times/week';
+      case ActivityLevel.basalMetabolicRate:
+        return 'Basal Metabolic Rate';
+      case ActivityLevel.sedentary:
+        return 'Sedentary: little or no exercise';
+      case ActivityLevel.lightlyActive:
+        return 'Light: exercise 1-3 times/week';
+      case ActivityLevel.moderatelyActive:
+        return 'Moderate: Exercise 4-5 times/week';
+      case ActivityLevel.active:
+        return 'Active: daily exercise or intense exercise 3-4 times/week';
       case ActivityLevel.veryActive:
         return 'Very Active: intense exercise 6-7 times/week';
       case ActivityLevel.extraActive:
@@ -324,4 +333,3 @@ Fast weight gain (2 lb/week): ${fastWeightGain.toStringAsFixed(0)} Calories/day
 ''';
   }
 }
-
