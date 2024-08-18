@@ -18,6 +18,7 @@ import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_due_date_calculator.dart';
 import 'package:calculation_app/screens/view/all_calculators/pregnency_due_date_calculator/pregnancy_trimester.dart';
 import 'package:calculation_app/screens/view/all_calculators/salary_calculator/salary_result_screen.dart';
+import 'package:calculation_app/screens/view/all_calculators/tdee_calculator/tdee_result_screen.dart';
 import 'package:calculation_app/screens/view/home_screen/homepage_screen.dart';
 import 'package:calculation_app/screens/view/all_calculators/mortgage_screen/mortgage_screen.dart';
 import 'package:calculation_app/screens/view/splash_screen/splash_screen.dart';
@@ -565,6 +566,12 @@ class RouteGenerator {
         {
           return MaterialPageRoute(
             builder: (context) => TDEECalculator(),
+          );
+        }
+        case Routes.tdeeCalculatorResult:
+        {
+          return MaterialPageRoute(
+            builder: (context) => TdeeResultScrren(),
           );
         }
     }

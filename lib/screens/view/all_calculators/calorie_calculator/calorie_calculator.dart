@@ -253,8 +253,6 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
 
             const SizedBox(height: 16.0),
 
-
-
             Row(
               children: [
                 Expanded(
@@ -324,7 +322,6 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                 const Text('Female'),
               ],
             ),
-
             const SizedBox(
               height: 20,
             ),

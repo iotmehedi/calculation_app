@@ -1,15 +1,22 @@
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
+import 'package:calculation_app/screens/view/all_calculators/tdee_calculator/tdee_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:math';
 
-enum ActivityLevel {
-  basalMetabolicRate,
-  sedentary,
-  lightlyActive,
-  moderatelyActive,
-  active,
-  veryActive,
-  extraActive
-}
+import 'package:hexcolor/hexcolor.dart';
+
+import '../../../../core/routes/route_name.dart';
+import '../../../../core/routes/router.dart';
+import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../toast/toast.dart';
+import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
+import '../../../widgets/custom_text/custom_text.dart';
+import '../../../widgets/textfield/textField_widget.dart';
+import '../normal_calculator/Colors.dart';
+
+
 
 void main() {
   runApp(MyApp());
@@ -34,302 +41,345 @@ class TDEECalculator extends StatefulWidget {
 }
 
 class _TDEECalculatorState extends State<TDEECalculator> {
-  bool isMetric = true;
-  double weight = 0;
-  double heightFeet = 0;
-  double heightInches = 0;
-  double heightCm = 0;
-  double weightKg = 0;
-  int age = 0;
-  String gender = 'Male';
-  ActivityLevel activityLevel = ActivityLevel.sedentary;
-  String tdeeResult = '';
-  String bmiResult = '';
-  String energyIntake = '';
 
-  double calculateBMR() {
-    double bmr = 0;
 
-    if (isMetric) {
-      // Metric units
-      bmr = gender == 'Male'
-          ? 88.362 + (13.397 * weightKg) + (4.799 * heightCm) - (5.677 * age)
-          : 447.593 + (9.247 * weightKg) + (3.098 * heightCm) - (4.330 * age);
-    } else {
-      // US units
-      double heightInInches = (heightFeet * 12) + heightInches;
-      bmr = gender == 'Male'
-          ? 66 + (6.23 * weight) + (12.7 * heightInInches) - (6.8 * age)
-          : 655 + (4.35 * weight) + (4.7 * heightInInches) - (4.7 * age);
-    }
-
-    return bmr;
-  }
-
-  double calculateTDEE() {
-    double bmr = calculateBMR();
-    double activityFactor;
-
-    switch (activityLevel) {
-      case ActivityLevel.basalMetabolicRate:
-        activityFactor = 1.0;
-        break;
-      case ActivityLevel.sedentary:
-        activityFactor = 1.1812;
-        break;
-      case ActivityLevel.lightlyActive:
-        activityFactor = 1.375;
-        break;
-      case ActivityLevel.moderatelyActive:
-        activityFactor = 1.55;
-        break;
-      case ActivityLevel.active:
-        activityFactor = 1.725;
-        break;
-      case ActivityLevel.veryActive:
-        activityFactor = 1.9;
-        break;
-      case ActivityLevel.extraActive:
-        activityFactor = 2.0;
-        break;
-    }
-
-    return bmr * activityFactor;
-  }
-
-  double calculateBMI() {
-    double heightInMeters = isMetric
-        ? heightCm / 100
-        : (heightFeet * 0.3048) + (heightInches * 0.0254);
-    double heightSquared = pow(heightInMeters, 2).toDouble();
-    double weightInKg = isMetric ? weightKg : weight * 0.453592;
-    return weightInKg / heightSquared;
-  }
+var controller = Get.put(TdeeController());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(()=>Scaffold(
       appBar: AppBar(title: Text('TDEE Calculator')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Switch for Metric/US units
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Metric Units'),
-                  Switch(
-                    value: isMetric,
-                    onChanged: (value) {
-                      setState(() {
-                        isMetric = value;
-                        if (isMetric) {
-                          // Convert US units to Metric if necessary
-                          heightCm =
-                              (heightFeet * 30.48) + (heightInches * 2.54);
-                          weightKg = weight * 0.453592;
-                        } else {
-                          // Convert Metric units to US if necessary
-                          heightFeet = (heightCm / 30.48).floor().toDouble();
-                          heightInches = (heightCm % 30.48) / 2.54;
-                          weight = weightKg / 0.453592;
-                        }
-                      });
-                    },
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    height: 56,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: HexColor("244384"),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    controller.isMetric.value = true;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: controller.isMetric.value ==
+                                        true
+                                        ? Colors.white
+                                        : HexColor("244384"),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Center(
+                                        child: CustomText(
+                                          text: "Us Unit",
+                                          fontSize: 20,
+                                          textColor:
+                                          controller.isMetric.value ==
+                                              true
+                                              ? Colors.black
+                                              : Colors.white,
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            5.pw,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    controller.isMetric.value = false;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: controller.isMetric.value ==
+                                        false
+                                        ? Colors.white
+                                        : HexColor("244384"),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Center(
+                                        child: CustomText(
+                                          text: "Matrics Units",
+                                          fontSize: 20,
+                                          textColor:
+                                          controller.isMetric.value ==
+                                              false
+                                              ? HexColor("244384")
+                                              : Colors.white,
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  Text('US Units'),
-                ],
-              ),
-              // Age input
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Age'),
-                onChanged: (value) => setState(() {
-                  age = int.tryParse(value) ?? 0;
-                }),
-              ),
-              // Gender dropdown
-              DropdownButton<String>(
-                value: gender,
-                items: ['Male', 'Female'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    gender = newValue!;
-                  });
-                },
-              ),
-              // Height inputs based on unit selection
-              if (isMetric)
-                TextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Height (cm)'),
-                  onChanged: (value) => setState(() {
-                    heightCm = double.tryParse(value) ?? 0;
-                  }),
-                )
-              else
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(labelText: 'Height (feet)'),
-                        onChanged: (value) => setState(() {
-                          heightFeet = double.tryParse(value) ?? 0;
-                        }),
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration:
-                            InputDecoration(labelText: 'Height (inches)'),
-                        onChanged: (value) => setState(() {
-                          heightInches = double.tryParse(value) ?? 0;
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
-              // Weight inputs based on unit selection
-              if (isMetric)
-                TextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Weight (kg)'),
-                  onChanged: (value) => setState(() {
-                    weightKg = double.tryParse(value) ?? 0;
-                  }),
-                )
-              else
-                TextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Weight (pounds)'),
-                  onChanged: (value) => setState(() {
-                    weight = double.tryParse(value) ?? 0;
-                  }),
-                ),
-              // Activity level dropdown
-              DropdownButton<ActivityLevel>(
-                value: activityLevel,
-                items: ActivityLevel.values.map((ActivityLevel value) {
-                  return DropdownMenuItem<ActivityLevel>(
-                    value: value,
-                    child: Text(_getActivityText(value)),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    activityLevel = newValue!;
-                  });
-                },
-              ),
-              // Calculate TDEE button
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    double tdee = calculateTDEE();
-                    double bmi = calculateBMI();
-                    double weightInPounds =
-                        isMetric ? weightKg * 2.20462 : weight;
-                    double heightInInches = isMetric
-                        ? heightCm / 2.54
-                        : (heightFeet * 12) + heightInches;
-                    double heightInMeters = heightInInches * 0.0254;
-                    double bmiScore = weightInPounds / pow(heightInMeters, 2);
 
-                    tdeeResult =
-                        'The estimated TDEE or body weight maintenance energy requirement is ${tdee.toStringAsFixed(0)} Calories per day.';
-                    bmiResult =
-                        'BMI Score: ${bmiScore.toStringAsFixed(1)} kg/m2 (${_getBMICategory(bmi)})';
-                    energyIntake = _getEnergyIntake(tdee);
-                  });
-                },
-                child: Text('Calculate TDEE'),
-              ),
-              // TDEE result
-              SizedBox(height: 20),
-              Text(
-                tdeeResult,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              Text(
-                bmiResult,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              Text(
-                energyIntake,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  const SizedBox(height: 16.0),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            globalText16(text: "Age", fontWeight: FontWeight.w500),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            CustomSimpleTextField(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                hexColor: HexColor('80848A'),
+                                controller: controller.ageController.value,
+                                keyboardType: TextInputType.number,
+                                paddingNeed: true,
+                                hint: "Age",
+                                textAlign: TextAlign.start),
+                          ],
+                        ),
+                      ),
+                      const Expanded(child: SizedBox())
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Transform.scale(
+                        scale: 1.1,
+                        child: Checkbox(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          value: controller.selectedGender.value == Gender.male,
+                          onChanged: (value) {
+                            setState(() {
+                              controller.selectedGender.value = value! ? Gender.male : controller.selectedGender.value;
+                            });
+                          },
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          activeColor: HexColor("244384"), // Set your desired color
+                        ),
+                      ),
+                      const Text('Male'),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Transform.scale(
+                        scale: 1.1,
+                        child: Checkbox(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          value: controller.selectedGender.value == Gender.female,
+                          onChanged: (value) {
+                            setState(() {
+                              controller.selectedGender.value =
+                              value! ? Gender.female : controller.selectedGender.value;
+                            });
+                          },
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          activeColor: HexColor("244384"), // Set your desired color
+                        ),
+                      ),
+                      const Text('Female'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  globalText16(text: "Height", fontWeight: FontWeight.w500),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: CustomSimpleTextField(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            hexColor: HexColor('80848A'),
+                            controller: controller.isMetric.value == true
+                                ? controller.heightCmController.value
+                                : controller.heightFeetController.value,
+                            keyboardType: TextInputType.number,
+                            paddingNeed: true,
+                            hint: controller.isMetric.value == true ? "Feet" : "cm",
+                            textAlign: TextAlign.start),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Visibility(
+                          visible: controller.isMetric.value == true ? true : false,
+                          child: CustomSimpleTextField(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              hexColor: HexColor('80848A'),
+                              controller: controller.heightInchesController.value,
+                              keyboardType: TextInputType.number,
+                              paddingNeed: true,
+                              hint: "Inch",
+                              textAlign: TextAlign.start),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            globalText16(text: "Weight", fontWeight: FontWeight.w500),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            CustomSimpleTextField(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                hexColor: HexColor('80848A'),
+                                controller: controller.weightKgController.value,
+                                keyboardType: TextInputType.number,
+                                paddingNeed: true,
+                                hint: controller.isMetric.value == false ? "kg" : "Pounds",
+                                textAlign: TextAlign.start),
+                          ],
+                        ),
+                      ),
+                      const Expanded(child: SizedBox())
+                    ],
+                  ),
+                  10.ph,
+                  globalText16(
+                      text: "Level of Activity", fontWeight: FontWeight.normal),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: AssetColor.calculationButtonColor.withOpacity(0.05)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<ActivityLevel>(
+                        value: controller.activityLevel.value,
+                        isExpanded: true,
+                        items: ActivityLevel.values.map((ActivityLevel value) {
+                          return DropdownMenuItem<ActivityLevel>(
+                            value: value,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: globalText12(
+                                  text: controller.getActivityText(value), fontWeight: FontWeight.normal),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            controller.activityLevel.value = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 20),
+                  CustomElevatedButton(
+                      text: globalText24(
+                          text: "Calculate",
+                          alignment: Alignment.center,
+                          color: Colors.white),
+                      hexColor: AppColors.calculateButtonColor,
+                      onPress: () {
+                        if (controller.ageController.value.text.isEmpty) {
+                          errorToast(context: context, msg: "Please enter age");
+                        } else if (controller.heightFeetController.value.text.isEmpty &&
+                            controller.isMetric.value == false) {
+                          errorToast(context: context, msg: "Please enter feet");
+                        } else if (controller.heightInchesController.value.text.isEmpty &&
+                            controller.isMetric.value == false) {
+                          errorToast(context: context, msg: "Please enter inch");
+                        } else if (controller.isMetric.value == true &&
+                            controller.heightCmController.value.text.isEmpty) {
+                        } else if (controller.weightKgController.value.text.isEmpty) {
+                          errorToast(context: context, msg: "Please enter weight");
+                        } else {
+                          setState(() {
+                            double tdee = controller.calculateTDEE();
+                            print("Hudai kaj kam $tdee");
+                            double bmi = controller.calculateBMI();
+                            double weightInPounds =
+                            controller.isMetric.value == false ? controller.weightKg.value * 2.20462 : controller.weightKg.value;
+                            double heightInInches = controller.isMetric.value == false
+                                ? controller.heightCm.value / 2.54
+                                : (controller.heightFeet.value * 12) + controller.heightInches.value;
+                            double heightInMeters = heightInInches * 0.0254;
+                            double bmiScore = weightInPounds / pow(heightInMeters, 2);
+
+                            controller.tdeeResult.value = '${tdee.toStringAsFixed(0)} ';
+                            controller.bmiResult.value =
+                            'BMI Score: ${bmiScore.toStringAsFixed(1)} kg/m2 (${controller.getBMICategory(bmi)})';
+                            controller.energyIntake.value = controller.getEnergyIntake(tdee);
+                            // RouteGenerator.pushNamed(context, Routes.tdeeCalculatorResult);
+                          });
+                          // RouteGenerator().pushNamedSms(
+                          //     context, Routes.calorieResultScreen,
+                          //     arguments: [
+                          //       weightLossCalories['Maintain weight'],
+                          //       weightLossCalories['Mild weight loss (0.5 kg/week)'],
+                          //       weightLossCalories['Weight loss (1 kg/week)'],
+                          //       weightLossCalories['Extreme weight loss (2 kg/week)'],
+                          //       selectedButton
+                          //     ]);
+                        }
+                      }),
+
+                  // SizedBox(height: 16.0),
+                  Text('${controller.tdeeResult.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text('${controller.mildWeightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text('${controller.weightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text('${controller.extremeWeightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),// will not show only for 1,2,3
+                  Text('${controller.mildWeightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text('${controller.weightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text('${controller.extremeWeightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+
+                ],
               ),
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 
-  String _getActivityText(ActivityLevel activityLevel) {
-    switch (activityLevel) {
-      case ActivityLevel.basalMetabolicRate:
-        return 'Basal Metabolic Rate';
-      case ActivityLevel.sedentary:
-        return 'Sedentary: little or no exercise';
-      case ActivityLevel.lightlyActive:
-        return 'Light: exercise 1-3 times/week';
-      case ActivityLevel.moderatelyActive:
-        return 'Moderate: Exercise 4-5 times/week';
-      case ActivityLevel.active:
-        return 'Active: daily exercise or intense exercise 3-4 times/week';
-      case ActivityLevel.veryActive:
-        return 'Very Active: intense exercise 6-7 times/week';
-      case ActivityLevel.extraActive:
-        return 'Extra Active: very intense exercise daily or physical job';
-      default:
-        return '';
-    }
-  }
 
-  String _getBMICategory(double bmi) {
-    if (bmi < 18.5) {
-      return 'Underweight';
-    } else if (bmi < 25) {
-      return 'Normal';
-    } else if (bmi < 30) {
-      return 'Overweight';
-    } else {
-      return 'Obese';
-    }
-  }
-
-  String _getEnergyIntake(double tdee) {
-    double mildWeightLoss = tdee * 0.9;
-    double weightLoss = tdee * 0.8;
-    double extremeWeightLoss = tdee * 0.61;
-
-    double mildWeightGain = tdee * 1.1;
-    double weightGain = tdee * 1.2;
-    double fastWeightGain = tdee * 1.39;
-
-    return '''
-Energy intake to lose weight:
-Mild weight loss (0.5 lb/week): ${mildWeightLoss.toStringAsFixed(0)} Calories/day
-Weight loss (1 lb/week): ${weightLoss.toStringAsFixed(0)} Calories/day
-Extreme weight loss (2 lb/week): ${extremeWeightLoss.toStringAsFixed(0)} Calories/day
-
-Energy intake to gain weight:
-Mild weight gain (0.5 lb/week): ${mildWeightGain.toStringAsFixed(0)} Calories/day
-Weight gain (1 lb/week): ${weightGain.toStringAsFixed(0)} Calories/day
-Fast weight gain (2 lb/week): ${fastWeightGain.toStringAsFixed(0)} Calories/day
-''';
-  }
 }

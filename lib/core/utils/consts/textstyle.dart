@@ -226,9 +226,9 @@ globalText16(
     alignment: alignment ?? Alignment.centerLeft,
     child: Text(
       text,
-      maxLines: 2,
+      // maxLines: 2,
       textAlign:  textAlign ??TextAlign.center,
-      overflow: TextOverflow.ellipsis,
+      // overflow: TextOverflow.ellipsis,
       style: fontFamily == true ? GoogleFonts.podkova(
         letterSpacing: 0.2,
         color: color ?? hexColor,
