@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'dart:math';
 
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
@@ -320,19 +321,19 @@ var controller = Get.put(TdeeController());
                           color: Colors.white),
                       hexColor: AppColors.calculateButtonColor,
                       onPress: () {
-                        if (controller.ageController.value.text.isEmpty) {
-                          errorToast(context: context, msg: "Please enter age");
-                        } else if (controller.heightFeetController.value.text.isEmpty &&
-                            controller.isMetric.value == false) {
-                          errorToast(context: context, msg: "Please enter feet");
-                        } else if (controller.heightInchesController.value.text.isEmpty &&
-                            controller.isMetric.value == false) {
-                          errorToast(context: context, msg: "Please enter inch");
-                        } else if (controller.isMetric.value == true &&
-                            controller.heightCmController.value.text.isEmpty) {
-                        } else if (controller.weightKgController.value.text.isEmpty) {
-                          errorToast(context: context, msg: "Please enter weight");
-                        } else {
+                        // if (controller.ageController.value.text.isEmpty) {
+                        //   errorToast(context: context, msg: "Please enter age");
+                        // } else if (controller.heightFeetController.value.text.isEmpty &&
+                        //     controller.isMetric.value == false) {
+                        //   errorToast(context: context, msg: "Please enter feet");
+                        // } else if (controller.heightInchesController.value.text.isEmpty &&
+                        //     controller.isMetric.value == false) {
+                        //   errorToast(context: context, msg: "Please enter inch");
+                        // } else if (controller.isMetric.value == true &&
+                        //     controller.heightCmController.value.text.isEmpty) {
+                        // } else if (controller.weightKgController.value.text.isEmpty) {
+                        //   errorToast(context: context, msg: "Please enter weight");
+                        // } else {
                           setState(() {
                             double tdee = controller.calculateTDEE();
                             print("Hudai kaj kam $tdee");
@@ -345,11 +346,11 @@ var controller = Get.put(TdeeController());
                             double heightInMeters = heightInInches * 0.0254;
                             double bmiScore = weightInPounds / pow(heightInMeters, 2);
 
-                            controller.tdeeResult.value = '${tdee.toStringAsFixed(0)} ';
+                            controller.tdeeResult.value = NumberFormat(',###', 'en_US').format(tdee);
                             controller.bmiResult.value =
                             'BMI Score: ${bmiScore.toStringAsFixed(1)} kg/m2 (${controller.getBMICategory(bmi)})';
                             controller.energyIntake.value = controller.getEnergyIntake(tdee);
-                            // RouteGenerator.pushNamed(context, Routes.tdeeCalculatorResult);
+                            RouteGenerator.pushNamed(context, Routes.tdeeCalculatorResult);
                           });
                           // RouteGenerator().pushNamedSms(
                           //     context, Routes.calorieResultScreen,
@@ -360,13 +361,13 @@ var controller = Get.put(TdeeController());
                           //       weightLossCalories['Extreme weight loss (2 kg/week)'],
                           //       selectedButton
                           //     ]);
-                        }
+                        // }
                       }),
 
                   // SizedBox(height: 16.0),
                   Text('${controller.tdeeResult.value}', style: TextStyle(fontWeight: FontWeight.bold),),
                   Text('${controller.mildWeightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),
-                  Text('${controller.weightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text('${controller.weightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),// without sedentery will show all
                   Text('${controller.extremeWeightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),// will not show only for 1,2,3
                   Text('${controller.mildWeightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
                   Text('${controller.weightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),

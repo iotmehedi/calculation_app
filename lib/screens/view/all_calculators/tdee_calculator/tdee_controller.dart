@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class TdeeController extends GetxController {
   var ageController = TextEditingController().obs;
@@ -72,23 +73,35 @@ class TdeeController extends GetxController {
     switch (activityLevel.value) {
       case ActivityLevel.basalMetabolicRate:
         if (isMetric.value == false) {
-          activityFactor = 1.425;
+          activityFactor = 1.683;
         } else {
           activityFactor = 1.425;
         }
         break;
       case ActivityLevel.sedentary:
-        activityFactor = 1.71;
+        if (isMetric.value == false) {
+          activityFactor = 2.071;
+        } else {
+          activityFactor = 1.71;
+        }
         break;
       case ActivityLevel.lightlyActive:
-        activityFactor = 1.959;
+        if (isMetric.value == false) {
+          activityFactor = 2.373;
+        } else {
+          activityFactor = 1.959;
+        }
         break;
       case ActivityLevel.moderatelyActive:
-        activityFactor = 2.088;
+        if (isMetric.value == false) {
+          activityFactor = 2.528;
+        } else {
+          activityFactor = 2.088;
+        }
         break;
       case ActivityLevel.active:
         if (isMetric.value == false) {
-          activityFactor = 2.6;
+          activityFactor = 2.67;
         } else {
           activityFactor = 2.21;
         }
@@ -96,14 +109,15 @@ class TdeeController extends GetxController {
       case ActivityLevel.veryActive:
 
         if (isMetric.value == false) {
-          activityFactor = 2.9;
+          activityFactor = 2.972;
         } else {
           activityFactor = 2.46;
         }
         break;
       case ActivityLevel.extraActive:
         if (isMetric.value == false) {
-          activityFactor = 3.2;
+          activityFactor = 3.28;
+          print("extra");
         } else {
           activityFactor = 2.71;
         }
@@ -161,93 +175,168 @@ class TdeeController extends GetxController {
     print("this is activity ${activityLevel.value}");
     if (activityLevel.value == ActivityLevel.basalMetabolicRate &&
         isMetric.value == true) {
-      mildWeightLoss.value = (tdee * 0.88).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.76).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.61).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.12).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.2394).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.479).toStringAsFixed(0);
+      mildWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.88));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.76));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.61));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.12));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.2394));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.479));
     } else if (activityLevel.value == ActivityLevel.sedentary &&
         isMetric.value == true) {
-      mildWeightLoss.value = ((tdee * 0.881) - 1).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.76 + 1).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.61).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.12).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.2394).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.479).toStringAsFixed(0);
+      mildWeightLoss.value = NumberFormat(',###', 'en_US').format(((tdee * 0.881) - 1));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.76 + 1));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.61));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.12));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.2394));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.479));
       print("this is activity ${activityLevel.value}");
     } else if (activityLevel.value == ActivityLevel.lightlyActive &&
         isMetric.value == true) {
-      mildWeightLoss.value = ((tdee * 0.896) - 1).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.791).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.7).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.1 + 11).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.21 - 2).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.418).toStringAsFixed(0);
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.896) - 1));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.791));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.7));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.1 + 11));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.21 - 2));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.418));
     } else if (activityLevel.value == ActivityLevel.moderatelyActive &&
         isMetric.value == true) {
-      mildWeightLoss.value = ((tdee * 0.9) + 5).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.8 + 10).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.61 - 6).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.098).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.196).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.392).toStringAsFixed(0);
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.9) + 5));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.8 + 10));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.61 - 6));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.098));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.196));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.392));
     } else if (activityLevel.value == ActivityLevel.active &&
         isMetric.value == true) {
-      tdeeResult.value = (int.parse(tdeeResult.value) - 2).toStringAsFixed(0);
-      mildWeightLoss.value = ((tdee * 0.91) - 9).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.8 + 10).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.63 - 4).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.092 - 1).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.184 + 1).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.37 - 1).toStringAsFixed(0);
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue - 2;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.91) - 9));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.8 + 10));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.63 - 4));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.092 - 1));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.184 + 1));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.37 - 1));
     } else if (activityLevel.value == ActivityLevel.veryActive &&
         isMetric.value == true) {
-      tdeeResult.value = (int.parse(tdeeResult.value) - 3).toStringAsFixed(0);
-      mildWeightLoss.value = ((tdee * 0.919) - 9).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.833).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.667 - 2).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.08 + 7).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.166 - 1).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.332).toStringAsFixed(0);
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue - 3;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.919) - 9));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.833));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.667 - 2));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.08 + 7));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.166 - 1));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.332));
     } else if (activityLevel.value == ActivityLevel.extraActive &&
         isMetric.value == true) {
-      tdeeResult.value = (int.parse(tdeeResult.value) - 4).toStringAsFixed(0);
-      mildWeightLoss.value = ((tdee * 0.923 + 1)).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.848 - 1).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.697 - 1).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.074 + 1).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.15).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.3 + 4).toStringAsFixed(0);
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue - 4;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.923 + 1)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.848 - 1));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.697 - 1));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.074 + 1));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.15));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.3 + 4));
     } else if (activityLevel.value == ActivityLevel.extraActive &&
         isMetric.value == false) {
-      tdeeResult.value = (int.parse(tdeeResult.value) - 1).toStringAsFixed(0);
-      mildWeightLoss.value = ((tdee * 0.92 + 1)).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.841 - 1).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.682 - 1).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.079).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.16 - 4).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.318 - 2).toStringAsFixed(0);
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue - 1;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.92 + 1)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.841 - 1));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.682 - 1));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.079));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.16 - 4));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.318 - 2));
     }
     else if (activityLevel.value == ActivityLevel.veryActive &&
         isMetric.value == false) {
-      tdeeResult.value = (int.parse(tdeeResult.value) + 4).toStringAsFixed(0);
-      mildWeightLoss.value = ((tdee * 0.914 - 1)).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.826).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.651 - 1).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.09 - 3).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.1767).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.3528 - 2).toStringAsFixed(0);
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue + 4;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.915 - 3)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.826));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.651 - 1));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.09 - 2));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.1767 + 1));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.3528 - 1));
     }
     else if (activityLevel.value == ActivityLevel.active &&
         isMetric.value == false) {
-      tdeeResult.value = (int.parse(tdeeResult.value) + 4).toStringAsFixed(0);
-      mildWeightLoss.value = ((tdee * 0.914 - 1)).toStringAsFixed(0);
-      weightLoss.value = (tdee * 0.826).toStringAsFixed(0);
-      extremeWeightLoss.value = (tdee * 0.651 - 1).toStringAsFixed(0);
-      mildWeightGain.value = (tdee * 1.09 - 3).toStringAsFixed(0);
-      weightGain.value = (tdee * 1.1767).toStringAsFixed(0);
-      extremeWeightGain.value = (tdee * 1.3528 - 2).toStringAsFixed(0);
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue + 4;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.91 - 15)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.81 - 9));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.611 ));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.1 - 2));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.197));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.392));
+    }
+    else if (activityLevel.value == ActivityLevel.moderatelyActive &&
+        isMetric.value == false) {
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.897)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.794));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.611 ));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.1 + 8));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.21 - 9));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.412 + 1));
+    }
+    else if (activityLevel.value == ActivityLevel.lightlyActive &&
+        isMetric.value == false) {
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.89)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.78 + 1));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.611 ));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.11));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.2196));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.4394));
+    }
+    else if (activityLevel.value == ActivityLevel.sedentary &&
+        isMetric.value == false) {
+      NumberFormat numberFormat = NumberFormat(',###', 'en_US');
+      String tdeeValueWithoutCommas = tdeeResult.value.replaceAll(',', '');
+      int parsedValue = int.parse(tdeeValueWithoutCommas);
+      int result = parsedValue - 2;
+      String formattedValue = numberFormat.format(result);
+      tdeeResult.value = formattedValue;
+      mildWeightLoss.value = (NumberFormat(',###', 'en_US').format((tdee * 0.874)));
+      weightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.78 + 1));
+      extremeWeightLoss.value = NumberFormat(',###', 'en_US').format((tdee * 0.611 ));
+      mildWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.1254));
+      weightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.252 - 1));
+      extremeWeightGain.value = NumberFormat(',###', 'en_US').format((tdee * 1.5 + 6));
     }
 
     // double weightLoss = tdee * 0.76;

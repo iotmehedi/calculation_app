@@ -99,37 +99,117 @@ class TdeeResultScrren extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            CustomRichThreeText(
-                title: " Lose weight",
-                titleFontSIze: 16,
-                titleFontWeight: FontWeight.w500,
-                titleTextColor: HexColor("2FAE3B"),
-                heading: "Energy intake to",
-                headingFontSize: 16,
-                headingFontWeight: FontWeight.w500,
-                headingTextColor: Colors.black,
-                value: " :"),
-            const SizedBox(height: 20),
-            Container(
-              // height: 130,
-              color: HexColor("0F182E"),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                child: Center(
+            Visibility(
+                visible: controller.activityLevel.value ==
+                        ActivityLevel.basalMetabolicRate
+                    ? false
+                    : true,
+                child: const SizedBox(height: 20)),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                      ActivityLevel.basalMetabolicRate
+                  ? false
+                  : true,
+              child: CustomRichThreeText(
+                  title: " Lose weight",
+                  titleFontSIze: 16,
+                  titleFontWeight: FontWeight.w500,
+                  titleTextColor: HexColor("2FAE3B"),
+                  heading: "Energy intake to",
+                  headingFontSize: 16,
+                  headingFontWeight: FontWeight.w500,
+                  headingTextColor: Colors.black,
+                  value: " :"),
+            ),
+            Visibility(
+                visible: controller.activityLevel.value ==
+                        ActivityLevel.basalMetabolicRate
+                    ? false
+                    : true,
+                child: const SizedBox(height: 20)),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                      ActivityLevel.basalMetabolicRate
+                  ? false
+                  : true,
+              child: Container(
+                // height: 130,
+                color: HexColor("0F182E"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(
+                            text: "Mild weight lose:",
+                            color: HexColor("F3F3F3"),
+                            fontWeight: FontWeight.normal,
+                            textAlign: TextAlign.start),
+                        5.ph,
+                        CustomRichText(
+                          heading: controller.mildWeightLoss.value,
+                          title: '/ Calories/day',
+                          headingTextColor: HexColor('7BFF80'),
+                          titleTextColor: HexColor('FFFFFF'),
+                          headingFontSize: 18.0,
+                          titleFontSIze: 16,
+                        ),
+                        5.ph,
+                        CustomRichThreeText(
+                          title: controller.isMetric.value == true
+                              ? "Pound /"
+                              : "Kg /",
+                          heading: controller.isMetric.value == true
+                              ? "0.5 "
+                              : "0.25 ",
+                          value: "Week",
+                          headingTextColor: HexColor('7BFF80'),
+                          headingFontWeight: FontWeight.bold,
+                          titleFontWeight: FontWeight.w500,
+                          titleFontSIze: 14,
+                          titleTextColor: HexColor('F3F3F3'),
+                          valueFontSize: 12,
+                          valueFontWeight: FontWeight.normal,
+                          valueTextColor: AppColors.deepGray1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+                visible: controller.activityLevel.value ==
+                            ActivityLevel.basalMetabolicRate ||
+                        controller.activityLevel.value ==
+                            ActivityLevel.sedentary
+                    ? false
+                    : true,
+                child: const SizedBox(height: 10)),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                          ActivityLevel.basalMetabolicRate ||
+                      controller.activityLevel.value == ActivityLevel.sedentary
+                  ? false
+                  : true,
+              child: Container(
+                color: HexColor("0F182E"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       globalText16(
-                          text:
-                              "Mild weight lose:",
+                          text: "Weight loss:",
                           color: HexColor("F3F3F3"),
                           fontWeight: FontWeight.normal,
                           textAlign: TextAlign.start),
                       5.ph,
                       CustomRichText(
-                        heading: controller.mildWeightLoss.value,
+                        heading: controller.weightLoss.value,
                         title: '/ Calories/day',
                         headingTextColor: HexColor('7BFF80'),
                         titleTextColor: HexColor('FFFFFF'),
@@ -141,9 +221,192 @@ class TdeeResultScrren extends StatelessWidget {
                         title: controller.isMetric.value == true
                             ? "Pound /"
                             : "Kg /",
-                        heading: controller.isMetric.value == true
-                            ? "0.5 "
-                            : "0.25 ",
+                        heading:
+                            controller.isMetric.value == true ? "1 " : "0.5 ",
+                        value: "Week",
+                        headingTextColor: HexColor('7BFF80'),
+                        headingFontWeight: FontWeight.bold,
+                        titleFontWeight: FontWeight.w500,
+                        titleFontSIze: 14,
+                        titleTextColor: HexColor('F3F3F3'),
+                        valueFontSize: 12,
+                        valueFontWeight: FontWeight.normal,
+                        valueTextColor: AppColors.deepGray1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+                visible: controller.activityLevel.value ==
+                            ActivityLevel.basalMetabolicRate ||
+                        controller.activityLevel.value ==
+                            ActivityLevel.sedentary
+                    ? false
+                    : true,
+                child: const SizedBox(height: 10)),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                          ActivityLevel.basalMetabolicRate ||
+                      controller.activityLevel.value ==
+                          ActivityLevel.sedentary ||
+                      controller.activityLevel.value ==
+                          ActivityLevel.lightlyActive ||
+                      controller.activityLevel.value ==
+                          ActivityLevel.moderatelyActive
+                  ? false
+                  : true,
+              child: Container(
+                color: HexColor("0F182E"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, bottom: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      globalText16(
+                          text: "Extreme weight loss :",
+                          color: HexColor("F3F3F3"),
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start),
+                      5.ph,
+                      CustomRichText(
+                        heading: controller.extremeWeightLoss.value,
+                        title: '/ Calories/day',
+                        headingTextColor: HexColor('7BFF80'),
+                        titleTextColor: HexColor('FFFFFF'),
+                        headingFontSize: 18.0,
+                        titleFontSIze: 16,
+                      ),
+                      5.ph,
+                      CustomRichThreeText(
+                        title: controller.isMetric.value == true
+                            ? "Pound /"
+                            : "Kg /",
+                        heading:
+                            controller.isMetric.value == true ? "2 " : "1 ",
+                        value: "Week",
+                        headingTextColor: HexColor('7BFF80'),
+                        headingFontWeight: FontWeight.bold,
+                        titleFontWeight: FontWeight.w500,
+                        titleFontSIze: 14,
+                        titleTextColor: HexColor('F3F3F3'),
+                        valueFontSize: 12,
+                        valueFontWeight: FontWeight.normal,
+                        valueTextColor: AppColors.deepGray1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                      ActivityLevel.basalMetabolicRate
+                  ? false
+                  : true,
+              child: CustomRichThreeText(
+                  title: " Gain weight",
+                  titleFontSIze: 16,
+                  titleFontWeight: FontWeight.w500,
+                  titleTextColor: HexColor("2FAE3B"),
+                  heading: "Energy intake to",
+                  headingFontSize: 16,
+                  headingFontWeight: FontWeight.w500,
+                  headingTextColor: Colors.black,
+                  value: " :"),
+            ),
+            const SizedBox(height: 20),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                      ActivityLevel.basalMetabolicRate
+                  ? false
+                  : true,
+              child: Container(
+                // height: 130,
+                color: HexColor("0F182E"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        globalText16(
+                            text: "Mild weight Gain:",
+                            color: HexColor("F3F3F3"),
+                            fontWeight: FontWeight.normal,
+                            textAlign: TextAlign.start),
+                        5.ph,
+                        CustomRichText(
+                          heading: controller.mildWeightGain.value,
+                          title: '/ Calories/day',
+                          headingTextColor: HexColor('7BFF80'),
+                          titleTextColor: HexColor('FFFFFF'),
+                          headingFontSize: 18.0,
+                          titleFontSIze: 16,
+                        ),
+                        5.ph,
+                        CustomRichThreeText(
+                          title: controller.isMetric.value == true
+                              ? "Pound /"
+                              : "Kg /",
+                          heading: controller.isMetric.value == true
+                              ? "0.5 "
+                              : "0.25 ",
+                          value: "Week",
+                          headingTextColor: HexColor('7BFF80'),
+                          headingFontWeight: FontWeight.bold,
+                          titleFontWeight: FontWeight.w500,
+                          titleFontSIze: 14,
+                          titleTextColor: HexColor('F3F3F3'),
+                          valueFontSize: 12,
+                          valueFontWeight: FontWeight.normal,
+                          valueTextColor: AppColors.deepGray1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Visibility(
+              visible: controller.activityLevel.value ==
+                      ActivityLevel.basalMetabolicRate
+                  ? false
+                  : true,
+              child: Container(
+                color: HexColor("0F182E"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      globalText16(
+                          text: "Weight Gain:",
+                          color: HexColor("F3F3F3"),
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start),
+                      5.ph,
+                      CustomRichText(
+                        heading: controller.weightGain.value,
+                        title: '/ Calories/day',
+                        headingTextColor: HexColor('7BFF80'),
+                        titleTextColor: HexColor('FFFFFF'),
+                        headingFontSize: 18.0,
+                        titleFontSIze: 16,
+                      ),
+                      5.ph,
+                      CustomRichThreeText(
+                        title: controller.isMetric.value == true
+                            ? "Pound /"
+                            : "Kg /",
+                        heading:
+                            controller.isMetric.value == true ? "1 " : "0.5 ",
                         value: "Week",
                         headingTextColor: HexColor('7BFF80'),
                         headingFontWeight: FontWeight.bold,
@@ -160,123 +423,27 @@ class TdeeResultScrren extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Container(
-              color: HexColor("0F182E"),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    globalText16(
-                        text: "Weight loss:",
-                        color: HexColor("F3F3F3"),
-                        fontWeight: FontWeight.normal,
-                        textAlign: TextAlign.start),
-                    5.ph,
-                    CustomRichText(
-                      heading: controller.weightLoss.value,
-                      title: '/ Calories/day',
-                      headingTextColor: HexColor('7BFF80'),
-                      titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 18.0,
-                      titleFontSIze: 16,
-                    ),
-                    5.ph,
-                    CustomRichThreeText(
-                      title: controller.isMetric.value == true
-                          ? "Pound /"
-                          : "Kg /",
-                      heading:
-                          controller.isMetric.value == true ? "1 " : "0.5 ",
-                      value: "Week",
-                      headingTextColor: HexColor('7BFF80'),
-                      headingFontWeight: FontWeight.bold,
-                      titleFontWeight: FontWeight.w500,
-                      titleFontSIze: 14,
-                      titleTextColor: HexColor('F3F3F3'),
-                      valueFontSize: 12,
-                      valueFontWeight: FontWeight.normal,
-                      valueTextColor: AppColors.deepGray1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              color: HexColor("0F182E"),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    globalText16(
-                        text: "Extreme weight loss :",
-                        color: HexColor("F3F3F3"),
-                        fontWeight: FontWeight.normal,
-                        textAlign: TextAlign.start),
-                    5.ph,
-                    CustomRichText(
-                      heading: controller.extremeWeightLoss.value,
-                      title: '/ Calories/day',
-                      headingTextColor: HexColor('7BFF80'),
-                      titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 18.0,
-                      titleFontSIze: 16,
-                    ),
-                    5.ph,
-                    CustomRichThreeText(
-                      title: controller.isMetric.value == true
-                          ? "Pound /"
-                          : "Kg /",
-                      heading: controller.isMetric.value == true ? "2 " : "1 ",
-                      value: "Week",
-                      headingTextColor: HexColor('7BFF80'),
-                      headingFontWeight: FontWeight.bold,
-                      titleFontWeight: FontWeight.w500,
-                      titleFontSIze: 14,
-                      titleTextColor: HexColor('F3F3F3'),
-                      valueFontSize: 12,
-                      valueFontWeight: FontWeight.normal,
-                      valueTextColor: AppColors.deepGray1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            CustomRichThreeText(
-                title: " Gain weight",
-                titleFontSIze: 16,
-                titleFontWeight: FontWeight.w500,
-                titleTextColor: HexColor("2FAE3B"),
-                heading: "Energy intake to",
-                headingFontSize: 16,
-                headingFontWeight: FontWeight.w500,
-                headingTextColor: Colors.black,
-                value: " :"),
-            const SizedBox(height: 20),
-            Container(
-              // height: 130,
-              color: HexColor("0F182E"),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                child: Center(
+            Visibility(
+              visible: controller.activityLevel.value ==
+                      ActivityLevel.basalMetabolicRate
+                  ? false
+                  : true,
+              child: Container(
+                color: HexColor("0F182E"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, bottom: 10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       globalText16(
-                          text:
-                          "Mild weight Gain:",
+                          text: "Extreme weight Gain :",
                           color: HexColor("F3F3F3"),
                           fontWeight: FontWeight.normal,
                           textAlign: TextAlign.start),
                       5.ph,
                       CustomRichText(
-                        heading: controller.mildWeightGain.value,
+                        heading: controller.extremeWeightGain.value,
                         title: '/ Calories/day',
                         headingTextColor: HexColor('7BFF80'),
                         titleTextColor: HexColor('FFFFFF'),
@@ -288,9 +455,8 @@ class TdeeResultScrren extends StatelessWidget {
                         title: controller.isMetric.value == true
                             ? "Pound /"
                             : "Kg /",
-                        heading: controller.isMetric.value == true
-                            ? "0.5 "
-                            : "0.25 ",
+                        heading:
+                            controller.isMetric.value == true ? "2 " : "1 ",
                         value: "Week",
                         headingTextColor: HexColor('7BFF80'),
                         headingFontWeight: FontWeight.bold,
@@ -303,93 +469,6 @@ class TdeeResultScrren extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              color: HexColor("0F182E"),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    globalText16(
-                        text: "Weight Gain:",
-                        color: HexColor("F3F3F3"),
-                        fontWeight: FontWeight.normal,
-                        textAlign: TextAlign.start),
-                    5.ph,
-                    CustomRichText(
-                      heading: controller.weightGain.value,
-                      title: '/ Calories/day',
-                      headingTextColor: HexColor('7BFF80'),
-                      titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 18.0,
-                      titleFontSIze: 16,
-                    ),
-                    5.ph,
-                    CustomRichThreeText(
-                      title: controller.isMetric.value == true
-                          ? "Pound /"
-                          : "Kg /",
-                      heading:
-                      controller.isMetric.value == true ? "1 " : "0.5 ",
-                      value: "Week",
-                      headingTextColor: HexColor('7BFF80'),
-                      headingFontWeight: FontWeight.bold,
-                      titleFontWeight: FontWeight.w500,
-                      titleFontSIze: 14,
-                      titleTextColor: HexColor('F3F3F3'),
-                      valueFontSize: 12,
-                      valueFontWeight: FontWeight.normal,
-                      valueTextColor: AppColors.deepGray1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              color: HexColor("0F182E"),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    globalText16(
-                        text: "Extreme weight Gain :",
-                        color: HexColor("F3F3F3"),
-                        fontWeight: FontWeight.normal,
-                        textAlign: TextAlign.start),
-                    5.ph,
-                    CustomRichText(
-                      heading: controller.extremeWeightGain.value,
-                      title: '/ Calories/day',
-                      headingTextColor: HexColor('7BFF80'),
-                      titleTextColor: HexColor('FFFFFF'),
-                      headingFontSize: 18.0,
-                      titleFontSIze: 16,
-                    ),
-                    5.ph,
-                    CustomRichThreeText(
-                      title: controller.isMetric.value == true
-                          ? "Pound /"
-                          : "Kg /",
-                      heading: controller.isMetric.value == true ? "2 " : "1 ",
-                      value: "Week",
-                      headingTextColor: HexColor('7BFF80'),
-                      headingFontWeight: FontWeight.bold,
-                      titleFontWeight: FontWeight.w500,
-                      titleFontSIze: 14,
-                      titleTextColor: HexColor('F3F3F3'),
-                      valueFontSize: 12,
-                      valueFontWeight: FontWeight.normal,
-                      valueTextColor: AppColors.deepGray1,
-                    ),
-                  ],
                 ),
               ),
             ),
