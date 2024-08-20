@@ -47,15 +47,26 @@ class UnitController extends GetxController{
       'Acre': 2.47105e-4,
     }
   };
-  void convert() {
-    double inputValue = double.tryParse(textController.value.text) ?? 0;
+  void convert({String? value, required String from}) {
+    double inputValue = 0.0;
+
+    if((value?.isEmpty ?? false) && from.isEmpty){
+      inputValue = double.tryParse(textController.value.text) ?? 0;
+    }else{
+      inputValue = double.tryParse(value!) ?? 0;
+    }
     double fromFactor = unitFactors[selectedButton]![fromUnit.value]!;
     double toFactor = unitFactors[selectedButton]![toUnit.value]!;
       convertedValue.value = (inputValue * fromFactor) / toFactor;
   }
 
-  void convertWeight() {
-    double inputValue = double.tryParse(textController.value.text) ?? 0;
+  void convertWeight({String? value, required String from}) {
+    double inputValue = 0.0;
+    if((value?.isEmpty ?? false) && from.isEmpty){
+      inputValue = double.tryParse(textController.value.text) ?? 0;
+    }else{
+      inputValue = double.tryParse(value!) ?? 0;
+    }
     double valueInKilograms =
         inputValue / unitFactors[selectedButton]![fromUnit.value]!;
 
@@ -64,8 +75,13 @@ class UnitController extends GetxController{
 
   }
 
-  void convertArea() {
-    double inputValue = double.tryParse(textController.value.text) ?? 0;
+  void convertArea({String? value, required String from}) {
+    double inputValue = 0.0;
+    if((value?.isEmpty ?? false) && from.isEmpty){
+      inputValue = double.tryParse(textController.value.text) ?? 0;
+    }else{
+      inputValue = double.tryParse(value!) ?? 0;
+    }
     double valueInSquareMeters =
         inputValue / unitFactors[selectedButton]![fromUnit.value]!;
 

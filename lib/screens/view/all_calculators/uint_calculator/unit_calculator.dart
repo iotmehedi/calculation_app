@@ -177,6 +177,16 @@ class _UnitConverterState extends State<UnitConverter> {
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
+                            onChanged: (value){
+                              if (controller.selectedButton.value == "Length") {
+                                controller.convert(value: value, from: "textfield");
+                              } else if (controller.selectedButton.value ==
+                                  "Weight") {
+                                controller.convertWeight(value: value, from: "textfield");
+                              } else {
+                                controller.convertArea(value: value, from: "textfield");
+                              }
+                            },
                           ),
                         ))
                   ],
@@ -209,6 +219,14 @@ class _UnitConverterState extends State<UnitConverter> {
                             value: controller.fromUnit.value,
                             onChanged: (newValue) {
                               controller.fromUnit.value = newValue!;
+                              if (controller.selectedButton.value == "Length") {
+                                controller.convert(from: '', value: '');
+                              } else if (controller.selectedButton.value ==
+                                  "Weight") {
+                                controller.convertWeight(from: '', value: '');
+                              } else {
+                                controller.convertArea(from: '', value: '');
+                              }
                             },
                             items: controller
                                 .unitFactors[controller.selectedButton.value]!
@@ -259,12 +277,12 @@ class _UnitConverterState extends State<UnitConverter> {
                             onChanged: (newValue) {
                               controller.toUnit.value = newValue!;
                               if (controller.selectedButton.value == "Length") {
-                                controller.convert();
+                                controller.convert(from: '', value: '');
                               } else if (controller.selectedButton.value ==
                                   "Weight") {
-                                controller.convertWeight();
+                                controller.convertWeight(from: '', value: '');
                               } else {
-                                controller.convertArea();
+                                controller.convertArea(from: '', value: '');
                               }
                             },
                             items: controller
@@ -309,7 +327,7 @@ class _UnitConverterState extends State<UnitConverter> {
                               padding: const EdgeInsets.only(left: 60, top: 5),
                               child: CustomText(
                                 text:
-                                    "${controller.textController.value.text} ${controller.fromUnit.value} = ${controller.convertedValue.value} ${controller.toUnit.value}",
+                                    "${controller.textController.value.text} ${controller.fromUnit.value} = ${double.tryParse(controller.convertedValue.value.toString().replaceAll(".0", '').replaceAll(".00", '').replaceAll(".000", ''))} ${controller.toUnit.value}",
                                 fontSize: 14,
                                 textColor: HexColor("2B2E63"),
                               ),
