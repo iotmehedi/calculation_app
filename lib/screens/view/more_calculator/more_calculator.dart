@@ -119,15 +119,6 @@ class MoreCalculatorPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: HomepageWidget(
-                    images: AppAssets.unit,
-                    text: "Unit\nCalculator",
-                    onPress: () {
-                      RouteGenerator.pushNamed(context, Routes.unitCalculator);
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: HomepageWidget(
                     images: AppAssets.inflation,
                     text: "Inflation\nCalculator",
                     onPress: () {
@@ -137,11 +128,20 @@ class MoreCalculatorPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: HomepageWidget(
-                    images: AppAssets.tdee,
-                    text: "TDEE Tax\nCalculator",
+                    images: AppAssets.brm,
+                    text: "BMR\nCalculator",
+                    onPress: () {
+                      RouteGenerator.pushNamed(context, Routes.bMRCalculator);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: HomepageWidget(
+                    images: AppAssets.unit,
+                    text: "Unit\nCalculator",
                     onPress: () {
                       RouteGenerator.pushNamed(
-                          context, Routes.tdeeCalculator);
+                          context, Routes.unitCalculator);
                     },
                   ),
                 ),

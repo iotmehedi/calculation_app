@@ -275,10 +275,10 @@ class HomepageScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: HomepageWidget(
-                      images: AppAssets.brm,
-                      text: "BRM\nCalculator",
+                      images: AppAssets.tdee,
+                      text: "Tdee\nCalculator",
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.bMRCalculator);
+                        RouteGenerator.pushNamed(context, Routes.tdeeCalculator);
                       },
                     ),
                   ),
