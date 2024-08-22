@@ -19,13 +19,13 @@ class HomepageWidget extends StatelessWidget {
             onTap: isConnected
                 ? onPress
                 : () {
-                    errorToast(
+                    errorToast1(
                         context: context,
                         msg: "Please check your internet connection",
-                        color: Colors.grey,
+                        color: Colors.white,
                         iconColor: Colors.red,
                         headingTextColor: Colors.red,
-                        valueTextColor: Colors.red);
+                        valueTextColor: Colors.black);
                   },
             child: Column(
               children: [

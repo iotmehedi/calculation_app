@@ -81,7 +81,7 @@ class MortgageResultPage extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                     child: CustomText(
                                   text: "Principal & Interest:",
                                   textColor: Colors.blue,
@@ -104,18 +104,19 @@ class MortgageResultPage extends StatelessWidget {
                                         text: "\$ $formattedValue",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
+                                        textAlign: TextAlign.end,
                                       );
                                     },
                                   ),
                                 ),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 0.2,
                             ),
                             Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                     child: CustomText(
                                   text: "Property Tax:",
                                   fontSize: 16,
@@ -137,6 +138,7 @@ class MortgageResultPage extends StatelessWidget {
                                         text: "\$ $formattedValue",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
+                                        textAlign: TextAlign.end,
                                       );
                                     },
                                   ),
@@ -146,7 +148,7 @@ class MortgageResultPage extends StatelessWidget {
                             5.ph,
                             Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                     child: CustomText(
                                   text: "Home Insurance:",
                                   fontSize: 16,
@@ -168,6 +170,7 @@ class MortgageResultPage extends StatelessWidget {
                                         text: "\$ $formattedValue",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
+                                        textAlign: TextAlign.end,
                                       );
                                     },
                                   ),
@@ -177,7 +180,7 @@ class MortgageResultPage extends StatelessWidget {
                             5.ph,
                             Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                     child: CustomText(
                                   text: "PMI Fee:",
                                   fontSize: 16,
@@ -199,6 +202,7 @@ class MortgageResultPage extends StatelessWidget {
                                         text: "\$ $formattedValue",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
+                                        textAlign: TextAlign.end,
                                       );
                                     },
                                   ),
@@ -208,7 +212,7 @@ class MortgageResultPage extends StatelessWidget {
                             5.ph,
                             Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                     child: CustomText(
                                   text: "HOA Fee:",
                                   fontSize: 16,
@@ -230,19 +234,20 @@ class MortgageResultPage extends StatelessWidget {
                                         text: "\$ $formattedValue",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
+                                        textAlign: TextAlign.end,
                                       );
                                     },
                                   ),
                                 ),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 0.2,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Expanded(
+                                const Expanded(
                                     child: CustomText(
                                   text: "Total Payment:",
                                   fontSize: 16,
@@ -270,6 +275,7 @@ class MortgageResultPage extends StatelessWidget {
                                         fontSize: 20,
                                         textColor: Colors.blue,
                                         fontWeight: FontWeight.w600,
+                                        textAlign: TextAlign.end,
                                       );
                                     },
                                   ),
@@ -297,7 +303,7 @@ class MortgageResultPage extends StatelessWidget {
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                      side: const BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -375,7 +381,7 @@ class MortgageResultPage extends StatelessWidget {
                     decoration: ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
+                        side: const BorderSide(width: 0.50, color: Color(0xFFFAFAFA)),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -387,7 +393,7 @@ class MortgageResultPage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                   child: CustomText(
                                 text: "House Price:",
                                 textColor: Colors.blue,
@@ -418,7 +424,7 @@ class MortgageResultPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Divider(
+                          const Divider(
                             thickness: 0.2,
                           ),
                           Row(
@@ -443,7 +449,7 @@ class MortgageResultPage extends StatelessWidget {
                           5.ph,
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                   child: CustomText(
                                 text: "Down Payment:",
                                 fontSize: 14,
@@ -543,7 +549,7 @@ class MortgageResultPage extends StatelessWidget {
                           5.ph,
                           Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                   child: CustomText(
                                 text: "Mortgage Payoff Date:",
                                 fontSize: 14,

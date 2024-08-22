@@ -68,4 +68,5 @@ class Routes {
   static const inflationCalculatorResult = "/inflationCalculatorResult";
   static const tdeeCalculator = "/tDEECalculator";
   static const tdeeCalculatorResult = "/tDEECalculatorResult";
+  static const splashScreenTwo = "/splashScreenTwo";
 }

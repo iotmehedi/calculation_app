@@ -52,4 +52,8 @@ class AppAssets {
   static const String tdee = 'assets/tdee.png';
   static const String twoArrow = 'assets/two_arrow.png';
   static const String arrowDown = 'assets/arrow_down.png';
+  static const String splashLogo = 'assets/splash_logo.png';
+  static const String splashLogoTwo = 'assets/splash_two.png';
+  static const String floatingArrow = 'assets/floating_arrow.png';
+  static const String noInternet = 'assets/no_internet.png';
 }

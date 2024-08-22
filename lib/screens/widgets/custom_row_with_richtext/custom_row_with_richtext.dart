@@ -51,7 +51,29 @@ class CustomRowWithRichtext extends StatelessWidget {
                   textAlign: TextAlign.start, fontFamily: titleFontFamily)),
            Visibility(
              visible: textAlignMostRight == false ? false : true,
-             child: CustomRichText(
+             child: Expanded(
+               flex: 2,
+               child: CustomRichText(
+                  title: richTextValue,
+                  titleTextColor: richTextValueColor,
+                  heading: richTextTitle,
+                  headingTextColor: richtextTitleColor,
+                  titleFontWeight: richTextValueFontWeight,
+                  headingFontWeight: richTextTitleFontWeight,
+                  titleFontSIze: titleFontSIze,
+                  headingFontSize: headingFontSize,
+                 fontFamily: richtextFontFamily,
+                 titleFontFamily: richTextTitleFontFamily,
+                ),
+             ),
+           ),
+          Visibility(
+            visible: textAlignMostRight == false ? true : false,
+            child: Expanded(
+              flex: 2,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: CustomRichText(
                 title: richTextValue,
                 titleTextColor: richTextValueColor,
                 heading: richTextTitle,
@@ -60,24 +82,9 @@ class CustomRowWithRichtext extends StatelessWidget {
                 headingFontWeight: richTextTitleFontWeight,
                 titleFontSIze: titleFontSIze,
                 headingFontSize: headingFontSize,
-               fontFamily: richtextFontFamily,
-               titleFontFamily: richTextTitleFontFamily,
+                fontFamily: richtextFontFamily,
+                titleFontFamily: richTextTitleFontFamily,
               ),
-           ),
-          Visibility(
-            visible: textAlignMostRight == false ? true : false,
-            child: Expanded(
-            child: CustomRichText(
-              title: richTextValue,
-              titleTextColor: richTextValueColor,
-              heading: richTextTitle,
-              headingTextColor: richtextTitleColor,
-              titleFontWeight: richTextValueFontWeight,
-              headingFontWeight: richTextTitleFontWeight,
-              titleFontSIze: titleFontSIze,
-              headingFontSize: headingFontSize,
-              fontFamily: richtextFontFamily,
-              titleFontFamily: richTextTitleFontFamily,
             ),
           ),)
         ],

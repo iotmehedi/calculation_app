@@ -22,7 +22,7 @@ class SalesCalculatorResultScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: "Sale Calculator",
+        title: "Sales Calculator",
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -70,7 +70,7 @@ class SalesCalculatorResultScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomRowWithRichtext(
-                      title: "Tip per person:",
+                      title: "Tax Price:",
                       titleFontWeight: FontWeight.w600,
                       headingFontWeight: FontWeight.normal,
                       richTextTitle: '\$',

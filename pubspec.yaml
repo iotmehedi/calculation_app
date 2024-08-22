@@ -52,6 +52,7 @@ dependencies:
   expressions:
   connectivity_plus: ^6.0.4
   internet_connection_checker_plus: ^2.5.1
+  flutter_launcher_icons: ^0.13.1
 
 
 dependency_overrides:
@@ -69,7 +70,11 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/logo.jpg"
 # The following section is specific to Flutter packages.
 flutter:
   # The following line ensures that the Material Icons font is

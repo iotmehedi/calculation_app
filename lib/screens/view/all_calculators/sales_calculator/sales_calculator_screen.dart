@@ -25,7 +25,7 @@ class _TaxCalculatorPageState extends State<TaxCalculatorPage> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: "Sale Calculator",
+        title: "Sales Calculator",
         onBackPressed: () {
           Navigator.pop(context);
           controller.allFieldClear();

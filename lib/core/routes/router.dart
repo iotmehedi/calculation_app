@@ -69,6 +69,7 @@ import '../../screens/view/all_calculators/vat_calculator/vat_calculator_screen.
 import '../../screens/view/all_calculators/vat_calculator/vat_result_screen.dart';
 import '../../screens/view/more_calculator/more_calculator.dart';
 import '../../screens/view/scientific_calculator/scientific_calculator.dart';
+import '../../screens/view/splash_screen/splash_screen_two.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -120,6 +121,10 @@ class RouteGenerator {
       case Routes.splashScreenRouteName:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
+        );
+        case Routes.splashScreenTwo:
+        return MaterialPageRoute(
+          builder: (context) => const SplashScreenTwo(),
         );
       case Routes.homepage:
         return MaterialPageRoute(

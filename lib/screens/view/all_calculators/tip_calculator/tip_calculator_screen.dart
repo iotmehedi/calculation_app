@@ -36,7 +36,7 @@ class _TipCalculatorState extends State<TipCalculator> {
                   child: Column(
                     children: [
                       CommonTextFieldCustom(
-                        headingName: 'Loan Amount',
+                        headingName: 'Bill',
                         controller: controller.priceController.value,
                         keyboardType: TextInputType.number,
                         needPadding: true,

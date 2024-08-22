@@ -312,7 +312,7 @@ class HomepageScreen extends StatelessWidget {
                   Expanded(
                     child: HomepageWidget(
                       images: AppAssets.dueDate,
-                      text: "Due Time\nCalculator",
+                      text: "Due Date\nCalculator",
                       onPress: () {
                         RouteGenerator.pushNamed(
                             context, Routes.pregnancyDueDate);

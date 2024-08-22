@@ -32,7 +32,7 @@ class CustomElevatedButton extends StatelessWidget {
           onPressed: isConnected
               ? onPress
               : () {
-            errorToast(
+            errorToast1(
                 context: context,
                 msg: "Please check your internet connection",
                 color: Colors.grey,

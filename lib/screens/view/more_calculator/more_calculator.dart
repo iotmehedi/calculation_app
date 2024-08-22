@@ -138,7 +138,7 @@ class MoreCalculatorPage extends StatelessWidget {
                 Expanded(
                   child: HomepageWidget(
                     images: AppAssets.unit,
-                    text: "Unit\nCalculator",
+                    text: "Unit\nConverter",
                     onPress: () {
                       RouteGenerator.pushNamed(
                           context, Routes.unitCalculator);
