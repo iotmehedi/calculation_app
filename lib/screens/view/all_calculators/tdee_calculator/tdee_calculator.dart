@@ -16,26 +16,6 @@ import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 import '../../../widgets/textfield/textField_widget.dart';
 import '../normal_calculator/Colors.dart';
-
-
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TDEE Calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: TDEECalculator(),
-    );
-  }
-}
-
 class TDEECalculator extends StatefulWidget {
   @override
   _TDEECalculatorState createState() => _TDEECalculatorState();
@@ -363,16 +343,6 @@ var controller = Get.put(TdeeController());
                           //     ]);
                         // }
                       }),
-
-                  // SizedBox(height: 16.0),
-                  Text('${controller.tdeeResult.value}', style: TextStyle(fontWeight: FontWeight.bold),),
-                  Text('${controller.mildWeightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),
-                  Text('${controller.weightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),// without sedentery will show all
-                  Text('${controller.extremeWeightLoss.value}', style: TextStyle(fontWeight: FontWeight.bold),),// will not show only for 1,2,3
-                  Text('${controller.mildWeightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
-                  Text('${controller.weightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
-                  Text('${controller.extremeWeightGain.value}', style: TextStyle(fontWeight: FontWeight.bold),),
-
                 ],
               ),
             ],

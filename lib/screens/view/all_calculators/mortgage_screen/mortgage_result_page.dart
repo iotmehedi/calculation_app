@@ -558,7 +558,7 @@ class MortgageResultPage extends StatelessWidget {
                               Expanded(
                                   child: CustomText(
                                 text:
-                                    "\$ ${controller.mortgagePayoffDatee.value}",
+                                    "${controller.mortgagePayoffDatee.value}",
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 textAlign: TextAlign.end,

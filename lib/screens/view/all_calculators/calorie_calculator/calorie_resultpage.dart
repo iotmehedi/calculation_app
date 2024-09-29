@@ -119,8 +119,8 @@ class CalorieResultScrren extends StatelessWidget {
                       ),
                       5.ph,
                       CustomRichThreeText(
-                        title: unitOrMatrics == false ?"Pound /" : "Kg /",
-                        heading: unitOrMatrics == false ? "0.5 " : "0.25 ",
+                        title: unitOrMatrics == true ?"lb /" : "Kg /",
+                        heading: unitOrMatrics == true ? "0.5 " : "0.25 ",
                         value: "Week",
                         headingTextColor: HexColor('7BFF80'),
                         headingFontWeight: FontWeight.bold,
@@ -162,8 +162,8 @@ class CalorieResultScrren extends StatelessWidget {
                     ),
                     5.ph,
                     CustomRichThreeText(
-                      title: unitOrMatrics == false ?"Pound /" : "Kg /",
-                      heading: unitOrMatrics == false ? "1 " : "0.5 ",
+                      title: unitOrMatrics == true ?"lb /" : "Kg /",
+                      heading: unitOrMatrics == true ? "1 " : "0.5 ",
                       value: "Week",
                       headingTextColor: HexColor('7BFF80'),
                       headingFontWeight: FontWeight.bold,
@@ -204,8 +204,8 @@ class CalorieResultScrren extends StatelessWidget {
                     ),
                     5.ph,
                     CustomRichThreeText(
-                      title: unitOrMatrics == false ?"Pound /" : "Kg /",
-                      heading: unitOrMatrics == false ? "2 " : "1 ",
+                      title: unitOrMatrics == true ?"lb /" : "Kg /",
+                      heading: unitOrMatrics == true ? "2 " : "1 ",
                       value: "Week",
                       headingTextColor: HexColor('7BFF80'),
                       headingFontWeight: FontWeight.bold,

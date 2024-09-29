@@ -42,7 +42,7 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                       keyboardType: TextInputType.number,
                       needPadding: true,
                       suffixIcon: Icon(
-                        Icons.attach_money,
+                        Icons.currency_rupee,
                         size: 16,
                       ),
                       validator: (value) {
