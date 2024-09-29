@@ -103,8 +103,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
                               child: CustomSimpleTextField(
                                 controller:
                                     controller.downPaymentController.value,
-                                suffixIcon:
-                                    CustomIconWidget(icon: Icons.attach_money),
+
                               ),
                             ),
                           ),

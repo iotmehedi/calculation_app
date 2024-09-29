@@ -95,6 +95,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
       // weightKg = weightKg * 2.20462;
     } else {
       heightCm = (height * 12) + heightInch;
+      weightKg = weightKg * 0.453592;
     }
 
     int age = int.tryParse(ageController.text) ?? 0;
@@ -385,7 +386,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           controller: weightKgController,
                           keyboardType: TextInputType.number,
                           paddingNeed: true,
-                          hint: selectedButton == true ? "kg" : "Pounds",
+                          hint: selectedButton == false ? "kg" : "Pounds",
                           textAlign: TextAlign.start),
                     ],
                   ),
