@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'core/ad_manager/add_manager.dart';
 import 'core/routes/router.dart';
 late SharedPreferences prefs;
 var internetCheck = true;
@@ -18,6 +20,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
+  // Initialize Google Mobile Ads
+  await MobileAds.instance.initialize();
   connectivityService = ConnectivityService();
   runApp(const MyApp());
 }
@@ -29,16 +33,16 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
   List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
-
+  final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
   @override
   void initState() {
     super.initState();
     initConnectivity();
-
+    _appOpenAdManager.loadAd();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
@@ -46,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _connectivitySubscription.cancel();
+
     super.dispose();
   }
 
@@ -80,6 +85,7 @@ class _MyAppState extends State<MyApp> {
     }
     print('Connectivity changed: ${_connectionStatus.first}');
   }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
