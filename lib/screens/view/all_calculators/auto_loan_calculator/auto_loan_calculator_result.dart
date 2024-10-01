@@ -7,13 +7,16 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import 'auto_loan_calculator_controller.dart';
 
 class AutoLoanCalculatorResult extends StatelessWidget {
   AutoLoanCalculatorResult({super.key});
   var controller = Get.find<LoanController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -28,6 +31,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
             textColor: Colors.black,
             fontSize: 20.0),
       ),
+      bottomNavigationBar:adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

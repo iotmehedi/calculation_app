@@ -9,23 +9,12 @@ import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_ele
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
 import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_text/custom_text.dart';
-
-// class CalorieCalculatorApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Calorie Calculator',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: CalorieCalculatorScreen(),
-//     );
-//   }
-// }
 
 enum ActivityLevel {
   basalMetabolicRate,
@@ -55,17 +44,11 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
   TextEditingController heightCmController = TextEditingController();
   TextEditingController weightKgController = TextEditingController();
   Gender selectedGender = Gender.male;
-  // late double heightCm; // Height in centimeters
-  // late double weightKg; // Weight in kilograms
-  // late int age;
-  // late double heightFeet;
-  // bool maleChecked = true;
-  // bool femaleChecked = false;
   late ActivityLevel activityLevel;
   var selectedButton = true;
   late int calculatedCalories;
   late Map<String, int> weightLossCalories;
-  // late bool isMetricUnit; // Flag to track if Metric unit is selected
+  var adController = Get.put(AdService());
 
   @override
   void initState() {
@@ -157,6 +140,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -165,6 +149,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

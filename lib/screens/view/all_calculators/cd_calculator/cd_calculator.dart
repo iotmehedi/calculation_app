@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
@@ -20,8 +21,10 @@ class CDCalculatorForm extends StatefulWidget {
 
 class _CDCalculatorFormState extends State<CDCalculatorForm> {
   var controller = Get.put(CDCalculatorController());
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -31,6 +34,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
           controller.allFieldClear();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() => Form(

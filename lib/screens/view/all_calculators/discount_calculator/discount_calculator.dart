@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
@@ -15,8 +16,10 @@ class DiscountCalculatorPage extends StatefulWidget {
 
 class _DiscountCalculatorPageState extends State<DiscountCalculatorPage> {
 var controller = Get.put(DiscountController());
+var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -26,6 +29,7 @@ var controller = Get.put(DiscountController());
           controller.allFieldClear();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Form(
         key: controller.formKey.value,
         child: Padding(

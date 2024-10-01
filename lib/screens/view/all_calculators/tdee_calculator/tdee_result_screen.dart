@@ -10,11 +10,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
+
 class TdeeResultScrren extends StatelessWidget {
   TdeeResultScrren({
     super.key,
   });
   var controller = Get.find<TdeeController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +28,7 @@ class TdeeResultScrren extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

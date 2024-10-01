@@ -4,6 +4,19 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService extends GetxController {
+  @override
+  void onInit() {
+    initialize();
+    loadBannerAd();
+    loadNativeAd();
+    super.onInit();
+  }
+  @override
+  void dispose() {
+    dispose();
+    // WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
   // Banner Ad Instance
   BannerAd? _bannerAd;
   var isBannerAdLoaded = false.obs;
@@ -42,8 +55,8 @@ class AdService extends GetxController {
     return Obx(() {
       if (isBannerAdLoaded.value && _bannerAd != null) {
         return Container(
-          width: MediaQuery.of(navigatorKey.currentContext!).size.width,
-          height: 50,
+          width: MediaQuery.of(navigatorKey.currentContext!).size.width * 0.9,
+          height: _bannerAd?.size.height.toDouble(),
           child: AdWidget(ad: _bannerAd!),
         );
       } else {
@@ -70,32 +83,32 @@ class AdService extends GetxController {
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
         templateType: TemplateType.medium,
-        mainBackgroundColor: Colors.purple,
+        mainBackgroundColor: Colors.transparent,
         cornerRadius: 10.0,
-        callToActionTextStyle: NativeTemplateTextStyle(
-          textColor: Colors.cyan,
-          backgroundColor: Colors.red,
-          style: NativeTemplateFontStyle.monospace,
-          size: 16.0,
-        ),
-        primaryTextStyle: NativeTemplateTextStyle(
-          textColor: Colors.red,
-          backgroundColor: Colors.cyan,
-          style: NativeTemplateFontStyle.italic,
-          size: 16.0,
-        ),
-        secondaryTextStyle: NativeTemplateTextStyle(
-          textColor: Colors.green,
-          backgroundColor: Colors.black,
-          style: NativeTemplateFontStyle.bold,
-          size: 16.0,
-        ),
-        tertiaryTextStyle: NativeTemplateTextStyle(
-          textColor: Colors.brown,
-          backgroundColor: Colors.amber,
-          style: NativeTemplateFontStyle.normal,
-          size: 16.0,
-        ),
+        // callToActionTextStyle: NativeTemplateTextStyle(
+        //   textColor: Colors.cyan,
+        //   backgroundColor: Colors.red,
+        //   style: NativeTemplateFontStyle.monospace,
+        //   size: 16.0,
+        // ),
+        // primaryTextStyle: NativeTemplateTextStyle(
+        //   textColor: Colors.red,
+        //   backgroundColor: Colors.cyan,
+        //   style: NativeTemplateFontStyle.italic,
+        //   size: 16.0,
+        // ),
+        // secondaryTextStyle: NativeTemplateTextStyle(
+        //   textColor: Colors.green,
+        //   backgroundColor: Colors.black,
+        //   style: NativeTemplateFontStyle.bold,
+        //   size: 16.0,
+        // ),
+        // tertiaryTextStyle: NativeTemplateTextStyle(
+        //   textColor: Colors.brown,
+        //   backgroundColor: Colors.amber,
+        //   style: NativeTemplateFontStyle.normal,
+        //   size: 16.0,
+        // ),
       ),
     );
     _nativeAd?.load();

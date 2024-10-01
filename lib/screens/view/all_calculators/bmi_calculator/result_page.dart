@@ -1,25 +1,30 @@
 import 'package:calculation_app/core/utils/consts/app_colors.dart';
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../../../../core/utils/services/ad_services.dart';
 
 class ResultScrren extends StatelessWidget {
   final double bmiresult;
   final double progressValue;
   final String bmiValueName;
   final bool type;
-  const ResultScrren(
+   ResultScrren(
       {super.key,
       required this.bmiresult,
       required this.progressValue,
       required this.bmiValueName,
       required this.type});
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -27,6 +32,17 @@ class ResultScrren extends StatelessWidget {
         onBackPressed: () {
           Navigator.pop(context);
         },
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          20.ph,
+          adController.getBannerAdWidget(),
+        ],
       ),
       body: Stack(
         children: [

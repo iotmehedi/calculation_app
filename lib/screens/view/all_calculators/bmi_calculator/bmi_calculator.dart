@@ -11,8 +11,10 @@ import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 
 class BMICalculatorScreen extends StatefulWidget {
@@ -27,6 +29,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   TextEditingController heightCmController = TextEditingController();
   TextEditingController weightKgController = TextEditingController();
   double bmiResult = 0.0;
+  var adController = Get.put(AdService());
   // String? type = 'usUnit';
   String? bmiValueName;
   var selectedButton = true;
@@ -81,6 +84,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

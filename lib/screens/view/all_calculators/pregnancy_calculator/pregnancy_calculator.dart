@@ -11,6 +11,7 @@ import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 
@@ -30,7 +31,7 @@ class _PregnancyTimeCalculatorPageState extends State<PregnancyTimeCalculatorPag
   int _selectedDay = DateTime.now().day;
   int _selectedYear = DateTime.now().year;
   String selectedOption = '1';
-
+  var adController = Get.put(AdService());
   DateTime dueDate = DateTime.now();
   var firstTrimesterEnd = DateTime.now();
   var secondTrimesterEnd = DateTime.now();
@@ -313,6 +314,17 @@ void _calculateDifference() {
       appBar: CustomAppBar(title: "Pregnancy Calculator", onBackPressed: (){
         Navigator.pop(context);
       },),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

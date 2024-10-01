@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 import '../../../widgets/textfield/textField_widget.dart';
 
@@ -19,6 +20,7 @@ class UnitConverter extends StatefulWidget {
 
 class _UnitConverterState extends State<UnitConverter> {
   var controller = Get.put(UnitController());
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -29,6 +31,7 @@ class _UnitConverterState extends State<UnitConverter> {
               Navigator.pop(context);
             },
           ),
+          bottomNavigationBar: adController.getBannerAdWidget(),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

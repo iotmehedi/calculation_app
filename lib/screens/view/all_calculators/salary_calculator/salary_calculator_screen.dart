@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
@@ -23,7 +24,7 @@ class SalaryCalculatorScreen extends StatefulWidget {
 
 class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
   var controller = Get.put(SalaryController());
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +37,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
           controller.allFieldClear();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

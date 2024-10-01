@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
@@ -16,7 +17,7 @@ class TipCalculator extends StatefulWidget {
 
 class _TipCalculatorState extends State<TipCalculator> {
   var controller = Get.put(TipController());
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +29,7 @@ class _TipCalculatorState extends State<TipCalculator> {
           controller.allFieldClear();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: EdgeInsets.all(16.0),
             child: Form(

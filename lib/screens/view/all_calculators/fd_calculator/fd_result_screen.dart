@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_pie_chart/common_pie_chart_widget.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
@@ -19,6 +20,7 @@ import 'fd_controller.dart';
 class FDResultScreen extends StatelessWidget {
    FDResultScreen({super.key});
 var controller = Get.find<FDController>();
+   var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ var controller = Get.find<FDController>();
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -54,6 +57,8 @@ var controller = Get.find<FDController>();
             ),
             20.ph,
             CommonPieChartWidget(list: controller.list, total: controller.total.value, netPriceColor: "458EEC", taxAmountColor: "99CBF7", netTitle: "Total Investment", taxTitle: "Total Return", badgeWidgetVisibleOrNot: true,),
+            70.ph,
+            adController.getNativeAdWidget(),
           ],
         ),
       ),

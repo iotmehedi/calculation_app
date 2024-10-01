@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 
@@ -21,6 +22,7 @@ class LoanCalculatorScreen extends StatefulWidget {
 
 class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
   var controller = Get.put(LoanCalcualtorController());
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
         Navigator.pop(context);
         controller.allFieldClear();
       },),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

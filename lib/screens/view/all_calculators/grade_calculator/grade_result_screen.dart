@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 
 class GradeResultScreen extends StatelessWidget {
   GradeResultScreen({super.key});
   var controller = Get.find<GradeController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +26,7 @@ class GradeResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,6 +255,8 @@ class GradeResultScreen extends StatelessWidget {
                 ],
               ),
             ),
+            50.ph,
+            adController.getNativeAdWidget(),
           ],
         ),
       ),

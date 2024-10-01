@@ -1,10 +1,13 @@
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 import '../../../widgets/textfield/textField_widget.dart';
@@ -18,7 +21,7 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
   TextEditingController numberController = TextEditingController();
   TextEditingController percentageController = TextEditingController();
   double result = 0.0;
-
+  var adController = Get.put(AdService());
   void calculatePercentage() {
     double number = double.tryParse(numberController.text) ?? 0.0;
     double percentage = double.tryParse(percentageController.text) ?? 0.0;
@@ -37,6 +40,17 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
       Navigator.pop(context);
     },
   ),
+      bottomNavigationBar: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: adController.getNativeAdWidget(),
+        ),
+        10.ph,
+        adController.getBannerAdWidget(),
+      ],
+    ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(

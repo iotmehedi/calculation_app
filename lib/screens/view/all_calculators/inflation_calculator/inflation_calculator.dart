@@ -9,27 +9,16 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 import 'inflation_controller.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: InflationCalculatorPage(),
-    );
-  }
-}
 
 class InflationCalculatorPage extends StatelessWidget {
   final InflationCalculatorController controller = Get.put(InflationCalculatorController());
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(()=> Scaffold(
@@ -40,6 +29,7 @@ class InflationCalculatorPage extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

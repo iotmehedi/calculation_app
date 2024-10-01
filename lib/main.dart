@@ -37,12 +37,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
   List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
-  final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+
   @override
   void initState() {
     super.initState();
     initConnectivity();
-    _appOpenAdManager.loadAd();
+
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_custom_richText/common_custom_richText.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -21,6 +22,7 @@ class EmiCalculator extends StatefulWidget {
 
 class _EmiCalculatorState extends State<EmiCalculator> {
   var controller = Get.put(EMIController());
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ class _EmiCalculatorState extends State<EmiCalculator> {
         Navigator.pop(context);
         controller.allFieldClear();
       },),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -107,7 +110,8 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                       clearButtonTitleFontSize: 20,
                       clearButtonFontWeight: FontWeight.w600,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 80),
+                    adController.getNativeAdWidget(),
                   ],
                 ),
               ),

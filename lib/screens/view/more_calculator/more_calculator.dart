@@ -1,17 +1,21 @@
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/routes/route_name.dart';
 import '../../../core/routes/router.dart';
 import '../../../core/utils/consts/app_assets.dart';
 import '../../../core/utils/consts/app_colors.dart';
+import '../../../core/utils/services/ad_services.dart';
 import '../../widgets/homepage_widget/homepage_widget.dart';
 
 class MoreCalculatorPage extends StatelessWidget {
-  const MoreCalculatorPage({super.key});
-
+   MoreCalculatorPage({super.key});
+   var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -19,6 +23,17 @@ class MoreCalculatorPage extends StatelessWidget {
         onBackPressed: () {
           Navigator.pop(context);
         },
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -153,6 +168,7 @@ class MoreCalculatorPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+
           ],
         ),
       ),

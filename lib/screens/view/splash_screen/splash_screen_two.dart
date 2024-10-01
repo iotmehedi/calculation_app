@@ -19,20 +19,8 @@ class SplashScreenTwo extends StatefulWidget {
 class _SplashScreenTwoState extends State<SplashScreenTwo> with WidgetsBindingObserver{
   final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
   var adController = Get.put(AdService());
-  final AdService _adService = AdService();
-  @override
-  void initState() {
-    adController.initialize();
-    adController.loadBannerAd();
-    adController.loadNativeAd();
-    super.initState();
-  }
-  @override
-  void dispose() {
-    _appOpenAdManager.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // Show the App Open Ad when the app is resumed from the background
@@ -42,36 +30,32 @@ class _SplashScreenTwoState extends State<SplashScreenTwo> with WidgetsBindingOb
   }
   @override
   Widget build(BuildContext context) {
-    _adService.loadBannerAd();
-    _adService.loadNativeAd();
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-      body: Column(
-        children: [
-          Center(
-            child: Image.asset(
-              AppAssets.splashLogoTwo,
-              height: 434,
-              // width: 327,
-            ),
-          ),
-          adController.getNativeAdWidget(),
-        ],
+      appBar: AppBar(
+        title: adController.getBannerAdWidget(),
       ),
-      bottomNavigationBar: _adService.getBannerAdWidget(),
+      body: Center(
+        child: Image.asset(
+          AppAssets.splashLogoTwo,
+          height: 434,
+          // width: 327,
+        ),
+      ),
+
       floatingActionButton: SizedBox(
         height: 40,
         width: 40,
         child: FloatingActionButton(
-            backgroundColor: HexColor("2B2E63"),
+          backgroundColor: HexColor("2B2E63"),
 
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-            onPressed: () {
-              AppOpenAdManager().showAdIfAvailable();
-              // RouteGenerator.pushNamedAndRemoveAll(Routes.homepage);
-            },
-        child: Image.asset(AppAssets.floatingArrow, width: 12, height: 17.05,),
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+          onPressed: () {
+            AppOpenAdManager().showAdIfAvailable();
+            RouteGenerator.pushNamedAndRemoveAll(Routes.homepage);
+          },
+          child: Image.asset(AppAssets.floatingArrow, width: 12, height: 17.05,),
         ),
       ),
     );

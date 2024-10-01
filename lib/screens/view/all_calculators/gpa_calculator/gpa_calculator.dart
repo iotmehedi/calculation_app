@@ -10,6 +10,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -35,7 +36,7 @@ class CourseForm extends StatefulWidget {
 
 class _CourseFormState extends State<CourseForm> {
   var controller = Get.put(GPAController());
-
+  var adController = Get.put(AdService());
   // @override
   // void dispose() {
   //   for (var controller in controller.courseControllers) {
@@ -57,6 +58,7 @@ class _CourseFormState extends State<CourseForm> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(
         () => Form(
           key: controller.formKey.value,

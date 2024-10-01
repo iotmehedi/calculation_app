@@ -7,6 +7,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_pie_chart/common_pie_chart_widget.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
@@ -16,6 +17,7 @@ import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart'
 class MarginCalculatorResultScreen extends StatelessWidget {
    MarginCalculatorResultScreen({super.key});
 var controller = Get.find<MarginCalculatorController>();
+   var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +89,8 @@ var controller = Get.find<MarginCalculatorController>();
               taxTitle: "Profit Margin",
               badgeWidgetVisibleOrNot: true,
             ),
+            50.ph,
+            adController.getNativeAdWidget(),
           ],
         ),
       ),),

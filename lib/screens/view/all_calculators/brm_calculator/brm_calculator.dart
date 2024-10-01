@@ -11,8 +11,10 @@ import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 
 class BmrCalculator extends StatefulWidget {
@@ -32,6 +34,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   var selectedButton = true;
   double bmr = 0.0;
   Gender selectedGender = Gender.male;
+  var adController = Get.put(AdService());
   Future<bool> calculateBmr() async {
     double height, weight, age;
     if (ageController.text.isEmpty) {
@@ -107,6 +110,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -115,6 +119,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

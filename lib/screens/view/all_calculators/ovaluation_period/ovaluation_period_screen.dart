@@ -1,11 +1,14 @@
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/src/intl/date_format.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 
@@ -20,7 +23,7 @@ class _OvulationInputPageState extends State<OvulationInputPage> {
   int _selectedDay = DateTime.now().day;
   int _selectedYear = DateTime.now().year;
   int _cycleLength = 28;
-
+  var adController = Get.put(AdService());
   List<int> _daysInMonth(int year, int month) {
     return List<int>.generate(DateTime(year, month + 1, 0).day, (i) => i + 1);
   }
@@ -60,241 +63,251 @@ class _OvulationInputPageState extends State<OvulationInputPage> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              globalText16(
-                  text: "First Day of Your Last Period:",
-                  fontWeight: FontWeight.normal),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      // Adjust padding here
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: HexColor("F3F6F9")),
-                      child: DropdownButtonHideUnderline(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          child: DropdownButton<int>(
-                            icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                            
-                            isExpanded: true,
-                            value: _selectedMonth,
-                            onChanged: (int? newValue) {
-                              setState(() {
-                                _selectedMonth = newValue!;
-                                if (_selectedDay >
-                                    _daysInMonth(_selectedYear, _selectedMonth)
-                                        .length) {
-                                  _selectedDay =
-                                      _daysInMonth(_selectedYear, _selectedMonth)
-                                          .length;
-                                }
-                              });
-                            },
-                            items: _months().asMap().entries.map((entry) {
-                              int index = entry.key;
-                              String name = entry.value;
-                              return DropdownMenuItem(
-                                value: index + 1,
-                                child: globalText16(
-                                    text: DateFormat('MMM').format(DateTime(0, index + 1)), fontWeight: FontWeight.normal),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    globalText16(
+                        text: "First Day of Your Last Period:",
+                        fontWeight: FontWeight.normal),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: HexColor("F3F6F9")),
-                      child: DropdownButtonHideUnderline(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          child: DropdownButton<int>(
-                            icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                             isExpanded: true,
-                            value: _selectedDay,
-                            onChanged: (int? newValue) {
-                              setState(() {
-                                _selectedDay = newValue!;
-                              });
-                            },
-                            items: _daysInMonth(_selectedYear, _selectedMonth)
-                                .map((day) {
-                              return DropdownMenuItem(
-                                value: day,
-                                child: globalText16(
-                                    text: "$day", fontWeight: FontWeight.normal),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: HexColor("F3F6F9")),
-                      child: DropdownButtonHideUnderline(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          child: DropdownButton<int>(
-                            icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                             isExpanded: true,
-                            value: _selectedYear,
-                            onChanged: (int? newValue) {
-                              setState(() {
-                                _selectedYear = newValue!;
-                                if (_selectedDay >
-                                    _daysInMonth(_selectedYear, _selectedMonth)
-                                        .length) {
-                                  _selectedDay =
-                                      _daysInMonth(_selectedYear, _selectedMonth)
-                                          .length;
-                                }
-                              });
-                            },
-                            items: _years().map((year) {
-                              return DropdownMenuItem(
-                                value: year,
-                                child: globalText16(
-                                    text: "$year", fontWeight: FontWeight.normal),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 60,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: HexColor("F3F6F9")),
-                    child: Center(
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        decoration: const InputDecoration(
-                          // labelText: 'Cycle Length (days)',
-                          border: InputBorder.none,
-                        ),
-                        keyboardType: TextInputType.number,
-                        initialValue: _cycleLength.toString(),
-                        onChanged: (val) {
-                          setState(() {
-                            _cycleLength = int.tryParse(val) ?? 28;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your cycle length';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  globalText16(text: "Days", fontWeight: FontWeight.normal)
-                ],
-              ),
-              const SizedBox(height: 30),
-              ValueListenableBuilder<bool>(
-                  valueListenable: connectivityService.isConnected,
-                  builder: (context, isConnected, child) {
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            // Adjust padding here
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: HexColor("F3F6F9")),
+                            child: DropdownButtonHideUnderline(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: DropdownButton<int>(
+                                  icon: const Icon(Icons.keyboard_arrow_down_sharp),
 
-                    return Center(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
-                        maximumSize: MaterialStateProperty.all(
-                          Size(MediaQuery.of(context).size.width * 0.8, 61),
-                        ),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        ),
-                      ),
-                      onPressed: isConnected ? () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OvulationCalendarPage(
-                                startDate: _selectedDate,
-                                cycleLength: _cycleLength,
+                                  isExpanded: true,
+                                  value: _selectedMonth,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      _selectedMonth = newValue!;
+                                      if (_selectedDay >
+                                          _daysInMonth(_selectedYear, _selectedMonth)
+                                              .length) {
+                                        _selectedDay =
+                                            _daysInMonth(_selectedYear, _selectedMonth)
+                                                .length;
+                                      }
+                                    });
+                                  },
+                                  items: _months().asMap().entries.map((entry) {
+                                    int index = entry.key;
+                                    String name = entry.value;
+                                    return DropdownMenuItem(
+                                      value: index + 1,
+                                      child: globalText16(
+                                          text: DateFormat('MMM').format(DateTime(0, index + 1)), fontWeight: FontWeight.normal),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
-                          );
-                        }
-                      } : () {
-                  errorToast(
-                  context: context,
-                  msg: "Please check your internet connection",
-                  color: Colors.grey,
-                  iconColor: Colors.red,
-                  headingTextColor: Colors.red,
-                  valueTextColor: Colors.red);
-                  },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          globalText24(
-                              text: "Get The Date",
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white),
-                          const SizedBox(
-                            width: 10,
                           ),
-                          Icon(
-                            Icons.calendar_today,
-                            size: 18,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: HexColor("F3F6F9")),
+                            child: DropdownButtonHideUnderline(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: DropdownButton<int>(
+                                  icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                                   isExpanded: true,
+                                  value: _selectedDay,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      _selectedDay = newValue!;
+                                    });
+                                  },
+                                  items: _daysInMonth(_selectedYear, _selectedMonth)
+                                      .map((day) {
+                                    return DropdownMenuItem(
+                                      value: day,
+                                      child: globalText16(
+                                          text: "$day", fontWeight: FontWeight.normal),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: HexColor("F3F6F9")),
+                            child: DropdownButtonHideUnderline(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: DropdownButton<int>(
+                                  icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                                   isExpanded: true,
+                                  value: _selectedYear,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      _selectedYear = newValue!;
+                                      if (_selectedDay >
+                                          _daysInMonth(_selectedYear, _selectedMonth)
+                                              .length) {
+                                        _selectedDay =
+                                            _daysInMonth(_selectedYear, _selectedMonth)
+                                                .length;
+                                      }
+                                    });
+                                  },
+                                  items: _years().map((year) {
+                                    return DropdownMenuItem(
+                                      value: year,
+                                      child: globalText16(
+                                          text: "$year", fontWeight: FontWeight.normal),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                }
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: HexColor("F3F6F9")),
+                          child: Center(
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              decoration: const InputDecoration(
+                                // labelText: 'Cycle Length (days)',
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.number,
+                              initialValue: _cycleLength.toString(),
+                              onChanged: (val) {
+                                setState(() {
+                                  _cycleLength = int.tryParse(val) ?? 28;
+                                });
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your cycle length';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        globalText16(text: "Days", fontWeight: FontWeight.normal)
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    ValueListenableBuilder<bool>(
+                        valueListenable: connectivityService.isConnected,
+                        builder: (context, isConnected, child) {
+
+                          return Center(
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll<HexColor>(HexColor("0F182E")),
+                              maximumSize: MaterialStateProperty.all(
+                                Size(MediaQuery.of(context).size.width * 0.8, 61),
+                              ),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: isConnected ? () {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OvulationCalendarPage(
+                                      startDate: _selectedDate,
+                                      cycleLength: _cycleLength,
+                                    ),
+                                  ),
+                                );
+                              }
+                            } : () {
+                        errorToast(
+                        context: context,
+                        msg: "Please check your internet connection",
+                        color: Colors.grey,
+                        iconColor: Colors.red,
+                        headingTextColor: Colors.red,
+                        valueTextColor: Colors.red);
+                        },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                globalText24(
+                                    text: "Get The Date",
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: 18,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    ),
+
+
+                  ],
+                ),
               ),
+              adController.getNativeAdWidget(),
             ],
           ),
         ),
@@ -319,7 +332,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
       DateTime startDate, int cycleLength) {
     Map<DateTime, List<DateTime>> ovulationDays = {};
     DateTime nextDate = startDate;
-
+    var adController = Get.put(AdService());
     for (int i = 0; i < 4; i++) {
       nextDate = nextDate.add(Duration(days: cycleLength));
       DateTime ovulationDay =
@@ -330,7 +343,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
     }
     return ovulationDays;
   }
-
+  var adController = Get.put(AdService());
   @override
   void initState() {
     _focusedDay = widget.startDate;
@@ -362,6 +375,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
       appBar: CustomAppBar(title: 'Ovulation Calendar', onBackPressed: (){
         Navigator.pop(context);
       },),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [

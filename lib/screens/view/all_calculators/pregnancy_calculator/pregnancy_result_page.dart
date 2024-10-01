@@ -2,6 +2,7 @@ import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/core/routes/router.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -9,6 +10,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -17,6 +19,7 @@ class PregnancyResultCalculator extends StatefulWidget {
   final int weeksDifference, daysDifference, month, remainingDays;
   final String currentTrimester, conceviedDate, dueDate;
   final List<Map<String, Object>> milestones, milestones2, milestones3;
+
   const PregnancyResultCalculator({
     super.key,
     required this.weeksDifference,
@@ -39,7 +42,7 @@ class PregnancyResultCalculator extends StatefulWidget {
 class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
   // final DateTime selectedDate = DateTime(2023, 10, 12);
   DateTime presentDate = DateTime.now();
-
+  var adController = Get.put(AdService());
   int get daysDifference {
     return presentDate
         .difference((widget.milestones[0]["weeks"] as DateTime))
@@ -77,6 +80,7 @@ class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

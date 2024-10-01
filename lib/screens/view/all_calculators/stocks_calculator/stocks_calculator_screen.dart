@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_richtext/custom_richtext.dart';
 import '../../../widgets/textfield/textField_widget.dart';
@@ -21,7 +22,7 @@ class _StockCalculatorPageState extends State<StockCalculatorPage> {
 
 
 var controller = Get.put(StocksCalculatorController());
-
+var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +34,7 @@ var controller = Get.put(StocksCalculatorController());
           controller.allFieldClear();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

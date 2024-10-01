@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
@@ -26,7 +27,7 @@ class GPAForm extends StatefulWidget {
 class _GPAFormState extends State<GPAForm> {
 
   var controller = Get.put(GradeController());
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +39,7 @@ class _GPAFormState extends State<GPAForm> {
           controller.allFieldClear();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Form(
         key: controller.formKey.value,
         child: Padding(

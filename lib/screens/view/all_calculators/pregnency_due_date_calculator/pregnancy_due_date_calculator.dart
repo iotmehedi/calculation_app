@@ -2,6 +2,7 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
@@ -9,6 +10,7 @@ import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
 import '../../../../core/utils/consts/app_colors.dart';
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 
@@ -906,16 +908,27 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
   String formatDate(DateTime date) {
     return DateFormat('MMM\nd').format(date);
   }
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
-        title: "Pregnancy Due Date",
+        title: "Due Date",
         onBackPressed: () {
           Navigator.pop(context);
         },
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

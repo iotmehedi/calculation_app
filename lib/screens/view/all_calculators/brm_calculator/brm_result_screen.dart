@@ -4,16 +4,20 @@ import 'package:calculation_app/core/utils/consts/textstyle.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../core/utils/services/ad_services.dart';
 
 class BRMResultScreen extends StatelessWidget {
   final double bmiresult;
 
-  const BRMResultScreen({super.key, required this.bmiresult});
-
+   BRMResultScreen({super.key, required this.bmiresult});
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -22,6 +26,7 @@ class BRMResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

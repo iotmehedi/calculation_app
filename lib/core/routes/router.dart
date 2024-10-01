@@ -128,7 +128,7 @@ class RouteGenerator {
         );
       case Routes.homepage:
         return MaterialPageRoute(
-          builder: (context) => const HomepageScreen(),
+          builder: (context) =>  HomepageScreen(),
         );
       case Routes.mortgagePage:
         return MaterialPageRoute(

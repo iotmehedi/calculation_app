@@ -8,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -18,6 +19,7 @@ import '../../../widgets/custom_two_row_widget/custom_row_widget.dart';
 class LoanCalculatorResult extends StatelessWidget {
   LoanCalculatorResult({super.key});
   var controller = Get.find<LoanCalcualtorController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +115,8 @@ class LoanCalculatorResult extends StatelessWidget {
                 ),
               ),
             ),
+            50.ph,
+            adController.getNativeAdWidget(),
           ],
         ),
       ),

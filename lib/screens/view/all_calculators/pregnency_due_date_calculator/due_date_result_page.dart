@@ -2,12 +2,14 @@ import 'package:calculation_app/core/routes/route_name.dart';
 import 'package:calculation_app/core/routes/router.dart';
 import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -67,7 +69,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
         return 'th';
     }
   }
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     print("this is date ${widget.milestones[0]["weeks"]}");
@@ -82,6 +84,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

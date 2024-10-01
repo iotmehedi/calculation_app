@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_pie_chart/common_pie_chart_widget.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
@@ -16,6 +17,7 @@ import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 class PPFCalculatorResult extends StatelessWidget {
    PPFCalculatorResult({super.key});
   var controller = Get.find<PPFCalculatorController>();
+   var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +25,17 @@ class PPFCalculatorResult extends StatelessWidget {
       appBar:  CustomAppBar(title: "PPF Calculator", onBackPressed: (){
         Navigator.pop(context);
       },),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

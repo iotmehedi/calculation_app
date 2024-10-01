@@ -9,10 +9,12 @@ import 'package:calculation_app/screens/widgets/custom_elevatedButton/custom_ele
 import 'package:calculation_app/screens/widgets/textfield/textField_widget.dart';
 import 'package:calculation_app/toast/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:math';
 
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 
 class BodyFatCalculator extends StatefulWidget {
@@ -34,6 +36,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   // String? type = 'usUnit';
   var selectedButton = true;
   Gender selectedGender = Gender.male;
+  var adController = Get.put(AdService());
   Future<bool> calculateBodyFat() async {
     if (_validateInputs()) {
       double weight = double.tryParse(weightController.text) ?? 0;
@@ -136,11 +139,13 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(title: "Body Fat Calculator", onBackPressed: (){
         Navigator.pop(context);
       },),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(

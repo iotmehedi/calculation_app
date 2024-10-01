@@ -9,12 +9,14 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import 'inflation_controller.dart';
 
 class InflationResultScreen extends StatelessWidget {
   InflationResultScreen({super.key});
   var controller = Get.find<InflationCalculatorController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -25,6 +27,7 @@ class InflationResultScreen extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          bottomNavigationBar: adController.getBannerAdWidget(),
           body: SingleChildScrollView(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -116,7 +119,9 @@ class InflationResultScreen extends StatelessWidget {
                   fontSize: 14,
                   textColor: HexColor("787777"),
                 ),
-              )
+              ),
+              50.ph,
+              adController.getNativeAdWidget(),
             ],
           )),
         ));

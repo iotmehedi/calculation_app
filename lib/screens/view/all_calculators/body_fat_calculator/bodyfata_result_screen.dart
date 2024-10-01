@@ -5,11 +5,14 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'dart:math';
 
 import 'package:intl/intl.dart';
+
+import '../../../../core/utils/services/ad_services.dart';
 
 class BodyfatResultScreen extends StatelessWidget {
   final String maintainWeight, weight;
@@ -24,8 +27,10 @@ class BodyfatResultScreen extends StatelessWidget {
   });
   double bodyFatWeightLbs = 0.0;
   double caloriesToBurnFor1PercentFat = 0.0;
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     double weightInLbs = type == false
         ? ((double.tryParse(weight) ?? 0.0) / 0.453592)
         : (double.tryParse(weight) ?? 0.0);
@@ -42,6 +47,17 @@ class BodyfatResultScreen extends StatelessWidget {
         onBackPressed: () {
           Navigator.pop(context);
         },
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

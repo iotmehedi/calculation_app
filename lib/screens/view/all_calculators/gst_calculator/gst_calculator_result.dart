@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
@@ -14,6 +15,7 @@ import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart'
 class GSTCalculatorResultScreen extends StatelessWidget {
    GSTCalculatorResultScreen({super.key});
 var controller = Get.find<GSTCalculatorController>();
+   var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +26,7 @@ var controller = Get.find<GSTCalculatorController>();
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -75,6 +78,8 @@ var controller = Get.find<GSTCalculatorController>();
                 ],
               ),
             ),
+            60.ph,
+            adController.getNativeAdWidget(),
           ],
         ),
       ),

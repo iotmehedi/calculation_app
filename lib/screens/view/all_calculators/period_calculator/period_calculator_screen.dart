@@ -1,10 +1,13 @@
 import 'package:calculation_app/core/utils/consts/textstyle.dart';
+import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../../main.dart';
 import '../../../../toast/toast.dart';
 
@@ -20,7 +23,7 @@ class _PeriodInputPageState extends State<PeriodInputPage> {
   int _selectedYear = DateTime.now().year;
   int _cycleLength = 28;
   int _howLongDidLast = 5;
-
+  var adController = Get.put(AdService());
   List<int> _daysInMonth(int year, int month) {
     return List<int>.generate(DateTime(year, month + 1, 0).day, (i) => i + 1);
   }
@@ -59,6 +62,17 @@ class _PeriodInputPageState extends State<PeriodInputPage> {
         onBackPressed: () {
           Navigator.pop(context);
         },
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -410,7 +424,7 @@ class _PeriodCalculationCalendarPageState
     _focusedDay = widget.startDate;
     super.initState();
   }
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     Map<DateTime, List<DateTime>> ovulationDays =
@@ -435,6 +449,7 @@ class _PeriodCalculationCalendarPageState
       appBar: CustomAppBar(title: 'Period Calendar', onBackPressed: (){
         Navigator.pop(context);
       },),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -4,21 +4,39 @@ import 'package:calculation_app/core/utils/consts/app_assets.dart';
 import 'package:calculation_app/screens/widgets/custom_text/custom_text.dart';
 import 'package:calculation_app/screens/widgets/homepage_widget/homepage_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../core/ad_manager/add_manager.dart';
 import '../../../core/utils/consts/app_colors.dart';
+import '../../../core/utils/services/ad_services.dart';
 
-class HomepageScreen extends StatelessWidget {
-  const HomepageScreen({super.key});
+class HomepageScreen extends StatefulWidget {
+   HomepageScreen({super.key});
 
   @override
+  State<HomepageScreen> createState() => _HomepageScreenState();
+}
+
+class _HomepageScreenState extends State<HomepageScreen> {
+  final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+  // var adController = Get.find<AdService>();
+@override
+  void initState() {
+
+  _appOpenAdManager.loadAd();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: HexColor("FAFAFA"),
         automaticallyImplyLeading: false,
       ),
+      bottomNavigationBar: Get.find<AdService>().getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20),

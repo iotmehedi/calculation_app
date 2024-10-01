@@ -5,13 +5,16 @@ import 'package:calculation_app/core/utils/core/extensions/extensions.dart';
 import 'package:calculation_app/screens/widgets/custom_appbar/custom_appbar.dart';
 import 'package:calculation_app/screens/widgets/custom_richtext/custom_richtext.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import '../../../../core/utils/services/ad_services.dart';
 
 class CalorieResultScrren extends StatelessWidget {
   final int maintainWeight, mildWeightLoss, weightLoss, extremeWeightLoss;
   final bool unitOrMatrics;
-  const CalorieResultScrren({
+   CalorieResultScrren({
     super.key,
     required this.maintainWeight,
     required this.mildWeightLoss,
@@ -19,7 +22,7 @@ class CalorieResultScrren extends StatelessWidget {
     required this.extremeWeightLoss,
     required this.unitOrMatrics,
   });
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +33,7 @@ class CalorieResultScrren extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_icons_widget/common_icon_widget.dart';
 import '../../../widgets/custom_richtext/custom_richtext.dart';
 
@@ -30,6 +31,7 @@ class MortgageScreen extends StatefulWidget {
 
 class _MortgageScreenState extends State<MortgageScreen> {
   var controller = Get.put(MortgageController());
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -38,6 +40,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
             Navigator.pop(context);
             controller.clearAllField();
           },),
+          bottomNavigationBar: adController.getBannerAdWidget(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),

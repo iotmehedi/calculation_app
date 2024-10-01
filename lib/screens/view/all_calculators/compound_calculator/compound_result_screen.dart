@@ -10,14 +10,17 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 
 class CompoundResultScreen extends StatelessWidget {
   CompoundResultScreen({super.key});
   var controller = Get.find<CompoundController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
+    Get.find<AdService>().loadBannerAd();
     int currentYear = DateTime.now().year;
     int maxYears = int.parse(
         controller.yearsOfGrowthController.value.text.isEmpty
@@ -254,7 +257,9 @@ class CompoundResultScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
+                60.ph,
+                adController.getNativeAdWidget(),
               ],
             ),
           )),

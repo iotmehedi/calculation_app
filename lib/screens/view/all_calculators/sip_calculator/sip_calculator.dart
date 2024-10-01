@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/app_colors.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_custom_richText/common_custom_richText.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_elevatedButton/custom_eleveted_button.dart';
@@ -20,6 +21,7 @@ class SIPCalculatorPage extends StatefulWidget {
 
 class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
   var controller = Get.put(SIPController());
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
         Navigator.pop(context);
       },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

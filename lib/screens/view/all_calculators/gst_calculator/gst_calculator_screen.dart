@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../../../core/utils/consts/textstyle.dart';
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_textfield_custom/common_textfield_custom.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
@@ -19,7 +20,7 @@ class GSTCalculatorPage extends StatefulWidget {
 
 class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
   var controller = Get.put(GSTCalculatorController());
-
+  var adController = Get.put(AdService());
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
           controller.clearFields();
         },
       ),
+      bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Form(
           key: controller.formKey.value,
           child: Padding(

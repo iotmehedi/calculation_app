@@ -9,9 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
+
 class TimeCalculatorResultPage extends StatelessWidget {
   TimeCalculatorResultPage({super.key});
   var controller = Get.find<TimeCalculatorController>();
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -22,6 +25,17 @@ class TimeCalculatorResultPage extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: adController.getNativeAdWidget(),
+          ),
+          10.ph,
+          adController.getBannerAdWidget(),
+        ],
+      ),
           body: SingleChildScrollView(
             child: Column(
               children: [

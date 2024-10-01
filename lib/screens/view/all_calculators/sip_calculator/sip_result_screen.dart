@@ -9,17 +9,30 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/common_result_heading/common_result_heading.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 
 class SIPResultScreen extends StatelessWidget {
    SIPResultScreen({super.key});
 var controller = Get.find<SIPController>();
+   var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(title: "SIP Calculator"),
+        bottomNavigationBar: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: adController.getNativeAdWidget(),
+        ),
+        10.ph,
+        adController.getBannerAdWidget(),
+      ],
+    ),
       body: SingleChildScrollView(
         child: Column(
           children: [

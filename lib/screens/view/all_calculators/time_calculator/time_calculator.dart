@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/utils/services/ad_services.dart';
 import '../../../widgets/custom_appbar/custom_appbar.dart';
 import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_widget.dart';
 
@@ -18,7 +19,7 @@ class TimeCalculatorScreen extends StatefulWidget {
 
 class _TimeCalculatorScreenState extends State<TimeCalculatorScreen> {
   var controller = Get.put(TimeCalculatorController());
-
+  var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -30,6 +31,7 @@ class _TimeCalculatorScreenState extends State<TimeCalculatorScreen> {
           controller.allFieldClear();
         },
       ),
+          bottomNavigationBar: adController.getBannerAdWidget(),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
