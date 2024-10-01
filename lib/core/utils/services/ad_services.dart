@@ -1,22 +1,16 @@
 import 'package:calculation_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class AdService {
-  // Singleton Pattern for AdService
-  static final AdService _instance = AdService._internal();
-  factory AdService() {
-    return _instance;
-  }
-  AdService._internal();
-
+class AdService extends GetxController {
   // Banner Ad Instance
   BannerAd? _bannerAd;
-  bool _isBannerAdLoaded = false;
+  var isBannerAdLoaded = false.obs;
 
-  // Inline Adaptive Banner Ad Instance
-  BannerAd? _inlineAdaptiveAd;
-  bool _isInlineAdaptiveAdLoaded = false;
+  // Native Ad Instance
+  NativeAd? _nativeAd;
+  var isNativeAdLoaded = false.obs;
 
   // Initialize Mobile Ads SDK
   Future<void> initialize() async {
@@ -28,11 +22,10 @@ class AdService {
     _bannerAd = BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Test ad unit ID
       size: AdSize.banner,
-      request: AdRequest(),
+      request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          _isBannerAdLoaded = true;
-
+          isBannerAdLoaded.value = true;
           print('Banner Ad loaded');
         },
         onAdFailedToLoad: (ad, error) {
@@ -44,67 +37,91 @@ class AdService {
     _bannerAd!.load();
   }
 
-  // Method to load an Inline Adaptive Banner Ad
-  void loadInlineAdaptiveAd({required BuildContext context}) async {
-    // Await the future to get the AdSize
-    final AnchoredAdaptiveBannerAdSize? adaptiveSize = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-      MediaQuery.of(context).size.width.toInt(),
-    );
+  // Method to get Banner Ad Widget
+  Widget getBannerAdWidget() {
+    return Obx(() {
+      if (isBannerAdLoaded.value && _bannerAd != null) {
+        return Container(
+          width: MediaQuery.of(navigatorKey.currentContext!).size.width,
+          height: 50,
+          child: AdWidget(ad: _bannerAd!),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    });
+  }
 
-    if (adaptiveSize == null) {
-      print('Error: Failed to get Adaptive AdSize');
-      return;
-    }
-
-    _inlineAdaptiveAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Test ad unit ID
-      size: adaptiveSize, // Now using the awaited adaptiveSize
-      request: AdRequest(),
-      listener: BannerAdListener(
+  // Native Ad load
+  void loadNativeAd() {
+    _nativeAd = NativeAd(
+      adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test ad unit ID
+      listener: NativeAdListener(
         onAdLoaded: (ad) {
-          _isInlineAdaptiveAdLoaded = true;
-          print('Inline Adaptive Banner Ad loaded');
+          isNativeAdLoaded.value = true;
+          print('Native Ad loaded');
         },
         onAdFailedToLoad: (ad, error) {
-          print('Inline Adaptive Banner Ad failed to load: $error');
+          print('Native Ad failed to load: $error');
+          isNativeAdLoaded.value = false;
           ad.dispose();
         },
       ),
+      request: const AdRequest(),
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.medium,
+        mainBackgroundColor: Colors.purple,
+        cornerRadius: 10.0,
+        callToActionTextStyle: NativeTemplateTextStyle(
+          textColor: Colors.cyan,
+          backgroundColor: Colors.red,
+          style: NativeTemplateFontStyle.monospace,
+          size: 16.0,
+        ),
+        primaryTextStyle: NativeTemplateTextStyle(
+          textColor: Colors.red,
+          backgroundColor: Colors.cyan,
+          style: NativeTemplateFontStyle.italic,
+          size: 16.0,
+        ),
+        secondaryTextStyle: NativeTemplateTextStyle(
+          textColor: Colors.green,
+          backgroundColor: Colors.black,
+          style: NativeTemplateFontStyle.bold,
+          size: 16.0,
+        ),
+        tertiaryTextStyle: NativeTemplateTextStyle(
+          textColor: Colors.brown,
+          backgroundColor: Colors.amber,
+          style: NativeTemplateFontStyle.normal,
+          size: 16.0,
+        ),
+      ),
     );
-
-    _inlineAdaptiveAd!.load();
+    _nativeAd?.load();
   }
 
-
-  // Method to get Banner Ad Widget
-  Widget getBannerAdWidget() {
-    if (_isBannerAdLoaded && _bannerAd != null) {
-      return Container(
-        width:  MediaQuery.of(navigatorKey.currentContext!).size.width,
-        height:50,
-        child: AdWidget(ad: _bannerAd!),
-      );
-    } else {
-      return SizedBox.shrink();
-    }
-  }
-
-  // Method to get Inline Adaptive Banner Ad Widget
-  Widget getInlineAdaptiveAdWidget() {
-    if (_isInlineAdaptiveAdLoaded && _inlineAdaptiveAd != null) {
-      return Container(
-        width: MediaQuery.of(navigatorKey.currentContext!).size.width,
-        height: 600,
-        child: AdWidget(ad: _inlineAdaptiveAd!),
-      );
-    } else {
-      return SizedBox.shrink();
-    }
+  // Method to retrieve the Native Ad Widget
+  Widget getNativeAdWidget() {
+    return Obx(() {
+      if (isNativeAdLoaded.value && _nativeAd != null) {
+        return Container(
+          width: double.infinity,
+          height: 200,
+          alignment: Alignment.center,
+          child: AdWidget(ad: _nativeAd!),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    });
   }
 
   // Dispose of Ads
-  void disposeAds() {
+  @override
+  void onClose() {
     _bannerAd?.dispose();
-    _inlineAdaptiveAd?.dispose();
+    _nativeAd?.dispose();
+    super.onClose();
   }
 }
