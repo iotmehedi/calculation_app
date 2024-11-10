@@ -14,7 +14,7 @@ import '../../../widgets/custom_calculate_clear_button/custom_calculate_clear_wi
 
 class PPFCalculatorScreen extends StatelessWidget {
   PPFCalculatorScreen({super.key});
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   var controller = Get.put(PPFCalculatorController());
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class PPFCalculatorScreen extends StatelessWidget {
           Navigator.pop(context);
           controller.allFieldClear();
         },),
-        bottomNavigationBar: adController.getBannerAdWidget(),
+        // bottomNavigationBar: adController.getBannerAdWidget(),
         body: Obx(()=> Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(

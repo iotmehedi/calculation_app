@@ -17,24 +17,24 @@ class SplashScreenTwo extends StatefulWidget {
 }
 
 class _SplashScreenTwoState extends State<SplashScreenTwo> with WidgetsBindingObserver{
-  final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
-  var adController = Get.put(AdService());
+  // final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+  // var adController = Get.put(AdService());
 
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Show the App Open Ad when the app is resumed from the background
-    if (state == AppLifecycleState.resumed) {
-      _appOpenAdManager.showAdIfAvailable();
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // Show the App Open Ad when the app is resumed from the background
+  //   if (state == AppLifecycleState.resumed) {
+  //     _appOpenAdManager.showAdIfAvailable();
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: adController.getBannerAdWidget(),
-      ),
+      // appBar: AppBar(
+      //   title: adController.getBannerAdWidget(),
+      // ),
       body: Center(
         child: Image.asset(
           AppAssets.splashLogoTwo,
@@ -52,7 +52,7 @@ class _SplashScreenTwoState extends State<SplashScreenTwo> with WidgetsBindingOb
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           onPressed: () {
-            AppOpenAdManager().showAdIfAvailable();
+            // AppOpenAdManager().showAdIfAvailable();
             RouteGenerator.pushNamedAndRemoveAll(Routes.homepage);
           },
           child: Image.asset(AppAssets.floatingArrow, width: 12, height: 17.05,),

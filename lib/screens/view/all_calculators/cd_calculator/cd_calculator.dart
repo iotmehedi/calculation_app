@@ -21,10 +21,10 @@ class CDCalculatorForm extends StatefulWidget {
 
 class _CDCalculatorFormState extends State<CDCalculatorForm> {
   var controller = Get.put(CDCalculatorController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -34,7 +34,7 @@ class _CDCalculatorFormState extends State<CDCalculatorForm> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() => Form(

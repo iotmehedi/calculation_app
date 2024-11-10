@@ -1,4 +1,4 @@
-package com.example.calculation_app
+package com.clacxpert.clacxpert
 
 import io.flutter.embedding.android.FlutterActivity
 

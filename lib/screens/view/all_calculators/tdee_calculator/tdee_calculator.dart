@@ -26,12 +26,12 @@ class _TDEECalculatorState extends State<TDEECalculator> {
 
 
 var controller = Get.put(TdeeController());
-var adController = Get.put(AdService());
+// var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(()=>Scaffold(
       appBar: AppBar(title: Text('TDEE Calculator')),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

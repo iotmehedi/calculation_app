@@ -21,10 +21,10 @@ class ResultScrren extends StatelessWidget {
       required this.progressValue,
       required this.bmiValueName,
       required this.type});
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -33,17 +33,17 @@ class ResultScrren extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          20.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     20.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: Stack(
         children: [
           Column(

@@ -18,7 +18,7 @@ import '../brm_calculator/brm_result_screen.dart';
 class EMIResultScreen extends StatelessWidget {
   EMIResultScreen({super.key});
   var controller = Get.find<EMIController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class EMIResultScreen extends StatelessWidget {
       appBar: CustomAppBar(title: "EMI Calculator", onBackPressed: (){
         Navigator.pop(context);
       },),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [

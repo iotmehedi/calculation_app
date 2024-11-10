@@ -34,7 +34,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   var selectedButton = true;
   double bmr = 0.0;
   Gender selectedGender = Gender.male;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   Future<bool> calculateBmr() async {
     double height, weight, age;
     if (ageController.text.isEmpty) {
@@ -110,7 +110,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -119,7 +119,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

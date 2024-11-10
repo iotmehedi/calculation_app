@@ -22,7 +22,7 @@ class LoanCalculatorScreen extends StatefulWidget {
 
 class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
   var controller = Get.put(LoanCalcualtorController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class _LoanCalculatorScreenState extends State<LoanCalculatorScreen> {
         Navigator.pop(context);
         controller.allFieldClear();
       },),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

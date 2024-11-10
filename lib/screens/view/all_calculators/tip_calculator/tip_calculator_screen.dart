@@ -17,7 +17,7 @@ class TipCalculator extends StatefulWidget {
 
 class _TipCalculatorState extends State<TipCalculator> {
   var controller = Get.put(TipController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class _TipCalculatorState extends State<TipCalculator> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: EdgeInsets.all(16.0),
             child: Form(

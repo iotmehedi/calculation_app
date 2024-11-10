@@ -53,7 +53,7 @@ dependencies:
   connectivity_plus: ^6.0.4
   internet_connection_checker_plus: ^2.5.1
   flutter_launcher_icons: ^0.13.1
-  google_mobile_ads: ^5.1.0
+#  google_mobile_ads: ^5.1.0
 
 
 dependency_overrides:

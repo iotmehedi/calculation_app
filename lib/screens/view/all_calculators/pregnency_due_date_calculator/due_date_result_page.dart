@@ -69,7 +69,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
         return 'th';
     }
   }
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     print("this is date ${widget.milestones[0]["weeks"]}");
@@ -84,7 +84,7 @@ class _DueDateResultCalculatorState extends State<DueDateResultCalculator> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

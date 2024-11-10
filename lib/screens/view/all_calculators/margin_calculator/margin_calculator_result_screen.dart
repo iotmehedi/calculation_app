@@ -17,7 +17,7 @@ import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart'
 class MarginCalculatorResultScreen extends StatelessWidget {
    MarginCalculatorResultScreen({super.key});
 var controller = Get.find<MarginCalculatorController>();
-   var adController = Get.put(AdService());
+   // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +90,7 @@ var controller = Get.find<MarginCalculatorController>();
               badgeWidgetVisibleOrNot: true,
             ),
             50.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),),

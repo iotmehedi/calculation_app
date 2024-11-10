@@ -19,7 +19,7 @@ class TimeCalculatorScreen extends StatefulWidget {
 
 class _TimeCalculatorScreenState extends State<TimeCalculatorScreen> {
   var controller = Get.put(TimeCalculatorController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -31,7 +31,7 @@ class _TimeCalculatorScreenState extends State<TimeCalculatorScreen> {
           controller.allFieldClear();
         },
       ),
-          bottomNavigationBar: adController.getBannerAdWidget(),
+          // bottomNavigationBar: adController.getBannerAdWidget(),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

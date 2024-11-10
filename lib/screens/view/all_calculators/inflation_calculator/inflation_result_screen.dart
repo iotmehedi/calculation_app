@@ -16,7 +16,7 @@ import 'inflation_controller.dart';
 class InflationResultScreen extends StatelessWidget {
   InflationResultScreen({super.key});
   var controller = Get.find<InflationCalculatorController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -27,7 +27,7 @@ class InflationResultScreen extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          bottomNavigationBar: adController.getBannerAdWidget(),
+          // bottomNavigationBar: adController.getBannerAdWidget(),
           body: SingleChildScrollView(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -121,7 +121,7 @@ class InflationResultScreen extends StatelessWidget {
                 ),
               ),
               50.ph,
-              adController.getNativeAdWidget(),
+              // adController.getNativeAdWidget(),
             ],
           )),
         ));

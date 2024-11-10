@@ -19,7 +19,7 @@ import '../brm_calculator/brm_result_screen.dart';
 class DiscountResultScreen extends StatelessWidget {
   DiscountResultScreen({super.key});
   var controller = Get.find<DiscountController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class DiscountResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -84,7 +84,7 @@ class DiscountResultScreen extends StatelessWidget {
                 taxTitle: "Discount",
                 badgeWidgetVisibleOrNot: true),
             60.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),

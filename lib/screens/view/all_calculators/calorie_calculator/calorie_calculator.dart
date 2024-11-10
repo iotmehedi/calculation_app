@@ -48,7 +48,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
   var selectedButton = true;
   late int calculatedCalories;
   late Map<String, int> weightLossCalories;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
 
   @override
   void initState() {
@@ -140,7 +140,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -149,7 +149,7 @@ class _CalorieCalculatorScreenState extends State<CalorieCalculatorScreen> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

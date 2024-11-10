@@ -20,10 +20,10 @@ import '../brm_calculator/brm_result_screen.dart';
 class CDResultScreen extends StatelessWidget {
   CDResultScreen({super.key});
   var controller = Get.find<CDCalculatorController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -32,17 +32,17 @@ class CDResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          10.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     10.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [

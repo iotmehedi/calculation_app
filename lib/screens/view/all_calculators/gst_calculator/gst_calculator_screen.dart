@@ -20,7 +20,7 @@ class GSTCalculatorPage extends StatefulWidget {
 
 class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
   var controller = Get.put(GSTCalculatorController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
           controller.clearFields();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Form(
           key: controller.formKey.value,
           child: Padding(
@@ -85,7 +85,7 @@ class _GSTCalculatorPageState extends State<GSTCalculatorPage> {
               controller: controller.amountController.value,
               keyboardType: TextInputType.number,
               needPadding: true,
-              suffixIcon: Icon(Icons.attach_money,size: 16, color: AppColors.deepGray1,),
+              suffixIcon: Icon(Icons.currency_rupee,size: 16, color: AppColors.deepGray1,),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter the total amount';

@@ -23,7 +23,7 @@ class _PeriodInputPageState extends State<PeriodInputPage> {
   int _selectedYear = DateTime.now().year;
   int _cycleLength = 28;
   int _howLongDidLast = 5;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   List<int> _daysInMonth(int year, int month) {
     return List<int>.generate(DateTime(year, month + 1, 0).day, (i) => i + 1);
   }
@@ -63,17 +63,17 @@ class _PeriodInputPageState extends State<PeriodInputPage> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          10.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     10.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -424,7 +424,7 @@ class _PeriodCalculationCalendarPageState
     _focusedDay = widget.startDate;
     super.initState();
   }
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     Map<DateTime, List<DateTime>> ovulationDays =
@@ -449,7 +449,7 @@ class _PeriodCalculationCalendarPageState
       appBar: CustomAppBar(title: 'Period Calendar', onBackPressed: (){
         Navigator.pop(context);
       },),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [

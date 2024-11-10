@@ -908,7 +908,7 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
   String formatDate(DateTime date) {
     return DateFormat('MMM\nd').format(date);
   }
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -919,17 +919,17 @@ class _PregnancyCalculatorPageState extends State<PregnancyCalculatorPage> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          10.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     10.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -29,7 +29,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   TextEditingController heightCmController = TextEditingController();
   TextEditingController weightKgController = TextEditingController();
   double bmiResult = 0.0;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   // String? type = 'usUnit';
   String? bmiValueName;
   var selectedButton = true;
@@ -84,7 +84,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

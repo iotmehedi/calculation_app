@@ -22,7 +22,7 @@ class CalorieResultScrren extends StatelessWidget {
     required this.extremeWeightLoss,
     required this.unitOrMatrics,
   });
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class CalorieResultScrren extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -24,7 +24,7 @@ class SalaryCalculatorScreen extends StatefulWidget {
 
 class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
   var controller = Get.put(SalaryController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,7 @@ class _SalaryCalculatorScreenState extends State<SalaryCalculatorScreen> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

@@ -15,7 +15,7 @@ import '../../../widgets/custom_row_with_richtext/custom_row_with_richtext.dart'
 class GSTCalculatorResultScreen extends StatelessWidget {
    GSTCalculatorResultScreen({super.key});
 var controller = Get.find<GSTCalculatorController>();
-   var adController = Get.put(AdService());
+   // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ var controller = Get.find<GSTCalculatorController>();
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -79,7 +79,7 @@ var controller = Get.find<GSTCalculatorController>();
               ),
             ),
             60.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),

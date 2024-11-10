@@ -17,7 +17,7 @@ import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 class PPFCalculatorResult extends StatelessWidget {
    PPFCalculatorResult({super.key});
   var controller = Get.find<PPFCalculatorController>();
-   var adController = Get.put(AdService());
+   // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +25,17 @@ class PPFCalculatorResult extends StatelessWidget {
       appBar:  CustomAppBar(title: "PPF Calculator", onBackPressed: (){
         Navigator.pop(context);
       },),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          10.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     10.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [

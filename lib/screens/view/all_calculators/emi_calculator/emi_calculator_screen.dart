@@ -22,7 +22,7 @@ class EmiCalculator extends StatefulWidget {
 
 class _EmiCalculatorState extends State<EmiCalculator> {
   var controller = Get.put(EMIController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class _EmiCalculatorState extends State<EmiCalculator> {
         Navigator.pop(context);
         controller.allFieldClear();
       },),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -111,7 +111,7 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                       clearButtonFontWeight: FontWeight.w600,
                     ),
                     SizedBox(height: 80),
-                    adController.getNativeAdWidget(),
+                    // adController.getNativeAdWidget(),
                   ],
                 ),
               ),

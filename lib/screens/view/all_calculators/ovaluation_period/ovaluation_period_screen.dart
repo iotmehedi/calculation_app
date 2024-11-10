@@ -23,7 +23,7 @@ class _OvulationInputPageState extends State<OvulationInputPage> {
   int _selectedDay = DateTime.now().day;
   int _selectedYear = DateTime.now().year;
   int _cycleLength = 28;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   List<int> _daysInMonth(int year, int month) {
     return List<int>.generate(DateTime(year, month + 1, 0).day, (i) => i + 1);
   }
@@ -63,7 +63,7 @@ class _OvulationInputPageState extends State<OvulationInputPage> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -307,7 +307,7 @@ class _OvulationInputPageState extends State<OvulationInputPage> {
                   ],
                 ),
               ),
-              adController.getNativeAdWidget(),
+              // adController.getNativeAdWidget(),
             ],
           ),
         ),
@@ -332,7 +332,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
       DateTime startDate, int cycleLength) {
     Map<DateTime, List<DateTime>> ovulationDays = {};
     DateTime nextDate = startDate;
-    var adController = Get.put(AdService());
+    // var adController = Get.put(AdService());
     for (int i = 0; i < 4; i++) {
       nextDate = nextDate.add(Duration(days: cycleLength));
       DateTime ovulationDay =
@@ -343,7 +343,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
     }
     return ovulationDays;
   }
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   void initState() {
     _focusedDay = widget.startDate;
@@ -375,7 +375,7 @@ class _OvulationCalendarPageState extends State<OvulationCalendarPage> {
       appBar: CustomAppBar(title: 'Ovulation Calendar', onBackPressed: (){
         Navigator.pop(context);
       },),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [

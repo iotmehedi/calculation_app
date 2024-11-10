@@ -16,7 +16,7 @@ import '../../../widgets/custom_appbar/custom_appbar.dart';
 class GPACalculatorResultScreen extends StatelessWidget {
   GPACalculatorResultScreen({super.key});
   var controller = Get.find<GPAController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -351,7 +351,7 @@ class GPACalculatorResultScreen extends StatelessWidget {
               ),
             ),
             60.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),

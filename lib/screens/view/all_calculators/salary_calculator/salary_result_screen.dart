@@ -14,7 +14,7 @@ import '../../../widgets/common_result_heading/common_result_heading.dart';
 class SalaryResultCalculator extends StatelessWidget {
   SalaryResultCalculator({super.key});
   var controller = Get.find<SalaryController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,17 +26,17 @@ class SalaryResultCalculator extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          10.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     10.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: Obx(() => SingleChildScrollView(
             child: Column(
               children: [

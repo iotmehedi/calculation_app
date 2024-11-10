@@ -36,7 +36,7 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
   // String? type = 'usUnit';
   var selectedButton = true;
   Gender selectedGender = Gender.male;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   Future<bool> calculateBodyFat() async {
     if (_validateInputs()) {
       double weight = double.tryParse(weightController.text) ?? 0;
@@ -139,13 +139,13 @@ class _BodyFatCalculatorState extends State<BodyFatCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(title: "Body Fat Calculator", onBackPressed: (){
         Navigator.pop(context);
       },),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(

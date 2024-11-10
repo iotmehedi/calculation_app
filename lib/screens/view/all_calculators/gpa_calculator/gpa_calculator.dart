@@ -36,7 +36,7 @@ class CourseForm extends StatefulWidget {
 
 class _CourseFormState extends State<CourseForm> {
   var controller = Get.put(GPAController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   // @override
   // void dispose() {
   //   for (var controller in controller.courseControllers) {
@@ -58,7 +58,7 @@ class _CourseFormState extends State<CourseForm> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(
         () => Form(
           key: controller.formKey.value,

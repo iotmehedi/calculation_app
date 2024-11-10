@@ -22,7 +22,7 @@ class _StockCalculatorPageState extends State<StockCalculatorPage> {
 
 
 var controller = Get.put(StocksCalculatorController());
-var adController = Get.put(AdService());
+// var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ var adController = Get.put(AdService());
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

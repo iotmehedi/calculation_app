@@ -20,7 +20,7 @@ class UnitConverter extends StatefulWidget {
 
 class _UnitConverterState extends State<UnitConverter> {
   var controller = Get.put(UnitController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -31,7 +31,7 @@ class _UnitConverterState extends State<UnitConverter> {
               Navigator.pop(context);
             },
           ),
-          bottomNavigationBar: adController.getBannerAdWidget(),
+          // bottomNavigationBar: adController.getBannerAdWidget(),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

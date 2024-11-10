@@ -18,7 +18,7 @@ class MarginCalculatorScreen extends StatefulWidget {
 
 class _MarginCalculatorScreenState extends State<MarginCalculatorScreen> {
 var controller = Get.put(MarginCalculatorController());
-var adController = Get.put(AdService());
+// var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ var adController = Get.put(AdService());
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(()=>Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

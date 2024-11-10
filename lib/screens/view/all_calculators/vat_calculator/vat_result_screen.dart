@@ -17,7 +17,7 @@ import '../brm_calculator/brm_result_screen.dart';
 class VatResultScreen extends StatelessWidget {
   VatResultScreen({super.key});
   var controller = Get.find<VatController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +28,17 @@ class VatResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: adController.getNativeAdWidget(),
-        ),
-        10.ph,
-        adController.getBannerAdWidget(),
-      ],
-    ),
+    //   bottomNavigationBar: Column(
+    //   mainAxisSize: MainAxisSize.min,
+    //   children: [
+    //     Align(
+    //       alignment: Alignment.bottomCenter,
+    //       child: adController.getNativeAdWidget(),
+    //     ),
+    //     10.ph,
+    //     adController.getBannerAdWidget(),
+    //   ],
+    // ),
       body: SingleChildScrollView(
         child: Column(
           children: [

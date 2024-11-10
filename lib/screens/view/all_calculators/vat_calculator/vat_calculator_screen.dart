@@ -16,7 +16,7 @@ class VATCalculatorHomePage extends StatefulWidget {
 
 class _VATCalculatorHomePageState extends State<VATCalculatorHomePage> {
   var controller = Get.put(VatController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class _VATCalculatorHomePageState extends State<VATCalculatorHomePage> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

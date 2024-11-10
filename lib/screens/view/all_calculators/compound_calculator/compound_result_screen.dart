@@ -17,10 +17,10 @@ import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 class CompoundResultScreen extends StatelessWidget {
   CompoundResultScreen({super.key});
   var controller = Get.find<CompoundController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     int currentYear = DateTime.now().year;
     int maxYears = int.parse(
         controller.yearsOfGrowthController.value.text.isEmpty
@@ -259,7 +259,7 @@ class CompoundResultScreen extends StatelessWidget {
                   ),
                 ),
                 60.ph,
-                adController.getNativeAdWidget(),
+                // adController.getNativeAdWidget(),
               ],
             ),
           )),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
   // Initialize Google Mobile Ads
-  await MobileAds.instance.initialize();
+  // await MobileAds.instance.initialize();
   connectivityService = ConnectivityService();
   runApp(const MyApp());
 }
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
-      title: 'Calc-Mate',
+      title: 'Calc-Xpert',
       initialRoute: Routes.splashScreenRouteName,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

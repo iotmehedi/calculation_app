@@ -21,7 +21,7 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
   TextEditingController numberController = TextEditingController();
   TextEditingController percentageController = TextEditingController();
   double result = 0.0;
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   void calculatePercentage() {
     double number = double.tryParse(numberController.text) ?? 0.0;
     double percentage = double.tryParse(percentageController.text) ?? 0.0;
@@ -40,17 +40,17 @@ class _PercentageCalculatorState extends State<PercentageCalculator> {
       Navigator.pop(context);
     },
   ),
-      bottomNavigationBar: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: adController.getNativeAdWidget(),
-        ),
-        10.ph,
-        adController.getBannerAdWidget(),
-      ],
-    ),
+    //   bottomNavigationBar: Column(
+    //   mainAxisSize: MainAxisSize.min,
+    //   children: [
+    //     Align(
+    //       alignment: Alignment.bottomCenter,
+    //       child: adController.getNativeAdWidget(),
+    //     ),
+    //     10.ph,
+    //     adController.getBannerAdWidget(),
+    //   ],
+    // ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(

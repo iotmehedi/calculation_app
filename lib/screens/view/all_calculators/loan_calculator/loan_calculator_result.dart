@@ -19,7 +19,7 @@ import '../../../widgets/custom_two_row_widget/custom_row_widget.dart';
 class LoanCalculatorResult extends StatelessWidget {
   LoanCalculatorResult({super.key});
   var controller = Get.find<LoanCalcualtorController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +116,7 @@ class LoanCalculatorResult extends StatelessWidget {
               ),
             ),
             50.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),

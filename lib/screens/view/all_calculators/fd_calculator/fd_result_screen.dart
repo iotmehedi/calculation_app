@@ -20,7 +20,7 @@ import 'fd_controller.dart';
 class FDResultScreen extends StatelessWidget {
    FDResultScreen({super.key});
 var controller = Get.find<FDController>();
-   var adController = Get.put(AdService());
+   // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ var controller = Get.find<FDController>();
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -58,7 +58,7 @@ var controller = Get.find<FDController>();
             20.ph,
             CommonPieChartWidget(list: controller.list, total: controller.total.value, netPriceColor: "458EEC", taxAmountColor: "99CBF7", netTitle: "Total Investment", taxTitle: "Total Return", badgeWidgetVisibleOrNot: true,),
             70.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),

@@ -19,24 +19,24 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
-  final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+  // final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
   // var adController = Get.find<AdService>();
 @override
   void initState() {
 
-  _appOpenAdManager.loadAd();
+  // _appOpenAdManager.loadAd();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: HexColor("FAFAFA"),
         automaticallyImplyLeading: false,
       ),
-      bottomNavigationBar: Get.find<AdService>().getBannerAdWidget(),
+      // bottomNavigationBar: Get.find<AdService>().getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20),

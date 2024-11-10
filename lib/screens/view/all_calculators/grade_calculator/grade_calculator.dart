@@ -27,7 +27,7 @@ class GPAForm extends StatefulWidget {
 class _GPAFormState extends State<GPAForm> {
 
   var controller = Get.put(GradeController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _GPAFormState extends State<GPAForm> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Form(
         key: controller.formKey.value,
         child: Padding(

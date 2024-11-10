@@ -15,7 +15,7 @@ import '../../../widgets/custom_appbar/custom_appbar.dart';
 class StocksCalculatorResultScreen extends StatelessWidget {
   StocksCalculatorResultScreen({super.key});
   var controller = Get.find<StocksCalculatorController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,17 +26,17 @@ class StocksCalculatorResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: adController.getNativeAdWidget(),
-          ),
-          10.ph,
-          adController.getBannerAdWidget(),
-        ],
-      ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     Align(
+      //       alignment: Alignment.bottomCenter,
+      //       child: adController.getNativeAdWidget(),
+      //     ),
+      //     10.ph,
+      //     adController.getBannerAdWidget(),
+      //   ],
+      // ),
       body: Obx(() => SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

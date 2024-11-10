@@ -16,10 +16,10 @@ class DiscountCalculatorPage extends StatefulWidget {
 
 class _DiscountCalculatorPageState extends State<DiscountCalculatorPage> {
 var controller = Get.put(DiscountController());
-var adController = Get.put(AdService());
+// var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -29,7 +29,7 @@ var adController = Get.put(AdService());
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Form(
         key: controller.formKey.value,
         child: Padding(

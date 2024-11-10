@@ -15,7 +15,7 @@ import '../../../widgets/container_shadow_widget/container_shadow_widget.dart';
 class GradeResultScreen extends StatelessWidget {
   GradeResultScreen({super.key});
   var controller = Get.find<GradeController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class GradeResultScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +256,7 @@ class GradeResultScreen extends StatelessWidget {
               ),
             ),
             50.ph,
-            adController.getNativeAdWidget(),
+            // adController.getNativeAdWidget(),
           ],
         ),
       ),

@@ -13,10 +13,10 @@ import 'auto_loan_calculator_controller.dart';
 class AutoLoanCalculatorResult extends StatelessWidget {
   AutoLoanCalculatorResult({super.key});
   var controller = Get.find<LoanController>();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -31,7 +31,7 @@ class AutoLoanCalculatorResult extends StatelessWidget {
             textColor: Colors.black,
             fontSize: 20.0),
       ),
-      bottomNavigationBar:adController.getBannerAdWidget(),
+      // bottomNavigationBar:adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

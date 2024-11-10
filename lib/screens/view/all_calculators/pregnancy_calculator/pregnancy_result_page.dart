@@ -42,7 +42,7 @@ class PregnancyResultCalculator extends StatefulWidget {
 class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
   // final DateTime selectedDate = DateTime(2023, 10, 12);
   DateTime presentDate = DateTime.now();
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   int get daysDifference {
     return presentDate
         .difference((widget.milestones[0]["weeks"] as DateTime))
@@ -80,7 +80,7 @@ class _PregnancyResultCalculatorState extends State<PregnancyResultCalculator> {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

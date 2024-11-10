@@ -22,10 +22,10 @@ class CalculatorForm extends StatefulWidget {
 
 class _CalculatorFormState extends State<CalculatorForm> {
   var controller = Get.put(CompoundController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
-    Get.find<AdService>().loadBannerAd();
+    // Get.find<AdService>().loadBannerAd();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       appBar: CustomAppBar(
@@ -35,7 +35,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

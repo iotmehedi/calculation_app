@@ -21,7 +21,7 @@ class SIPCalculatorPage extends StatefulWidget {
 
 class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
   var controller = Get.put(SIPController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,7 @@ class _SIPCalculatorPageState extends State<SIPCalculatorPage> {
         Navigator.pop(context);
       },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

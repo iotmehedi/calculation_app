@@ -20,7 +20,7 @@ class TaxCalculatorPage extends StatefulWidget {
 class _TaxCalculatorPageState extends State<TaxCalculatorPage> {
 
   var controller = Get.put(SalesCalculatorController());
-  var adController = Get.put(AdService());
+  // var adController = Get.put(AdService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class _TaxCalculatorPageState extends State<TaxCalculatorPage> {
           controller.allFieldClear();
         },
       ),
-      bottomNavigationBar: adController.getBannerAdWidget(),
+      // bottomNavigationBar: adController.getBannerAdWidget(),
       body: Obx(() => Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
